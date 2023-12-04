@@ -14,21 +14,12 @@
                             <h5>Current</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->where('DocDueDate','<=',date('Y-m-d')))}}</h1>
+                            <h1 class="no-margins">0</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
                     </div>
                 </div>
-                @php
-                    $day_after = date('Y-m-d',strtotime('+1 days',strtotime(date('Y-m-d'))));
-                    $month = date('Y-m-d',strtotime('+30 days',strtotime(date('Y-m-d'))));
-                    $monthday = date('Y-m-d',strtotime('+31 days',strtotime(date('Y-m-d'))));
-                    $twomonths = date('Y-m-d',strtotime('+60 days',strtotime(date('Y-m-d'))));
-                    $twomonthsday = date('Y-m-d',strtotime('+61 days',strtotime(date('Y-m-d'))));
-                    $threemonths = date('Y-m-d',strtotime('+90 days',strtotime(date('Y-m-d'))));
-                    $threemonthsday = date('Y-m-d',strtotime('+91 days',strtotime(date('Y-m-d'))));
-                @endphp
                 <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -36,7 +27,7 @@
                             <h5>1 to 30 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->whereBetween('DocDueDate',[$day_after,$month]))}}</h1>
+                            <h1 class="no-margins">0</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -49,7 +40,7 @@
                             <h5>31 to 60 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->whereBetween('DocDueDate',[$monthday,$twomonths]))}}</h1>
+                            <h1 class="no-margins">0</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -62,7 +53,7 @@
                             <h5>61 to 90 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->whereBetween('DocDueDate',[$twomonthsday,$threemonths]))}}</h1>
+                            <h1 class="no-margins">0</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -75,7 +66,7 @@
                             <h5>Over 90 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->where('DocDueDate','>',$threemonthsday))}}</h1>
+                            <h1 class="no-margins">0</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -134,6 +125,10 @@
                                             $total_php_t = 0;
                                             $total_php_nt = 0;
                                             $total_php = 0;
+                                            $total_current = 0;
+                                            $total_month = 0;
+                                            $total_twomonth = 0;
+                                            $total_threemonth = 0;
                                             $total_over_days = 0;
                                         @endphp
                                         @foreach ($invoices as $invoice)
@@ -195,19 +190,25 @@
                                             <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
                                             @php
                                                 if (round($datediff / (60 * 60 * 24)) <= 0) {
+                                                    $total_current++;
                                                     $status = 'Current';
                                                 }
                                                 elseif ((round($datediff / (60 * 60 * 24)) >= 1) && (round($datediff / (60 * 60 * 24)) <= 30))
                                                 {
                                                     $status = '1  to 30 days Late';
+                                                    
+                                                    $total_month++;
                                                 }
                                                 elseif ((round($datediff / (60 * 60 * 24)) >= 31) && (round($datediff / (60 * 60 * 24)) <= 60))
                                                 {
                                                     $status = '31  to 60 days Late';
+                                                    $total_twomonth++;
                                                 }
                                                 elseif ((round($datediff / (60 * 60 * 24)) >= 61) && (round($datediff / (60 * 60 * 24)) <= 90))
                                                 {
                                                     $status = '61  to 90 days Late';
+                                                    
+                                                    $total_threemonth++;
                                                 }
                                                 else
                                                 {
@@ -254,6 +255,12 @@
 <script src="{{ asset('/inside/login_css/js/plugins/dataTables/datatables.min.js')}}"></script>
 <script src="{{ asset('/inside/login_css/js/plugins/chosen/chosen.jquery.js') }}"></script>
 <script>
+    var total_current = {!! json_encode($total_current) !!};
+    var total_month = {!! json_encode($total_month) !!};
+    var total_twomonth = {!! json_encode($total_twomonth) !!};
+    var total_threemonth = {!! json_encode($total_threemonth) !!};
+    var total_over_days = {!! json_encode($total_over_days) !!};
+    console.log(total_current,total_month,total_twomonth,total_threemonth,total_over_days);
     $(document).ready(function(){
         
 
