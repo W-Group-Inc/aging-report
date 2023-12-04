@@ -79,7 +79,8 @@
                             <h5>Accounts Receivable</h5>
                         </div>
                         <div class="ibox-content">
-                            <h4 class="no-margins">PHP : <span id='total'>0.00</span> </h4>
+                            <h4 class="no-margins">Total PHP : <span id='total'>0.00</span> </h4>
+                            <h4 class="no-margins">Total USD : <span id='total_usd'>0.00</span> </h4>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -251,6 +252,7 @@
 </div>
 @php
     $total_php = number_format($total_php,2);
+    $total_usd = number_format($total_usd,2);
 @endphp
 @endsection
 @section('footer')
@@ -269,6 +271,7 @@
     document.getElementById("total_threemonth").innerHTML = total_threemonth;
     document.getElementById("total_over_days").innerHTML = total_over_days;
     document.getElementById("total").innerHTML = total;
+    document.getElementById("total_usd").innerHTML = total_usd;
     $(document).ready(function(){
         
 
