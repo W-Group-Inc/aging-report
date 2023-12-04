@@ -221,21 +221,18 @@
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
                                         </tr>
                                         @endforeach
-                                    </tbody>
-                                    <tfoot>
                                         <tr>
                                         
-                                            <th colspan='7' class='text-right'>Total Account Receivables</th>
-                                            <th>{{number_format($total_usd,2)}}</th>
-                                            <th>{{number_format($total_euro,2)}}</th>
-                                            <th>{{number_format($total_php_t,2)}}</th>
-                                            <th>{{number_format($total_php_nt,2)}}</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>{{number_format($total_php,2)}}</th>
+                                            <td colspan='7' class='text-right'>Total Account Receivables</td>
+                                            <td>{{number_format($total_usd,2)}}</td>
+                                            <td>{{number_format($total_euro,2)}}</td>
+                                            <td>{{number_format($total_php_t,2)}}</td>
+                                            <td>{{number_format($total_php_nt,2)}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{number_format($total_php,2)}}</td>
                                         </tr>
-                                    </tfoot>
                                 </table>
                             </div>
 
