@@ -134,6 +134,7 @@
                                             $total_php_t = 0;
                                             $total_php_nt = 0;
                                             $total_php = 0;
+                                            $total_over_days = 0;
                                         @endphp
                                         @foreach ($invoices as $invoice)
                                         <tr>
@@ -210,6 +211,7 @@
                                                 }
                                                 else
                                                 {
+                                                    $total_over_days++;
                                                     $status = 'Over 90 days Late';
                                                 }
                                             @endphp
@@ -249,6 +251,8 @@
 <script src="{{ asset('/inside/login_css/js/plugins/dataTables/datatables.min.js')}}"></script>
 <script src="{{ asset('/inside/login_css/js/plugins/chosen/chosen.jquery.js') }}"></script>
 <script>
+   var days = {!! json_encode($total_over_days) !!};
+   console.log(days);
     $(document).ready(function(){
         
 
