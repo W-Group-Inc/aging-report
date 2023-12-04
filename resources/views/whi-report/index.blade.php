@@ -166,14 +166,21 @@
                                             <td>@if($usd != null){{$usd}} @else NA @endif</td>
                                             <td>@if($euro != null){{$euro}} @else NA @endif</td>
                                             <td>@if($invoice->DocCur == 'PHP')
-                                                    @if($invoice->DocType == "I") {{$php}}
+                                                    @if($invoice->DocType == "I")
+                                                    @php
+                                                        $total_php_t = $total_php_t +$php; 
+                                                    @endphp {{number_format($php,2)}}
                                                     @else NA 
                                                     @endif
                                                 @else NA 
                                                 @endif
                                             </td>
                                             <td>@if($invoice->DocCur == 'PHP')
-                                                    @if($invoice->DocType == "S") {{$php}} 
+                                                    @if($invoice->DocType == "S") 
+                                                        @php
+                                                            $total_php_nt = $total_php_nt +$php; 
+                                                        @endphp 
+                                                    {{number_format($php,2)}}
                                                     @else NA 
                                                     @endif
                                                 @else NA 
@@ -221,8 +228,8 @@
                                             <th colspan='7' class='text-right'>Total Account Receivables</th>
                                             <th>{{number_format($total_usd,2)}}</th>
                                             <th>{{number_format($total_euro,2)}}</th>
-                                            <th>Invoice Amount in PHP-T</th>
-                                            <th>Invoice Amount in PHP-NT</th>
+                                            <th>{{number_format($total_php_t,2)}}</th>
+                                            <th>{{number_format($total_php_nt,2)}}</th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
