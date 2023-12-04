@@ -7,38 +7,42 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-success pull-right">as of Today</span>
                             <h5>Current</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->where('DocDueDate','<',date('Y-m-d')))}}</h1>
+                            <h1 class="no-margins">{{count($invoices->where('DocDueDate','<=',date('Y-m-d')))}}</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
                     </div>
                 </div>
                 @php
+                    $day_after = date('Y-m-d',strtotime('+1 days',strtotime(date('Y-m-d'))));
                     $month = date('Y-m-d',strtotime('+30 days',strtotime(date('Y-m-d'))));
                     $monthday = date('Y-m-d',strtotime('+31 days',strtotime(date('Y-m-d'))));
                     $twomonths = date('Y-m-d',strtotime('+60 days',strtotime(date('Y-m-d'))));
+                    $twomonthsday = date('Y-m-d',strtotime('+61 days',strtotime(date('Y-m-d'))));
+                    $threemonths = date('Y-m-d',strtotime('+90 days',strtotime(date('Y-m-d'))));
+                    $threemonthsday = date('Y-m-d',strtotime('+91 days',strtotime(date('Y-m-d'))));
                 @endphp
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-warning pull-right">as of Today</span>
                             <h5>1 to 30 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->whereBetween('DocDueDate',[date('Y-m-d'),$month]))}}</h1>
+                            <h1 class="no-margins">{{count($invoices->whereBetween('DocDueDate',[$day_after,$month]))}}</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-info pull-right">as of Today</span>
@@ -51,33 +55,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-info pull-right">as of Today</span>
                             <h5>61 to 90 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">0</h1>
+                            <h1 class="no-margins">{{count($invoices->whereBetween('DocDueDate',[$twomonthsday,$threemonths]))}}</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-danger pull-right">as of Today</span>
                             <h5>Over 90 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">0</h1>
+                            <h1 class="no-margins">{{count($invoices->where('DocDueDate','>',$threemonthsday))}}</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-info pull-right">as of Today</span>
