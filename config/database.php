@@ -82,7 +82,7 @@ return [
             'prefix_indexes' => true,
         ],
         'sqlsrv_pbi' => [
-            'driver' => 'sqlsrv_pbi',
+            'driver' => 'sqlsrv',
             'host' => env('DB_HOST_PBI', 'localhost'),
             'port' => env('DB_PORT_PBI', '1433'),
             'database' => env('DB_DATABASE_PBI', 'forge'),
