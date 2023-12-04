@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OINV extends Model
 {
+    protected $connection = 'sqlsrv';
     protected $table = 'OINV';
     
     public function payments()
