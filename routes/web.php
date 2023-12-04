@@ -11,12 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+// Auth::routes();
+
+Route::group(['middleware' => 'auth'], function () {
+Route::get('/home','ReportController@index');
+Route::get('/', 'ReportController@index');
+Route::get('/report', 'ReportController@index');
 });
-
-Route::get('report', 'ReportController@index');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
