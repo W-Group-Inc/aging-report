@@ -13,9 +13,9 @@
                             <div class="col-lg-3">
                                 <select name='company' class='form-control' required>
                                     <option value=''>Company</option>
-                                    <option value='WHI'>WHI</option>
-                                    <option value='PBI'>PBI</option>
-                                    <option value='CCC'>CCC</option>
+                                    <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
+                                    <option value='PBI' @if($company == "PBI") selected @endif>PBI</option>
+                                    <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
                                 </select>
                             </div>
                             <div class="col-lg-2">

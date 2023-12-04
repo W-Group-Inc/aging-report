@@ -22,7 +22,8 @@ class ReportController extends Controller
         // dd($invoices->first());
         return view('whi-report.index',
             array(
-                'invoices' =>$invoices
+                'invoices' =>$invoices,
+                'company' => $request->company
             )
         ); 
     }
