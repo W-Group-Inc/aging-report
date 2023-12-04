@@ -167,9 +167,9 @@
                                             <td>@if($euro != null){{$euro}} @else NA @endif</td>
                                             <td>@if($invoice->DocCur == 'PHP')
                                                     @if($invoice->DocType == "I")
-                                                    @php
-                                                        $total_php_t = $total_php_t +$php; 
-                                                    @endphp {{$php}}
+                                                        @php
+                                                            $total_php_t = $total_php_t + $invoice->DocTotal - $invoice->PaidToDate; 
+                                                        @endphp {{$php}}
                                                     @else NA 
                                                     @endif
                                                 @else NA 
@@ -178,7 +178,7 @@
                                             <td>@if($invoice->DocCur == 'PHP')
                                                     @if($invoice->DocType == "S") 
                                                         @php
-                                                            $total_php_nt = $total_php_nt +$php; 
+                                                            $total_php_nt = $total_php_nt + $invoice->DocTotal - $invoice->PaidToDate; 
                                                         @endphp 
                                                     {{$php}}
                                                     @else NA 
