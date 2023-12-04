@@ -81,6 +81,17 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
+        'sqlsrv_pbi' => [
+            'driver' => 'sqlsrv_pbi',
+            'host' => env('DB_HOST_PBI', 'localhost'),
+            'port' => env('DB_PORT_PBI', '1433'),
+            'database' => env('DB_DATABASE_PBI', 'forge'),
+            'username' => env('DB_USERNAME_PBI', 'forge'),
+            'password' => env('DB_PASSWORD_PBI', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
 
     ],
 

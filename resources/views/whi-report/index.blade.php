@@ -5,6 +5,29 @@
 @section('content')
 <div class="wrapper wrapper-content ">
     <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-content">
+                    <form  method='GET' onsubmit='show();'  enctype="multipart/form-data" >
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <select name='company' class='form-control' required>
+                                    <option value=''>Company</option>
+                                    <option value='WHI'>WHI</option>
+                                    <option value='PBI'>PBI</option>
+                                    <option value='CCC'>CCC</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-primary mt-4" type="submit" id='submit'><i class="fa fa-check"></i>&nbsp;Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="col-lg-3">
