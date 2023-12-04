@@ -14,7 +14,7 @@
                             <h5>Current</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->where('DocDueDate','<=',date('Y-m-d')))}}</h1>
+                            <h1 class="no-margins">{{count($invoices->whereDate('DocDueDate','<=',date('Y-m-d')))}}</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -75,7 +75,7 @@
                             <h5>Over 90 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{count($invoices->where('DocDueDate','>',$threemonthsday))}}</h1>
+                            <h1 class="no-margins">{{count($invoices->whereDate('DocDueDate','>',$threemonthsday))}}</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
