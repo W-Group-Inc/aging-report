@@ -100,13 +100,13 @@
               </div>
               <div class="navbar-collapse collapse justify-content-center" id="navbar">
                   
-                  {{-- <ul class="nav navbar-top-links navbar-right">
+                  <ul class="nav navbar-top-links navbar-right">
                       <li>
                           <a href="{{ route('logout') }}" onclick="logout(); show();">
                               <i class="fa fa-sign-out"></i> Log out
                           </a>
                       </li>
-                  </ul> --}}
+                  </ul>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>
