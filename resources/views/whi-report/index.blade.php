@@ -81,6 +81,9 @@
                         <div class="ibox-content">
                             <h4 class="no-margins">Total PHP : <span id='total'>0.00</span> </h4>
                             <h4 class="no-margins">Total USD : <span id='total_usd'>0.00</span> </h4>
+                            <h4 class="no-margins">Total EURO : <span id='total_euro'>0.00</span> </h4>
+                            <h4 class="no-margins">Total PHP-T : <span id='total_php_t'>0.00</span> </h4>
+                            <h4 class="no-margins">Total PHP-NT : <span id='total_php_nt'>0.00</span> </h4>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -253,6 +256,9 @@
 @php
     $total_php = number_format($total_php,2);
     $total_usd = number_format($total_usd,2);
+    $total_euro = number_format($total_euro,2);
+    $total_php_t = number_format($total_php_t,2);
+    $total_php_nt = number_format($total_php_nt,2);
 @endphp
 @endsection
 @section('footer')
@@ -265,6 +271,10 @@
     var total_threemonth = {!! json_encode($total_threemonth) !!};
     var total_over_days = {!! json_encode($total_over_days) !!};
     var total = {!! json_encode($total_php) !!};
+    var total_usd = {!! json_encode($total_usd) !!};
+    var total_euro = {!! json_encode($total_euro) !!};
+    var total_php_t = {!! json_encode($total_php_t) !!};
+    var total_php_nt = {!! json_encode($total_php_nt) !!};
     document.getElementById("total_current").innerHTML = total_current;
     document.getElementById("total_month").innerHTML = total_month;
     document.getElementById("total_twomonth").innerHTML = total_twomonth;
@@ -272,6 +282,9 @@
     document.getElementById("total_over_days").innerHTML = total_over_days;
     document.getElementById("total").innerHTML = total;
     document.getElementById("total_usd").innerHTML = total_usd;
+    document.getElementById("total_euro").innerHTML = total_euro;
+    document.getElementById("total_php_t").innerHTML = total_php_t;
+    document.getElementById("total_php_nt").innerHTML = total_php_nt;
     $(document).ready(function(){
         
 
