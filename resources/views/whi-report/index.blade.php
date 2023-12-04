@@ -22,6 +22,8 @@
                 </div>
                 @php
                     $month = date('Y-m-d',strtotime('+30 days',strtotime(date('Y-m-d'))));
+                    $monthday = date('Y-m-d',strtotime('+31 days',strtotime(date('Y-m-d'))));
+                    $twomonths = date('Y-m-d',strtotime('+60 days',strtotime(date('Y-m-d'))));
                 @endphp
                 <div class="col-lg-2">
                     <div class="ibox float-e-margins">
@@ -43,7 +45,7 @@
                             <h5>31 to 60 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">0</h1>
+                            <h1 class="no-margins">{{count($invoices->whereBetween('DocDueDate',[$monthday,$twomonths]))}}</h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
