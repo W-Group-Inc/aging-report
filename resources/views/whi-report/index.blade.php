@@ -14,7 +14,7 @@
                             <h5>Current</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">0</h1>
+                            <h1 class="no-margins"><span id='current'>0</span></h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -27,7 +27,7 @@
                             <h5>1 to 30 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">0</h1>
+                            <h1 class="no-margins"><span id='total_month'>0</span></h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -40,7 +40,7 @@
                             <h5>31 to 60 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">0</h1>
+                            <h1 class="no-margins"><span id='total_twomonth'>0</span></h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -53,7 +53,7 @@
                             <h5>61 to 90 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">0</h1>
+                            <h1 class="no-margins"><span id='total_threemonth'>0</span></h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -66,7 +66,7 @@
                             <h5>Over 90 days late</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">0</h1>
+                            <h1 class="no-margins"><span id='total_over_days'>0</span></h1>
                             {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                             <small>&nbsp;</small>
                         </div>
@@ -260,7 +260,11 @@
     var total_twomonth = {!! json_encode($total_twomonth) !!};
     var total_threemonth = {!! json_encode($total_threemonth) !!};
     var total_over_days = {!! json_encode($total_over_days) !!};
-    console.log(total_current,total_month,total_twomonth,total_threemonth,total_over_days);
+    document.getElementById("serverTime").innerHTML = total_current;
+    document.getElementById("total_month").innerHTML = total_month;
+    document.getElementById("total_twomonth").innerHTtotal_over_daystotal_twomonth;
+    document.getElementById("total_threemonth").innerHTML = total_threemonth;
+    document.getElementById("total_over_days").innerHTML = total_over_days;
     $(document).ready(function(){
         
 
