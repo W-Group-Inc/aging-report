@@ -262,7 +262,7 @@
     var total_over_days = {!! json_encode($total_over_days) !!};
     document.getElementById("total_current").innerHTML = total_current;
     document.getElementById("total_month").innerHTML = total_month;
-    document.getElementById("total_twomonth").innerHTtotal_over_daystotal_twomonth;
+    document.getElementById("total_twomonth").innerHTML = total_twomonth;
     document.getElementById("total_threemonth").innerHTML = total_threemonth;
     document.getElementById("total_over_days").innerHTML = total_over_days;
     $(document).ready(function(){
