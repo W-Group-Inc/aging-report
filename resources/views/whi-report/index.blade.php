@@ -249,7 +249,9 @@
         </div>
     </div>
 </div>
-
+@php
+    $total_php = number_format($total_php,2);
+@endphp
 @endsection
 @section('footer')
 <script src="{{ asset('/inside/login_css/js/plugins/dataTables/datatables.min.js')}}"></script>
