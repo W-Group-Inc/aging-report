@@ -211,6 +211,7 @@
                                                 }
                                                 else
                                                 {
+                                                    $total_over_days++;
                                                     $status = 'Over 90 days Late';
                                                 }
                                             @endphp
@@ -222,6 +223,8 @@
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
                                         </tr>
                                         @endforeach
+                                    </tbody>
+                                    <tfoot>
                                         <tr>
                                         
                                             <td colspan='7' class='text-right'>Total Account Receivables</td>
@@ -234,6 +237,7 @@
                                             <td></td>
                                             <td>{{number_format($total_php,2)}}</td>
                                         </tr>
+                                    </tfoot>
                                 </table>
                             </div>
 
