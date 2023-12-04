@@ -7,6 +7,90 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">as of Today</span>
+                            <h5>Current</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">0</h1>
+                            {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
+                            <small>&nbsp;</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-warning pull-right">as of Today</span>
+                            <h5>1 to 30 days late</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">0</h1>
+                            {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
+                            <small>&nbsp;</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-info pull-right">as of Today</span>
+                            <h5>31 to 60 days late</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">0</h1>
+                            {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
+                            <small>&nbsp;</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-info pull-right">as of Today</span>
+                            <h5>61 to 90 days late</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">0</h1>
+                            {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
+                            <small>&nbsp;</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-danger pull-right">as of Today</span>
+                            <h5>Over 90 days late</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">0</h1>
+                            {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
+                            <small>&nbsp;</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-info pull-right">as of Today</span>
+                            <h5>Accounts Receivable</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h4 class="no-margins">PHP : <span id='total'>0.00</span> </h4>
+                            {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
+                            <small>&nbsp;</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -35,8 +119,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $total_usd = 0;
+                                        @endphp
                                         @foreach ($invoices as $invoice)
-                                        {{-- {{dd($invoice)}} --}}
                                         <tr>
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
@@ -52,6 +138,7 @@
                                             $php = "";
                                                 if($invoice->DocCur == "USD")
                                                 {
+                                                    $total_usd = $total_usd + $final_amount;
                                                     $usd = number_format($final_amount,2);
                                                 }
                                                 elseif($invoice->DocCur == "EUR") {
@@ -109,8 +196,22 @@
                                             <td>{{$invoice->DocRate}}</td>
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
                                         </tr>
-                                    @endforeach
+                                        @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                        
+                                            <th colspan='7' class='text-right'>Total Account Receivables</th>
+                                            <th>{{number_format($total_usd,2)}}</th>
+                                            <th>Invoice Amount in EUR</th>
+                                            <th>Invoice Amount in PHP-T</th>
+                                            <th>Invoice Amount in PHP-NT</th>
+                                            <th>Days Late</th>
+                                            <th>Aging Status</th>
+                                            <th>Forex Rate</th>
+                                            <th>Invoice PHP Value</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
 
@@ -133,6 +234,7 @@
         $('.cat').chosen({width: "100%"});
         $('.tables').DataTable({
             pageLength: -1,
+            paginate: false,
             responsive: true,
             dom: '<"html5buttons"B>lTfgitp',
             buttons: [
