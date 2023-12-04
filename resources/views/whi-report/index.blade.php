@@ -169,7 +169,7 @@
                                                     @if($invoice->DocType == "I")
                                                     @php
                                                         $total_php_t = $total_php_t +$php; 
-                                                    @endphp {{number_format($php,2)}}
+                                                    @endphp {{$php}}
                                                     @else NA 
                                                     @endif
                                                 @else NA 
@@ -180,7 +180,7 @@
                                                         @php
                                                             $total_php_nt = $total_php_nt +$php; 
                                                         @endphp 
-                                                    {{number_format($php,2)}}
+                                                    {{$php}}
                                                     @else NA 
                                                     @endif
                                                 @else NA 
