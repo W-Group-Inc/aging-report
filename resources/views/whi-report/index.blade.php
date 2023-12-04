@@ -121,6 +121,10 @@
                                     <tbody>
                                         @php
                                             $total_usd = 0;
+                                            $total_euro = 0;
+                                            $total_php_t = 0;
+                                            $total_php_nt = 0;
+                                            $total_php = 0;
                                         @endphp
                                         @foreach ($invoices as $invoice)
                                         <tr>
@@ -142,6 +146,7 @@
                                                     $usd = number_format($final_amount,2);
                                                 }
                                                 elseif($invoice->DocCur == "EUR") {
+                                                    $total_euro = $total_euro+$final_amount;
                                                     $euro = number_format($final_amount,2);
                                                 }
                                                 else {
@@ -194,6 +199,9 @@
                                             @endphp
                                             <td>{{$status}}</td>
                                             <td>{{$invoice->DocRate}}</td>
+                                            @php
+                                                $total_php = $final_amount*$invoice->DocRate + $total_php;
+                                            @endphp
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
                                         </tr>
                                         @endforeach
@@ -203,13 +211,13 @@
                                         
                                             <th colspan='7' class='text-right'>Total Account Receivables</th>
                                             <th>{{number_format($total_usd,2)}}</th>
-                                            <th>Invoice Amount in EUR</th>
+                                            <th>{{number_format($total_euro,2)}}</th>
                                             <th>Invoice Amount in PHP-T</th>
                                             <th>Invoice Amount in PHP-NT</th>
-                                            <th>Days Late</th>
-                                            <th>Aging Status</th>
-                                            <th>Forex Rate</th>
-                                            <th>Invoice PHP Value</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>{{number_format($total_php,2)}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
