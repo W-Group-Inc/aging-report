@@ -23,7 +23,7 @@ class ReportController extends Controller
         {
             
             $invoices = OINV::with('payments','terms')->where('CardCode','not like','LR-%')->where('CardCode','not like','WTT-%')->where('CardCode','not like','LR-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
-            dd($invoices->first());
+            // dd($invoices->first());
         }
         elseif($request->company == "PBI")
         {
