@@ -39,6 +39,7 @@ class ReportController extends Controller
                 'invoices' =>$invoices,
                 'company' => $request->company,
                 'aging' => $aging,
+                'previous_month' => $previous_month,
             )
         ); 
     }
