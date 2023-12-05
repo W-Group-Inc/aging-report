@@ -27,7 +27,7 @@ class ReportController extends Controller
         }
         elseif($request->company == "PBI")
         {
-            $invoices = OINV_PBI::with('payments','terms')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
+            $invoices = OINV_PBI::with('payments','terms')->where('CardCode','not like','LL-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
         }
         elseif($request->company == "CCC")
         {
