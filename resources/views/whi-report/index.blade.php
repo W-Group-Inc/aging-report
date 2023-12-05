@@ -4,26 +4,24 @@
 @endsection
 @section('content')
 <div class="wrapper wrapper-content ">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox ">
-                <div class="ibox-content">
-                    <form  method='GET' onsubmit='show();'  enctype="multipart/form-data" >
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <select name='company' class='form-control' required>
-                                    <option value=''>Company</option>
-                                    <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
-                                    <option value='PBI' @if($company == "PBI") selected @endif>PBI</option>
-                                    <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2">
-                                <button class="btn btn-primary mt-4" type="submit" id='submit'><i class="fa fa-check"></i>&nbsp;Submit</button>
-                            </div>
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-content">
+                <form  method='GET' onsubmit='show();'  enctype="multipart/form-data" >
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <select name='company' class='form-control' required>
+                                <option value=''>Company</option>
+                                <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
+                                <option value='PBI' @if($company == "PBI") selected @endif>PBI</option>
+                                <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
+                            </select>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-primary mt-4" type="submit" id='submit'><i class="fa fa-check"></i>&nbsp;Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -187,10 +185,10 @@
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
                                             <td>{{$invoice->U_BuyerMark}}</td>
-                                            <td>{{date('Y-m-d', strtotime($invoice->DocDate))}}</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
-                                            <td>@if($invoice->U_BaseDate != null){{date('Y-m-d', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                            <td>{{date('Y-m-d', strtotime($invoice->DocDueDate))}}</td>
+                                            <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->DocDueDate))}}</td>
                                             @php
                                             $final_amount = $invoice->DocTotalFC-$invoice->PaidFC;
                                             $usd = "";
@@ -235,7 +233,7 @@
                                             </td>
                                             @php
                                                 $now = time(); // or your date as well
-                                                $your_date = strtotime(date('Y-m-d', strtotime($invoice->DocDueDate)));
+                                                $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
                                                 $datediff = $now - $your_date
                                             @endphp
                                             <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
