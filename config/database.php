@@ -92,6 +92,17 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
+        'sqlsrv_ccc' => [
+            'driver' => 'sqlsrv',
+            'host' => env('DB_HOST_CCC', 'localhost'),
+            'port' => env('DB_PORT_CCC', '1433'),
+            'database' => env('DB_DATABASE_CCC', 'forge'),
+            'username' => env('DB_USERNAME_CCC', 'forge'),
+            'password' => env('DB_PASSWORD_CCC', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
 
     ],
 
