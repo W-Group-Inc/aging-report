@@ -22,7 +22,10 @@ class ReportController extends Controller
         if($request->company == "WHI")
         {
             
-            $invoices = OINV::whereDoesntHave('warehouse')->with('payments','terms')->where('CardCode','not like','LR-%')->where('CardCode','not like','WTT-%')->where('CardCode','not like','LR-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
+            $invoices = OINV::whereDoesntHave('warehouse', function($query) {
+                $query->where('WhsCode','TRI Whse');
+              })
+              ->with('payments','terms')->where('CardCode','not like','LR-%')->where('CardCode','not like','WTT-%')->where('CardCode','not like','LR-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
             // dd($invoices->first());
         }
         elseif($request->company == "PBI")
