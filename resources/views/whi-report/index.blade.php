@@ -39,11 +39,11 @@
                                     <h5>AR Aging</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h2 class="no-margins text-success">Current : <span id='total_current'>0</span></h2>
-                                    <h2 class="no-margins text-success">1 to 30 days late : <span id='total_month'>0</span></h2>
-                                    <h2 class="no-margins text-warning">31 to 60 days late : <span id='total_twomonth'>0</span></h2>
-                                    <h2 class="no-margins text-warning">61 to 90 days late : <span id='total_threemonth'>0</span></h2>
-                                    <h2 class="no-margins text-danger">Over 90 days late : <span id='total_over_days'>0</span></h2>
+                                    <h2 class="no-margins bg-primary p-xs b-r-sm">Current : <span id='total_current'>0</span></h2>
+                                    <h2 class="no-margins bg-info p-xs b-r-sm">1 to 30 days late : <span id='total_month'>0</span></h2>
+                                    <h2 class="no-margins bg-warning p-xs b-r-sm">31 to 60 days late : <span id='total_twomonth'>0</span></h2>
+                                    <h2 class="no-margins bg-warning p-xs b-r-sm">61 to 90 days late : <span id='total_threemonth'>0</span></h2>
+                                    <h2 class="no-margins bg-danger p-xs b-r-sm">Over 90 days late : <span id='total_over_days'>0</span></h2>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
