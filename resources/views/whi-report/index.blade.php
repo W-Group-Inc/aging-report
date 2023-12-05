@@ -119,6 +119,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class='col-md-4'>
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
+                                    <h5>Last Aging Balance - {{$company}}</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <h3 class="no-margins">&#8369; @if($aging) {{number_format($aging->amount,2)}} @else 0.00  @endif</span> </h3>
+                                    {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
+                                    <small>&nbsp;</small>
+                                </div>
+                            </div>
+                        </div>
                   
                 </div>
                   
