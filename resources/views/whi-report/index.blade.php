@@ -35,7 +35,7 @@
                         <div class="col-md-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-success pull-right">as of Today</span>
+                                    <span class="label label-success pull-right">as of {{date('Y-m-d')}}</span>
                                     <h5>AR Aging</h5>
                                 </div>
                                 <div class="ibox-content">
@@ -57,11 +57,11 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of Today</span>
+                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
                                     <h5>PHP</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">&#8369; <span id='total'>0.00</span> </h1>
+                                    <h3 class="no-margins">&#8369; <span id='total'>0.00</span> </h3>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -70,11 +70,11 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of Today</span>
+                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
                                     <h5>USD</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">&#36; <span id='total_usd'>0.00</span> </h1>
+                                    <h3 class="no-margins">&#36; <span id='total_usd'>0.00</span> </h3>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -83,11 +83,11 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of Today</span>
+                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
                                     <h5>EURO</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">&#8364; <span id='total_euro'>0.00</span> </h1>
+                                    <h3 class="no-margins">&#8364; <span id='total_euro'>0.00</span></h3>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -96,11 +96,11 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of Today</span>
+                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
                                     <h5>PHP-T</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">&#8369; <span id='total_php_t'>0.00</span> </h1>
+                                    <h3 class="no-margins">&#8369; <span id='total_php_t'>0.00</span> </h3>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -109,11 +109,11 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of Today</span>
+                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
                                     <h5>PHP-NT</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">&#8369; <span id='total_php_nt'>0.00</span> </h1>
+                                    <h3 class="no-margins">&#8369; <span id='total_php_nt'>0.00</span> </h3>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
