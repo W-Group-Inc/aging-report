@@ -39,11 +39,11 @@
                                     <h5>AR Aging</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h3 class="no-margins bg-primary p-xs b-r-sm " >Current : <span id='total_current'>0</span></h3> <br>
-                                    <h3 class="no-margins bg-info p-xs b-r-sm">1 to 30 days late : <span id='total_month'>0</span></h3> <br>
-                                    <h3 class="no-margins bg-warning p-xs b-r-sm">31 to 60 days late : <span id='total_twomonth'>0</span></h3> <br>
-                                    <h3 class="no-margins bg-warning p-xs b-r-sm">61 to 90 days late : <span id='total_threemonth'>0</span></h3> <br>
-                                    <h3 class="no-margins bg-danger p-xs b-r-sm">Over 90 days late : <span id='total_over_days'>0</span></h3>
+                                    <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span></h3></a> <br>
+                                    <a href="#table"><h3 class="no-margins bg-info p-xs b-r-sm" href="#table" onclick='current("1 to 30 days late");'>1 to 30 days late : <span id='total_month'>0</span></h3></a>  <br>
+                                    <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("31 to 60 days late");'>31 to 60 days late : <span id='total_twomonth'>0</span></h3></a>  <br>
+                                    <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("61 to 90 days late");'>61 to 90 days late : <span id='total_threemonth'>0</span></h3></a>  <br>
+                                    <a href="#table"><h3 class="no-margins bg-danger p-xs b-r-sm" href="#table" onclick='current("Over 90 days late");'>Over 90 days late : <span id='total_over_days'>0</span></h3></a> 
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -149,7 +149,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover tables">
+                                <table id='table' class="table table-striped table-bordered table-hover tables">
                                     <thead>
                                         <tr>
                                             <th>Customer Name</th>
@@ -312,6 +312,7 @@
 <script src="{{ asset('/inside/login_css/js/plugins/dataTables/datatables.min.js')}}"></script>
 <script src="{{ asset('/inside/login_css/js/plugins/chosen/chosen.jquery.js') }}"></script>
 <script>
+
     var total_current = {!! json_encode($total_current) !!};
     var total_month = {!! json_encode($total_month) !!};
     var total_twomonth = {!! json_encode($total_twomonth) !!};
@@ -332,8 +333,9 @@
     document.getElementById("total_euro").innerHTML = total_euro;
     document.getElementById("total_php_t").innerHTML = total_php_t;
     document.getElementById("total_php_nt").innerHTML = total_php_nt;
+    
+   
     $(document).ready(function(){
-        
 
         $('.cat').chosen({width: "100%"});
         $('.tables').DataTable({
@@ -349,7 +351,10 @@
         });
 
     });
-
+   function current(value)
+   {
+    document.querySelector('input[type="search"]').value = value;
+   }
 </script>
 @endsection
 
