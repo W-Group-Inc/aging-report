@@ -61,7 +61,7 @@
                                     <h5>PHP</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">Total PHP : <span id='total'>0.00</span> </h1>
+                                    <h1 class="no-margins">&#8369; <span id='total'>0.00</span> </h1>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -74,7 +74,7 @@
                                     <h5>USD</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins"><span id='total_usd'>0.00</span> </h1>
+                                    <h1 class="no-margins">&#36; <span id='total_usd'>0.00</span> </h1>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -87,7 +87,7 @@
                                     <h5>EURO</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins"><span id='total_euro'>0.00</span> </h1>
+                                    <h1 class="no-margins">&#8364; <span id='total_euro'>0.00</span> </h1>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -100,7 +100,7 @@
                                     <h5>PHP-T</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins"><span id='total_php_t'>0.00</span> </h1>
+                                    <h1 class="no-margins">&#8369; <span id='total_php_t'>0.00</span> </h1>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
@@ -113,7 +113,7 @@
                                     <h5>PHP-NT</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins"><span id='total_php_nt'>0.00</span> </h1>
+                                    <h1 class="no-margins">&#8369; <span id='total_php_nt'>0.00</span> </h1>
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
