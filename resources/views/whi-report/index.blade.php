@@ -354,6 +354,7 @@
    function current(value)
    {
     document.querySelector('input[type="search"]').value = value;
+    $("input[type='search']").val(value).trigger("change");
    }
 </script>
 @endsection
