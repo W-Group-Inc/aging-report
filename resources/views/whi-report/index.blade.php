@@ -351,7 +351,9 @@
     });
    function current(value)
    {
+    var table = $('.tables').DataTable();
     document.querySelector('input[type="search"]').value = value;
+    table.search(value).draw();
    }
 </script>
 @endsection
