@@ -122,7 +122,7 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of @if($aging) {{date('M. d, Y',strtotime($aging->date))}} @else {{date('M. t, Y',strtotime($previous_month))}}  @endif</span>
+                                    <span class="label label-info pull-right">@if($aging) {{date('M. d, Y',strtotime($aging->date))}} @else {{date('M. t, Y',strtotime($previous_month))}}  @endif</span>
                                     <h5>Last Aging Balance - {{$company}}</h5>
                                 </div>
                                 <div class="ibox-content">
