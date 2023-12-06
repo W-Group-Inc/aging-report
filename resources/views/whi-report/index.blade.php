@@ -5,24 +5,32 @@
 @section('content')
 <div class="wrapper wrapper-content ">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox ">
-                <div class="ibox-content">
-                    <form  method='GET' onsubmit='show();'  enctype="multipart/form-data" >
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <select name='company' class='form-control' required>
-                                    <option value=''>Company</option>
-                                    <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
-                                    <option value='PBI' @if($company == "PBI") selected @endif>PBI</option>
-                                    <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2">
-                                <button class="btn btn-primary mt-4" type="submit" id='submit'><i class="fa fa-check"></i>&nbsp;Submit</button>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox ">
+                                <div class="ibox-content">
+                                    <form  method='GET' onsubmit='show();'  enctype="multipart/form-data" >
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <select name='company' class='form-control' required>
+                                                    <option value=''>Company</option>
+                                                    <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
+                                                    <option value='PBI' @if($company == "PBI") selected @endif>PBI</option>
+                                                    <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <button class="btn btn-primary mt-4" type="submit" id='submit'>Generate</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,11 +39,12 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="col-lg-3">
+                    
                     <div class="row">
                         <div class="col-md-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-success pull-right">as of {{date('Y-m-d')}}</span>
+                                    <span class="label label-success pull-right">as of {{date('M. d, Y')}}</span>
                                     <h5>AR Aging</h5>
                                 </div>
                                 <div class="ibox-content">
@@ -57,7 +66,7 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
+                                    <span class="label label-info pull-right">as of {{date('M. d, Y')}}</span>
                                     <h5>PHP</h5>
                                 </div>
                                 <div class="ibox-content">
@@ -70,7 +79,7 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
+                                    <span class="label label-info pull-right">as of {{date('M. d, Y')}}</span>
                                     <h5>USD</h5>
                                 </div>
                                 <div class="ibox-content">
@@ -83,7 +92,7 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
+                                    <span class="label label-info pull-right">as of {{date('M. d, Y')}}</span>
                                     <h5>EURO</h5>
                                 </div>
                                 <div class="ibox-content">
@@ -96,7 +105,7 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
+                                    <span class="label label-info pull-right">as of {{date('M. d, Y')}}</span>
                                     <h5>PHP-T</h5>
                                 </div>
                                 <div class="ibox-content">
@@ -109,7 +118,7 @@
                         <div class='col-md-4'>
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <span class="label label-info pull-right">as of {{date('Y-m-d')}}</span>
+                                    <span class="label label-info pull-right">as of {{date('M. d, Y')}}</span>
                                     <h5>PHP-NT</h5>
                                 </div>
                                 <div class="ibox-content">
@@ -187,10 +196,10 @@
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
                                             <td>{{$invoice->U_BuyerMark}}</td>
-                                            <td>{{date('Y-m-d', strtotime($invoice->DocDate))}}</td>
+                                            <td>{{date('M. d, Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
-                                            <td>@if($invoice->U_BaseDate != null){{date('Y-m-d', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                            <td>{{date('Y-m-d', strtotime($invoice->DocDueDate))}}</td>
+                                            <td>@if($invoice->U_BaseDate != null){{date('M. d, Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
+                                            <td>{{date('M. d, Y', strtotime($invoice->DocDueDate))}}</td>
                                             @php
                                             $final_amount = $invoice->DocTotalFC-$invoice->PaidFC;
                                             $usd = "";
@@ -235,7 +244,7 @@
                                             </td>
                                             @php
                                                 $now = time(); // or your date as well
-                                                $your_date = strtotime(date('Y-m-d', strtotime($invoice->DocDueDate)));
+                                                $your_date = strtotime(date('M. d, Y', strtotime($invoice->DocDueDate)));
                                                 $datediff = $now - $your_date
                                             @endphp
                                             <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
@@ -316,7 +325,7 @@
     var total_current = {!! json_encode($total_current) !!};
     var total_month = {!! json_encode($total_month) !!};
     var total_twomonth = {!! json_encode($total_twomonth) !!};
-    var total_threemonth = {!! json_encode($total_threemonth) !!};
+    var total_threemonth = {!! json_encode($total_threemonth) !!};in
     var total_over_days = {!! json_encode($total_over_days) !!};
     var total = {!! json_encode($total_php) !!};
     var total_usd = {!! json_encode($total_usd) !!};
