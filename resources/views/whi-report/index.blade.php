@@ -325,7 +325,7 @@
     var total_current = {!! json_encode($total_current) !!};
     var total_month = {!! json_encode($total_month) !!};
     var total_twomonth = {!! json_encode($total_twomonth) !!};
-    var total_threemonth = {!! json_encode($total_threemonth) !!};in
+    var total_threemonth = {!! json_encode($total_threemonth) !!};
     var total_over_days = {!! json_encode($total_over_days) !!};
     var total = {!! json_encode($total_php) !!};
     var total_usd = {!! json_encode($total_usd) !!};
