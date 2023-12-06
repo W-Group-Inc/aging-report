@@ -244,7 +244,7 @@
                                             </td>
                                             @php
                                                 $now = time(); // or your date as well
-                                                $your_date = strtotime(date('Y-m-d', strtotime($invoice->DocDueDate)));
+                                                $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
                                                 $datediff = $now - $your_date
                                             @endphp
                                             <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
@@ -362,9 +362,7 @@
     });
    function current(value)
    {
-    var table = $('.tables').DataTable();
-    document.querySelector('input[type="search"]').value = value;
-    table.search(value).draw();
+   
    }
 </script>
 @endsection
