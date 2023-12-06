@@ -15,7 +15,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>SAP Business One</title>
 
     <!-- Scripts -->
 
@@ -25,8 +25,8 @@
 
     <!-- Styles -->
     <!-- endinject -->
-    
-    <link rel="icon" type="image/png" href="{{ asset('/images/icon.PNG')}}"/>
+ 
+    <link rel="icon" type="image/png" href="{{ asset('/img/sap-icon.png')}}" />
     <link href="{{ asset('/inside/login_css/css/bootstrap.min.css')}}" rel="stylesheet">
     
     <link href="{{ asset('/inside/login_css/font-awesome/css/font-awesome.css')}}" rel="stylesheet">

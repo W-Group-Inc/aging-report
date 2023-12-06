@@ -196,10 +196,10 @@
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
                                             <td>{{$invoice->U_BuyerMark}}</td>
-                                            <td>{{date('M. d, Y', strtotime($invoice->DocDate))}}</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
-                                            <td>@if($invoice->U_BaseDate != null){{date('M. d, Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                            <td>{{date('M. d, Y', strtotime($invoice->DocDueDate))}}</td>
+                                            <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->DocDueDate))}}</td>
                                             @php
                                             $final_amount = $invoice->DocTotalFC-$invoice->PaidFC;
                                             $usd = "";
@@ -244,7 +244,7 @@
                                             </td>
                                             @php
                                                 $now = time(); // or your date as well
-                                                $your_date = strtotime(date('M. d, Y', strtotime($invoice->DocDueDate)));
+                                                $your_date = strtotime(date('Y-m-d', strtotime($invoice->DocDueDate)));
                                                 $datediff = $now - $your_date
                                             @endphp
                                             <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
