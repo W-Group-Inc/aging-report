@@ -284,6 +284,99 @@
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
                                         </tr>
                                         @endforeach
+                                        @foreach ($last_invoices as $invoice)
+                                        <tr>
+                                            <td>{{$invoice->CardName}}</td>
+                                            <td>{{$invoice->NumAtCard}}</td>
+                                            <td>{{$invoice->U_BuyerMark}}</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
+                                            <td>{{$invoice->terms->PymntGroup}}</td>
+                                            <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->DocDueDate))}}</td>
+                                            @php
+                                            $final_amount = $invoice->DocTotalFC-$invoice->PaidFC;
+                                            $usd = "";
+                                            $euro = "";
+                                            $php = "";
+                                                if($invoice->DocCur == "USD")
+                                                {
+                                                    $total_usd = $total_usd + $final_amount;
+                                                    $usd = number_format($final_amount,2);
+                                                }
+                                                elseif($invoice->DocCur == "EUR") {
+                                                    $total_euro = $total_euro+$final_amount;
+                                                    $euro = number_format($final_amount,2);
+                                                }
+                                                else {
+                                                    $php = number_format($invoice->DocTotal - $invoice->PaidToDate,2);
+                                                    $final_amount = $invoice->DocTotal - $invoice->PaidToDate;
+                                                }
+                                            @endphp
+                                            <td>@if($usd != null){{$usd}} @else NA @endif</td>
+                                            <td>@if($euro != null){{$euro}} @else NA @endif</td>
+                                            <td>@if($invoice->DocCur == 'PHP')
+                                                    @if($invoice->DocType == "I")
+                                                        @php
+                                                            $total_php_t = $total_php_t + $invoice->DocTotal - $invoice->PaidToDate; 
+                                                        @endphp {{$php}}
+                                                    @else NA 
+                                                    @endif
+                                                @else NA 
+                                                @endif
+                                            </td>
+                                            <td>@if($invoice->DocCur == 'PHP')
+                                                    @if($invoice->DocType == "S") 
+                                                        @php
+                                                            $total_php_nt = $total_php_nt + $invoice->DocTotal - $invoice->PaidToDate; 
+                                                        @endphp 
+                                                    {{$php}}
+                                                    @else NA 
+                                                    @endif
+                                                @else NA 
+                                                @endif
+                                            </td>
+                                            @php
+                                                $now = time(); // or your date as well
+                                                $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
+                                                $datediff = $now - $your_date
+                                            @endphp
+                                            <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
+                                            @php
+                                                if (round($datediff / (60 * 60 * 24)) <= 0) {
+                                                    $total_current++;
+                                                    $status = 'Current';
+                                                }
+                                                elseif ((round($datediff / (60 * 60 * 24)) >= 1) && (round($datediff / (60 * 60 * 24)) <= 30))
+                                                {
+                                                    $status = '1  to 30 days Late';
+                                                    
+                                                    $total_month++;
+                                                }
+                                                elseif ((round($datediff / (60 * 60 * 24)) >= 31) && (round($datediff / (60 * 60 * 24)) <= 60))
+                                                {
+                                                    $status = '31  to 60 days Late';
+                                                    $total_twomonth++;
+                                                }
+                                                elseif ((round($datediff / (60 * 60 * 24)) >= 61) && (round($datediff / (60 * 60 * 24)) <= 90))
+                                                {
+                                                    $status = '61  to 90 days Late';
+                                                    
+                                                    $total_threemonth++;
+                                                }
+                                                else
+                                                {
+                                                    $total_over_days++;
+                                                    $status = 'Over 90 days Late';
+                                                }
+                                            @endphp
+                                            <td>{{$status}}</td>
+                                            <td>{{$invoice->DocRate}}</td>
+                                            @php
+                                                $total_php = $final_amount*$invoice->DocRate + $total_php;
+                                            @endphp
+                                            <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>

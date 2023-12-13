@@ -12,16 +12,18 @@ class ReportController extends Controller
 {
     public function index(Request $request) {
         $invoices = [];
+        $last_invoices = [];
         $aging = [];
         $previous_month = date('Y-m-d', strtotime(date('Y-m')." -1 month"));
         
         if($request->company != null)
         {
+        
             $aging = Aging::where('company',$request->company)->whereYear('date',date('Y',strtotime($previous_month)))->whereMonth('date',date('m',strtotime($previous_month)))->orderBy('date','desc')->first();
         }
         if($request->company == "WHI")
         {
-            
+            $last_invoices= OINV::where('NumAtCard','like','WHI19-038E')->get();
             $invoices = OINV::whereDoesntHave('warehouse', function($query) {
                 $query->where('WhsCode','TRI Whse');
               })
@@ -44,6 +46,7 @@ class ReportController extends Controller
                 'company' => $request->company,
                 'aging' => $aging,
                 'previous_month' => $previous_month,
+                'last_invoices' => $last_invoices,
             )
         ); 
     }
