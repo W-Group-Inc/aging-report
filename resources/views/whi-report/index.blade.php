@@ -301,7 +301,7 @@
                                                 if($invoice->DocCur == "USD")
                                                 {
                                                     $total_usd = $total_usd + 25000.00;
-                                                    $usd = number_format($final_amount,2);
+                                                    $usd = number_format(25000.00,2);
                                                 }
                                                 elseif($invoice->DocCur == "EUR") {
                                                     $total_euro = $total_euro+$final_amount;
