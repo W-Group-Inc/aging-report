@@ -24,7 +24,7 @@ class ReportController extends Controller
         if($request->company == "WHI")
         {
             $last_invoices= OINV::where('DocNum',10338)->get();
-            dd($last_invoices);
+            // dd($last_invoices);
             $invoices = OINV::whereDoesntHave('warehouse', function($query) {
                 $query->where('WhsCode','TRI Whse');
               })
