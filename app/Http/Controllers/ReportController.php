@@ -28,7 +28,7 @@ class ReportController extends Controller
             $invoices = OINV::whereDoesntHave('warehouse', function($query) {
                 $query->where('WhsCode','TRI Whse');
               })
-              ->with('payments','terms')->where('CardName','!=','Mariel Tan')->where('NumAtCard','!=','WHI20-312L CCC')->where('NumAtCard','!=','WHI20-280L CCC')->where('NumAtCard','!=','WHI20-281L CCC-Mandaue')->where('CardCode','not like','LR-%')->where('CardCode','not like','WTT-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
+              ->with('payments','terms')->where('CardName','!=','Mariel Tan')->where('NumAtCard','!=','WHI20-312L CCC')->where('NumAtCard','!=','WHI20-280L CCC')->where('NumAtCard','!=','WHI20-281L CCC-Mandaue')->where('NumAtCard','!=','WHI20-311L CCC-Mandaue')->where('CardCode','not like','LR-%')->where('CardCode','not like','WTT-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
             // dd($invoices->first());
         }
         elseif($request->company == "PBI")
