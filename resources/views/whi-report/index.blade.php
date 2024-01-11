@@ -48,7 +48,8 @@
                                     <h5>AR Aging</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span></h3></a> <br>
+                                    <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span><br>
+                                        <div class="stat-percent font-bold text-success">&#8369;  <i class="fa fa-bolt"></i></div></h3></a> <br>
                                     <a href="#table"><h3 class="no-margins bg-info p-xs b-r-sm" href="#table" onclick='current("1 to 30 days late");'>1 to 30 days late : <span id='total_month'>0</span></h3></a>  <br>
                                     <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("31 to 60 days late");'>31 to 60 days late : <span id='total_twomonth'>0</span></h3></a>  <br>
                                     <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("61 to 90 days late");'>61 to 90 days late : <span id='total_threemonth'>0</span></h3></a>  <br>
@@ -71,7 +72,6 @@
                                 </div>
                                 <div class="ibox-content">
                                     <h3 class="no-margins">&#8369; <span id='total'>0.00</span> </h3>
-                                    <div class="stat-percent font-bold text-success">&#8369;  <i class="fa fa-bolt"></i></div>
                                     <small>&nbsp;</small>
                                 </div>
                             </div>
