@@ -430,11 +430,11 @@
     var total_twomonth = {!! json_encode($total_twomonth) !!};
     var total_threemonth = {!! json_encode($total_threemonth) !!};
     var total_over_days = {!! json_encode($total_over_days) !!};
-    var total_current_php = {!! json_encode($total_current_php) !!};
-    var total_month_php = {!! json_encode($total_month_php) !!};
-    var total_twomonth_php = {!! json_encode($total_twomonth_php) !!};
-    var total_threemonth_php = {!! json_encode($total_threemonth_php) !!};
-    var total_over_days_php = {!! json_encode($total_over_days_php) !!};
+    var total_current_php = {!! json_encode(number_format($total_current_php,2)) !!};
+    var total_month_php = {!! json_encode(number_format($total_month_php,2)) !!};
+    var total_twomonth_php = {!! json_encode(number_format($total_twomonth_php,2)) !!};
+    var total_threemonth_php = {!! json_encode(number_format($total_threemonth_php,2)) !!};
+    var total_over_days_php = {!! json_encode(number_format($total_over_days_php,2)) !!};
     var total = {!! json_encode($total_php) !!};
     var total_usd = {!! json_encode($total_usd) !!};
     var total_euro = {!! json_encode($total_euro) !!};
