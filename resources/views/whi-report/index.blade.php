@@ -48,12 +48,12 @@
                                     <h5>AR Aging</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span>   <div class="stat-percent font-bold text-white" style='font-size:8px;' >&#8369; <span id='current_php'>0.00</span></div></h3><br>
+                                    <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span>   <div class="stat-percent font-bold text-white" style='font-size:10px;' >&#8369; <span id='total_current_php'>0.00</span></div></h3><br>
                                       </a>
-                                    <a href="#table"><h3 class="no-margins bg-info p-xs b-r-sm" href="#table" onclick='current("1 to 30 days late");'>1 to 30 days late : <span id='total_month'>0</span> <div class="stat-percent font-bold text-white" >&#8369; <span id='current_thirty'>0.00</span></div></h3></a>  <br>
-                                    <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("31 to 60 days late");'>31 to 60 days late : <span id='total_twomonth'>0</span></h3></a>  <br>
-                                    <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("61 to 90 days late");'>61 to 90 days late : <span id='total_threemonth'>0</span></h3></a>  <br>
-                                    <a href="#table"><h3 class="no-margins bg-danger p-xs b-r-sm" href="#table" onclick='current("Over 90 days late");'>Over 90 days late : <span id='total_over_days'>0</span></h3></a> 
+                                    <a href="#table"><h3 class="no-margins bg-info p-xs b-r-sm" href="#table" onclick='current("1 to 30 days late");'>1 to 30 days late : <span id='total_month'>0</span> <div class="stat-percent font-bold text-white" style='font-size:10px;' >&#8369; <span id='total_month_php'>0.00</span></div></h3></a>  <br>
+                                    <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("31 to 60 days late");'>31 to 60 days late : <span id='total_twomonth'>0</span><div class="stat-percent font-bold text-white" style='font-size:10px;' >&#8369; <span id='total_twomonth_php'>0.00</span></div></h3></a>  <br>
+                                    <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("61 to 90 days late");'>61 to 90 days late : <span id='total_threemonth'>0</span><div class="stat-percent font-bold text-white" style='font-size:10px;' >&#8369; <span id='total_threemonth_php'>0.00</span></div></h3></a>  <br>
+                                    <a href="#table"><h3 class="no-margins bg-danger p-xs b-r-sm" href="#table" onclick='current("Over 90 days late");'>Over 90 days late : <span id='total_over_days'>0</span><div class="stat-percent font-bold text-white" style='font-size:10px;' >&#8369; <span id='total_over_days_php'>0.00</span></div></h3></a> 
                                     {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
                                     <small>&nbsp;</small>
                                 </div>
