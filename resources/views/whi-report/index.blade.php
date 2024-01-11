@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="ibox-content">
                                     <h3 class="no-margins">&#8369; <span id='total'>0.00</span> </h3>
-                                    {{-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> --}}
+                                    <div class="stat-percent font-bold text-success">&#8369;  <i class="fa fa-bolt"></i></div>
                                     <small>&nbsp;</small>
                                 </div>
                             </div>
