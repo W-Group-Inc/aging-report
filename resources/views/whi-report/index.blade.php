@@ -190,6 +190,11 @@
                                             $total_twomonth = 0;
                                             $total_threemonth = 0;
                                             $total_over_days = 0;
+                                            $total_current_php = 0;
+                                            $total_month_php = 0;
+                                            $total_twomonth_php = 0;
+                                            $total_threemonth_php = 0;
+                                            $total_over_days_php = 0;
                                         @endphp
                                         @foreach ($invoices as $invoice)
                                         <tr>
@@ -252,28 +257,33 @@
                                                 if (round($datediff / (60 * 60 * 24)) <= 0) {
                                                     $total_current++;
                                                     $status = 'Current';
+                                                    $total_current_php = $total_current_php+($final_amount*$invoice->DocRate);
                                                 }
                                                 elseif ((round($datediff / (60 * 60 * 24)) >= 1) && (round($datediff / (60 * 60 * 24)) <= 30))
                                                 {
                                                     $status = '1  to 30 days Late';
                                                     
                                                     $total_month++;
+                                                    $total_month_php = $total_month_php+($final_amount*$invoice->DocRate);
                                                 }
                                                 elseif ((round($datediff / (60 * 60 * 24)) >= 31) && (round($datediff / (60 * 60 * 24)) <= 60))
                                                 {
                                                     $status = '31  to 60 days Late';
                                                     $total_twomonth++;
+                                                    $total_twomonth_php = $total_twomonth_php+($final_amount*$invoice->DocRate);
                                                 }
                                                 elseif ((round($datediff / (60 * 60 * 24)) >= 61) && (round($datediff / (60 * 60 * 24)) <= 90))
                                                 {
                                                     $status = '61  to 90 days Late';
                                                     
                                                     $total_threemonth++;
+                                                    $total_threemonth_php = $total_threemonth_php+($final_amount*$invoice->DocRate);
                                                 }
                                                 else
                                                 {
                                                     $total_over_days++;
                                                     $status = 'Over 90 days Late';
+                                                    $total_over_days_php = $total_over_days_php+($final_amount*$invoice->DocRate);
                                                 }
                                             @endphp
                                             <td>{{$status}}</td>
@@ -420,6 +430,11 @@
     var total_twomonth = {!! json_encode($total_twomonth) !!};
     var total_threemonth = {!! json_encode($total_threemonth) !!};
     var total_over_days = {!! json_encode($total_over_days) !!};
+    var total_current_php = {!! json_encode($total_current_php) !!};
+    var total_month_php = {!! json_encode($total_month_php) !!};
+    var total_twomonth_php = {!! json_encode($total_twomonth_php) !!};
+    var total_threemonth_php = {!! json_encode($total_threemonth_php) !!};
+    var total_over_days_php = {!! json_encode($total_over_days_php) !!};
     var total = {!! json_encode($total_php) !!};
     var total_usd = {!! json_encode($total_usd) !!};
     var total_euro = {!! json_encode($total_euro) !!};
@@ -430,6 +445,11 @@
     document.getElementById("total_twomonth").innerHTML = total_twomonth;
     document.getElementById("total_threemonth").innerHTML = total_threemonth;
     document.getElementById("total_over_days").innerHTML = total_over_days;
+    document.getElementById("total_current_php").innerHTML = total_current_php;
+    document.getElementById("total_month_php").innerHTML = total_month_php;
+    document.getElementById("total_twomonth_php").innerHTML = total_twomonth_php;
+    document.getElementById("total_threemonth_php").innerHTML = total_threemonth_php;
+    document.getElementById("total_over_days_php").innerHTML = total_over_days_php;
     document.getElementById("total").innerHTML = total;
     document.getElementById("total_usd").innerHTML = total_usd;
     document.getElementById("total_euro").innerHTML = total_euro;
