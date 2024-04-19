@@ -140,6 +140,7 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('inside/login_css/js/inspinia.js')}}"></script>
 <script src="{{ asset('inside/login_css/js/plugins/pace/pace.min.js')}}"></script>
+@include('sweetalert::alert')
 @yield('footer')
 <script>
    function myFunction() {

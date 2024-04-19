@@ -18,4 +18,12 @@ class OINV_CCC extends Model
     {
         return $this->belongsTo(OCTG_CCC::class,'GroupNum','GroupNum');
     }
+    public function manager()
+    {
+        return $this->belongsTo(OSLP::class,'SlpCode','SlpCode');
+    }
+    public function remark() 
+    {
+        return $this->hasOne(Remark::class, 'docentry', 'DocNum');
+    }
 }

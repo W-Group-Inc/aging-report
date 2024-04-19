@@ -21,4 +21,16 @@ class OINV extends Model
     {
         return $this->belongsTo(OCTG::class,'GroupNum','GroupNum');
     }
+    public function manager()
+    {
+        return $this->belongsTo(OSLP::class,'SlpCode','SlpCode');
+    }
+    public function location()
+    {
+        return $this->belongsTo(OCDR::class, 'CardCode', 'CardCode')->with('ocrg');
+    }
+    public function remark() 
+    {
+        return $this->hasOne(Remark::class, 'docentry', 'DocNum');
+    }
 }

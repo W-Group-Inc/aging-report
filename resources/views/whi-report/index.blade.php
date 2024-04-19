@@ -161,21 +161,26 @@
                                 <table id='table' class="table table-striped table-bordered table-hover tables">
                                     <thead>
                                         <tr>
+                                            <th>Actions</th>
                                             <th>Customer Name</th>
                                             <th>Invoice Number</th>
                                             <th>Buyer's Mark</th>
+                                            <th>Account Manager</th>
+                                            <th>Location</th>
+                                            <th>Original Invoice Amount</th>
                                             <th>Invoice Date</th>
                                             <th>Payment Term</th>
                                             <th>Baseline Date</th>
                                             <th>Invoice Due Date</th>
-                                            <th>Invoice Amount in USD</th>
-                                            <th>Invoice Amount in EUR</th>
-                                            <th>Invoice Amount in PHP-T</th>
-                                            <th>Invoice Amount in PHP-NT</th>
+                                            <th>Invoice Balance USD</th>
+                                            <th>Invoice Balance EUR</th>
+                                            <th>Invoice Balance PHP-T</th>
+                                            <th>Invoice balance PHP-NT</th>
                                             <th>Days Late</th>
                                             <th>Aging Status</th>
                                             <th>Forex Rate</th>
                                             <th>Invoice PHP Value</th>
+                                            <th>Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -198,9 +203,20 @@
                                         @endphp
                                         @foreach ($invoices as $invoice)
                                         <tr>
+                                            <td align="center">
+                                                @if($invoice->remark)
+                                                    <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn" style="display: none"><i class="fa fa fa-plus"></i></button>
+                                                @else
+                                                    <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
+                                                @endif
+                                                
+                                            </td>
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
                                             <td>{{$invoice->U_BuyerMark}}</td>
+                                            <td>{{$invoice->manager->SlpName}}</td>
+                                            <td>{{$invoice->location->ocrg->GroupName}}</td>
+                                            <td>{{ number_format($invoice->DocTotalFC, 2) }}</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
@@ -292,6 +308,13 @@
                                                 $total_php = $final_amount*$invoice->DocRate + $total_php;
                                             @endphp
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
+                                            <td> 
+                                                @if($invoice->remark)
+                                                    {{$invoice->remark->remarks}}
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                         @foreach ($last_invoices as $invoice)
@@ -299,6 +322,8 @@
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
                                             <td>{{$invoice->U_BuyerMark}}</td>
+                                            <td>{{$invoice->manager->SlpName}}</td>
+                                            <td>{{$invoice->location->ocrg->GroupName}}</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
@@ -385,6 +410,11 @@
                                                 $total_php = $final_amount*$invoice->DocRate + $total_php;
                                             @endphp
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-outline" data-toggle="modal" data-target="#add_remarks"><i class="fa fa fa-pencil"></i><a href=""></a></button>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -411,7 +441,36 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="add_remarks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="POST" action="{{url('new_remarks')}}" autocomplete="off">
+            @csrf
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Add Remarks</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="docentry" id="docentry" type="hidden">
+                        <input name="user_id" id="user_id" type="hidden" value="{{ auth()->user()->id }}">
+                        <div class="row">
+                            <div class="col-12 mb-10">
+                                <input name="remarks" id="remarks" class="form-control" type="text" placeholder="Enter Remarks" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+
 @php
     $total_php = number_format($total_php,2);
     $total_usd = number_format($total_usd,2);
@@ -424,6 +483,10 @@
 <script src="{{ asset('/inside/login_css/js/plugins/dataTables/datatables.min.js')}}"></script>
 <script src="{{ asset('/inside/login_css/js/plugins/chosen/chosen.jquery.js') }}"></script>
 <script>
+    function getDocEntry(data)
+    {
+        document.getElementById("docentry").value = data.DocNum;
+    }
 
     var total_current = {!! json_encode($total_current) !!};
     var total_month = {!! json_encode($total_month) !!};
