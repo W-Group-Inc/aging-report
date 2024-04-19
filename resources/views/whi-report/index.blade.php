@@ -12,7 +12,7 @@
                         <div class="col-lg-12">
                             <div class="ibox ">
                                 <div class="ibox-content">
-                                    <form  method='GET' onsubmit='show();'  enctype="multipart/form-data" >
+                                    <form method='GET' onsubmit='show();'  enctype="multipart/form-data" >
                                         <div class="row">
                                             <div class="col-lg-3">
                                                 <select name='company' class='form-control' required>
@@ -22,8 +22,11 @@
                                                     <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
                                                 </select>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-1">
                                                 <button class="btn btn-primary mt-4" type="submit" id='submit'>Generate</button>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <h3>AR Aging as of:&nbsp;<p>{{date('M. d, Y')}}</p></h3> 
                                             </div>
                                         </div>
                                     </form>
@@ -43,10 +46,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="ibox float-e-margins">
-                                <div class="ibox-title">
+                                <!-- <div class="ibox-title">
                                     <span class="label label-success pull-right">as of {{date('M. d, Y')}}</span>
                                     <h5>AR Aging</h5>
-                                </div>
+                                </div> -->
                                 <div class="ibox-content">
                                     <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span>   <div class="stat-percent font-bold text-white" style='font-size:11px;' >&#8369; <span id='total_current_php'>0.00</span></div></h3><br>
                                       </a>
@@ -209,7 +212,6 @@
                                                 @else
                                                     <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
                                                 @endif
-                                                
                                             </td>
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
@@ -319,11 +321,18 @@
                                         @endforeach
                                         @foreach ($last_invoices as $invoice)
                                         <tr>
+                                            <td align="center">
+                                                @if($invoice->remark)
+                                                    <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn" style="display: none"><i class="fa fa fa-plus"></i></button>
+                                                @else
+                                                    <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
+                                                @endif
+                                            </td>
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
                                             <td>{{$invoice->U_BuyerMark}}</td>
                                             <td>{{$invoice->manager->SlpName}}</td>
-                                            <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td>
+                                            <td>{{$invoice->location->ocrg->GroupName ?? 'N/A'}}</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
@@ -412,16 +421,13 @@
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
                                             <td></td>
                                             <td></td>
-                                            <td>
-                                                <button type="button" class="btn btn-success btn-outline" data-toggle="modal" data-target="#add_remarks"><i class="fa fa fa-pencil"></i><a href=""></a></button>
-                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                         
-                                            <td colspan='7' class='text-right'>Total Account Receivables</td>
+                                            <td colspan='11' class='text-right'>Total Account Receivables</td>
                                             <td>{{number_format($total_usd,2)}}</td>
                                             <td>{{number_format($total_euro,2)}}</td>
                                             <td>{{number_format($total_php_t,2)}}</td>
