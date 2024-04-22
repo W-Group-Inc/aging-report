@@ -214,11 +214,11 @@
                                                 @endif
                                             </td>
                                             <td>{{$invoice->CardName}}</td>
+                                            <td>{{$invoice->U_invNo}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
-                                            <td>{{$invoice->U_BuyerMark}}</td>
                                             <td>{{$invoice->manager->SlpName}}</td>
                                             <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td>
-                                            <td>{{ number_format($invoice->DocTotalFC, 2) }}</td>
+                                            <td>{{ number_format($invoice->DocTotal, 2) }}</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
@@ -329,8 +329,8 @@
                                                 @endif
                                             </td>
                                             <td>{{$invoice->CardName}}</td>
+                                            <td>{{$invoice->U_invNo}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
-                                            <td>{{$invoice->U_BuyerMark}}</td>
                                             <td>{{$invoice->manager->SlpName}}</td>
                                             <td>{{$invoice->location->ocrg->GroupName ?? 'N/A'}}</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
