@@ -19,4 +19,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'ReportController@index');
     Route::get('/report', 'ReportController@index');
     Route::post('/new_remarks', 'RemarkController@store');
+    Route::post('/update_remarks/{id}', 'RemarkController@update');
 });

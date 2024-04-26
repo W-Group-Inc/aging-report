@@ -25,4 +25,15 @@ class RemarkController extends Controller
         Alert::success('Success Title', 'Success Message');
         return back();
     }
+
+    public function update(Request $request, $id) 
+    {
+        $update_remarks = Remark::find($id);
+        $update_remarks->remarks = $request->remarks;
+        $update_remarks->user_id = $request->user_id;
+        $update_remarks->update();
+
+        Alert::success('Success Title', 'Success Message');
+        return back();
+    }
 }

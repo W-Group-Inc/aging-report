@@ -144,9 +144,7 @@
                                 </div>
                             </div>
                         </div>
-                  
-                </div>
-                  
+                    </div>
                 </div>
             </div>
         </div>
@@ -183,7 +181,7 @@
                                             <th>Aging Status</th>
                                             <th>Forex Rate</th>
                                             <th>Invoice PHP Value</th>
-                                            <th>Remarks</th>
+                                            <th style="padding-right: 80px">Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -208,7 +206,7 @@
                                         <tr>
                                             <td align="center">
                                                 @if($invoice->remark)
-                                                    <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn" style="display: none"><i class="fa fa fa-plus"></i></button>
+                                                    <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
                                                 @else
                                                     <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
                                                 @endif
@@ -218,7 +216,7 @@
                                             <td>{{$invoice->NumAtCard}}</td>
                                             <td>{{$invoice->manager->SlpName}}</td>
                                             <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td>
-                                            <td>{{ number_format($invoice->DocTotal, 2) }}</td>
+                                            <td>{{ $invoice->DocCur .' '. number_format($invoice->DocTotal, 2) }}</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
@@ -313,6 +311,10 @@
                                             <td> 
                                                 @if($invoice->remark)
                                                     {{$invoice->remark->remarks}}
+                                                    <br>
+                                                    <span style="font-size: 10px">Date Created: <span class="label label-primary">{{ $invoice->remark->created_at->format('M. d, Y g:i A') }}</span>
+                                                    <br>
+                                                    <span style="font-size: 10px">Date Updated: <span class="label label-warning">{{ $invoice->remark->updated_at->format('M. d, Y g:i A') }}</span>
                                                 @else
                                                     N/A
                                                 @endif
@@ -323,7 +325,7 @@
                                         <tr>
                                             <td align="center">
                                                 @if($invoice->remark)
-                                                    <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn" style="display: none"><i class="fa fa fa-plus"></i></button>
+                                                    <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
                                                 @else
                                                     <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
                                                 @endif
@@ -475,6 +477,37 @@
             </div>
         </form>
     </div>
+    @foreach($invoices as $invoice)
+        @if ($invoice->remark)
+            <div class="modal fade" id="edit_remarks{{ $invoice->remark->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <form action="{{ url('update_remarks/'.$invoice->remark->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel">Edit Remarks</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12 mb-10">
+                                        <label>Remarks</label>
+                                        <input name="remarks" id="remarks{{ $invoice->id }}" class="form-control" type="text" value="{{ $invoice->remark['remarks'] ?? '' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        @endif
+    @endforeach
 </div>
 
 @php
