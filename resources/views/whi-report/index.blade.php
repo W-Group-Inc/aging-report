@@ -159,15 +159,13 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table id='table' class="table table-striped table-bordered table-hover tables">
+                                <table id='table' class="table table-striped table-bordered table-hover tables" style="margin-bottom: 0px !important;">
                                     <thead>
                                         <tr>
                                             <th>Actions</th>
                                             <th>Customer Name</th>
                                             <th>Invoice Number</th>
                                             <th>Buyer's Mark</th>
-                                            <th>Account Manager</th>
-                                            <th>Location</th>
                                             <th>Original Invoice Amount</th>
                                             <th>Invoice Date</th>
                                             <th>Payment Term</th>
@@ -181,6 +179,8 @@
                                             <th>Aging Status</th>
                                             <th>Forex Rate</th>
                                             <th>Invoice PHP Value</th>
+                                            <th>Location</th>
+                                            <th>Account Manager</th>
                                             <th style="padding-right: 80px">Remarks</th>
                                         </tr>
                                     </thead>
@@ -214,8 +214,6 @@
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->U_invNo}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
-                                            <td>{{$invoice->manager->SlpName}}</td>
-                                            <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td>
                                             <td>{{ $invoice->DocCur .' '. number_format($invoice->DocTotalFC, 2) }}</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
@@ -307,7 +305,9 @@
                                             @php
                                                 $total_php = $final_amount*$invoice->DocRate + $total_php;
                                             @endphp
-                                            <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
+                                            <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
+                                            <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td> 
+                                            <td>{{$invoice->manager->SlpName}}</td>
                                             <td> 
                                                 @if($invoice->remark)
                                                     {{$invoice->remark->remarks}}
@@ -333,8 +333,7 @@
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->U_invNo}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
-                                            <td>{{$invoice->manager->SlpName}}</td>
-                                            <td>{{$invoice->location->ocrg->GroupName ?? 'N/A'}}</td>
+                                            <td>{{ $invoice->DocCur .' '. number_format($invoice->DocTotalFC, 2) }}</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
@@ -420,29 +419,38 @@
                                             @php
                                                 $total_php = $final_amount*$invoice->DocRate + $total_php;
                                             @endphp
-                                            <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td> 
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
+                                            <td>{{$invoice->location->ocrg->GroupName ?? 'N/A'}}</td> 
+                                            <td>{{$invoice->manager->SlpName}}</td>
+                                            <td>
+                                                @if($invoice->remark)
+                                                    {{$invoice->remark->remarks}}
+                                                    <br>
+                                                    <span style="font-size: 10px">Date Created: <span class="label label-primary">{{ $invoice->remark->created_at->format('M. d, Y g:i A') }}</span>
+                                                    <br>
+                                                    <span style="font-size: 10px">Date Updated: <span class="label label-warning">{{ $invoice->remark->updated_at->format('M. d, Y g:i A') }}</span>
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                        
-                                            <td colspan='11' class='text-right'>Total Account Receivables</td>
+                                            <td colspan='10' class='text-right'>Total Account Receivables</td>
                                             <td>{{number_format($total_usd,2)}}</td>
                                             <td>{{number_format($total_euro,2)}}</td>
                                             <td>{{number_format($total_php_t,2)}}</td>
                                             <td>{{number_format($total_php_nt,2)}}</td>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>{{number_format($total_php,2)}}</td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -564,6 +572,11 @@
         $('.cat').chosen({width: "100%"});
         $('.tables').DataTable({
             pageLength: -1,
+            fixedHeader: true,
+            scrollX: true,
+            scrollY: 700,   
+            scrollCollapse: true,
+            paging: false,
             paginate: false,
             responsive: true,
             dom: '<"html5buttons"B>lTfgitp',
@@ -580,5 +593,6 @@
    
    }
 </script>
+
 @endsection
 

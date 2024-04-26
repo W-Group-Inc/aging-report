@@ -8551,3 +8551,9 @@ body.md-skin {
     margin: 0;
   }
 }
+.sticky-col {
+    position: sticky;
+    left: 0;
+    z-index: 1; /* Ensure that the sticky columns appear above other columns */
+    background-color: #fff; /* Optional: to make the sticky columns appear white */
+}
