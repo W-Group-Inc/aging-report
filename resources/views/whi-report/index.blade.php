@@ -150,7 +150,6 @@
             </div>
         </div>
     </div>
-    <div class="row">
         <div class="col-md-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
@@ -211,7 +210,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    
 
     <div class="modal fade" id="myModal">
         <div class="modal-dialog"  style="width: 90%;">
