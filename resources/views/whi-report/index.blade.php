@@ -169,40 +169,40 @@
                         <tbody>
                             <tr id="USD">
                                 <td >USD</td>
-                                <td id="total_current_usd">0.00</td>
-                                <td id="total_month_usd">0.00</td>
-                                <td id="total_twomonth_usd">0.00</td>
-                                <td id="total_threemonth_usd">0.00</td>
-                                <td id="total_over_days_usd">0.00</td>
+                                <td id="total_current_usd" onclick="openModalByStatusAndCurrency('current', 'USD')">0.00</td>
+                                <td id="total_month_usd" onclick="openModalByStatusAndCurrency('1 to 30 days Late', 'USD')">0.00</td>
+                                <td id="total_twomonth_usd" onclick="openModalByStatusAndCurrency('31 to 60 days Late', 'USD')">0.00</td>
+                                <td id="total_threemonth_usd" onclick="openModalByStatusAndCurrency('61 to 90 days Late', 'USD')">0.00</td>
+                                <td id="total_over_days_usd" onclick="openModalByStatusAndCurrency('Over 90 days Late', 'USD')">0.00</td>
                                 <td id="total_usd">0.00</td>
                                 <td id="total_usd_in_ph">0.00</td>
                             </tr>
                             <tr>
                                 <td >EUR</td>
-                                <td id="total_current_euro">0.00</td>
-                                <td id="total_month_euro">0.00</td>
-                                <td id="total_twomonth_euro">0.00</td>
-                                <td id="total_threemonth_euro">0.00</td>
-                                <td id="total_over_days_euro">0.00</td>
+                                <td id="total_current_euro" onclick="openModalByStatusAndCurrency('current', 'EUR')">0.00</td>
+                                <td id="total_month_euro" onclick="openModalByStatusAndCurrency('1 to 30 days Late', 'EUR')">0.00</td>
+                                <td id="total_twomonth_euro" onclick="openModalByStatusAndCurrency('31 to 60 days Late', 'EUR')">0.00</td>
+                                <td id="total_threemonth_euro" onclick="openModalByStatusAndCurrency('61 to 90 days Late', 'EUR')">0.00</td>
+                                <td id="total_over_days_euro" onclick="openModalByStatusAndCurrency('Over 90 days Late', 'EUR')">0.00</td>
                                 <td id="total_euro">0.00</td>
                                 <td id="total_euro_in_ph">0.00</td>
                             </tr>
                             <tr>
                                 <td>PHP Trade</td>
-                                <td id="total_current_php_t">0.00</td>
-                                <td id="total_month_php_t">0.00</td>
-                                <td id="total_twomonth_php_t">0.00</td>
-                                <td id="total_threemonth_php_t">0.00</td>
-                                <td id="total_over_days_php_t">0.00</td>
+                                <td id="total_current_php_t" onclick="openModalByStatusAndCurrencyAndType('current', 'PHP', 'I')">0.00</td>
+                                <td id="total_month_php_t" onclick="openModalByStatusAndCurrencyAndType('1 to 30 days Late', 'PHP', 'I')">0.00</td>
+                                <td id="total_twomonth_php_t" onclick="openModalByStatusAndCurrencyAndType('31 to 60 days Late', 'PHP', 'I')">0.00</td>
+                                <td id="total_threemonth_php_t" onclick="openModalByStatusAndCurrencyAndType('61 to 90 days Late', 'PHP', 'I')">0.00</td>
+                                <td id="total_over_days_php_t" onclick="openModalByStatusAndCurrencyAndType('Over 90 days Late', 'PHP', 'I')">0.00</td>
                                 <td id='total_php_t'>0.00</td>
                             </tr>
                             <tr>
                                 <td>PHP Non-Trade</td>
-                                <td id="total_current_php_nt">0.00</td>
-                                <td id="total_month_php_nt">0.00</td>
-                                <td id="total_twomonth_php_nt">0.00</td>
-                                <td id="total_threemonth_php_nt">0.00</td>
-                                <td id="total_over_days_php_nt">0.00</td>
+                                <td id="total_current_php_nt" onclick="openModalByStatusAndCurrencyAndType('current', 'PHP', 'S')">0.00</td>
+                                <td id="total_month_php_nt" onclick="openModalByStatusAndCurrencyAndType('1 to 30 days Late', 'PHP', 'S')">0.00</td>
+                                <td id="total_twomonth_php_nt"onclick="openModalByStatusAndCurrencyAndType('31 to 60 days Late', 'PHP', 'S')">0.00</td>
+                                <td id="total_threemonth_php_nt" onclick="openModalByStatusAndCurrencyAndType('61 to 90 days Late', 'PHP', 'S')">0.00</td>
+                                <td id="total_over_days_php_nt" onclick="openModalByStatusAndCurrencyAndType('Over 90 days Late', 'PHP', 'S')">0.00</td>
                                 <td id='total_php_nt'>0.00</td>
                             </tr>
                         </tbody>
@@ -223,7 +223,7 @@
                     <table id='invoiceTable' class="table table-striped table-bordered table-hover tables" style="margin-bottom: 0px !important;">
                         <thead>
                             <tr>
-                                <th>Actions</th>
+                                {{-- <th>Actions</th> --}}
                                 <th>Customer Name</th>
                                 <th>Invoice Number</th>
                                 <th>Buyer's Mark</th>
@@ -287,13 +287,13 @@
                             @endphp
                             @foreach ($invoices as $invoice)
                             <tr>
-                                <td align="center">
+                                {{-- <td align="center">
                                     @if($invoice->remark)
                                         <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
                                     @else
                                         <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
                                     @endif
-                                </td>
+                                </td> --}}
                                 <td>{{$invoice->CardName}}</td>
                                 <td>{{$invoice->U_invNo}}</td>
                                 <td>{{$invoice->NumAtCard}}</td>
@@ -1188,12 +1188,18 @@ console.log(invoicesData);
 function openModal(filterColumn) {
     console.log(filterColumn);
     var filteredData = invoicesData.filter(function (item) {
-        var datediff = (new Date() - new Date(item.DocDueDate)) / (1000 * 60 * 60 * 24); // Calculate date difference in days
+        var currentDate = new Date();
+        var dueDate = new Date(item.DocDueDate);
+        
+        currentDate.setHours(0, 0, 0, 0);
+        dueDate.setHours(0, 0, 0, 0);
+
+        var datediff = (currentDate - dueDate) / (1000 * 60 * 60 * 24); 
         var status = '';
 
-        if (datediff <= 0) {
+        if (datediff < 0) {
             status = 'current';
-        } else if (datediff >= 1 && datediff <= 30) {
+        } else if (datediff >= 0 && datediff <= 30) { 
             status = '1 to 30 days Late';
         } else if (datediff >= 31 && datediff <= 60) {
             status = '31 to 60 days Late';
@@ -1205,6 +1211,75 @@ function openModal(filterColumn) {
 
         return status.toLowerCase() === filterColumn.toLowerCase();
     });
+    renderModalContent(filteredData);
+
+    $('#myModal').modal('show');
+}
+
+
+function openModalByStatusAndCurrency(status, currency) {
+    var filteredData = invoicesData.filter(function(item) {
+        // var datediff = (new Date() - new Date(item.DocDueDate)) / (1000 * 60 * 60 * 24); // Calculate date difference in days
+        // var currentStatus = '';
+
+        var currentDate = new Date();
+        var dueDate = new Date(item.DocDueDate);
+        
+        currentDate.setHours(0, 0, 0, 0);
+        dueDate.setHours(0, 0, 0, 0);
+
+        var datediff = (currentDate - dueDate) / (1000 * 60 * 60 * 24); 
+        var currentStatus = '';
+
+        if (datediff <= 0) {
+            currentStatus = 'current';
+        } else if (datediff >= 1 && datediff <= 30) {
+            currentStatus = '1 to 30 days Late';
+        } else if (datediff >= 31 && datediff <= 60) {
+            currentStatus = '31 to 60 days Late';
+        } else if (datediff >= 61 && datediff <= 90) {
+            currentStatus = '61 to 90 days Late';
+        } else {
+            currentStatus = 'Over 90 days Late';
+        }
+
+        return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase();
+    });
+
+    renderModalContent(filteredData);
+
+    $('#myModal').modal('show');
+}
+
+function openModalByStatusAndCurrencyAndType(status, currency, type) {
+    var filteredData = invoicesData.filter(function(item) {
+        // var datediff = (new Date() - new Date(item.DocDueDate)) / (1000 * 60 * 60 * 24); // Calculate date difference in days
+        // var currentStatus = '';
+
+        var currentDate = new Date();
+        var dueDate = new Date(item.DocDueDate);
+
+        currentDate.setHours(0, 0, 0, 0);
+        dueDate.setHours(0, 0, 0, 0);
+
+        var datediff = (currentDate - dueDate) / (1000 * 60 * 60 * 24); 
+        var currentStatus = '';
+
+        if (datediff <= 0) {
+            currentStatus = 'current';
+        } else if (datediff >= 1 && datediff <= 30) {
+            currentStatus = '1 to 30 days Late';
+        } else if (datediff >= 31 && datediff <= 60) {
+            currentStatus = '31 to 60 days Late';
+        } else if (datediff >= 61 && datediff <= 90) {
+            currentStatus = '61 to 90 days Late';
+        } else {
+            currentStatus = 'Over 90 days Late';
+        }
+
+        return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase() && item.DocType === type.toUpperCase();
+    });
+
     renderModalContent(filteredData);
 
     $('#myModal').modal('show');
@@ -1224,12 +1299,12 @@ function renderModalContent(data) {
     var php_t = "";
     var php_nt = "";
 
-    var remarksButtonHtml = '';
-    if (item.remark) {
-        remarksButtonHtml = '<button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks' + item.remark.id + '" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>';
-    } else {
-        remarksButtonHtml = '<button onclick="getDocEntry(' + JSON.stringify(item) + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
-    }
+    // var remarksButtonHtml = '';
+    // if (item.remark) {
+    //     remarksButtonHtml = '<button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks' + item.remark.id + '" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>';
+    // } else {
+    //     remarksButtonHtml = '<button onclick="getDocEntry(' + JSON.stringify(item) + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
+    // }
 
     if (item.DocCur === "USD") {
         total_usd += finalAmount;
@@ -1280,7 +1355,7 @@ function renderModalContent(data) {
     }
 
     var row = '<tr>' +
-        '<td align="center">' + remarksButtonHtml + '</td>' +
+        // '<td align="center">' + remarksButtonHtml + '</td>' +
         '<td>' + item.CardName + '</td>' +
         '<td>' + item.U_invNo + '</td>' +
         '<td>' + item.NumAtCard + '</td>' +
