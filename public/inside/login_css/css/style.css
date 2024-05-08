@@ -8557,3 +8557,67 @@ body.md-skin {
     z-index: 1; /* Ensure that the sticky columns appear above other columns */
     background-color: #fff; /* Optional: to make the sticky columns appear white */
 }
+
+#newSummaryTable thead tr th {
+  background-color: #ffff00 !important; 
+}
+
+#newSummaryTable tbody tr td:nth-child(1) {
+  line-height: 20px;
+  color: #000;
+  background-color: #ffff00 !important; 
+  font-weight: 500 !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#newSummaryTable tbody tr td:nth-child(2) {
+  color: #000;
+  background-color: #92d050 !important; 
+  font-weight: 500 !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#newSummaryTable tbody tr td:nth-child(3) {
+  color: #000;
+  background-color: #00b0f0 !important; 
+  font-weight: 500 !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#newSummaryTable tbody tr td:nth-child(4) {
+  color: #000;
+  background-color: #ffc000 !important; 
+  font-weight: 500 !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#newSummaryTable tbody tr td:nth-child(5) {
+  color: #000;
+  background-color: #f8cbad !important; 
+  font-weight: 500 !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#newSummaryTable tbody tr td:nth-child(6) {
+  color: #000;
+  background-color: #ff0000 !important; 
+  font-weight: 500 !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#newSummaryTable tbody tr td:nth-child(7) {
+  color: #000;
+  background-color: #ffff00 !important; 
+  font-weight: 500 !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#newSummaryTable tbody tr td:nth-child(8) {
+  color: #000;
+  background-color: #ffff00 !important; 
+  font-weight: 500 !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+
