@@ -8558,7 +8558,7 @@ body.md-skin {
     background-color: #fff; /* Optional: to make the sticky columns appear white */
 }
 
-/* #newSummaryTable thead tr th {
+#newSummaryTable thead tr th {
   background-color: #ffff00 !important; 
 }
 
@@ -8617,7 +8617,7 @@ body.md-skin {
   background-color: #ffff00 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-} */
+}
 
 
 
