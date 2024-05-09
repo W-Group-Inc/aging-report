@@ -13,9 +13,9 @@
                         <div class="col-lg-12">
                             <div class="ibox ">
                                 <div class="ibox-content">
-                                    <form method='GET' onsubmit='updateSessionStorage(); show();'  enctype="multipart/form-data" >
-                                        <div class="row">
-                                            <div class="col-lg-3">
+                                    <form method='GET' onsubmit='updateSessionStorage(); show();' enctype="multipart/form-data">
+                                        <div class="row align-items-end" style="display: flex;justify-content: center;align-items: center;">
+                                            <div class="col-lg-3" >
                                                 <select name='company' class='form-control' required>
                                                     <option value=''>Company</option>
                                                     <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
@@ -23,17 +23,23 @@
                                                     <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
                                                 </select>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-2" style="display: flex;justify-content: center;align-items: center;">
                                                 <h3 id="aging_date">AR Aging as of:&nbsp;<span id="aging_span">{{date('M. d, Y')}}</span></h3> 
                                             </div>
-                                            <div class="col-lg-4">
-                                                <label for="start_date">Start Date:</label>
-                                                <input type="date" id="start_date" name="start_date" value="{{ Request::get('start_date') }}"> -  
-                                                <label for="end_date">End Date:</label>
-                                                <input type="date" id="end_date" name="end_date" value="{{ Request::get('end_date') }}">
+                                            <div class="col-lg-5">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <label for="start_date" style="display: block;">Start Date:</label>
+                                                        <input type="date" id="start_date" name="start_date" value="{{ Request::get('start_date') }}" class="form-control" style="margin-bottom: 10px;">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <label for="end_date" style="display: block;">End Date:</label>
+                                                        <input type="date" id="end_date" name="end_date" value="{{ Request::get('end_date') }}" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-1">
-                                                <button class="btn btn-primary mt-4" type="submit" id='submit'>Generate</button>
+                                            <div class="col-lg-2">
+                                                <button class="btn btn-primary btn-block mt-4" type="submit" id='submit'>Generate</button>
                                             </div>
                                         </div>
                                     </form>
