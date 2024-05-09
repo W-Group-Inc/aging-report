@@ -21,16 +21,22 @@ class ReportController extends Controller
         
             $aging = Aging::where('company',$request->company)->whereYear('date',date('Y',strtotime($previous_month)))->whereMonth('date',date('m',strtotime($previous_month)))->orderBy('date','desc')->first();
         }
-        if($request->company == "WHI")
-        {
-            $last_invoices= OINV::where('DocNum',10338)->get();
-            // dd($last_invoices);
-            $invoices = OINV::whereDoesntHave('warehouse', function($query) {
-                $query->where('WhsCode','TRI Whse');
-            })
-                ->with('payments','terms','manager','remark')->where('CardName','!=','Mariel Tan')->where('NumAtCard','!=','WHI20-312L CCC')->where('NumAtCard','!=','WHI20-280L CCC')->where('NumAtCard','!=','WHI20-281L CCC-Mandaue')->where('NumAtCard','!=','WHI20-311L CCC-Mandaue')->where('CardCode','not like','LR-%')->where('CardCode','not like','WTT-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
-            // dd($invoices->first());
+        if($request->company == "WHI") {
+            $last_invoices = OINV::where('DocNum', 10338)->get();
+        
+            $query = OINV::whereDoesntHave('warehouse', function($query) {
+                    $query->where('WhsCode', 'TRI Whse');
+                })
+                ->with('payments', 'terms', 'manager', 'remark')->where('CardName', '!=', 'Mariel Tan')->where('NumAtCard', '!=', 'WHI20-312L CCC')->where('NumAtCard', '!=', 'WHI20-280L CCC')->where('NumAtCard', '!=', 'WHI20-281L CCC-Mandaue')->where('NumAtCard', '!=', 'WHI20-311L CCC-Mandaue')->where('CardCode', 'not like', 'LR-%')->where('CardCode', 'not like', 'WTT-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc');
+
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+              
+                $query->whereBetween('DocDate', [$request->start_date, $request->end_date]);
+            }
+        
+            $invoices = $query->get();
         }
+        
         elseif($request->company == "PBI")
         {
             $invoices = OINV_PBI::with('payments','terms','manager', 'remark')->where('CardCode','not like','LL-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();

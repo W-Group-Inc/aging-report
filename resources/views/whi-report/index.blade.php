@@ -13,7 +13,7 @@
                         <div class="col-lg-12">
                             <div class="ibox ">
                                 <div class="ibox-content">
-                                    <form method='GET' onsubmit='show();'  enctype="multipart/form-data" >
+                                    <form method='GET' onsubmit='updateSessionStorage(); show();'  enctype="multipart/form-data" >
                                         <div class="row">
                                             <div class="col-lg-3">
                                                 <select name='company' class='form-control' required>
@@ -23,11 +23,17 @@
                                                     <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
                                                 </select>
                                             </div>
+                                            <div class="col-lg-2">
+                                                <h3 id="aging_date">AR Aging as of:&nbsp;<span id="aging_span">{{date('M. d, Y')}}</span></h3> 
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label for="start_date">Start Date:</label>
+                                                <input type="date" id="start_date" name="start_date" value="{{ Request::get('start_date') }}"> -  
+                                                <label for="end_date">End Date:</label>
+                                                <input type="date" id="end_date" name="end_date" value="{{ Request::get('end_date') }}">
+                                            </div>
                                             <div class="col-lg-1">
                                                 <button class="btn btn-primary mt-4" type="submit" id='submit'>Generate</button>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <h3>AR Aging as of:&nbsp;<p>{{date('M. d, Y')}}</p></h3> 
                                             </div>
                                         </div>
                                     </form>
@@ -1399,7 +1405,39 @@ function formatDate(dateString) {
 
 
 }
+function updateSessionStorage() {
+        var startDate = document.getElementById('start_date').value;
+        var endDate = document.getElementById('end_date').value;
+        
+        if (startDate || endDate) {
+            sessionStorage.setItem('startDate', startDate);
+            sessionStorage.setItem('endDate', endDate);
+        } else {
+            sessionStorage.removeItem('startDate');
+            sessionStorage.removeItem('endDate');
+        }
+    }
 
+    function updateAgingDateFromSessionStorage() {
+        var startDate = sessionStorage.getItem('startDate');
+        var endDate = sessionStorage.getItem('endDate');
+
+        if (startDate && endDate) {
+            var startDateFormat = new Date(startDate);
+            var endDateFormat = new Date(endDate);
+            
+            var formattedStartDate = startDateFormat.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            var formattedEndDate = endDateFormat.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+            document.getElementById('aging_span').innerText =  formattedStartDate + " to " + formattedEndDate;
+        } else {
+            var currentDate = new Date();
+        var formattedCurrentDate = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        document.getElementById('aging_span').innerText = formattedCurrentDate;
+        }
+    }
+
+    updateAgingDateFromSessionStorage();
 
 
 </script>
