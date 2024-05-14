@@ -39,11 +39,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-2">
-<<<<<<< HEAD
-                                                <button class="btn btn-primary btn-block mt-4" type="submit" id='submit'>Generate</button>
-=======
                                                 <button class="btn btn-primary mt-4" type="submit" id='submit' style="margin-top: 14px;">Generate</button>
->>>>>>> e0e893c8c2bfca8a0538fa78a0d78bc1379a1ee5
                                             </div>
                                         </div>
                                     </form>
