@@ -13,9 +13,9 @@
                         <div class="col-lg-12">
                             <div class="ibox ">
                                 <div class="ibox-content">
-                                    <form method='GET' onsubmit='updateSessionStorage(); show();' enctype="multipart/form-data">
+                                    <form method='GET' onsubmit='updateSessionStorage(); show();' enctype="multipart/form-data" >
                                         <div class="row align-items-end" style="display: flex;justify-content: center;align-items: center;">
-                                            <div class="col-lg-3" >
+                                            <div class="col-lg-3">
                                                 <select name='company' class='form-control' required>
                                                     <option value=''>Company</option>
                                                     <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
@@ -39,7 +39,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-2">
+<<<<<<< HEAD
                                                 <button class="btn btn-primary btn-block mt-4" type="submit" id='submit'>Generate</button>
+=======
+                                                <button class="btn btn-primary mt-4" type="submit" id='submit' style="margin-top: 14px;">Generate</button>
+>>>>>>> e0e893c8c2bfca8a0538fa78a0d78bc1379a1ee5
                                             </div>
                                         </div>
                                     </form>
