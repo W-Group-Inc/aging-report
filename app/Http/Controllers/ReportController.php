@@ -36,16 +36,30 @@ class ReportController extends Controller
         
             $invoices = $query->get();
         }
-        
-        elseif($request->company == "PBI")
-        {
-            $invoices = OINV_PBI::with('payments','terms','manager', 'remark')->where('CardCode','not like','LL-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
+        // 5/14/24 JunJihad Apply Date Between Start
+       elseif ($request->company == "PBI") {
+            $query = OINV_PBI::with('payments', 'terms', 'manager', 'remark')->where('CardCode', 'not like', 'LL-%')->where('DocStatus', 'O');
+
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+                $query->whereBetween('DocDate', [$request->start_date, $request->end_date]);
+            }
+
+            $invoices = $query->orderBy('DocDueDate', 'desc')->get();
         }
+
         elseif($request->company == "CCC")
         {
-            $invoices = OINV_CCC::with('payments','terms','manager', 'remark')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
+            // $invoices = OINV_CCC::with('payments','terms','manager', 'remark')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
+            $query = OINV_CCC::with('payments','terms','manager', 'remark')->where('DocStatus', 'O');
+            
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+                $query->whereBetween('DocDate', [$request->start_date, $request->end_date]);
+            }
+            $invoices = $query->orderBy('DocDueDate', 'desc')->get();
         }
         
+        // 5/14/24 JunJihad Apply Date Between End
+
         // dd($invoices->first());
         return view('whi-report.index',
             array(

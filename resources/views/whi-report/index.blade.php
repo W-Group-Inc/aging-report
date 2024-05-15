@@ -374,11 +374,11 @@
 
                                                 if ($daysLate <= 0) {
                                                     $total_current_php_nt += $php_nt_amount;
-                                                } elseif ($daysLate <= 30) {
+                                                } elseif ($daysLate >= 1 && $daysLate <= 30) {
                                                     $total_month_php_nt += $php_nt_amount;
-                                                } elseif ($daysLate <= 60) {
+                                                } elseif ($daysLate >= 31 && $daysLate <= 60) {
                                                     $total_twomonth_php_nt += $php_nt_amount;
-                                                } elseif ($daysLate <= 90) {
+                                                } elseif ($daysLate >= 61 && $daysLate <= 90) {
                                                     $total_threemonth_php_nt += $php_nt_amount;
                                                 } else {
                                                     $total_over_days_php_nt += $php_nt_amount;
@@ -738,11 +738,11 @@
 
                                                             if ($daysLate <= 0) {
                                                                 $total_current_php_t += $php_t_amount;
-                                                            } elseif ($daysLate <= 30) {
+                                                            } elseif ($daysLate >= 1 && $daysLate <= 30) {
                                                                 $total_month_php_t += $php_t_amount;
-                                                            } elseif ($daysLate <= 60) {
+                                                            } elseif ($daysLate <= 31 && $daysLate <= 60) {
                                                                 $total_twomonth_php_t += $php_t_amount;
-                                                            } elseif ($daysLate <= 90) {
+                                                            } elseif ($daysLate <= 61 && $daysLate <= 90) {
                                                                 $total_threemonth_php_t += $php_t_amount;
                                                             } else {
                                                                 $total_over_days_php_t += $php_t_amount;
@@ -765,11 +765,11 @@
 
                                                             if ($daysLate <= 0) {
                                                                 $total_current_php_nt += $php_nt_amount;
-                                                            } elseif ($daysLate <= 30) {
+                                                            } elseif ($daysLate >= 1 && $daysLate <= 30) {
                                                                 $total_month_php_nt += $php_nt_amount;
-                                                            } elseif ($daysLate <= 60) {
+                                                            } elseif ($daysLate >= 31 && $daysLate <= 60) {
                                                                 $total_twomonth_php_nt += $php_nt_amount;
-                                                            } elseif ($daysLate <= 90) {
+                                                            } elseif ($daysLate >= 61 && $daysLate <= 90) {
                                                                 $total_threemonth_php_nt += $php_nt_amount;
                                                             } else {
                                                                 $total_over_days_php_nt += $php_nt_amount;
@@ -1202,16 +1202,16 @@ function openModal(filterColumn) {
     var filteredData = invoicesData.filter(function (item) {
         var currentDate = new Date();
         var dueDate = new Date(item.DocDueDate);
-        
-        currentDate.setHours(0, 0, 0, 0);
-        dueDate.setHours(0, 0, 0, 0);
 
-        var datediff = (currentDate - dueDate) / (1000 * 60 * 60 * 24); 
+        var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+
+        var datediff = (currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24);
         var status = '';
 
         if (datediff < 0) {
             status = 'current';
-        } else if (datediff >= 0 && datediff <= 30) { 
+        } else if (datediff >= 0 && datediff <= 30) {
             status = '1 to 30 days Late';
         } else if (datediff >= 31 && datediff <= 60) {
             status = '31 to 60 days Late';
@@ -1220,7 +1220,6 @@ function openModal(filterColumn) {
         } else {
             status = 'Over 90 days Late';
         }
-
         return status.toLowerCase() === filterColumn.toLowerCase();
     });
     renderModalContent(filteredData);
@@ -1237,10 +1236,10 @@ function openModalByStatusAndCurrency(status, currency) {
         var currentDate = new Date();
         var dueDate = new Date(item.DocDueDate);
         
-        currentDate.setHours(0, 0, 0, 0);
-        dueDate.setHours(0, 0, 0, 0);
+        var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
 
-        var datediff = (currentDate - dueDate) / (1000 * 60 * 60 * 24); 
+        var datediff = (currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24);
         var currentStatus = '';
 
         if (datediff <= 0) {
@@ -1271,10 +1270,10 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
         var currentDate = new Date();
         var dueDate = new Date(item.DocDueDate);
 
-        currentDate.setHours(0, 0, 0, 0);
-        dueDate.setHours(0, 0, 0, 0);
+        var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
 
-        var datediff = (currentDate - dueDate) / (1000 * 60 * 60 * 24); 
+        var datediff = (currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24);
         var currentStatus = '';
 
         if (datediff <= 0) {
@@ -1334,10 +1333,14 @@ function renderModalContent(data) {
         }
     }
 
-    var now = new Date().getTime();
-    var your_date = new Date(item.DocDueDate).getTime();
-    var datediff = now - your_date;
-    var daysDifference = Math.round(datediff / (1000 * 60 * 60 * 24));
+    var now = new Date();
+    var your_date = new Date(item.DocDueDate);
+
+    var currentDateUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+        var dueDateUTC = Date.UTC(your_date.getFullYear(), your_date.getMonth(), your_date.getDate());
+    // var datediff = now - your_date;
+    // var daysDifference = Math.round(datediff / (1000 * 60 * 60 * 24));
+    var daysDifference = (currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24);
 
     var status;
     if (daysDifference <= 0) {
@@ -1374,7 +1377,7 @@ function renderModalContent(data) {
         '<td>' + item.DocCur + ' ' + parseFloat(item.DocTotalFC).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + '</td>' +
         '<td>' + formatDate(item.DocDate) + '</td>' +
         '<td>' + item.terms.PymntGroup + '</td>' +
-        '<td>' + formatDate(item.U_BaseDate) + '</td>' +
+        '<td>' + (item.U_BaseDate ? formatDate(item.U_BaseDate) : "NA") + '</td>' +
         '<td>' + formatDate(item.DocDueDate) + '</td>' +
         '<td>' + (usd !== "" ? parseFloat(usd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
         '<td>' + (euro !== "" ? parseFloat(euro).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
@@ -1384,7 +1387,7 @@ function renderModalContent(data) {
         '<td>' + status + '</td>' + 
         '<td>' + item.DocRate + '</td>' +
         '<td>' + (finalAmount * item.DocRate).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</td>' +
-        '<td>' + (item.location.ocrg.GroupName !== "" ? item.location.ocrg.GroupName : "NA") + '</td>' +
+        '<td>' + ((item.location && item.location.ocrg && item.location.ocrg.GroupName !== "") ? item.location.ocrg.GroupName : "NA") + '</td>' +
         '<td>' + item.manager.SlpName + '</td>' +
         '<td>' + remarksHtml + '</td>' +
 
@@ -1392,9 +1395,9 @@ function renderModalContent(data) {
 
         '</tr>';
 
-    // Append row to table body
+    
     tableBody.append(row);
-    $(window).trigger('resize');
+     $(window).trigger('resize');
 });
 
 function formatDate(dateString) {
