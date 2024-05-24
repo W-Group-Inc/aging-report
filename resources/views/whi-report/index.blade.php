@@ -34,7 +34,7 @@
                                                     </div> --}}
                                                     <div class="col-lg-6">
                                                         <label for="end_date" style="display: block;">End Date:</label>
-                                                        <input type="date" id="end_date" name="end_date" value="{{ Request::get('end_date') }}" class="form-control" required>
+                                                        <input type="date" id="end_date" name="end_date" value="{{ Request::get('end_date') }}" class="form-control" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,41 +181,41 @@
                         <tbody>
                             <tr id="USD">
                                 <td >USD</td>
-                                <td id="total_current_usd" onclick="openModalByStatusAndCurrency('current', 'USD')">0.00</td>
-                                <td id="total_month_usd" onclick="openModalByStatusAndCurrency('1 to 30 days Late', 'USD')">0.00</td>
-                                <td id="total_twomonth_usd" onclick="openModalByStatusAndCurrency('31 to 60 days Late', 'USD')">0.00</td>
-                                <td id="total_threemonth_usd" onclick="openModalByStatusAndCurrency('61 to 90 days Late', 'USD')">0.00</td>
-                                <td id="total_over_days_usd" onclick="openModalByStatusAndCurrency('Over 90 days Late', 'USD')">0.00</td>
-                                <td id="total_usd" onclick="openModalByStatusAndCurrency('total ar aging', 'USD')">0.00</td>
-                                <td id="total_usd_in_ph">0.00</td>
+                                <td  onclick="openModalByStatusAndCurrency('current', 'USD')"> <span class="summaryRow"><span class="currency">$</span><span id="total_current_usd"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrency('1 to 30 days Late', 'USD')"><span class="summaryRow"><span class="currency">$</span><span id="total_month_usd"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrency('31 to 60 days Late', 'USD')"><span class="summaryRow"><span class="currency">$</span><span id="total_twomonth_usd"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrency('61 to 90 days Late', 'USD')"><span class="summaryRow"><span class="currency">$</span><span id="total_threemonth_usd"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrency('Over 90 days Late', 'USD')"><span class="summaryRow"><span class="currency">$</span><span id="total_over_days_usd"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrency('total ar aging', 'USD')"><span class="summaryRow"><span class="currency">$</span><span id="total_usd"0.00></span></span></td>
+                                <td><span class="summaryRow"><span class="currency">₱</span><span id="total_usd_in_ph"0.00></span></span></td>
                             </tr>
                             <tr>
                                 <td >EUR</td>
-                                <td id="total_current_euro" onclick="openModalByStatusAndCurrency('current', 'EUR')">0.00</td>
-                                <td id="total_month_euro" onclick="openModalByStatusAndCurrency('1 to 30 days Late', 'EUR')">0.00</td>
-                                <td id="total_twomonth_euro" onclick="openModalByStatusAndCurrency('31 to 60 days Late', 'EUR')">0.00</td>
-                                <td id="total_threemonth_euro" onclick="openModalByStatusAndCurrency('61 to 90 days Late', 'EUR')">0.00</td>
-                                <td id="total_over_days_euro" onclick="openModalByStatusAndCurrency('Over 90 days Late', 'EUR')">0.00</td>
-                                <td id="total_euro" onclick="openModalByStatusAndCurrency('total ar aging', 'EUR')">0.00</td>
-                                <td id="total_euro_in_ph">0.00</td>
+                                <td id="" onclick="openModalByStatusAndCurrency('current', 'EUR')"><span class="summaryRow"><span class="currency">€</span><span id="total_current_euro"0.00></span></span></td>
+                                <td id="" onclick="openModalByStatusAndCurrency('1 to 30 days Late', 'EUR')"><span class="summaryRow"><span class="currency">€</span><span id="total_month_euro"0.00></span></span></td>
+                                <td id="" onclick="openModalByStatusAndCurrency('31 to 60 days Late', 'EUR')"><span class="summaryRow"><span class="currency">€</span><span id="total_twomonth_euro"0.00></span></span></td>
+                                <td id="" onclick="openModalByStatusAndCurrency('61 to 90 days Late', 'EUR')"><span class="summaryRow"><span class="currency">€</span><span id="total_threemonth_euro"0.00></span></span></td>
+                                <td id="" onclick="openModalByStatusAndCurrency('Over 90 days Late', 'EUR')"><span class="summaryRow"><span class="currency">€</span><span id="total_over_days_euro"0.00></span></span></td>
+                                <td id="" onclick="openModalByStatusAndCurrency('total ar aging', 'EUR')"><span class="summaryRow"><span class="currency">€</span><span id="total_euro"0.00></span></span></td>
+                                <td><span class="summaryRow"><span class="currency">₱</span><span id="total_euro_in_ph"0.00></span></span></td>
                             </tr>
                             <tr>
                                 <td>PHP Trade</td>
-                                <td id="total_current_php_t" onclick="openModalByStatusAndCurrencyAndType('current', 'PHP', 'I')">0.00</td>
-                                <td id="total_month_php_t" onclick="openModalByStatusAndCurrencyAndType('1 to 30 days Late', 'PHP', 'I')">0.00</td>
-                                <td id="total_twomonth_php_t" onclick="openModalByStatusAndCurrencyAndType('31 to 60 days Late', 'PHP', 'I')">0.00</td>
-                                <td id="total_threemonth_php_t" onclick="openModalByStatusAndCurrencyAndType('61 to 90 days Late', 'PHP', 'I')">0.00</td>
-                                <td id="total_over_days_php_t" onclick="openModalByStatusAndCurrencyAndType('Over 90 days Late', 'PHP', 'I')">0.00</td>
-                                <td id='total_php_t' onclick="openModalByStatusAndCurrencyAndType('total ar aging', 'PHP', 'I')">0.00</td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('current', 'PHP', 'I')"><span class="summaryRow"><span class="currency">₱</span><span id="total_current_php_t"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('1 to 30 days Late', 'PHP', 'I')"><span class="summaryRow"><span class="currency">₱</span><span id="total_month_php_t"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('31 to 60 days Late', 'PHP', 'I')"><span class="summaryRow"><span class="currency">₱</span><span id="total_twomonth_php_t"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('61 to 90 days Late', 'PHP', 'I')"><span class="summaryRow"><span class="currency">₱</span><span id="total_threemonth_php_t"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('Over 90 days Late', 'PHP', 'I')"><span class="summaryRow"><span class="currency">₱</span><span id="total_over_days_php_t"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('total ar aging', 'PHP', 'I')"><span class="summaryRow"><span class="currency">₱</span><span id="total_php_t"0.00></span></span></td>
                             </tr>
                             <tr>
                                 <td>PHP Non-Trade</td>
-                                <td id="total_current_php_nt" onclick="openModalByStatusAndCurrencyAndType('current', 'PHP', 'S')">0.00</td>
-                                <td id="total_month_php_nt" onclick="openModalByStatusAndCurrencyAndType('1 to 30 days Late', 'PHP', 'S')">0.00</td>
-                                <td id="total_twomonth_php_nt"onclick="openModalByStatusAndCurrencyAndType('31 to 60 days Late', 'PHP', 'S')">0.00</td>
-                                <td id="total_threemonth_php_nt" onclick="openModalByStatusAndCurrencyAndType('61 to 90 days Late', 'PHP', 'S')">0.00</td>
-                                <td id="total_over_days_php_nt" onclick="openModalByStatusAndCurrencyAndType('Over 90 days Late', 'PHP', 'S')">0.00</td>
-                                <td id='total_php_nt' onclick="openModalByStatusAndCurrencyAndType('total ar aging', 'PHP', 'S')">0.00</td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('current', 'PHP', 'S')"><span class="summaryRow"><span class="currency">₱</span><span id="total_current_php_nt"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('1 to 30 days Late', 'PHP', 'S')"><span class="summaryRow"><span class="currency">₱</span><span id="total_month_php_nt"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('31 to 60 days Late', 'PHP', 'S')"><span class="summaryRow"><span class="currency">₱</span><span id="total_twomonth_php_nt"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('61 to 90 days Late', 'PHP', 'S')"><span class="summaryRow"><span class="currency">₱</span><span id="total_threemonth_php_nt"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('Over 90 days Late', 'PHP', 'S')"><span class="summaryRow"><span class="currency">₱</span><span id="total_over_days_php_nt"0.00></span></span></td>
+                                <td  onclick="openModalByStatusAndCurrencyAndType('total ar aging', 'PHP', 'S')"><span class="summaryRow"><span class="currency">₱</span><span id="total_php_nt"0.00></span></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -228,7 +228,7 @@
         <div class="modal-dialog"  style="width: 90%;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Table Modal</h4>
+                    <h4 class="modal-title text-center" id="modalTitle">Table Modal</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -338,7 +338,18 @@
                                             <td>{{$invoice->CardName}}</td>
                                             <td>{{$invoice->U_invNo}}</td>
                                             <td>{{$invoice->NumAtCard}}</td>
-                                            <td>{{ $invoice->DocCur .' '. number_format($invoice->DocTotalFC, 2) }}</td>
+                                            {{-- <td>{{ "$invoice->DocCur" .' '. number_format($invoice->DocTotalFC, 2) }}</td> --}}
+                                            <td> <?php
+                                                $currencySymbol = '';
+                                                if ($invoice->DocCur === 'USD') {
+                                                    $currencySymbol = '$';
+                                                } elseif ($invoice->DocCur === 'EUR') {
+                                                    $currencySymbol = '€';
+                                                } elseif ($invoice->DocCur === 'PHP') {
+                                                    $currencySymbol = '₱';
+                                                }
+                                                echo $currencySymbol . '' . number_format($invoice->DocTotalFC, 2);
+                                                ?></td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
@@ -353,6 +364,9 @@
                                                     $usd = number_format($final_amount, 2);
                                                 
                                                     $end_date = strtotime(Request::get('end_date'));
+                                                    if (empty($end_date)) {
+                                                        $end_date = time(); 
+                                                    }
                                                     $dueDateTimestamp = strtotime($invoice->DocDueDate);
                                                     $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
 
@@ -373,6 +387,9 @@
                                                     $euro = number_format($final_amount,2);
 
                                                     $end_date = strtotime(Request::get('end_date'));
+                                                    if (empty($end_date)) {
+                                                        $end_date = time(); 
+                                                    }
                                                     $dueDateTimestamp = strtotime($invoice->DocDueDate);
                                                     $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
 
@@ -393,8 +410,8 @@
                                                     $final_amount = $invoice->DocTotal - $invoice->PaidToDate;
                                                 }
                                             @endphp
-                                            <td>@if($usd != null){{$usd}} @else NA @endif</td>
-                                            <td>@if($euro != null){{$euro}} @else NA @endif</td>
+                                            <td>@if($usd != null){{'$'."".$usd}} @else NA @endif</td>
+                                            <td>@if($euro != null){{'€'."".$euro}} @else NA @endif</td>
                                             <td>@if($invoice->DocCur == 'PHP')
                                                     @if($invoice->DocType == "I")
                                                         @php
@@ -403,6 +420,9 @@
                                                             $total_php_t += $php_t_amount;
 
                                                             $end_date = strtotime(Request::get('end_date'));
+                                                            if (empty($end_date)) {
+                                                                $end_date = time(); 
+                                                            }
                                                             $dueDateTimestamp = strtotime($invoice->DocDueDate);
                                                             $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
@@ -417,7 +437,7 @@
                                                             } else {
                                                                 $total_over_days_php_t += $php_t_amount;
                                                             }
-                                                        @endphp {{$php}}
+                                                        @endphp {{'₱'."".$php}}
                                                     @else NA 
                                                     @endif
                                                 @else NA 
@@ -431,6 +451,9 @@
                                                             $total_php_nt += $php_nt_amount;
 
                                                             $end_date = strtotime(Request::get('end_date'));
+                                                            if (empty($end_date)) {
+                                                                $end_date = time(); 
+                                                            }
                                                             $dueDateTimestamp = strtotime($invoice->DocDueDate);
                                                             $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
@@ -446,7 +469,7 @@
                                                                 $total_over_days_php_nt += $php_nt_amount;
                                                             }
                                                         @endphp 
-                                                    {{$php}}
+                                                    {{'₱'."".$php}}
                                                     @else NA 
                                                     @endif
                                                 @else NA 
@@ -494,6 +517,9 @@
                                             <td>{{$status}}</td> --}}
                                             @php
                                                 $end_date = strtotime(Request::get('end_date')); 
+                                                if (empty($end_date)) {
+                                                        $end_date = time(); 
+                                                    }
                                                 $datediff = $end_date - strtotime(date('m/d/Y', strtotime($invoice->DocDueDate))); 
                                             @endphp
                                             <td>{{ ceil($datediff / (60 * 60 * 24)) . " days" }}</td>
@@ -640,6 +666,9 @@
                                             </td>
                                             @php
                                                 $end_date = strtotime(Request::get('end_date'));
+                                                if (empty($end_date)) {
+                                                        $end_date = time(); 
+                                                    }
                                                 $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
                                                 $datediff = $end_date - $your_date
                                             @endphp
@@ -896,7 +925,15 @@
    {
    
    }
-   var end_date = Date.parse('<?php echo date("Y-m-d H:i:s", strtotime(Request::get('end_date'))); ?>');
+//    var end_date = Date.parse('<?php echo date("Y-m-d H:i:s", strtotime(Request::get('end_date'))); ?>');
+var end_date_param = '<?php echo Request::get("end_date"); ?>';
+var end_date;
+
+if (end_date_param !== '') {
+    end_date = Date.parse(end_date_param);
+} else {
+    end_date = Date.now(); // If 'end_date' is empty, use current date
+}
    var invoicesData = <?php echo json_encode($invoices); ?>;
 console.log(invoicesData);
 function openModal(filterColumn) {
@@ -929,7 +966,7 @@ function openModal(filterColumn) {
             return status.toLowerCase() === filterColumn.toLowerCase();
         }
     });
-    renderModalContent(filteredData);
+    renderModalContent(filteredData, filterColumn);
 
     $('#myModal').modal('show');
 }
@@ -969,7 +1006,7 @@ function openModalByStatusAndCurrency(status, currency) {
         }
     });
 
-    renderModalContent(filteredData);
+    renderModalContent(filteredData, status, currency);
 
     $('#myModal').modal('show');
 }
@@ -1008,12 +1045,12 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
         }
     });
 
-    renderModalContent(filteredData);
+    renderModalContent(filteredData, status, currency, type);
 
     $('#myModal').modal('show');
 }
 
-function renderModalContent(data) {
+function renderModalContent(data, filterColumn, status, currency, type) {
     var modalBody = $('#myModal .modal-body');
     var tableBody = modalBody.find('.invoiceTable tbody');
     var tableHeader = modalBody.find('.invoiceTable thead');
@@ -1021,6 +1058,7 @@ function renderModalContent(data) {
     tableBody.empty();
     tableBody.empty();
     var headerRow = '<tr>' +
+        '<th>Action</th>' +
         '<th>Customer Name</th>' +
         '<th>Invoice Number</th>' +
         '<th>Buyers Mark</th>' +
@@ -1050,12 +1088,12 @@ function renderModalContent(data) {
     var php_t = "";
     var php_nt = "";
 
-    // var remarksButtonHtml = '';
-    // if (item.remark) {
-    //     remarksButtonHtml = '<button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks' + item.remark.id + '" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>';
-    // } else {
-    //     remarksButtonHtml = '<button onclick="getDocEntry(' + JSON.stringify(item) + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
-    // }
+    var remarksButtonHtml = '';
+    if (item.remark) {
+        remarksButtonHtml = '<button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks' + item.remark.id + '" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>';
+    } else {
+        remarksButtonHtml = '<button onclick="getDocEntry(' + JSON.stringify(item) + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
+    }
 
     if (item.DocCur === "USD") {
         total_usd += finalAmount;
@@ -1108,21 +1146,30 @@ function renderModalContent(data) {
     } else {
         remarksHtml = 'N/A';
     }
-
+    var currencySymbol;
+if (item.DocCur === "USD") {
+    currencySymbol = "$";
+} else if (item.DocCur === "EUR") {
+    currencySymbol = "€";
+} else if (item.DocCur === "PHP") {
+    currencySymbol = "₱";
+} else {
+    currencySymbol = ""; // Handle other currencies or unexpected values
+}
     var row = '<tr>' +
-        // '<td align="center">' + remarksButtonHtml + '</td>' +
+        '<td align="center">' + remarksButtonHtml + '</td>' +
         '<td>' + item.CardName + '</td>' +
         '<td>' + item.U_invNo + '</td>' +
         '<td>' + item.NumAtCard + '</td>' +
-        '<td>' + item.DocCur + ' ' + parseFloat(item.DocTotalFC).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + '</td>' +
+        '<td>' + currencySymbol + '' + parseFloat(item.DocTotalFC).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + '</td>' +
         '<td>' + formatDate(item.DocDate) + '</td>' +
         '<td>' + item.terms.PymntGroup + '</td>' +
         '<td>' + (item.U_BaseDate ? formatDate(item.U_BaseDate) : "NA") + '</td>' +
         '<td>' + formatDate(item.DocDueDate) + '</td>' +
-        '<td>' + (usd !== "" ? parseFloat(usd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
-        '<td>' + (euro !== "" ? parseFloat(euro).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
-        '<td>' + (php_t !== "" ? parseFloat(php_t).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
-        '<td>' + (php_nt !== "" ? parseFloat(php_nt).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
+        '<td>' + (usd !== "" ? '$' + '' +parseFloat(usd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
+        '<td>' + (euro !== "" ? '€' + '' +parseFloat(euro).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
+        '<td>' + (php_t !== "" ? '₱' + '' +parseFloat(php_t).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
+        '<td>' + (php_nt !== "" ? '₱' + '' +parseFloat(php_nt).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
         '<td>' + daysDifference + ' days' + '</td>' + 
         '<td>' + status + '</td>' + 
         '<td>' + item.DocRate + '</td>' +
@@ -1152,6 +1199,18 @@ function formatDate(dateString) {
     return [month, day, year].join('/');
 }
 
+var modalTitle = document.getElementById("modalTitle");
+    var title = filterColumn;
+    if (status) {
+        title += " - " + status;
+    }
+    if (currency) {
+        title += " - " + currency;
+    }
+    if (type) {
+        title += " - " + (type === "S" ? "Non-Trade" : "Trade");
+    }
+    modalTitle.textContent = title;
 
 }
 function updateSessionStorage() {
@@ -1174,11 +1233,11 @@ function updateSessionStorage() {
 
             document.getElementById('aging_span').innerText = formattedEndDate;
         } 
-        // else {
-        //     var currentDate = new Date();
-        // var formattedCurrentDate = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-        // document.getElementById('aging_span').innerText = formattedCurrentDate;
-        // }
+        else {
+            var currentDate = new Date();
+        var formattedCurrentDate = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        document.getElementById('aging_span').innerText = formattedCurrentDate;
+        }
     }
 
     updateAgingDateFromSessionStorage();

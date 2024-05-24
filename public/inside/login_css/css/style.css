@@ -8562,6 +8562,11 @@ body.md-skin {
   background-color: #e7e6e6 !important; 
   color: black;
 }
+#newSummaryTable tbody tr td span.summaryRow {
+ display: flex;
+ justify-content: space-between;
+}
+
 
 #newSummaryTable tbody tr td:nth-child(1) {
   line-height: 20px;
@@ -8576,6 +8581,7 @@ body.md-skin {
   background-color: #ddebf7 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
 }
 
 #newSummaryTable tbody tr td:nth-child(3) {
