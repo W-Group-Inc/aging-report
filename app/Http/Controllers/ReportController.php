@@ -24,18 +24,50 @@ class ReportController extends Controller
         if($request->company == "WHI") {
             $last_invoices = OINV::where('DocNum', 10338)->get();
         
-            $query = OINV::whereDoesntHave('warehouse', function($query) {
-                    $query->where('WhsCode', 'TRI Whse');
-                })
-                ->with('payments', 'terms', 'manager', 'remark')->where('CardName', '!=', 'Mariel Tan')->where('NumAtCard', '!=', 'WHI20-312L CCC')->where('NumAtCard', '!=', 'WHI20-280L CCC')->where('NumAtCard', '!=', 'WHI20-281L CCC-Mandaue')->where('NumAtCard', '!=', 'WHI20-311L CCC-Mandaue')->where('CardCode', 'not like', 'LR-%')->where('CardCode', 'not like', 'WTT-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc');
+            // $query = OINV::whereDoesntHave('warehouse', function($query) {
+            //         $query->where('WhsCode', 'TRI Whse');
+            //     })
+            //     ->with('payments', 'terms', 'manager', 'remark')->where('CardName', '!=', 'Mariel Tan')->where('NumAtCard', '!=', 'WHI20-312L CCC')->where('NumAtCard', '!=', 'WHI20-280L CCC')->where('NumAtCard', '!=', 'WHI20-281L CCC-Mandaue')->where('NumAtCard', '!=', 'WHI20-311L CCC-Mandaue')->where('CardCode', 'not like', 'LR-%')->where('CardCode', 'not like', 'WTT-%')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc');
 
-            if ($request->filled('start_date') && $request->filled('end_date')) {
+            // if ($request->filled('end_date')) {
               
-                $query->whereBetween('DocDate', [$request->start_date, $request->end_date]);
-            }
+            //     // $query->whereBetween('DocDate', [$request->start_date, $request->end_date]);
+            //     $query->where('DocDate', '<=', $request->end_date);
+            // }
         
-            $invoices = $query->get();
-        }
+            // $invoices = $query->get();
+            $query1 = OINV::whereDoesntHave('warehouse', function($query) {
+                $query->where('WhsCode', 'TRI Whse');
+            })
+            ->with('payments', 'terms', 'manager', 'remark')
+            ->where('CardName', '!=', 'Mariel Tan')
+            ->where('NumAtCard', '!=', 'WHI20-312L CCC')
+            ->where('NumAtCard', '!=', 'WHI20-280L CCC')
+            ->where('NumAtCard', '!=', 'WHI20-281L CCC-Mandaue')
+            ->where('NumAtCard', '!=', 'WHI20-311L CCC-Mandaue')
+            ->where('CardCode', 'not like', 'LR-%')
+            ->where('CardCode', 'not like', 'WTT-%')
+            ->where('DocStatus', 'O')
+            ->orderBy('DocDueDate', 'desc');
+
+            if ($request->filled('end_date')) {
+                $query1->where('DocDate', '<=', $request->end_date);
+            }
+            $invoices1 = $query1->get();
+
+            $query2 = OINV::with('payments', 'terms', 'manager', 'remark')
+              ->where('DocNum', 18481)
+              ->whereHas('warehouse', function($query) {
+                  $query->where('WhsCode', 'VAT');
+              })
+              ->first();
+
+            $invoices = $invoices1;
+
+            if ($query2 && !$invoices1->contains('DocNum', 18481)) {
+                $invoices->push($query2);
+            }
+                    }
         // 5/14/24 JunJihad Apply Date Between Start
        elseif ($request->company == "PBI") {
             $query = OINV_PBI::with('payments', 'terms', 'manager', 'remark')->where('CardCode', 'not like', 'LL-%')->where('DocStatus', 'O');
@@ -72,3 +104,5 @@ class ReportController extends Controller
         ); 
     }
 }
+
+

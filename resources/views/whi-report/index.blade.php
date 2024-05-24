@@ -24,17 +24,17 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-2" style="display: flex;justify-content: center;align-items: center;">
-                                                <h3 id="aging_date">AR Aging as of:&nbsp;<span id="aging_span">{{date('M. d, Y')}}</span></h3> 
+                                                <h3 id="aging_date">AR Aging as of:&nbsp;<span id="aging_span"></span></h3> 
                                             </div>
                                             <div class="col-lg-5">
                                                 <div class="row">
-                                                    <div class="col-lg-6">
+                                                    {{-- <div class="col-lg-6">
                                                         <label for="start_date" style="display: block;">Start Date:</label>
                                                         <input type="date" id="start_date" name="start_date" value="{{ Request::get('start_date') }}" class="form-control" style="margin-bottom: 10px;">
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-lg-6">
                                                         <label for="end_date" style="display: block;">End Date:</label>
-                                                        <input type="date" id="end_date" name="end_date" value="{{ Request::get('end_date') }}" class="form-control">
+                                                        <input type="date" id="end_date" name="end_date" value="{{ Request::get('end_date') }}" class="form-control" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -174,7 +174,7 @@
                                 <th scope="col" onclick="openModal('31 to 60 days Late')">31 to 60 Days Late</th>
                                 <th scope="col" onclick="openModal('61 to 90 days Late')">61 to 90 Days Late</th>
                                 <th scope="col" onclick="openModal('Over 90 days Late')">Over 90 Days Late</th>
-                                <th scope="col">Total AR Aging</th>
+                                <th scope="col" onclick="openModal('total ar aging')">Total AR Aging</th>
                                 <th scope="col">PHP Value</th>
                             </tr>
                         </thead>
@@ -186,7 +186,7 @@
                                 <td id="total_twomonth_usd" onclick="openModalByStatusAndCurrency('31 to 60 days Late', 'USD')">0.00</td>
                                 <td id="total_threemonth_usd" onclick="openModalByStatusAndCurrency('61 to 90 days Late', 'USD')">0.00</td>
                                 <td id="total_over_days_usd" onclick="openModalByStatusAndCurrency('Over 90 days Late', 'USD')">0.00</td>
-                                <td id="total_usd">0.00</td>
+                                <td id="total_usd" onclick="openModalByStatusAndCurrency('total ar aging', 'USD')">0.00</td>
                                 <td id="total_usd_in_ph">0.00</td>
                             </tr>
                             <tr>
@@ -196,7 +196,7 @@
                                 <td id="total_twomonth_euro" onclick="openModalByStatusAndCurrency('31 to 60 days Late', 'EUR')">0.00</td>
                                 <td id="total_threemonth_euro" onclick="openModalByStatusAndCurrency('61 to 90 days Late', 'EUR')">0.00</td>
                                 <td id="total_over_days_euro" onclick="openModalByStatusAndCurrency('Over 90 days Late', 'EUR')">0.00</td>
-                                <td id="total_euro">0.00</td>
+                                <td id="total_euro" onclick="openModalByStatusAndCurrency('total ar aging', 'EUR')">0.00</td>
                                 <td id="total_euro_in_ph">0.00</td>
                             </tr>
                             <tr>
@@ -206,7 +206,7 @@
                                 <td id="total_twomonth_php_t" onclick="openModalByStatusAndCurrencyAndType('31 to 60 days Late', 'PHP', 'I')">0.00</td>
                                 <td id="total_threemonth_php_t" onclick="openModalByStatusAndCurrencyAndType('61 to 90 days Late', 'PHP', 'I')">0.00</td>
                                 <td id="total_over_days_php_t" onclick="openModalByStatusAndCurrencyAndType('Over 90 days Late', 'PHP', 'I')">0.00</td>
-                                <td id='total_php_t'>0.00</td>
+                                <td id='total_php_t' onclick="openModalByStatusAndCurrencyAndType('total ar aging', 'PHP', 'I')">0.00</td>
                             </tr>
                             <tr>
                                 <td>PHP Non-Trade</td>
@@ -215,7 +215,7 @@
                                 <td id="total_twomonth_php_nt"onclick="openModalByStatusAndCurrencyAndType('31 to 60 days Late', 'PHP', 'S')">0.00</td>
                                 <td id="total_threemonth_php_nt" onclick="openModalByStatusAndCurrencyAndType('61 to 90 days Late', 'PHP', 'S')">0.00</td>
                                 <td id="total_over_days_php_nt" onclick="openModalByStatusAndCurrencyAndType('Over 90 days Late', 'PHP', 'S')">0.00</td>
-                                <td id='total_php_nt'>0.00</td>
+                                <td id='total_php_nt' onclick="openModalByStatusAndCurrencyAndType('total ar aging', 'PHP', 'S')">0.00</td>
                             </tr>
                         </tbody>
                     </table>
@@ -232,378 +232,16 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <table id='invoiceTable' class="table table-striped table-bordered table-hover tables" style="margin-bottom: 0px !important;">
+                    <div class="table-responsive">
+                    <table id='invoiceTable' class="table table-striped table-bordered table-hover tables invoiceTable" style="margin-bottom: 0px !important;">
                         <thead>
-                            <tr>
-                                {{-- <th>Actions</th> --}}
-                                <th>Customer Name</th>
-                                <th>Invoice Number</th>
-                                <th>Buyer's Mark</th>
-                                <th>Original Invoice Amount</th>
-                                <th>Invoice Date</th>
-                                <th>Payment Term</th>
-                                <th>Baseline Date</th>
-                                <th>Invoice Due Date</th>
-                                <th>Invoice Balance USD</th>
-                                <th>Invoice Balance EUR</th>
-                                <th>Invoice Balance PHP-T</th>
-                                <th>Invoice balance PHP-NT</th>
-                                <th>Days Late</th>
-                                <th>Aging Status</th>
-                                <th>Forex Rate</th>
-                                <th>Invoice PHP Value</th>
-                                <th>Location</th>
-                                <th>Account Manager</th>
-                                <th style="padding-right: 80px">Remarks</th>
-                            </tr>
+                            
                         </thead>
                         <tbody>
-                            @php
-                                $total_usd = 0;
-                                $total_usd_in_ph = 0;
-                                $total_euro = 0;
-                                $total_euro_in_ph = 0;
-                                $total_php_t = 0;
-                                $total_php_nt = 0;
-                                $total_php = 0;
-                                $total_current = 0;
-                                $total_month = 0;
-                                $total_twomonth = 0;
-                                $total_threemonth = 0;
-                                $total_over_days = 0;
-                                $total_current_php = 0;
-                                $total_current_usd = 0;
-                                $total_month_usd = 0;
-                                $total_twomonth_usd = 0;
-                                $total_threemonth_usd = 0;
-                                $total_over_days_usd = 0;
-                                $total_current_euro = 0;
-                                $total_month_euro = 0;
-                                $total_twomonth_euro = 0;
-                                $total_threemonth_euro = 0;
-                                $total_over_days_euro = 0;
-                                $total_current_php_t = 0;
-                                $total_month_php_t = 0;
-                                $total_twomonth_php_t = 0;
-                                $total_threemonth_php_t = 0;
-                                $total_over_days_php_t = 0;
-                                $total_current_php_nt = 0;
-                                $total_month_php_nt = 0;
-                                $total_twomonth_php_nt = 0;
-                                $total_threemonth_php_nt = 0;
-                                $total_over_days_php_nt = 0;
-                                $total_month_php = 0;
-                                $total_twomonth_php = 0;
-                                $total_threemonth_php = 0;
-                                $total_over_days_php = 0;
-                            @endphp
-                            @foreach ($invoices as $invoice)
-                            <tr>
-                                {{-- <td align="center">
-                                    @if($invoice->remark)
-                                        <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
-                                    @else
-                                        <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
-                                    @endif
-                                </td> --}}
-                                <td>{{$invoice->CardName}}</td>
-                                <td>{{$invoice->U_invNo}}</td>
-                                <td>{{$invoice->NumAtCard}}</td>
-                                <td>{{ $invoice->DocCur .' '. number_format($invoice->DocTotalFC, 2) }}</td>
-                                <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
-                                <td>{{$invoice->terms->PymntGroup}}</td>
-                                <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                <td>{{date('m/d/Y', strtotime($invoice->DocDueDate))}}</td>
-                                @php
-                                $final_amount = $invoice->DocTotalFC-$invoice->PaidFC;
-                                $usd = "";
-                                $euro = "";
-                                $php = "";
-                                    if($invoice->DocCur == "USD")
-                                    {
-                                        $total_usd = $total_usd + $final_amount;
-                                        $usd = number_format($final_amount,2);
-                                    }
-                                    elseif($invoice->DocCur == "EUR") {
-                                        $total_euro = $total_euro+$final_amount;
-                                        $euro = number_format($final_amount,2);
-                                    }
-                                    else {
-                                        $php = number_format($invoice->DocTotal - $invoice->PaidToDate,2);
-                                        $final_amount = $invoice->DocTotal - $invoice->PaidToDate;
-                                    }
-                                @endphp
-                                <td>@if($usd != null){{$usd}} @else NA @endif</td>
-                                <td>@if($euro != null){{$euro}} @else NA @endif</td>
-                                <td>@if($invoice->DocCur == 'PHP')
-                                        @if($invoice->DocType == "I")
-                                            @php
-                                                // $total_php_t = $total_php_t + $invoice->DocTotal - $invoice->PaidToDate; 
-                                                $php_t_amount = $invoice->DocTotal - $invoice->PaidToDate;
-                                                $total_php_t += $php_t_amount;
-
-                                                $dueDateTimestamp = strtotime($invoice->DocDueDate);
-                                                $daysLate = (time() - $dueDateTimestamp) / (60 * 60 * 24);
-
-                                                if ($daysLate <= 0) {
-                                                    $total_current_php_t += $php_t_amount;
-                                                } elseif ($daysLate <= 30) {
-                                                    $total_month_php_t += $php_t_amount;
-                                                } elseif ($daysLate <= 60) {
-                                                    $total_twomonth_php_t += $php_t_amount;
-                                                } elseif ($daysLate <= 90) {
-                                                    $total_threemonth_php_t += $php_t_amount;
-                                                } else {
-                                                    $total_over_days_php_t += $php_t_amount;
-                                                }
-                                            @endphp {{$php}}
-                                        @else NA 
-                                        @endif
-                                    @else NA 
-                                    @endif
-                                </td>
-                                <td>@if($invoice->DocCur == 'PHP')
-                                        @if($invoice->DocType == "S") 
-                                            @php
-                                                // $total_php_nt = $total_php_nt + $invoice->DocTotal - $invoice->PaidToDate; 
-                                                $php_nt_amount = $invoice->DocTotal - $invoice->PaidToDate;
-                                                $total_php_nt += $php_nt_amount;
-
-                                                $dueDateTimestamp = strtotime($invoice->DocDueDate);
-                                                $daysLate = (time() - $dueDateTimestamp) / (60 * 60 * 24);
-
-                                                if ($daysLate <= 0) {
-                                                    $total_current_php_nt += $php_nt_amount;
-                                                } elseif ($daysLate >= 1 && $daysLate <= 30) {
-                                                    $total_month_php_nt += $php_nt_amount;
-                                                } elseif ($daysLate >= 31 && $daysLate <= 60) {
-                                                    $total_twomonth_php_nt += $php_nt_amount;
-                                                } elseif ($daysLate >= 61 && $daysLate <= 90) {
-                                                    $total_threemonth_php_nt += $php_nt_amount;
-                                                } else {
-                                                    $total_over_days_php_nt += $php_nt_amount;
-                                                }
-                                            @endphp 
-                                        {{$php}}
-                                        @else NA 
-                                        @endif
-                                    @else NA 
-                                    @endif
-                                </td>
-                                @php
-                                    $now = time(); // or your date as well
-                                    $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
-                                    $datediff = $now - $your_date
-                                @endphp
-                                <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
-                                @php
-                                    if (round($datediff / (60 * 60 * 24)) <= 0) {
-                                        $total_current++;
-                                        $status = 'Current';
-                                        $total_current_php = $total_current_php+($final_amount*$invoice->DocRate);
-                                    }
-                                    elseif ((round($datediff / (60 * 60 * 24)) >= 1) && (round($datediff / (60 * 60 * 24)) <= 30))
-                                    {
-                                        $status = '1  to 30 days Late';
-                                        
-                                        $total_month++;
-                                        $total_month_php = $total_month_php+($final_amount*$invoice->DocRate);
-                                    }
-                                    elseif ((round($datediff / (60 * 60 * 24)) >= 31) && (round($datediff / (60 * 60 * 24)) <= 60))
-                                    {
-                                        $status = '31  to 60 days Late';
-                                        $total_twomonth++;
-                                        $total_twomonth_php = $total_twomonth_php+($final_amount*$invoice->DocRate);
-                                    }
-                                    elseif ((round($datediff / (60 * 60 * 24)) >= 61) && (round($datediff / (60 * 60 * 24)) <= 90))
-                                    {
-                                        $status = '61  to 90 days Late';
-                                        
-                                        $total_threemonth++;
-                                        $total_threemonth_php = $total_threemonth_php+($final_amount*$invoice->DocRate);
-                                    }
-                                    else
-                                    {
-                                        $total_over_days++;
-                                        $status = 'Over 90 days Late';
-                                        $total_over_days_php = $total_over_days_php+($final_amount*$invoice->DocRate);
-                                    }
-                                @endphp
-                                <td>{{$status}}</td>
-                                <td>{{$invoice->DocRate}}</td>
-                                @php
-                                    $total_php = $final_amount*$invoice->DocRate + $total_php;
-                                    if($invoice->DocCur == "USD") {
-                                        $total_usd_in_ph += $final_amount * $invoice->DocRate;
-                                    }
-                                    if($invoice->DocCur == "EUR") {
-                                        $total_euro_in_ph += $final_amount * $invoice->DocRate;
-                                    }
-                                @endphp
-                                <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
-                                <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td> 
-                                <td>{{$invoice->manager->SlpName}}</td>
-                                <td> 
-                                    @if($invoice->remark)
-                                        {{$invoice->remark->remarks}}
-                                        <br>
-                                        <span style="font-size: 10px">Date Created: <span class="label label-primary">{{ $invoice->remark->created_at->format('M. d, Y g:i A') }}</span>
-                                        <br>
-                                        <span style="font-size: 10px">Date Updated: <span class="label label-warning">{{ $invoice->remark->updated_at->format('M. d, Y g:i A') }}</span>
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
-                                @php
-                                    if ($invoice->DocCur == "USD") {
-                                        $usd_amount = $final_amount;
-
-                                        if (round($datediff / (60 * 60 * 24)) <= 0) {
-                                            $total_current_usd += $usd_amount;
-                                        } elseif (round($datediff / (60 * 60 * 24)) >= 1 && round($datediff / (60 * 60 * 24)) <= 30) {
-                                            $total_month_usd += $usd_amount;
-                                        } elseif (round($datediff / (60 * 60 * 24)) >= 31 && round($datediff / (60 * 60 * 24)) <= 60) {
-                                            $total_twomonth_usd += $usd_amount;
-                                        } elseif (round($datediff / (60 * 60 * 24)) >= 61 && round($datediff / (60 * 60 * 24)) <= 90) {
-                                            $total_threemonth_usd += $usd_amount;
-                                        } else {
-                                            $total_over_days_usd += $usd_amount;
-                                        }
-                                    }
-                                    if ($invoice->DocCur == "EUR") {
-                                        $euro_amount = $final_amount;
-
-                                        if (round($datediff / (60 * 60 * 24)) <= 0) {
-                                            $total_current_euro += $euro_amount;
-                                        } elseif (round($datediff / (60 * 60 * 24)) >= 1 && round($datediff / (60 * 60 * 24)) <= 30) {
-                                            $total_month_euro += $euro_amount;
-                                        } elseif (round($datediff / (60 * 60 * 24)) >= 31 && round($datediff / (60 * 60 * 24)) <= 60) {
-                                            $total_twomonth_euro += $euro_amount;
-                                        } elseif (round($datediff / (60 * 60 * 24)) >= 61 && round($datediff / (60 * 60 * 24)) <= 90) {
-                                            $total_threemonth_euro += $euro_amount;
-                                        } else {
-                                            $total_over_days_euro += $euro_amount;
-                                        }
-                                    }
-                                @endphp
-                            </tr>
-                            @endforeach
-                            @foreach ($last_invoices as $invoice)
-                            <tr>
-                                <td align="center">
-                                    @if($invoice->remark)
-                                        <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
-                                    @else
-                                        <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
-                                    @endif
-                                </td>
-                                <td>{{$invoice->CardName}}</td>
-                                <td>{{$invoice->U_invNo}}</td>
-                                <td>{{$invoice->NumAtCard}}</td>
-                                <td>{{ $invoice->DocCur .' '. number_format($invoice->DocTotalFC, 2) }}</td>
-                                <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
-                                <td>{{$invoice->terms->PymntGroup}}</td>
-                                <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                <td>{{date('m/d/Y', strtotime($invoice->DocDueDate))}}</td>
-                                @php
-                                $final_amount = $invoice->DocTotalFC-$invoice->PaidFC;
-                                $usd = "";
-                                $euro = "";
-                                $php = "";
-                                    if($invoice->DocCur == "USD")
-                                    {
-                                        $total_usd = $total_usd + 25000.00;
-                                        $usd = number_format(25000.00,2);
-                                    }
-                                    elseif($invoice->DocCur == "EUR") {
-                                        $total_euro = $total_euro+$final_amount;
-                                        $euro = number_format($final_amount,2);
-                                    }
-                                    else {
-                                        $php = number_format($invoice->DocTotal - $invoice->PaidToDate,2);
-                                        $final_amount = $invoice->DocTotal - $invoice->PaidToDate;
-                                    }
-                                @endphp
-                                <td>@if($usd != null){{$usd}} @else NA @endif</td>
-                                <td>@if($euro != null){{$euro}} @else NA @endif</td>
-                                <td>@if($invoice->DocCur == 'PHP')
-                                        @if($invoice->DocType == "I")
-                                            @php
-                                                $total_php_t = $total_php_t + $invoice->DocTotal - $invoice->PaidToDate; 
-                                            @endphp {{$php}}
-                                        @else NA 
-                                        @endif
-                                    @else NA 
-                                    @endif
-                                </td>
-                                <td>@if($invoice->DocCur == 'PHP')
-                                        @if($invoice->DocType == "S") 
-                                            @php
-                                                $total_php_nt = $total_php_nt + $invoice->DocTotal - $invoice->PaidToDate; 
-                                            @endphp 
-                                        {{$php}}
-                                        @else NA 
-                                        @endif
-                                    @else NA 
-                                    @endif
-                                </td>
-                                @php
-                                    $now = time(); // or your date as well
-                                    $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
-                                    $datediff = $now - $your_date
-                                @endphp
-                                <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
-                                @php
-                                    if (round($datediff / (60 * 60 * 24)) <= 0) {
-                                        $total_current++;
-                                        $status = 'Current';
-                                    }
-                                    elseif ((round($datediff / (60 * 60 * 24)) >= 1) && (round($datediff / (60 * 60 * 24)) <= 30))
-                                    {
-                                        $status = '1  to 30 days Late';
-                                        
-                                        $total_month++;
-                                    }
-                                    elseif ((round($datediff / (60 * 60 * 24)) >= 31) && (round($datediff / (60 * 60 * 24)) <= 60))
-                                    {
-                                        $status = '31  to 60 days Late';
-                                        $total_twomonth++;
-                                    }
-                                    elseif ((round($datediff / (60 * 60 * 24)) >= 61) && (round($datediff / (60 * 60 * 24)) <= 90))
-                                    {
-                                        $status = '61  to 90 days Late';
-                                        
-                                        $total_threemonth++;
-                                    }
-                                    else
-                                    {
-                                        $total_over_days++;
-                                        $status = 'Over 90 days Late';
-                                    }
-                                @endphp
-                                <td>{{$status}}</td>
-                                <td>{{$invoice->DocRate}}</td>
-                                @php
-                                    $total_php = $final_amount*$invoice->DocRate + $total_php;
-                                @endphp
-                                <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
-                                <td>{{$invoice->location->ocrg->GroupName ?? 'N/A'}}</td> 
-                                <td>{{$invoice->manager->SlpName}}</td>
-                                <td>
-                                    @if($invoice->remark)
-                                        {{$invoice->remark->remarks}}
-                                        <br>
-                                        <span style="font-size: 10px">Date Created: <span class="label label-primary">{{ $invoice->remark->created_at->format('M. d, Y g:i A') }}</span>
-                                        <br>
-                                        <span style="font-size: 10px">Date Updated: <span class="label label-warning">{{ $invoice->remark->updated_at->format('M. d, Y g:i A') }}</span>
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
+                            
                         </tbody>
                     </table>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -623,7 +261,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table id='table' class="table table-striped table-bordered table-hover tables" style="margin-bottom: 0px !important;">
+                                <table id='table' class="table table-striped table-bordered table-hover fullSummaryTable" style="margin-bottom: 0px !important;">
                                     <thead>
                                         <tr>
                                             <th>Actions</th>
@@ -710,14 +348,45 @@
                                             $usd = "";
                                             $euro = "";
                                             $php = "";
-                                                if($invoice->DocCur == "USD")
-                                                {
-                                                    $total_usd = $total_usd + $final_amount;
-                                                    $usd = number_format($final_amount,2);
+                                            if ($invoice->DocCur == "USD") {
+                                                    $total_usd += $final_amount;
+                                                    $usd = number_format($final_amount, 2);
+                                                
+                                                    $end_date = strtotime(Request::get('end_date'));
+                                                    $dueDateTimestamp = strtotime($invoice->DocDueDate);
+                                                    $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
+
+                                                    if ($daysLate <= 0) {
+                                                        $total_current_usd += $final_amount;
+                                                    } elseif ($daysLate >= 1 && $daysLate <= 30) {
+                                                        $total_month_usd += $final_amount;
+                                                    } elseif ($daysLate >= 31 && $daysLate <= 60) {
+                                                        $total_twomonth_usd += $final_amount;
+                                                    } elseif ($daysLate >= 61 && $daysLate <= 90) {
+                                                        $total_threemonth_usd += $final_amount;
+                                                    } else {
+                                                        $total_over_days_usd += $final_amount;
+                                                    }
                                                 }
                                                 elseif($invoice->DocCur == "EUR") {
-                                                    $total_euro = $total_euro+$final_amount;
+                                                    $total_euro +=$final_amount;
                                                     $euro = number_format($final_amount,2);
+
+                                                    $end_date = strtotime(Request::get('end_date'));
+                                                    $dueDateTimestamp = strtotime($invoice->DocDueDate);
+                                                    $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
+
+                                                    if ($daysLate <= 0) {
+                                                        $total_current_euro += $final_amount;
+                                                    } elseif ($daysLate >= 1 && $daysLate <= 30) {
+                                                        $total_month_euro += $final_amount;
+                                                    } elseif ($daysLate >= 31 && $daysLate <= 60) {
+                                                        $total_twomonth_euro += $final_amount;
+                                                    } elseif ($daysLate >= 61 && $daysLate <= 90) {
+                                                        $total_threemonth_euro += $final_amount;
+                                                    } else {
+                                                        $total_over_days_euro += $final_amount;
+                                                    }
                                                 }
                                                 else {
                                                     $php = number_format($invoice->DocTotal - $invoice->PaidToDate,2);
@@ -733,8 +402,9 @@
                                                             $php_t_amount = $invoice->DocTotal - $invoice->PaidToDate;
                                                             $total_php_t += $php_t_amount;
 
+                                                            $end_date = strtotime(Request::get('end_date'));
                                                             $dueDateTimestamp = strtotime($invoice->DocDueDate);
-                                                            $daysLate = (time() - $dueDateTimestamp) / (60 * 60 * 24);
+                                                            $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
                                                             if ($daysLate <= 0) {
                                                                 $total_current_php_t += $php_t_amount;
@@ -760,8 +430,9 @@
                                                             $php_nt_amount = $invoice->DocTotal - $invoice->PaidToDate;
                                                             $total_php_nt += $php_nt_amount;
 
+                                                            $end_date = strtotime(Request::get('end_date'));
                                                             $dueDateTimestamp = strtotime($invoice->DocDueDate);
-                                                            $daysLate = (time() - $dueDateTimestamp) / (60 * 60 * 24);
+                                                            $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
                                                             if ($daysLate <= 0) {
                                                                 $total_current_php_nt += $php_nt_amount;
@@ -781,32 +452,32 @@
                                                 @else NA 
                                                 @endif
                                             </td>
-                                            @php
-                                                $now = time(); // or your date as well
+                                            {{-- @php
+                                                $now = time(); 
                                                 $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
                                                 $datediff = $now - $your_date
                                             @endphp
-                                            <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
+                                            <td>{{ceil($datediff / (60 * 60 * 24)). " days"}}</td>
                                             @php
-                                                if (round($datediff / (60 * 60 * 24)) <= 0) {
+                                                if (ceil($datediff / (60 * 60 * 24)) <= 0) {
                                                     $total_current++;
                                                     $status = 'Current';
                                                     $total_current_php = $total_current_php+($final_amount*$invoice->DocRate);
                                                 }
-                                                elseif ((round($datediff / (60 * 60 * 24)) >= 1) && (round($datediff / (60 * 60 * 24)) <= 30))
+                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 1) && (ceil($datediff / (60 * 60 * 24)) <= 30))
                                                 {
                                                     $status = '1  to 30 days Late';
                                                     
                                                     $total_month++;
                                                     $total_month_php = $total_month_php+($final_amount*$invoice->DocRate);
                                                 }
-                                                elseif ((round($datediff / (60 * 60 * 24)) >= 31) && (round($datediff / (60 * 60 * 24)) <= 60))
+                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 31) && (ceil($datediff / (60 * 60 * 24)) <= 60))
                                                 {
                                                     $status = '31  to 60 days Late';
                                                     $total_twomonth++;
                                                     $total_twomonth_php = $total_twomonth_php+($final_amount*$invoice->DocRate);
                                                 }
-                                                elseif ((round($datediff / (60 * 60 * 24)) >= 61) && (round($datediff / (60 * 60 * 24)) <= 90))
+                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 61) && (ceil($datediff / (60 * 60 * 24)) <= 90))
                                                 {
                                                     $status = '61  to 90 days Late';
                                                     
@@ -820,7 +491,36 @@
                                                     $total_over_days_php = $total_over_days_php+($final_amount*$invoice->DocRate);
                                                 }
                                             @endphp
-                                            <td>{{$status}}</td>
+                                            <td>{{$status}}</td> --}}
+                                            @php
+                                                $end_date = strtotime(Request::get('end_date')); 
+                                                $datediff = $end_date - strtotime(date('m/d/Y', strtotime($invoice->DocDueDate))); 
+                                            @endphp
+                                            <td>{{ ceil($datediff / (60 * 60 * 24)) . " days" }}</td>
+                                            @php
+                                                if (ceil($datediff / (60 * 60 * 24)) <= 0) {
+                                                    $total_current++;
+                                                    $status = 'Current';
+                                                    $total_current_php = $total_current_php + ($final_amount * $invoice->DocRate);
+                                                } elseif ((ceil($datediff / (60 * 60 * 24)) >= 1) && (ceil($datediff / (60 * 60 * 24)) <= 30)) {
+                                                    $status = '1  to 30 days Late';
+                                                    $total_month++;
+                                                    $total_month_php = $total_month_php + ($final_amount * $invoice->DocRate);
+                                                } elseif ((ceil($datediff / (60 * 60 * 24)) >= 31) && (ceil($datediff / (60 * 60 * 24)) <= 60)) {
+                                                    $status = '31  to 60 days Late';
+                                                    $total_twomonth++;
+                                                    $total_twomonth_php = $total_twomonth_php + ($final_amount * $invoice->DocRate);
+                                                } elseif ((ceil($datediff / (60 * 60 * 24)) >= 61) && (ceil($datediff / (60 * 60 * 24)) <= 90)) {
+                                                    $status = '61  to 90 days Late';
+                                                    $total_threemonth++;
+                                                    $total_threemonth_php = $total_threemonth_php + ($final_amount * $invoice->DocRate);
+                                                } else {
+                                                    $total_over_days++;
+                                                    $status = 'Over 90 days Late';
+                                                    $total_over_days_php = $total_over_days_php + ($final_amount * $invoice->DocRate);
+                                                }
+                                            @endphp
+                                            <td>{{ $status }}</td>
                                             <td>{{$invoice->DocRate}}</td>
                                             @php
                                                 $total_php = $final_amount*$invoice->DocRate + $total_php;
@@ -846,36 +546,36 @@
                                                 @endif
                                             </td>
                                             @php
-                                                if ($invoice->DocCur == "USD") {
-                                                    $usd_amount = $final_amount;
+                                                // if ($invoice->DocCur == "USD") {
+                                                //     $usd_amount = $final_amount;
 
-                                                    if (round($datediff / (60 * 60 * 24)) <= 0) {
-                                                        $total_current_usd += $usd_amount;
-                                                    } elseif (round($datediff / (60 * 60 * 24)) >= 1 && round($datediff / (60 * 60 * 24)) <= 30) {
-                                                        $total_month_usd += $usd_amount;
-                                                    } elseif (round($datediff / (60 * 60 * 24)) >= 31 && round($datediff / (60 * 60 * 24)) <= 60) {
-                                                        $total_twomonth_usd += $usd_amount;
-                                                    } elseif (round($datediff / (60 * 60 * 24)) >= 61 && round($datediff / (60 * 60 * 24)) <= 90) {
-                                                        $total_threemonth_usd += $usd_amount;
-                                                    } else {
-                                                        $total_over_days_usd += $usd_amount;
-                                                    }
-                                                }
-                                                if ($invoice->DocCur == "EUR") {
-                                                    $euro_amount = $final_amount;
+                                                //     if (ceil($datediff / (60 * 60 * 24)) <= 0) {
+                                                //         $total_current_usd += $usd_amount;
+                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 1 && ceil($datediff / (60 * 60 * 24)) <= 30) {
+                                                //         $total_month_usd += $usd_amount;
+                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 31 && ceil($datediff / (60 * 60 * 24)) <= 60) {
+                                                //         $total_twomonth_usd += $usd_amount;
+                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 61 && ceil($datediff / (60 * 60 * 24)) <= 90) {
+                                                //         $total_threemonth_usd += $usd_amount;
+                                                //     } else {
+                                                //         $total_over_days_usd += $usd_amount;
+                                                //     }
+                                                // }
+                                                // if ($invoice->DocCur == "EUR") {
+                                                //     $euro_amount = $final_amount;
 
-                                                    if (round($datediff / (60 * 60 * 24)) <= 0) {
-                                                        $total_current_euro += $euro_amount;
-                                                    } elseif (round($datediff / (60 * 60 * 24)) >= 1 && round($datediff / (60 * 60 * 24)) <= 30) {
-                                                        $total_month_euro += $euro_amount;
-                                                    } elseif (round($datediff / (60 * 60 * 24)) >= 31 && round($datediff / (60 * 60 * 24)) <= 60) {
-                                                        $total_twomonth_euro += $euro_amount;
-                                                    } elseif (round($datediff / (60 * 60 * 24)) >= 61 && round($datediff / (60 * 60 * 24)) <= 90) {
-                                                        $total_threemonth_euro += $euro_amount;
-                                                    } else {
-                                                        $total_over_days_euro += $euro_amount;
-                                                    }
-                                                }
+                                                //     if (ceil($datediff / (60 * 60 * 24)) <= 0) {
+                                                //         $total_current_euro += $euro_amount;
+                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 1 && ceil($datediff / (60 * 60 * 24)) <= 30) {
+                                                //         $total_month_euro += $euro_amount;
+                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 31 && ceil($datediff / (60 * 60 * 24)) <= 60) {
+                                                //         $total_twomonth_euro += $euro_amount;
+                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 61 && ceil($datediff / (60 * 60 * 24)) <= 90) {
+                                                //         $total_threemonth_euro += $euro_amount;
+                                                //     } else {
+                                                //         $total_over_days_euro += $euro_amount;
+                                                //     }
+                                                // }
                                             @endphp
                                         </tr>
                                         @endforeach
@@ -939,28 +639,28 @@
                                                 @endif
                                             </td>
                                             @php
-                                                $now = time(); // or your date as well
+                                                $end_date = strtotime(Request::get('end_date'));
                                                 $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
-                                                $datediff = $now - $your_date
+                                                $datediff = $end_date - $your_date
                                             @endphp
-                                            <td>{{round($datediff / (60 * 60 * 24)). " days"}}</td>
+                                            <td>{{ceil($datediff / (60 * 60 * 24)). " days"}}</td>
                                             @php
-                                                if (round($datediff / (60 * 60 * 24)) <= 0) {
+                                                if (ceil($datediff / (60 * 60 * 24)) <= 0) {
                                                     $total_current++;
                                                     $status = 'Current';
                                                 }
-                                                elseif ((round($datediff / (60 * 60 * 24)) >= 1) && (round($datediff / (60 * 60 * 24)) <= 30))
+                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 1) && (ceil($datediff / (60 * 60 * 24)) <= 30))
                                                 {
                                                     $status = '1  to 30 days Late';
                                                     
                                                     $total_month++;
                                                 }
-                                                elseif ((round($datediff / (60 * 60 * 24)) >= 31) && (round($datediff / (60 * 60 * 24)) <= 60))
+                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 31) && (ceil($datediff / (60 * 60 * 24)) <= 60))
                                                 {
                                                     $status = '31  to 60 days Late';
                                                     $total_twomonth++;
                                                 }
-                                                elseif ((round($datediff / (60 * 60 * 24)) >= 61) && (round($datediff / (60 * 60 * 24)) <= 90))
+                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 61) && (ceil($datediff / (60 * 60 * 24)) <= 90))
                                                 {
                                                     $status = '61  to 90 days Late';
                                                     
@@ -1088,6 +788,7 @@
 <script src="{{ asset('/inside/login_css/js/plugins/dataTables/datatables.min.js')}}"></script>
 <script src="{{ asset('/inside/login_css/js/plugins/chosen/chosen.jquery.js') }}"></script>
 <script>
+
     function getDocEntry(data)
     {
         document.getElementById("docentry").value = data.DocNum;
@@ -1100,6 +801,7 @@
     var total_over_days = {!! json_encode($total_over_days) !!};
     var total_current_php = {!! json_encode(number_format($total_current_php,2)) !!};
     var total_current_usd = {!! json_encode(number_format($total_current_usd,2)) !!};
+    // console.log(total_current_usd);
     var total_month_usd = {!! json_encode(number_format($total_month_usd,2)) !!};
     var total_twomonth_usd = {!! json_encode(number_format($total_twomonth_usd,2)) !!};
     var total_threemonth_usd = {!! json_encode(number_format($total_threemonth_usd,2)) !!};
@@ -1171,8 +873,8 @@
    
     $(document).ready(function(){
 
-        $('.cat').chosen({width: "100%"});
-        $('.tables').DataTable({
+        // $('.cat').chosen({width: "100%"});
+        $('.fullSummaryTable').DataTable({
             pageLength: -1,
             fixedHeader: true,
             scrollX: true,
@@ -1194,7 +896,7 @@
    {
    
    }
-
+   var end_date = Date.parse('<?php echo date("Y-m-d H:i:s", strtotime(Request::get('end_date'))); ?>');
    var invoicesData = <?php echo json_encode($invoices); ?>;
 console.log(invoicesData);
 function openModal(filterColumn) {
@@ -1206,12 +908,12 @@ function openModal(filterColumn) {
         var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
         var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
 
-        var datediff = (currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24);
+        var datediff = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
         var status = '';
 
-        if (datediff < 0) {
+        if (datediff <= 0) {
             status = 'current';
-        } else if (datediff >= 0 && datediff <= 30) {
+        } else if (datediff >= 1 && datediff <= 30) {
             status = '1 to 30 days Late';
         } else if (datediff >= 31 && datediff <= 60) {
             status = '31 to 60 days Late';
@@ -1220,7 +922,12 @@ function openModal(filterColumn) {
         } else {
             status = 'Over 90 days Late';
         }
-        return status.toLowerCase() === filterColumn.toLowerCase();
+        // return status.toLowerCase() === filterColumn.toLowerCase();
+        if (filterColumn.toLowerCase() === 'total ar aging') {
+            return true; // Include all statuses
+        } else {
+            return status.toLowerCase() === filterColumn.toLowerCase();
+        }
     });
     renderModalContent(filteredData);
 
@@ -1239,7 +946,7 @@ function openModalByStatusAndCurrency(status, currency) {
         var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
         var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
 
-        var datediff = (currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24);
+        var datediff = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
         var currentStatus = '';
 
         if (datediff <= 0) {
@@ -1254,7 +961,12 @@ function openModalByStatusAndCurrency(status, currency) {
             currentStatus = 'Over 90 days Late';
         }
 
-        return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase();
+        // return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase();
+        if (status.toLowerCase() === 'total ar aging') {
+            return item.DocCur === currency.toUpperCase(); // Include all statuses
+        } else {
+            return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase();
+        }
     });
 
     renderModalContent(filteredData);
@@ -1273,7 +985,7 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
         var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
         var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
 
-        var datediff = (currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24);
+        var datediff = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
         var currentStatus = '';
 
         if (datediff <= 0) {
@@ -1288,7 +1000,12 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
             currentStatus = 'Over 90 days Late';
         }
 
-        return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase() && item.DocType === type.toUpperCase();
+        // return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase() && item.DocType === type.toUpperCase();
+        if (status.toLowerCase() === 'total ar aging') {
+            return item.DocCur === currency.toUpperCase() && item.DocType === type.toUpperCase(); 
+        } else {
+            return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase() && item.DocType === type.toUpperCase();
+        }
     });
 
     renderModalContent(filteredData);
@@ -1298,10 +1015,33 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
 
 function renderModalContent(data) {
     var modalBody = $('#myModal .modal-body');
-    var tableBody = modalBody.find('tbody');
+    var tableBody = modalBody.find('.invoiceTable tbody');
+    var tableHeader = modalBody.find('.invoiceTable thead');
 
     tableBody.empty();
-
+    tableBody.empty();
+    var headerRow = '<tr>' +
+        '<th>Customer Name</th>' +
+        '<th>Invoice Number</th>' +
+        '<th>Buyers Mark</th>' +
+        '<th>Original Invoice Amount</th>' +
+        '<th>Invoice Date</th>' +
+        '<th>Payment Term</th>' +
+        '<th>Baseline Date</th>' +
+        '<th>Invoice Due Date</th>' +
+        '<th>Invoice Balance USD</th>' +
+        '<th>Invoice Balance EUR</th>' +
+        '<th>Invoice Balance PHP-T</th>' +
+        '<th>Invoice balance PHP-NT</th>' +
+        '<th>Days Late</th>' +
+        '<th>Aging Status</th>' +
+        '<th>Forex Rate</th>' +
+        '<th>Invoice PHP Value</th>' +
+        '<th>Location</th>' +
+        '<th>Account Manager</th>' +
+        '<th>Remarks</th>' +
+        '</tr>';
+        tableHeader.html(headerRow);
     data.forEach(function (item) {
     var finalAmount = item.DocTotalFC - item.PaidFC;
 
@@ -1339,8 +1079,8 @@ function renderModalContent(data) {
     var currentDateUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
         var dueDateUTC = Date.UTC(your_date.getFullYear(), your_date.getMonth(), your_date.getDate());
     // var datediff = now - your_date;
-    // var daysDifference = Math.round(datediff / (1000 * 60 * 60 * 24));
-    var daysDifference = (currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24);
+    // var daysDifference = Math.ceil(datediff / (1000 * 60 * 60 * 24));
+    var daysDifference = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
 
     var status;
     if (daysDifference <= 0) {
@@ -1415,35 +1155,30 @@ function formatDate(dateString) {
 
 }
 function updateSessionStorage() {
-        var startDate = document.getElementById('start_date').value;
         var endDate = document.getElementById('end_date').value;
         
-        if (startDate || endDate) {
-            sessionStorage.setItem('startDate', startDate);
+        if (endDate) {
             sessionStorage.setItem('endDate', endDate);
         } else {
-            sessionStorage.removeItem('startDate');
             sessionStorage.removeItem('endDate');
         }
     }
 
     function updateAgingDateFromSessionStorage() {
-        var startDate = sessionStorage.getItem('startDate');
         var endDate = sessionStorage.getItem('endDate');
 
-        if (startDate && endDate) {
-            var startDateFormat = new Date(startDate);
+        if (endDate) {
             var endDateFormat = new Date(endDate);
             
-            var formattedStartDate = startDateFormat.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
             var formattedEndDate = endDateFormat.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
-            document.getElementById('aging_span').innerText =  formattedStartDate + " to " + formattedEndDate;
-        } else {
-            var currentDate = new Date();
-        var formattedCurrentDate = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-        document.getElementById('aging_span').innerText = formattedCurrentDate;
-        }
+            document.getElementById('aging_span').innerText = formattedEndDate;
+        } 
+        // else {
+        //     var currentDate = new Date();
+        // var formattedCurrentDate = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        // document.getElementById('aging_span').innerText = formattedCurrentDate;
+        // }
     }
 
     updateAgingDateFromSessionStorage();

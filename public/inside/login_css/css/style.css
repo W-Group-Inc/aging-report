@@ -8559,62 +8559,63 @@ body.md-skin {
 }
 
 #newSummaryTable thead tr th {
-  background-color: #ffff00 !important; 
+  background-color: #e7e6e6 !important; 
+  color: black;
 }
 
 #newSummaryTable tbody tr td:nth-child(1) {
   line-height: 20px;
   color: #000;
-  background-color: #ffff00 !important; 
+  background-color: #e7e6e6 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #newSummaryTable tbody tr td:nth-child(2) {
   color: #000;
-  background-color: #92d050 !important; 
+  background-color: #ddebf7 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #newSummaryTable tbody tr td:nth-child(3) {
   color: #000;
-  background-color: #00b0f0 !important; 
+  background-color: #bdd7ee !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #newSummaryTable tbody tr td:nth-child(4) {
   color: #000;
-  background-color: #ffc000 !important; 
+  background-color: #9bc2e6 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #newSummaryTable tbody tr td:nth-child(5) {
   color: #000;
-  background-color: #f8cbad !important; 
+  background-color: #f4b084 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #newSummaryTable tbody tr td:nth-child(6) {
   color: #000;
-  background-color: #ff0000 !important; 
+  background-color: #ff6600 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #newSummaryTable tbody tr td:nth-child(7) {
   color: #000;
-  background-color: #ffff00 !important; 
+  background-color: #e7e6e6 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #newSummaryTable tbody tr td:nth-child(8) {
   color: #000;
-  background-color: #ffff00 !important; 
+  background-color: #e7e6e6 !important; 
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

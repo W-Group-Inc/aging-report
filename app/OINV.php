@@ -15,7 +15,7 @@ class OINV extends Model
     }
     public function warehouse()
     {
-        return $this->hasOne(INV1::class,'DocEntry','DocEntry');
+        return $this->belongsTo(INV1::class,'DocEntry','DocEntry');
     }
     public function terms()
     {
