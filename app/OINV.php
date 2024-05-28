@@ -33,4 +33,8 @@ class OINV extends Model
     {
         return $this->hasOne(Remark::class, 'docentry', 'DocNum');
     }
+    public function inv1()
+    {
+        return $this->hasMany(INV1::class, 'DocEntry', 'DocEntry');
+    }
 }

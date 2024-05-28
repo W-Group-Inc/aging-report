@@ -28,10 +28,6 @@
                                             </div>
                                             <div class="col-lg-5">
                                                 <div class="row">
-                                                    {{-- <div class="col-lg-6">
-                                                        <label for="start_date" style="display: block;">Start Date:</label>
-                                                        <input type="date" id="start_date" name="start_date" value="{{ Request::get('start_date') }}" class="form-control" style="margin-bottom: 10px;">
-                                                    </div> --}}
                                                     <div class="col-lg-6">
                                                         <label for="end_date" style="display: block;">End Date:</label>
                                                         <input type="date" id="end_date" name="end_date" value="{{ Request::get('end_date') }}" class="form-control" >
@@ -59,10 +55,6 @@
                     <div class="row" style="display:none">
                         <div class="col-md-12">
                             <div class="ibox float-e-margins">
-                                <!-- <div class="ibox-title">
-                                    <span class="label label-success pull-right">as of {{date('M. d, Y')}}</span>
-                                    <h5>AR Aging</h5>
-                                </div> -->
                                 <div class="ibox-content">
                                     <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span>   <div class="stat-percent font-bold text-white" style='font-size:11px;' >&#8369; <span id='total_current_php'>0.00</span></div></h3><br>
                                       </a>
@@ -348,14 +340,23 @@
                                                 } elseif ($invoice->DocCur === 'PHP') {
                                                     $currencySymbol = '₱';
                                                 }
-                                                echo $currencySymbol . '' . number_format($invoice->DocTotalFC, 2);
+                                                $totalFrgnTRIWhse = 0;
+                                                foreach ($invoice->inv1 as $item) {
+                                                    if ($item->WhsCode === 'TRI Whse') {
+                                                        $totalFrgnTRIWhse += $item->TotalFrgn;
+                                                    }
+                                                }
+
+                                                $finalTotal = $invoice->DocTotalFC - $totalFrgnTRIWhse;
+
+                                                echo $currencySymbol . '' . number_format($finalTotal, 2);
                                                 ?></td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDueDate))}}</td>
                                             @php
-                                            $final_amount = $invoice->DocTotalFC-$invoice->PaidFC;
+                                            $final_amount = $finalTotal - $invoice->PaidFC;
                                             $usd = "";
                                             $euro = "";
                                             $php = "";
@@ -415,7 +416,6 @@
                                             <td>@if($invoice->DocCur == 'PHP')
                                                     @if($invoice->DocType == "I")
                                                         @php
-                                                            // $total_php_t = $total_php_t + $invoice->DocTotal - $invoice->PaidToDate; 
                                                             $php_t_amount = $invoice->DocTotal - $invoice->PaidToDate;
                                                             $total_php_t += $php_t_amount;
 
@@ -446,7 +446,6 @@
                                             <td>@if($invoice->DocCur == 'PHP')
                                                     @if($invoice->DocType == "S") 
                                                         @php
-                                                            // $total_php_nt = $total_php_nt + $invoice->DocTotal - $invoice->PaidToDate; 
                                                             $php_nt_amount = $invoice->DocTotal - $invoice->PaidToDate;
                                                             $total_php_nt += $php_nt_amount;
 
@@ -475,46 +474,6 @@
                                                 @else NA 
                                                 @endif
                                             </td>
-                                            {{-- @php
-                                                $now = time(); 
-                                                $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
-                                                $datediff = $now - $your_date
-                                            @endphp
-                                            <td>{{ceil($datediff / (60 * 60 * 24)). " days"}}</td>
-                                            @php
-                                                if (ceil($datediff / (60 * 60 * 24)) <= 0) {
-                                                    $total_current++;
-                                                    $status = 'Current';
-                                                    $total_current_php = $total_current_php+($final_amount*$invoice->DocRate);
-                                                }
-                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 1) && (ceil($datediff / (60 * 60 * 24)) <= 30))
-                                                {
-                                                    $status = '1  to 30 days Late';
-                                                    
-                                                    $total_month++;
-                                                    $total_month_php = $total_month_php+($final_amount*$invoice->DocRate);
-                                                }
-                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 31) && (ceil($datediff / (60 * 60 * 24)) <= 60))
-                                                {
-                                                    $status = '31  to 60 days Late';
-                                                    $total_twomonth++;
-                                                    $total_twomonth_php = $total_twomonth_php+($final_amount*$invoice->DocRate);
-                                                }
-                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 61) && (ceil($datediff / (60 * 60 * 24)) <= 90))
-                                                {
-                                                    $status = '61  to 90 days Late';
-                                                    
-                                                    $total_threemonth++;
-                                                    $total_threemonth_php = $total_threemonth_php+($final_amount*$invoice->DocRate);
-                                                }
-                                                else
-                                                {
-                                                    $total_over_days++;
-                                                    $status = 'Over 90 days Late';
-                                                    $total_over_days_php = $total_over_days_php+($final_amount*$invoice->DocRate);
-                                                }
-                                            @endphp
-                                            <td>{{$status}}</td> --}}
                                             @php
                                                 $end_date = strtotime(Request::get('end_date')); 
                                                 if (empty($end_date)) {
@@ -522,7 +481,7 @@
                                                     }
                                                 $datediff = $end_date - strtotime(date('m/d/Y', strtotime($invoice->DocDueDate))); 
                                             @endphp
-                                            <td>{{ ceil($datediff / (60 * 60 * 24)) . " days" }}</td>
+                                            <td>{{ ceil($datediff / (60 * 60 * 24))}} {{ ceil($datediff / (60 * 60 * 24)) == 1 ? 'day' : 'days' }}</td>
                                             @php
                                                 if (ceil($datediff / (60 * 60 * 24)) <= 0) {
                                                     $total_current++;
@@ -571,38 +530,6 @@
                                                     N/A
                                                 @endif
                                             </td>
-                                            @php
-                                                // if ($invoice->DocCur == "USD") {
-                                                //     $usd_amount = $final_amount;
-
-                                                //     if (ceil($datediff / (60 * 60 * 24)) <= 0) {
-                                                //         $total_current_usd += $usd_amount;
-                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 1 && ceil($datediff / (60 * 60 * 24)) <= 30) {
-                                                //         $total_month_usd += $usd_amount;
-                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 31 && ceil($datediff / (60 * 60 * 24)) <= 60) {
-                                                //         $total_twomonth_usd += $usd_amount;
-                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 61 && ceil($datediff / (60 * 60 * 24)) <= 90) {
-                                                //         $total_threemonth_usd += $usd_amount;
-                                                //     } else {
-                                                //         $total_over_days_usd += $usd_amount;
-                                                //     }
-                                                // }
-                                                // if ($invoice->DocCur == "EUR") {
-                                                //     $euro_amount = $final_amount;
-
-                                                //     if (ceil($datediff / (60 * 60 * 24)) <= 0) {
-                                                //         $total_current_euro += $euro_amount;
-                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 1 && ceil($datediff / (60 * 60 * 24)) <= 30) {
-                                                //         $total_month_euro += $euro_amount;
-                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 31 && ceil($datediff / (60 * 60 * 24)) <= 60) {
-                                                //         $total_twomonth_euro += $euro_amount;
-                                                //     } elseif (ceil($datediff / (60 * 60 * 24)) >= 61 && ceil($datediff / (60 * 60 * 24)) <= 90) {
-                                                //         $total_threemonth_euro += $euro_amount;
-                                                //     } else {
-                                                //         $total_over_days_euro += $euro_amount;
-                                                //     }
-                                                // }
-                                            @endphp
                                         </tr>
                                         @endforeach
                                         @foreach ($last_invoices as $invoice)
@@ -830,7 +757,6 @@
     var total_over_days = {!! json_encode($total_over_days) !!};
     var total_current_php = {!! json_encode(number_format($total_current_php,2)) !!};
     var total_current_usd = {!! json_encode(number_format($total_current_usd,2)) !!};
-    // console.log(total_current_usd);
     var total_month_usd = {!! json_encode(number_format($total_month_usd,2)) !!};
     var total_twomonth_usd = {!! json_encode(number_format($total_twomonth_usd,2)) !!};
     var total_threemonth_usd = {!! json_encode(number_format($total_threemonth_usd,2)) !!};
@@ -925,17 +851,17 @@
    {
    
    }
-//    var end_date = Date.parse('<?php echo date("Y-m-d H:i:s", strtotime(Request::get('end_date'))); ?>');
 var end_date_param = '<?php echo Request::get("end_date"); ?>';
 var end_date;
 
 if (end_date_param !== '') {
     end_date = Date.parse(end_date_param);
 } else {
-    end_date = Date.now(); // If 'end_date' is empty, use current date
+    end_date = Date.now(); 
 }
    var invoicesData = <?php echo json_encode($invoices); ?>;
-console.log(invoicesData);
+
+
 function openModal(filterColumn) {
     console.log(filterColumn);
     var filteredData = invoicesData.filter(function (item) {
@@ -959,9 +885,8 @@ function openModal(filterColumn) {
         } else {
             status = 'Over 90 days Late';
         }
-        // return status.toLowerCase() === filterColumn.toLowerCase();
         if (filterColumn.toLowerCase() === 'total ar aging') {
-            return true; // Include all statuses
+            return true; 
         } else {
             return status.toLowerCase() === filterColumn.toLowerCase();
         }
@@ -974,9 +899,7 @@ function openModal(filterColumn) {
 
 function openModalByStatusAndCurrency(status, currency) {
     var filteredData = invoicesData.filter(function(item) {
-        // var datediff = (new Date() - new Date(item.DocDueDate)) / (1000 * 60 * 60 * 24); // Calculate date difference in days
-        // var currentStatus = '';
-
+       
         var currentDate = new Date();
         var dueDate = new Date(item.DocDueDate);
         
@@ -998,9 +921,8 @@ function openModalByStatusAndCurrency(status, currency) {
             currentStatus = 'Over 90 days Late';
         }
 
-        // return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase();
         if (status.toLowerCase() === 'total ar aging') {
-            return item.DocCur === currency.toUpperCase(); // Include all statuses
+            return item.DocCur === currency.toUpperCase(); 
         } else {
             return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase();
         }
@@ -1013,9 +935,6 @@ function openModalByStatusAndCurrency(status, currency) {
 
 function openModalByStatusAndCurrencyAndType(status, currency, type) {
     var filteredData = invoicesData.filter(function(item) {
-        // var datediff = (new Date() - new Date(item.DocDueDate)) / (1000 * 60 * 60 * 24); // Calculate date difference in days
-        // var currentStatus = '';
-
         var currentDate = new Date();
         var dueDate = new Date(item.DocDueDate);
 
@@ -1037,7 +956,6 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
             currentStatus = 'Over 90 days Late';
         }
 
-        // return currentStatus.toLowerCase() === status.toLowerCase() && item.DocCur === currency.toUpperCase() && item.DocType === type.toUpperCase();
         if (status.toLowerCase() === 'total ar aging') {
             return item.DocCur === currency.toUpperCase() && item.DocType === type.toUpperCase(); 
         } else {
@@ -1056,7 +974,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     var tableHeader = modalBody.find('.invoiceTable thead');
 
     tableBody.empty();
-    tableBody.empty();
+    tableHeader.empty();
     var headerRow = '<tr>' +
         '<th>Action</th>' +
         '<th>Customer Name</th>' +
@@ -1081,7 +999,28 @@ function renderModalContent(data, filterColumn, status, currency, type) {
         '</tr>';
         tableHeader.html(headerRow);
     data.forEach(function (item) {
-    var finalAmount = item.DocTotalFC - item.PaidFC;
+
+        var currencySymbol;
+if (item.DocCur === "USD") {
+    currencySymbol = "$";
+} else if (item.DocCur === "EUR") {
+    currencySymbol = "€";
+} else if (item.DocCur === "PHP") {
+    currencySymbol = "₱";
+} else {
+    currencySymbol = ""; 
+}
+
+var totalFrgnTRIWhse = 0;
+item.inv1.forEach(function (item) {
+    if (item.WhsCode === 'TRI Whse') {
+        totalFrgnTRIWhse += item.TotalFrgn;
+    }
+});
+var finalTotal = item.DocTotalFC - totalFrgnTRIWhse;
+var formattedFinalTotal = currencySymbol + '' + finalTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    
+var finalAmount = finalTotal - item.PaidFC;
 
     var usd = "";
     var euro = "";
@@ -1115,10 +1054,9 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     var your_date = new Date(item.DocDueDate);
 
     var currentDateUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-        var dueDateUTC = Date.UTC(your_date.getFullYear(), your_date.getMonth(), your_date.getDate());
-    // var datediff = now - your_date;
-    // var daysDifference = Math.ceil(datediff / (1000 * 60 * 60 * 24));
+    var dueDateUTC = Date.UTC(your_date.getFullYear(), your_date.getMonth(), your_date.getDate());
     var daysDifference = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
+    var daysText = daysDifference + ' ' + (daysDifference === 1 ? 'day' : 'days');
 
     var status;
     if (daysDifference <= 0) {
@@ -1146,22 +1084,13 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     } else {
         remarksHtml = 'N/A';
     }
-    var currencySymbol;
-if (item.DocCur === "USD") {
-    currencySymbol = "$";
-} else if (item.DocCur === "EUR") {
-    currencySymbol = "€";
-} else if (item.DocCur === "PHP") {
-    currencySymbol = "₱";
-} else {
-    currencySymbol = ""; // Handle other currencies or unexpected values
-}
+   
     var row = '<tr>' +
         '<td align="center">' + remarksButtonHtml + '</td>' +
         '<td>' + item.CardName + '</td>' +
         '<td>' + item.U_invNo + '</td>' +
         '<td>' + item.NumAtCard + '</td>' +
-        '<td>' + currencySymbol + '' + parseFloat(item.DocTotalFC).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + '</td>' +
+        '<td>' + formattedFinalTotal + '</td>' +
         '<td>' + formatDate(item.DocDate) + '</td>' +
         '<td>' + item.terms.PymntGroup + '</td>' +
         '<td>' + (item.U_BaseDate ? formatDate(item.U_BaseDate) : "NA") + '</td>' +
@@ -1170,16 +1099,13 @@ if (item.DocCur === "USD") {
         '<td>' + (euro !== "" ? '€' + '' +parseFloat(euro).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
         '<td>' + (php_t !== "" ? '₱' + '' +parseFloat(php_t).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
         '<td>' + (php_nt !== "" ? '₱' + '' +parseFloat(php_nt).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
-        '<td>' + daysDifference + ' days' + '</td>' + 
+        '<td>' + daysText + '</td>' + 
         '<td>' + status + '</td>' + 
         '<td>' + item.DocRate + '</td>' +
         '<td>' + (finalAmount * item.DocRate).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</td>' +
         '<td>' + ((item.location && item.location.ocrg && item.location.ocrg.GroupName !== "") ? item.location.ocrg.GroupName : "NA") + '</td>' +
         '<td>' + item.manager.SlpName + '</td>' +
         '<td>' + remarksHtml + '</td>' +
-
-
-
         '</tr>';
 
     

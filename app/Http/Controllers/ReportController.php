@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\INV1;
 use App\OINV;
 use App\OINV_PBI;
 use App\OINV_CCC;
@@ -55,25 +56,31 @@ class ReportController extends Controller
             }
             $invoices1 = $query1->get();
 
+            $matchingDocEntries = INV1::select('DocEntry')
+            ->whereIn('WhsCode', ['TRI Whse', 'VAT'])
+            ->groupBy('DocEntry')
+            ->havingRaw('COUNT(DISTINCT WhsCode) > 1 OR (COUNT(DISTINCT WhsCode) = 1 AND MAX(WhsCode) <> \'TRI Whse\')')
+            ->get();
+
             $query2 = OINV::with('payments', 'terms', 'manager', 'remark')
-              ->where('DocNum', 18481)
-              ->whereHas('warehouse', function($query) {
-                  $query->where('WhsCode', 'VAT');
-              })
-              ->first();
+            ->whereIn('DocEntry', $matchingDocEntries)
+            ->where('DocStatus', 'O')
+            ->get();
 
             $invoices = $invoices1;
 
-            if ($query2 && !$invoices1->contains('DocNum', 18481)) {
-                $invoices->push($query2);
+            foreach ($query2 as $invoice) {
+                if (!$invoices1->contains('DocNum', $invoice->DocNum)) {
+                    $invoices->push($invoice);
+                }
             }
-                    }
+        }
         // 5/14/24 JunJihad Apply Date Between Start
        elseif ($request->company == "PBI") {
             $query = OINV_PBI::with('payments', 'terms', 'manager', 'remark')->where('CardCode', 'not like', 'LL-%')->where('DocStatus', 'O');
 
-            if ($request->filled('start_date') && $request->filled('end_date')) {
-                $query->whereBetween('DocDate', [$request->start_date, $request->end_date]);
+            if ($request->filled('end_date')) {
+                $query->where('DocDate', '<=', $request->end_date);
             }
 
             $invoices = $query->orderBy('DocDueDate', 'desc')->get();
@@ -84,8 +91,8 @@ class ReportController extends Controller
             // $invoices = OINV_CCC::with('payments','terms','manager', 'remark')->where('DocStatus', 'O')->orderBy('DocDueDate', 'desc')->get();
             $query = OINV_CCC::with('payments','terms','manager', 'remark')->where('DocStatus', 'O');
             
-            if ($request->filled('start_date') && $request->filled('end_date')) {
-                $query->whereBetween('DocDate', [$request->start_date, $request->end_date]);
+            if ($request->filled('end_date')) {
+                $query->where('DocDate', '<=', $request->end_date);
             }
             $invoices = $query->orderBy('DocDueDate', 'desc')->get();
         }
@@ -100,6 +107,7 @@ class ReportController extends Controller
                 'aging' => $aging,
                 'previous_month' => $previous_month,
                 'last_invoices' => $last_invoices,
+                // 'matchingDocEntries' => $matchingDocEntries,
             )
         ); 
     }
