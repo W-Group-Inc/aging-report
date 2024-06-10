@@ -354,7 +354,7 @@
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                            <td>{{date('m/d/Y', strtotime($invoice->DocDueDate))}}</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->U_DueDateAR))}}</td>
                                             @php
                                             $final_amount = $finalTotal - $invoice->PaidFC;
                                             $usd = "";
@@ -368,7 +368,7 @@
                                                     if (empty($end_date)) {
                                                         $end_date = time(); 
                                                     }
-                                                    $dueDateTimestamp = strtotime($invoice->DocDueDate);
+                                                    $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                     $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
 
                                                     if ($daysLate <= 0) {
@@ -391,7 +391,7 @@
                                                     if (empty($end_date)) {
                                                         $end_date = time(); 
                                                     }
-                                                    $dueDateTimestamp = strtotime($invoice->DocDueDate);
+                                                    $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                     $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
 
                                                     if ($daysLate <= 0) {
@@ -423,7 +423,7 @@
                                                             if (empty($end_date)) {
                                                                 $end_date = time(); 
                                                             }
-                                                            $dueDateTimestamp = strtotime($invoice->DocDueDate);
+                                                            $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                             $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
                                                             if ($daysLate <= 0) {
@@ -453,7 +453,7 @@
                                                             if (empty($end_date)) {
                                                                 $end_date = time(); 
                                                             }
-                                                            $dueDateTimestamp = strtotime($invoice->DocDueDate);
+                                                            $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                             $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
                                                             if ($daysLate <= 0) {
@@ -479,7 +479,7 @@
                                                 if (empty($end_date)) {
                                                         $end_date = time(); 
                                                     }
-                                                $datediff = $end_date - strtotime(date('m/d/Y', strtotime($invoice->DocDueDate))); 
+                                                $datediff = $end_date - strtotime(date('m/d/Y', strtotime($invoice->U_DueDateAR))); 
                                             @endphp
                                             <td>{{ ceil($datediff / (60 * 60 * 24))}} {{ ceil($datediff / (60 * 60 * 24)) == 1 ? 'day' : 'days' }}</td>
                                             @php
@@ -548,7 +548,7 @@
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                            <td>{{date('m/d/Y', strtotime($invoice->DocDueDate))}}</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->U_DueDateAR))}}</td>
                                             @php
                                             $final_amount = $invoice->DocTotalFC-$invoice->PaidFC;
                                             $usd = "";
@@ -596,7 +596,7 @@
                                                 if (empty($end_date)) {
                                                         $end_date = time(); 
                                                     }
-                                                $your_date = strtotime(date('m/d/Y', strtotime($invoice->DocDueDate)));
+                                                $your_date = strtotime(date('m/d/Y', strtotime($invoice->U_DueDateAR)));
                                                 $datediff = $end_date - $your_date
                                             @endphp
                                             <td>{{ceil($datediff / (60 * 60 * 24)). " days"}}</td>
@@ -866,7 +866,7 @@ function openModal(filterColumn) {
     console.log(filterColumn);
     var filteredData = invoicesData.filter(function (item) {
         var currentDate = new Date();
-        var dueDate = new Date(item.DocDueDate);
+        var dueDate = new Date(item.U_DueDateAR);
 
         var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
         var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
@@ -901,7 +901,7 @@ function openModalByStatusAndCurrency(status, currency) {
     var filteredData = invoicesData.filter(function(item) {
        
         var currentDate = new Date();
-        var dueDate = new Date(item.DocDueDate);
+        var dueDate = new Date(item.U_DueDateAR);
         
         var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
         var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
@@ -936,7 +936,7 @@ function openModalByStatusAndCurrency(status, currency) {
 function openModalByStatusAndCurrencyAndType(status, currency, type) {
     var filteredData = invoicesData.filter(function(item) {
         var currentDate = new Date();
-        var dueDate = new Date(item.DocDueDate);
+        var dueDate = new Date(item.U_DueDateAR);
 
         var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
         var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
@@ -1051,7 +1051,7 @@ var finalAmount = finalTotal - item.PaidFC;
     }
 
     var now = new Date();
-    var your_date = new Date(item.DocDueDate);
+    var your_date = new Date(item.U_DueDateAR);
 
     var currentDateUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     var dueDateUTC = Date.UTC(your_date.getFullYear(), your_date.getMonth(), your_date.getDate());
@@ -1094,7 +1094,7 @@ var finalAmount = finalTotal - item.PaidFC;
         '<td>' + formatDate(item.DocDate) + '</td>' +
         '<td>' + item.terms.PymntGroup + '</td>' +
         '<td>' + (item.U_BaseDate ? formatDate(item.U_BaseDate) : "NA") + '</td>' +
-        '<td>' + formatDate(item.DocDueDate) + '</td>' +
+        '<td>' + formatDate(item.U_DueDateAR) + '</td>' +
         '<td>' + (usd !== "" ? '$' + '' +parseFloat(usd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
         '<td>' + (euro !== "" ? '€' + '' +parseFloat(euro).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
         '<td>' + (php_t !== "" ? '₱' + '' +parseFloat(php_t).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +

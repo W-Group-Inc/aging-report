@@ -49,7 +49,7 @@ class ReportController extends Controller
             ->where('CardCode', 'not like', 'LR-%')
             ->where('CardCode', 'not like', 'WTT-%')
             ->where('DocStatus', 'O')
-            ->orderBy('DocDueDate', 'desc');
+            ->orderBy('U_DueDateAR', 'desc');
 
             if ($request->filled('end_date')) {
                 $query1->where('DocDate', '<=', $request->end_date);

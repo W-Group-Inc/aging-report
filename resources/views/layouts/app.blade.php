@@ -38,8 +38,7 @@
     </style>
 </head>
 <body class="gray-bg">
-    <div id = "myDiv" style="display:none;" class="loader">
-    </div>
+    <div id = "myDiv" style="display:none;" class="loader"></div>
     <div id="app">
         @yield('content')
     </div>
