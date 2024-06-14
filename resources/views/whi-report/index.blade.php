@@ -563,15 +563,19 @@
                                                     $currencySymbol = '₱';
                                                 }
                                                 $totalFrgnTRIWhse = 0;
-                                                foreach ($invoice->inv1 as $item) {
-                                                    if ($item->WhsCode === 'TRI Whse') {
-                                                        $totalFrgnTRIWhse += $item->TotalFrgn;
+                                                if(isset($invoice->inv1))
+                                                {
+                                                    
+                                                    foreach ($invoice->inv1 as $item) {
+                                                        if ($item->WhsCode === 'TRI Whse') {
+                                                            $totalFrgnTRIWhse += $item->TotalFrgn;
+                                                        }
+                                                        else {
+                                                            $totalFrgnTRIWhse = 0;
+                                                        }
                                                     }
-                                                    else {
-                                                        $totalFrgnTRIWhse = 0;
-                                                    }
-                                                }
 
+                                                }
                                                 $finalTotal = $invoice->DocTotalFC - $totalFrgnTRIWhse;
 
                                                 echo $currencySymbol . '' . number_format($finalTotal, 2);
