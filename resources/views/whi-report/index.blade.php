@@ -340,14 +340,27 @@
                                                 } elseif ($invoice->DocCur === 'PHP') {
                                                     $currencySymbol = '₱';
                                                 }
-                                                $totalFrgnTRIWhse = 0;
-                                                foreach ($invoice->inv1 as $item) {
-                                                    if ($item->WhsCode === 'TRI Whse') {
-                                                        $totalFrgnTRIWhse += $item->TotalFrgn;
-                                                    }
-                                                }
+                                                // $totalFrgnTRIWhse = 0;
+                                                // foreach ($invoice->inv1 as $item) {
+                                                //     if ($item->WhsCode === 'TRI Whse') {
+                                                //         $totalFrgnTRIWhse += $item->TotalFrgn;
+                                                //     }
+                                                // }
 
-                                                $finalTotal = $invoice->DocTotalFC - $totalFrgnTRIWhse;
+                                                // $finalTotal = $invoice->DocTotalFC - $totalFrgnTRIWhse;
+
+                                                $totalFrgnTRIWhse = 0;
+
+                                                if ($company === 'WHI') {
+                                                    foreach ($invoice->inv1 as $item) {
+                                                        if ($item->WhsCode === 'TRI Whse') {
+                                                            $totalFrgnTRIWhse += $item->TotalFrgn;
+                                                        }
+                                                    }
+                                                    $finalTotal = $invoice->DocTotalFC - $totalFrgnTRIWhse;
+                                                } else {
+                                                    $finalTotal = $invoice->DocTotalFC;
+                                                }
 
                                                 echo $currencySymbol . '' . number_format($finalTotal, 2);
                                                 ?></td>
@@ -1086,7 +1099,7 @@ var totalFrgnTRIWhse = 0;
                 }
             });
         } else {
-            totalFrgnTRIWhse = 25000;
+            totalFrgnTRIWhse = 0;
         }
 
 var finalTotal = item.DocTotalFC - totalFrgnTRIWhse;
