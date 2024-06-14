@@ -540,30 +540,30 @@
                                             </td>
                                         </tr>
                                         @endforeach
-                                        @foreach ($last_invoices as $invoiceinvoice)
+                                        @foreach ($last_invoices as $invoice)
                                         <tr>
                                             <td align="center">
-                                                @if($invoiceinvoice->remark)
-                                                    <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoiceinvoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
+                                                @if($invoice->remark)
+                                                    <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
                                                 @else
-                                                    <button onclick="getDocEntry({{$invoiceinvoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
+                                                    <button onclick="getDocEntry({{$invoice}});" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
                                                 @endif
                                             </td>
-                                            <td>{{$invoiceinvoice->CardName}}</td>
-                                            <td>{{$invoiceinvoice->U_invNo}}</td>
-                                            <td>{{$invoiceinvoice->NumAtCard}}</td>
+                                            <td>{{$invoice->CardName}}</td>
+                                            <td>{{$invoice->U_invNo}}</td>
+                                            <td>{{$invoice->NumAtCard}}</td>
                                             {{-- <td>{{ $invoice->DocCur .' '. number_format($invoice->DocTotalFC, 2) }}</td> --}}
                                             <td> <?php
                                                 $currencySymbol = '';
-                                                if ($invoiceinvoice->DocCur === 'USD') {
+                                                if ($invoice->DocCur === 'USD') {
                                                     $currencySymbol = '$';
-                                                } elseif ($invoiceinvoice->DocCur === 'EUR') {
+                                                } elseif ($invoice->DocCur === 'EUR') {
                                                     $currencySymbol = '€';
-                                                } elseif ($invoiceinvoice->DocCur === 'PHP') {
+                                                } elseif ($invoice->DocCur === 'PHP') {
                                                     $currencySymbol = '₱';
                                                 }
                                                 $totalFrgnTRIWhse = 0;
-                                                foreach ($invoiceinvoice->inv1 as $item) {
+                                                foreach ($invoice->inv1 as $item) {
                                                     if ($item->WhsCode === 'TRI Whse') {
                                                         $totalFrgnTRIWhse += $item->TotalFrgn;
                                                     }
@@ -572,14 +572,14 @@
                                                     }
                                                 }
 
-                                                $finalTotal = $invoiceinvoice->DocTotalFC - $totalFrgnTRIWhse;
+                                                $finalTotal = $invoice->DocTotalFC - $totalFrgnTRIWhse;
 
                                                 echo $currencySymbol . '' . number_format($finalTotal, 2);
                                                 ?></td>
-                                            <td>{{date('m/d/Y', strtotime($invoiceinvoice->DocDate))}}</td>
-                                            <td>{{$invoiceinvoice->terms->PymntGroup}}</td>
-                                            <td>@if($invoiceinvoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoiceinvoice->U_BaseDate))}}@else NA @endif</td>
-                                            <td>{{date('m/d/Y', strtotime($invoiceinvoice->U_DueDateAR))}}</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
+                                            <td>{{$invoice->terms->PymntGroup}}</td>
+                                            <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
+                                            <td>{{date('m/d/Y', strtotime($invoice->U_DueDateAR))}}</td>
                                             @php
                                             $final_amount = + 25000.00;
                                             $usd = "";
@@ -621,31 +621,31 @@
                                                 //     $total_usd = $total_usd + 25000.00;
                                                 //     $usd = number_format(25000.00,2);
                                                 // }
-                                                elseif($invoiceinvoice->DocCur == "EUR") {
+                                                elseif($invoice->DocCur == "EUR") {
                                                     $total_euro = $total_euro+$final_amount;
                                                     $euro = number_format($final_amount,2);
                                                 }
                                                 else {
-                                                    $php = number_format($invoiceinvoice->DocTotal - $invoiceinvoice->PaidToDate,2);
-                                                    $final_amount = $invoiceinvoice->DocTotal - $invoiceinvoice->PaidToDate;
+                                                    $php = number_format($invoice->DocTotal - $invoice->PaidToDate,2);
+                                                    $final_amount = $invoice->DocTotal - $invoice->PaidToDate;
                                                 }
                                             @endphp
                                             <td>@if($usd != null){{$usd}} @else NA @endif</td>
                                             <td>@if($euro != null){{$euro}} @else NA @endif</td>
-                                            <td>@if($invoiceinvoice->DocCur == 'PHP')
+                                            <td>@if($invoice->DocCur == 'PHP')
                                                     @if($invoice->DocType == "I")
                                                         @php
-                                                            $total_php_t = $total_php_t + $invoiceinvoice->DocTotal - $invoiceinvoice->PaidToDate; 
+                                                            $total_php_t = $total_php_t + $invoice->DocTotal - $invoice->PaidToDate; 
                                                         @endphp {{$php}}
                                                     @else NA 
                                                     @endif
                                                 @else NA 
                                                 @endif
                                             </td>
-                                            <td>@if($invoiceinvoice->DocCur == 'PHP')
-                                                    @if($invoiceinvoice->DocType == "S") 
+                                            <td>@if($invoice->DocCur == 'PHP')
+                                                    @if($invoice->DocType == "S") 
                                                         @php
-                                                            $total_php_nt = $total_php_nt + $invoiceinvoice->DocTotal - $invoiceinvoice->PaidToDate; 
+                                                            $total_php_nt = $total_php_nt + $invoice->DocTotal - $invoice->PaidToDate; 
                                                         @endphp 
                                                     {{$php}}
                                                     @else NA 
@@ -658,7 +658,7 @@
                                                 if (empty($end_date)) {
                                                         $end_date = time(); 
                                                     }
-                                                $your_date = strtotime(date('m/d/Y', strtotime($invoiceinvoice->U_DueDateAR)));
+                                                $your_date = strtotime(date('m/d/Y', strtotime($invoice->U_DueDateAR)));
                                                 $datediff = $end_date - $your_date
                                             @endphp
                                             <td>{{ceil($datediff / (60 * 60 * 24)). " days"}}</td>
@@ -691,20 +691,20 @@
                                                 }
                                             @endphp
                                             <td>{{$status}}</td>
-                                            <td>{{$invoiceinvoice->DocRate}}</td>
+                                            <td>{{$invoice->DocRate}}</td>
                                             @php
-                                                $total_php = $final_amount*$invoiceinvoice->DocRate + $total_php;
+                                                $total_php = $final_amount*$invoice->DocRate + $total_php;
                                             @endphp
-                                            <td>{{number_format($final_amount*$invoiceinvoice->DocRate,2)}}</td>
-                                            <td>{{$invoiceinvoice->location->ocrg->GroupName ?? 'N/A'}}</td> 
-                                            <td>{{$invoiceinvoice->manager->SlpName}}</td>
+                                            <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
+                                            <td>{{$invoice->location->ocrg->GroupName ?? 'N/A'}}</td> 
+                                            <td>{{$invoice->manager->SlpName}}</td>
                                             <td>
-                                                @if($invoiceinvoice->remark)
-                                                    {{$invoiceinvoice->remark->remarks}}
+                                                @if($invoice->remark)
+                                                    {{$invoice->remark->remarks}}
                                                     <br>
-                                                    <span style="font-size: 10px">Date Created: <span class="label label-primary">{{ $invoiceinvoice->remark->created_at->format('M. d, Y g:i A') }}</span>
+                                                    <span style="font-size: 10px">Date Created: <span class="label label-primary">{{ $invoice->remark->created_at->format('M. d, Y g:i A') }}</span>
                                                     <br>
-                                                    <span style="font-size: 10px">Date Updated: <span class="label label-warning">{{ $invoiceinvoice->remark->updated_at->format('M. d, Y g:i A') }}</span>
+                                                    <span style="font-size: 10px">Date Updated: <span class="label label-warning">{{ $invoice->remark->updated_at->format('M. d, Y g:i A') }}</span>
                                                 @else
                                                     N/A
                                                 @endif
