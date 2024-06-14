@@ -318,6 +318,7 @@
                                             $total_threemonth_php = 0;
                                             $total_over_days_php = 0;
                                         @endphp
+                                        @if (is_array($invoices) || is_object($invoices))
                                         @foreach ($invoices as $invoice)
                                         <tr>
                                             <td align="center">
@@ -540,6 +541,8 @@
                                             </td>
                                         </tr>
                                         @endforeach
+                                        @endif
+                                        @if (is_array($last_invoices) || is_object($last_invoices))
                                         @foreach ($last_invoices as $invoice)
                                         <tr>
                                             <td align="center">
@@ -711,6 +714,7 @@
                                             </td>
                                         </tr>
                                         @endforeach
+                                        @endif
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -761,6 +765,7 @@
             </div>
         </form>
     </div>
+    @if (is_array($invoices) || is_object($invoices))
     @foreach($invoices as $invoice)
         @if ($invoice->remark)
             <div class="modal fade" id="edit_remarks{{ $invoice->remark->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -792,6 +797,7 @@
             </div>
         @endif
     @endforeach
+    @endif
 </div>
 
 @php
