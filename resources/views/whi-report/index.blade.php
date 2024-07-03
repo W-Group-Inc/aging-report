@@ -4,6 +4,23 @@
 <link href="{{ asset('/inside/login_css/css/style.css') }}" rel="stylesheet">
 @endsection
 @section('content')
+<style>
+    .table-modal-responsive {
+    position: relative;
+    height: 400px; 
+    overflow: auto;
+    display: inline-block;
+    width: 100%;
+    }
+
+    .table-modal-responsive .invoiceTable thead th {
+    position: sticky;
+    top: 0;
+    background-color: #fff; 
+    z-index: 2;
+    }
+
+</style>
 <div class="wrapper wrapper-content ">
     <div class="row">
         <div class="col-md-12">
@@ -56,8 +73,7 @@
                         <div class="col-md-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content">
-                                    <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span>   <div class="stat-percent font-bold text-white" style='font-size:11px;' >&#8369; <span id='total_current_php'>0.00</span></div></h3><br>
-                                      </a>
+                                    <a href="#table"><h3 class="no-margins bg-primary p-xs b-r-sm "   onclick='current("current");' >Current : <span id='total_current'>0</span>   <div class="stat-percent font-bold text-white" style='font-size:11px;' >&#8369; <span id='total_current_php'>0.00</span></div></h3><br></a>
                                     <a href="#table"><h3 class="no-margins bg-info p-xs b-r-sm" href="#table" onclick='current("1 to 30 days late");'>1 to 30 days late : <span id='total_month'>0</span> <div class="stat-percent font-bold text-white" style='font-size:11px;' >&#8369; <span id='total_month_php'>0.00</span></div></h3></a>  <br>
                                     <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("31 to 60 days late");'>31 to 60 days late : <span id='total_twomonth'>0</span><div class="stat-percent font-bold text-white" style='font-size:11px;' >&#8369; <span id='total_twomonth_php'>0.00</span></div></h3></a>  <br>
                                     <a href="#table"><h3 class="no-margins bg-warning p-xs b-r-sm" href="#table" onclick='current("61 to 90 days late");'>61 to 90 days late : <span id='total_threemonth'>0</span><div class="stat-percent font-bold text-white" style='font-size:11px;' >&#8369; <span id='total_threemonth_php'>0.00</span></div></h3></a>  <br>
@@ -224,7 +240,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
+                    <div class="table-modal-responsive">
                     <table id='invoiceTable' class="table table-striped table-bordered table-hover tables invoiceTable" style="margin-bottom: 0px !important;">
                         <thead>
                             
@@ -367,7 +383,13 @@
                                             <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
                                             <td>{{$invoice->terms->PymntGroup}}</td>
                                             <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                            <td>{{date('m/d/Y', strtotime($invoice->U_DueDateAR))}}</td>
+                                            <td>
+                                                @if(!empty($invoice->U_DueDateAR))
+                                                {{ date('m/d/Y', strtotime($invoice->U_DueDateAR)) }}
+                                                @else
+                                                TBA
+                                                @endif
+                                        </td>
                                             @php
                                             $final_amount = $finalTotal - $invoice->PaidFC;
                                             $usd = "";
@@ -500,9 +522,21 @@
                                                 if (empty($end_date)) {
                                                         $end_date = time(); 
                                                     }
-                                                $datediff = $end_date - strtotime(date('m/d/Y', strtotime($invoice->U_DueDateAR))); 
+                                                    $due_date = !empty($invoice->U_DueDateAR) ? strtotime(date('m/d/Y', strtotime($invoice->U_DueDateAR))) : null;
+    
+                                                if ($due_date !== null) {
+                                                    $datediff = $end_date - $due_date;
+                                                } else {
+                                                    $datediff = null; 
+                                                } 
                                             @endphp
-                                            <td>{{ ceil($datediff / (60 * 60 * 24))}} {{ ceil($datediff / (60 * 60 * 24)) == 1 ? 'day' : 'days' }}</td>
+                                        <td>
+                                            @if($datediff !== null)
+                                                {{ ceil($datediff / (60 * 60 * 24)) }} {{ ceil($datediff / (60 * 60 * 24)) == 1 ? 'day' : 'days' }}
+                                            @else
+                                                {{ "0 days" }}
+                                            @endif
+                                        </td>
                                             @php
                                                 if (ceil($datediff / (60 * 60 * 24)) <= 0) {
                                                     $total_current++;
@@ -986,7 +1020,7 @@ function openModalByStatusAndCurrency(status, currency) {
         // var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
         var dueDateUTC = dueDate ? Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate()) : null;
         // var datediff = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
-        var datediff = dueDate ? Math.ceil((currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24)) : null;
+        var datediff = dueDate ? Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24)) : null;
         var currentStatus = '';
 
         if (!dueDate || datediff <= 0) {
@@ -1078,34 +1112,35 @@ function renderModalContent(data, filterColumn, status, currency, type) {
         '<th>Remarks</th>' +
         '</tr>';
         tableHeader.html(headerRow);
+        
     data.forEach(function (item) {
 
         var currencySymbol;
-if (item.DocCur === "USD") {
-    currencySymbol = "$";
-} else if (item.DocCur === "EUR") {
-    currencySymbol = "€";
-} else if (item.DocCur === "PHP") {
-    currencySymbol = "₱";
-} else {
-    currencySymbol = ""; 
-}
+    if (item.DocCur === "USD") {
+        currencySymbol = "$";
+    } else if (item.DocCur === "EUR") {
+        currencySymbol = "€";
+    } else if (item.DocCur === "PHP") {
+        currencySymbol = "₱";
+    } else {
+        currencySymbol = ""; 
+    }
 
-var totalFrgnTRIWhse = 0;
-        if (item.inv1 && Array.isArray(item.inv1)) {
-            item.inv1.forEach(function (subItem) {
-                if (subItem.WhsCode === 'TRI Whse') {
-                    totalFrgnTRIWhse += subItem.TotalFrgn;
-                }
-            });
-        } else {
-            totalFrgnTRIWhse = 0;
-        }
+    var totalFrgnTRIWhse = 0;
+            if (item.inv1 && Array.isArray(item.inv1)) {
+                item.inv1.forEach(function (subItem) {
+                    if (subItem.WhsCode === 'TRI Whse') {
+                        totalFrgnTRIWhse += subItem.TotalFrgn;
+                    }
+                });
+            } else {
+                totalFrgnTRIWhse = 0;
+            }
 
-var finalTotal = item.DocTotalFC - totalFrgnTRIWhse;
-var formattedFinalTotal = currencySymbol + '' + finalTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    
-var finalAmount = finalTotal - item.PaidFC;
+    var finalTotal = item.DocTotalFC - totalFrgnTRIWhse;
+    var formattedFinalTotal = currencySymbol + '' + finalTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        
+    var finalAmount = finalTotal - item.PaidFC;
 
     var usd = "";
     var euro = "";
@@ -1142,12 +1177,16 @@ var finalAmount = finalTotal - item.PaidFC;
     }
 
     var now = new Date();
-    var your_date = new Date(item.U_DueDateAR);
+    // var your_date = new Date(item.U_DueDateAR);
+    var your_date = item.U_DueDateAR ? new Date(item.U_DueDateAR) : null;
 
     var currentDateUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-    var dueDateUTC = Date.UTC(your_date.getFullYear(), your_date.getMonth(), your_date.getDate());
-    var daysDifference = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
-    var daysText = daysDifference + ' ' + (daysDifference === 1 ? 'day' : 'days');
+    // var dueDateUTC = Date.UTC(your_date.getFullYear(), your_date.getMonth(), your_date.getDate());
+    var dueDateUTC = your_date ? Date.UTC(your_date.getFullYear(), your_date.getMonth(), your_date.getDate()) : null;
+    // var daysDifference = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
+    var daysDifference = dueDateUTC ? Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24)) : null;
+    // var daysText = daysDifference + ' ' + (daysDifference === 1 ? 'day' : 'days');
+    var daysText = daysDifference !== null ? daysDifference + ' ' + (daysDifference === 1 ? 'day' : 'days') : '0 days';
 
     var status;
     if (daysDifference <= 0) {
@@ -1185,7 +1224,7 @@ var finalAmount = finalTotal - item.PaidFC;
         '<td>' + formatDate(item.DocDate) + '</td>' +
         '<td>' + item.terms.PymntGroup + '</td>' +
         '<td>' + (item.U_BaseDate ? formatDate(item.U_BaseDate) : "NA") + '</td>' +
-        '<td>' + formatDate(item.U_DueDateAR) + '</td>' +
+        '<td>' + (item.U_DueDateAR ? formatDate(item.U_DueDateAR) : 'TBA') + '</td>' +
         '<td>' + (usd !== "" ? '$' + '' +parseFloat(usd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
         '<td>' + (euro !== "" ? '€' + '' +parseFloat(euro).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
         '<td>' + (php_t !== "" ? '₱' + '' +parseFloat(php_t).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "NA") + '</td>' +
