@@ -1214,7 +1214,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     } else {
         remarksHtml = 'N/A';
     }
-   
+
     var row = '<tr>' +
         '<td align="center">' + remarksButtonHtml + '</td>' +
         '<td>' + item.CardName + '</td>' +
