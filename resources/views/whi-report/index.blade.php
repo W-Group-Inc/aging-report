@@ -808,6 +808,35 @@
             </div>
         </form>
     </div>
+    {{-- New Modal for table modal add remark  --}}
+    <div class="modal fade" id="add_tableremarks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="POST" action="{{url('new_remarks')}}" autocomplete="off">
+            @csrf
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Add Remarks</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="docentry" id="docentry" type="hidden">
+                        <input name="user_id" id="user_id" type="hidden" value="{{ auth()->user()->id }}">
+                        <div class="row">
+                            <div class="col-12 mb-10">
+                                <input name="remarks" id="remarks" class="form-control" type="text" placeholder="Enter Remarks" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     @foreach($invoices as $invoice)
         @if ($invoice->remark)
             <div class="modal fade" id="edit_remarks{{ $invoice->remark->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1151,7 +1180,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     if (item.remark) {
         remarksButtonHtml = '<button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks' + item.remark.id + '" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>';
     } else {
-        remarksButtonHtml = '<button onclick="getDocEntry(' + item + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
+        remarksButtonHtml = '<button onclick="getDocEntry(' + item + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_tableremarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
     }
 
     if (item.DocCur === "USD") {
