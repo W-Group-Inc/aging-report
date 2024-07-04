@@ -437,16 +437,27 @@
                                                     $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                     $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
 
-                                                    if ($daysLate <= 0) {
-                                                        $total_current_euro += $final_amount;
-                                                    } elseif ($daysLate >= 1 && $daysLate <= 30) {
-                                                        $total_month_euro += $final_amount;
-                                                    } elseif ($daysLate >= 31 && $daysLate <= 60) {
-                                                        $total_twomonth_euro += $final_amount;
-                                                    } elseif ($daysLate >= 61 && $daysLate <= 90) {
-                                                        $total_threemonth_euro += $final_amount;
+                                                    if (empty($invoice->U_DueDateAR)) {
+                                                        $total_current_euro += $final_amount; 
                                                     } else {
-                                                        $total_over_days_euro += $final_amount;
+                                                        $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
+                                                        if ($dueDateTimestamp === false) {
+                                                            $total_current_euro += $final_amount;
+                                                        } else {
+                                                            $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
+
+                                                            if ($daysLate <= 0) {
+                                                                $total_current_euro += $final_amount;
+                                                            } elseif ($daysLate >= 1 && $daysLate <= 30) {
+                                                                $total_month_euro += $final_amount;
+                                                            } elseif ($daysLate >= 31 && $daysLate <= 60) {
+                                                                $total_twomonth_euro += $final_amount;
+                                                            } elseif ($daysLate >= 61 && $daysLate <= 90) {
+                                                                $total_threemonth_euro += $final_amount;
+                                                            } else {
+                                                                $total_over_days_euro += $final_amount;
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 else {
@@ -499,6 +510,15 @@
                                                             $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                             $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
+                                                            if (empty($invoice->U_DueDateAR)) {
+                                                        $total_current_php_nt += $php_nt_amount; 
+                                                    } else {
+                                                        $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
+                                                        if ($dueDateTimestamp === false) {
+                                                            $total_current_php_nt += $php_nt_amount;
+                                                        } else {
+                                                            $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
+
                                                             if ($daysLate <= 0) {
                                                                 $total_current_php_nt += $php_nt_amount;
                                                             } elseif ($daysLate >= 1 && $daysLate <= 30) {
@@ -510,6 +530,8 @@
                                                             } else {
                                                                 $total_over_days_php_nt += $php_nt_amount;
                                                             }
+                                                        }
+                                                    }
                                                         @endphp 
                                                     {{'₱'."".$php}}
                                                     @else NA 
@@ -808,35 +830,6 @@
             </div>
         </form>
     </div>
-    {{-- New Modal for table modal add remark  --}}
-    <div class="modal fade" id="add_tableremarks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form method="POST" action="{{url('new_remarks')}}" autocomplete="off">
-            @csrf
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="exampleModalLabel">Add Remarks</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input name="docentry" id="docentry" type="hidden">
-                        <input name="user_id" id="user_id" type="hidden" value="{{ auth()->user()->id }}">
-                        <div class="row">
-                            <div class="col-12 mb-10">
-                                <input name="remarks" id="remarks" class="form-control" type="text" placeholder="Enter Remarks" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
     @foreach($invoices as $invoice)
         @if ($invoice->remark)
             <div class="modal fade" id="edit_remarks{{ $invoice->remark->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -883,10 +876,7 @@
 <script src="{{ asset('/inside/login_css/js/plugins/chosen/chosen.jquery.js') }}"></script>
 <script>
 
-    function getDocEntry(data)
-    {
-        document.getElementById("docentry").value = data.DocNum;
-    }
+   
 
     var total_current = {!! json_encode($total_current) !!};
     var total_month = {!! json_encode($total_month) !!};
@@ -985,10 +975,6 @@
         });
 
     });
-//    function current(value)
-//    {
-   
-//    }
 var end_date_param = '<?php echo Request::get("end_date"); ?>';
 var end_date;
 
@@ -1079,15 +1065,16 @@ function openModalByStatusAndCurrency(status, currency) {
 function openModalByStatusAndCurrencyAndType(status, currency, type) {
     var filteredData = combinedData.filter(function(item) {
         var currentDate = new Date();
-        var dueDate = new Date(item.U_DueDateAR);
+        var dueDate =item.U_DueDateAR ? new Date(item.U_DueDateAR) : null;
 
         var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-        var dueDateUTC = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
-
-        var datediff = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
+        var dueDateUTC = dueDate ? Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate()) : null;
+        var datediff = dueDate ? Math.ceil((currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24)) : null;
+        // var datediff = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
+        
         var currentStatus = '';
 
-        if (datediff <= 0) {
+        if (!dueDate || datediff <= 0) {
             currentStatus = 'current';
         } else if (datediff >= 1 && datediff <= 30) {
             currentStatus = '1 to 30 days Late';
@@ -1143,7 +1130,6 @@ function renderModalContent(data, filterColumn, status, currency, type) {
         tableHeader.html(headerRow);
         
     data.forEach(function (item) {
-
         var currencySymbol;
     if (item.DocCur === "USD") {
         currencySymbol = "$";
@@ -1180,7 +1166,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     if (item.remark) {
         remarksButtonHtml = '<button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks' + item.remark.id + '" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>';
     } else {
-        remarksButtonHtml = '<button onclick="getDocEntry(' + item + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_tableremarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
+        remarksButtonHtml = '<button onclick="getDocEntry(' + item + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
     }
 
     if (item.DocCur === "USD") {
@@ -1327,6 +1313,10 @@ function updateSessionStorage() {
 
     updateAgingDateFromSessionStorage();
 
+    function getDocEntry(data)
+    {
+        document.getElementById("docentry").value = data.DocNum;
+    }
 
 </script>
 
