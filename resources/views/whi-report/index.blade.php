@@ -480,17 +480,29 @@
                                                             $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                             $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
+                                                            if (empty($invoice->U_DueDateAR)) {
+                                                        $total_current_php_t += $php_nt_amount; 
+                                                    } else {
+                                                        $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
+                                                        if ($dueDateTimestamp === false) {
+                                                            $total_current_php_t += $php_t_amount;
+                                                        } else {
+                                                            $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
+
                                                             if ($daysLate <= 0) {
                                                                 $total_current_php_t += $php_t_amount;
                                                             } elseif ($daysLate >= 1 && $daysLate <= 30) {
                                                                 $total_month_php_t += $php_t_amount;
-                                                            } elseif ($daysLate <= 31 && $daysLate <= 60) {
+                                                            } elseif ($daysLate >= 31 && $daysLate <= 60) {
                                                                 $total_twomonth_php_t += $php_t_amount;
-                                                            } elseif ($daysLate <= 61 && $daysLate <= 90) {
+                                                            } elseif ($daysLate >= 61 && $daysLate <= 90) {
                                                                 $total_threemonth_php_t += $php_t_amount;
                                                             } else {
                                                                 $total_over_days_php_t += $php_t_amount;
                                                             }
+                                                        }
+                                                    }
+                                                
                                                         @endphp {{'₱'."".$php}}
                                                     @else NA 
                                                     @endif
@@ -1069,7 +1081,7 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
 
         var currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
         var dueDateUTC = dueDate ? Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate()) : null;
-        var datediff = dueDate ? Math.ceil((currentDateUTC - dueDateUTC) / (1000 * 60 * 60 * 24)) : null;
+        var datediff = dueDate ? Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24)) : null;
         // var datediff = Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24));
         
         var currentStatus = '';
