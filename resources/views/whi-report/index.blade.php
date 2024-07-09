@@ -238,10 +238,11 @@
                 <div class="modal-header">
                     <h4 class="modal-title text-center" id="modalTitle">Table Modal</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="btn btn-primary" onclick="fnExcelReport();">Export Table</button>
                 </div>
                 <div class="modal-body">
                     <div class="table-modal-responsive">
-                    <table id='invoiceTable' class="table table-striped table-bordered table-hover tables invoiceTable" style="margin-bottom: 0px !important;">
+                    <table id='invoiceTable' class="table table-striped table-bordered table-hover tables" style="margin-bottom: 0px !important;">
                         <thead>
                             
                         </thead>
@@ -874,7 +875,7 @@
         @endif
     @endforeach
 </div>
-
+<iframe id="txtArea1" style="display:none"></iframe>
 @php
     $total_php = number_format($total_php,2);
     $total_usd = number_format($total_usd,2);
@@ -1112,8 +1113,8 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
 
 function renderModalContent(data, filterColumn, status, currency, type) {
     var modalBody = $('#myModal .modal-body');
-    var tableBody = modalBody.find('.invoiceTable tbody');
-    var tableHeader = modalBody.find('.invoiceTable thead');
+    var tableBody = modalBody.find('#invoiceTable tbody');
+    var tableHeader = modalBody.find('#invoiceTable thead');
 
     tableBody.empty();
     tableHeader.empty();
@@ -1178,7 +1179,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     if (item.remark) {
         remarksButtonHtml = '<button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks' + item.remark.id + '" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>';
     } else {
-        remarksButtonHtml = '<button onclick="getDocEntry(' + item + ');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
+        remarksButtonHtml = '<button onclick="getDocEntryModal(\'' + item.DocNum + '\');" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>';
     }
 
     if (item.DocCur === "USD") {
@@ -1270,6 +1271,13 @@ function renderModalContent(data, filterColumn, status, currency, type) {
      $(window).trigger('resize');
 });
 
+// $('.invoiceTable').DataTable({
+//             dom: 'Bfrtip',
+//             buttons: [
+//                 'csv', 'excel', 'pdf' 
+//             ]
+//         });
+
 function formatDate(dateString) {
     var date = new Date(dateString);
     var month = '' + (date.getMonth() + 1);
@@ -1296,6 +1304,11 @@ var modalTitle = document.getElementById("modalTitle");
     modalTitle.textContent = title;
 
 }
+
+$('#exportBtn').on('click', function () {
+        $('.invoiceTable').DataTable().buttons.exportData();
+    });
+
 function updateSessionStorage() {
         var endDate = document.getElementById('end_date').value;
         
@@ -1329,6 +1342,46 @@ function updateSessionStorage() {
     {
         document.getElementById("docentry").value = data.DocNum;
     }
+
+    function getDocEntryModal(data)
+    {
+        document.getElementById("docentry").value = data;
+    }
+    function fnExcelReport() {
+    var tab_text = "<meta charset='utf-8'><table border='2px'><tr bgcolor='#87AFC6'>";
+    var j = 0;
+    var tab = document.getElementById('invoiceTable');
+    console.log(tab);
+    for (j = 0; j < tab.rows.length; j++) {
+        tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+    }
+
+    tab_text = tab_text + "</table>";
+    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");
+    tab_text = tab_text.replace(/<img[^>]*>/gi, ""); 
+    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); 
+
+    var msie = window.navigator.userAgent.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        txtArea1.document.open("txt/html", "replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus();
+
+        sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
+    } else {
+        var blob = new Blob([tab_text], { type: "application/vnd.ms-excel;charset=utf-8" });
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "Say Thanks to Sumit.xls";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    return sa;
+}
 
 </script>
 
