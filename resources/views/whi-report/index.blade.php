@@ -1369,12 +1369,12 @@ function updateSessionStorage() {
         txtArea1.document.close();
         txtArea1.focus();
 
-        sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
+        sa = txtArea1.document.execCommand("SaveAs", true, "AR Aging.xls");
     } else {
         var blob = new Blob([tab_text], { type: "application/vnd.ms-excel;charset=utf-8" });
         var link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.download = "Say Thanks to Sumit.xls";
+        link.download = "AR Aging.xls";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
