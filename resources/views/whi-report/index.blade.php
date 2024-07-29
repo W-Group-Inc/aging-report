@@ -482,7 +482,7 @@
                                                             $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
                                                             if (empty($invoice->U_DueDateAR)) {
-                                                        $total_current_php_t += $php_nt_amount; 
+                                                            $total_current_php_t += $php_t_amount; 
                                                     } else {
                                                         $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                         if ($dueDateTimestamp === false) {
@@ -524,7 +524,7 @@
                                                             $daysLate = ($end_date - $dueDateTimestamp) / (60 * 60 * 24);
 
                                                             if (empty($invoice->U_DueDateAR)) {
-                                                        $total_current_php_nt += $php_nt_amount; 
+                                                            $total_current_php_nt += $php_nt_amount; 
                                                     } else {
                                                         $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
                                                         if ($dueDateTimestamp === false) {
