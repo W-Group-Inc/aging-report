@@ -99,7 +99,17 @@
                   <a href="{{url('/report')}}" onclick='show();' class="align-middle" > <img  style='margin-top:10px;margin-left:25px;margin-bottom:5px;' src="{{URL::asset('/img/sap-logo.png')}}" height='45px' alt="AVATAR"></a>
               </div>
               <div class="navbar-collapse collapse justify-content-center" id="navbar">
-                  
+                <ul class="nav navbar-nav">
+                  <li class="">
+                      <a aria-expanded="false" role="button" href="{{url('/')}}"> AR Aging Report</a>
+                  </li>
+                  @if(auth()->user()->gp_report == 1)
+                  <li class="">
+                      <a aria-expanded="false" role="button" href="{{url('/gp-report')}}"> GP Report</a>
+                  </li>
+                  @endif
+                 
+              </ul>
                   <ul class="nav navbar-top-links navbar-right">
                       <li>
                           <a href="{{ route('logout') }}" onclick="logout(); show();">

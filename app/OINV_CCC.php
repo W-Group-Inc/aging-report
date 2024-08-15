@@ -30,4 +30,8 @@ class OINV_CCC extends Model
     {
         return $this->hasOne(Remark::class, 'docentry', 'DocNum');
     }
+    public function ap_whi()
+    {
+        return $this->hasMany(PCH1_CCC::class,'U_InvoiceNo','U_InvoiceNo');
+    }
 }
