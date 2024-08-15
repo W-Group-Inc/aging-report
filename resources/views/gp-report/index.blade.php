@@ -183,11 +183,12 @@
                                             <td>{{number_format($gp ,2)}} %</td>
                                             @elseif($company == "PBI")
                                             <td>
-                                                {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300']) as $inv)
-                                               {{$inv->LineTotal}} <br>
-                                            @endforeach --}}
+                                                @foreach(($invoice->ap_whi) as $inv)
+                                               {{$inv->chart_of_account}} <br>
+                                            @endforeach
                                             {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300'])->sum('LineTotal'),2)}} --}}
                                             {{-- <br> --}}
+                                            
                                             @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710701'])->sum('LineTotal') > 0)
                                             @php
                                                 $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
