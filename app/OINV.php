@@ -37,4 +37,8 @@ class OINV extends Model
     {
         return $this->hasMany(INV1::class, 'DocEntry', 'DocEntry');
     }
+    public function ap_whi()
+    {
+        return $this->hasMany(PCH1::class,'U_InvoiceNo','U_InvoiceNo');
+    }
 }

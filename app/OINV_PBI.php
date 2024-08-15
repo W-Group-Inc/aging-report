@@ -30,4 +30,8 @@ class OINV_PBI extends Model
     {
         return $this->hasOne(Remark::class, 'docentry', 'DocNum');
     }
+    public function ap_whi()
+    {
+        return $this->hasMany(PCH1_PBI::class,'U_InvoiceNo','U_InvoiceNo');
+    }
 }
