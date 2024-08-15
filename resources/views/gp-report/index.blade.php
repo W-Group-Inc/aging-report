@@ -184,7 +184,7 @@
                                             @elseif($company == "PBI")
                                             <td>
                                                 @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700']) as $inv)
-                                               {{$inv->chart_of_account->FatherNum}} <br>
+                                               {{$inv->LineTotal}} <br>
                                             @endforeach
                                             {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300'])->sum('LineTotal'),2)}} --}}
                                             {{-- <br> --}}
