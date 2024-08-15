@@ -140,11 +140,11 @@
                                             @endforeach --}}
                                             {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300'])->sum('LineTotal'),2)}} --}}
                                             {{-- <br> --}}
-                                            @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620200','620700'])->sum('LineTotal') > 0)
+                                            @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620700'])->sum('LineTotal') > 0)
                                             @php
-                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620200','620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
                                             @endphp
-                                            {{number_format(((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620200','620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME),2)}}
+                                            {{number_format(((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME),2)}}
                                             
                                             @else
                                             0.00
@@ -189,11 +189,11 @@
                                             {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300'])->sum('LineTotal'),2)}} --}}
                                             {{-- <br> --}}
                                             
-                                            @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700'])->sum('LineTotal') > 0)
+                                            @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700','710500','711000','710800'])->sum('LineTotal') > 0)
                                             @php
-                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700','710500','711000','710800'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
                                             @endphp
-                                            {{number_format(((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME),2)}}
+                                            {{number_format(((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700','710500','711000','710800'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME),2)}}
                                             
                                             @else
                                             0.00
