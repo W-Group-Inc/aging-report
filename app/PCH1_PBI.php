@@ -12,6 +12,6 @@ class PCH1_PBI extends Model
 
     public function chart_of_account()
     {
-        return $this->belongsTo(OACT::class,'AcctCode','AcctCode');
+        return $this->belongsTo(OACT_PBI::class,'AcctCode','AcctCode');
     }
 }
