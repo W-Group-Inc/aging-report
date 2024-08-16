@@ -219,7 +219,7 @@
                                                     }
                                                  if($gross_profit != 0)
                                                  {
-                                                    $gp = $invoice->Php_Value/$gross_profit;
+                                                    $gp = $gross_profit/$invoice->Php_Value;
                                                  }
                                                
                                              @endphp
@@ -229,7 +229,7 @@
 
                                                 {{number_format($gross_profit ,2)}}
                                             </td>
-                                            <td>{{number_format($gp ,2)}} %</td>
+                                            <td>{{number_format($gp*100,2)}} %</td>
                                             @elseif($company == "PBI")
                                             <td>
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400'])->sum('LineTotal') > 0)
@@ -289,7 +289,7 @@
                                                     }
                                                  if($gross_profit != 0)
                                                  {
-                                                    $gp = $invoice->Php_Value/$gross_profit;
+                                                    $gp = $gross_profit/$invoice->Php_Value;
                                                  }
                                                
                                              @endphp
@@ -299,7 +299,7 @@
 
                                                 {{number_format($gross_profit ,2)}}
                                             </td>
-                                            <td>{{number_format($gp ,2)}} %</td>
+                                            <td>{{number_format($gp*100,2)}} %</td>
                                             @elseif($company == "CCC")
                                             <td>
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610127'])->sum('LineTotal') > 0)
@@ -359,7 +359,7 @@
                                                     }
                                                  if($gross_profit != 0)
                                                  {
-                                                    $gp = $invoice->Php_Value/$gross_profit;
+                                                    $gp = $gross_profit/$invoice->Php_Value;
                                                  }
                                                
                                              @endphp
@@ -369,7 +369,7 @@
 
                                                 {{number_format($gross_profit ,2)}}
                                             </td>
-                                            <td>{{number_format($gp ,2)}} %</td>
+                                            <td>{{number_format($gp*100,2)}} %</td>
                                             @endif
                                         </tr>
                                         @endif
