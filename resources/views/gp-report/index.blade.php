@@ -91,8 +91,28 @@
                                             <th>Euro Value </th>
                                             <th>Php Value</th>
                                             <th>COS - RM</th>
-                                            <th>Freight/   Trucking/    Handling/Arrastre/      Insurance</th>
-                                            <th>Commissions </th>
+                                            @if($company == "WHI")
+                                            <th>620300 - Freight and Handling</th>
+                                            <th>620400 - Delivery and Trucking</th>
+                                            <th>621400 - Insurance & Bonds</th>
+                                            <th>620500 - Brokerage Charges</th>
+                                            <th>620700 - Export Processing Fees</th>
+                                            <th>620200 - Commission Expenses</th>
+                                            @elseif($company == "PBI")
+                                            <th>710400 - Freight & Handling</th>
+                                            <th>710500 - Export Processing Fees</th>
+                                            <th>710700 - Delivery & Trucking</th>
+                                            <th>711000 - Brokerage</th>
+                                            <th>710800 - Insurance & Bonds</th>
+                                            <th>710600 - Commission Expenses</th>
+                                            @elseif($company == "CCC")
+                                            <th>610127-GEN - Delivery Expenses (GEN)</th>
+                                            <th>610128-GEN - Insurance Expense (GEN)</th>
+                                            <th>610131-GEN - Freight & Handling - Export (GEN)</th>
+                                            <th>630000 - Processing Fees (GEN)</th>
+                                            <th>610145-GEN - Delivery and Trucking - Export (GEN)</th>
+                                            <th>620000 - Commission</th>
+                                            @endif
                                             <th>Gross Profit - RM </th>
                                             <th>GP%</th>
                                         </tr>
@@ -129,42 +149,72 @@
                                             <td>{{number_format($invoice->Php_Value,2)}}</td>
                                             <td>{{number_format($invoice->COS_RM,2)}}</td>
                                             @php
-                                                $freight = 0;
+                                                $frieght = 0;
+                                                $delivery = 0;
+                                                $insurance = 0;
+                                                $export = 0;
                                                 $commission = 0;
+                                                $brokerage = 0;
                                                 $gp=0;
                                             @endphp
                                             @if($company == "WHI")
+                                            @if(count($invoice->ap_whi) >0)
+                                                @endif
                                             <td>
-                                                {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300']) as $inv)
-                                               {{$inv->LineTotal}} <br>
-                                            @endforeach --}}
-                                            {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300'])->sum('LineTotal'),2)}} --}}
-                                            {{-- <br> --}}
-                                            @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620700'])->sum('LineTotal') > 0)
+                                                
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620300'])->sum('LineTotal') > 0)
                                             @php
-                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
-                                            @endphp
-                                            {{number_format(((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300','621400','620500','620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME),2)}}
-                                            
-                                            @else
-                                            0.00
-                                            @php
-                                                $frieght = 0;
+                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620300'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
                                             @endphp
                                             @endif
-                                            </td>
+                                            {{number_format($frieght,2)}}
+                                            </td> {{--620300--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400'])->sum('LineTotal') > 0)
+                                            @php
+                                                $delivery = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($delivery,2)}}
+                                            </td> {{--620400 --}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['621400'])->sum('LineTotal') > 0)
+                                            @php
+                                                $insurance = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['621400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($insurance,2)}}
+                                            </td> {{--621400--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620500'])->sum('LineTotal') > 0)
+                                            @php
+                                                $brokerage = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620500'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($brokerage,2)}}
+                                            </td> {{--620500--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620700'])->sum('LineTotal') > 0)
+                                            @php
+                                                $export = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($export,2)}}
+                                            </td> {{--620700--}}
                                             <td>
                                                 {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200']) as $inv)
                                                 {{$inv->LineTotal}} <br>
                                              @endforeach --}}
                                              @php
                                                  $commission = ($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200'])->sum('LineTotal');
-                                                 $gross_profit = $invoice->Php_Value-$frieght-$commission-$invoice->COS_RM;
+                                                 $gross_profit = $invoice->Php_Value-$frieght-$commission-$invoice->COS_RM-$delivery-$insurance-$export-$brokerage;
                                                  if(str_contains($invoice->WhsCode,"TRI"))                                                 
                                                     {
-                                                        $frieght = 0;
+                                                        $freight = 0;
+                                                        $delivery = 0;
+                                                        $insurance = 0;
+                                                        $export = 0;
                                                         $commission = 0;
-                                                        $gross_profit = 0;
 
                                                     }
                                                  if($gross_profit != 0)
@@ -174,7 +224,6 @@
                                                
                                              @endphp
                                              {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200'])->sum('LineTotal'),2)}}
-
                                             </td>
                                             <td>
 
@@ -183,37 +232,59 @@
                                             <td>{{number_format($gp ,2)}} %</td>
                                             @elseif($company == "PBI")
                                             <td>
-                                                {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700']) as $inv)
-                                               {{$inv->LineTotal}} <br>
-                                            @endforeach --}}
-                                            {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300'])->sum('LineTotal'),2)}} --}}
-                                            {{-- <br> --}}
-                                            
-                                            @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700','710500','711000','710800'])->sum('LineTotal') > 0)
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400'])->sum('LineTotal') > 0)
                                             @php
-                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700','710500','711000','710800'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
-                                            @endphp
-                                            {{number_format(((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400','710700','710500','711000','710800'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME),2)}}
-                                            
-                                            @else
-                                            0.00
-                                            @php
-                                                $frieght = 0;
+                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
                                             @endphp
                                             @endif
-                                            </td>
+                                            {{number_format($frieght,2)}}
+                                            </td> {{--710400--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710500'])->sum('LineTotal') > 0)
+                                            @php
+                                                $delivery = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710500'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($delivery,2)}}
+                                            </td> {{--710500 --}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710700'])->sum('LineTotal') > 0)
+                                            @php
+                                                $insurance = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($insurance,2)}}
+                                            </td> {{--710700--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['711000'])->sum('LineTotal') > 0)
+                                            @php
+                                                $brokerage = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['711000'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($brokerage,2)}}
+                                            </td> {{--711000--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710800'])->sum('LineTotal') > 0)
+                                            @php
+                                                $export = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710800'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($export,2)}}
+                                            </td> {{--710800--}}
                                             <td>
                                                 {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200']) as $inv)
                                                 {{$inv->LineTotal}} <br>
                                              @endforeach --}}
                                              @php
                                                  $commission = ($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710600'])->sum('LineTotal');
-                                                 $gross_profit = $invoice->Php_Value-$frieght-$commission-$invoice->COS_RM;
+                                                 $gross_profit = $invoice->Php_Value-$frieght-$commission-$invoice->COS_RM-$delivery-$insurance-$export-$brokerage;
                                                  if(str_contains($invoice->WhsCode,"TRI"))                                                 
                                                     {
-                                                        $frieght = 0;
+                                                        $freight = 0;
+                                                        $delivery = 0;
+                                                        $insurance = 0;
+                                                        $export = 0;
                                                         $commission = 0;
-                                                        $gross_profit = 0;
 
                                                     }
                                                  if($gross_profit != 0)
@@ -223,7 +294,6 @@
                                                
                                              @endphp
                                              {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710600'])->sum('LineTotal'),2)}}
-
                                             </td>
                                             <td>
 
@@ -232,36 +302,59 @@
                                             <td>{{number_format($gp ,2)}} %</td>
                                             @elseif($company == "CCC")
                                             <td>
-                                                {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300']) as $inv)
-                                               {{$inv->LineTotal}} <br>
-                                            @endforeach --}}
-                                            {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400','620300'])->sum('LineTotal'),2)}} --}}
-                                            {{-- <br> --}}
-                                            @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['610130'])->sum('LineTotal') > 0)
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610127'])->sum('LineTotal') > 0)
                                             @php
-                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['610130'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
-                                            @endphp
-                                            {{number_format(((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['610130'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME),2)}}
-                                            
-                                            @else
-                                            0.00
-                                            @php
-                                                $frieght = 0;
+                                                $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610127'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
                                             @endphp
                                             @endif
-                                            </td>
+                                            {{number_format($frieght,2)}}
+                                            </td> {{--610127--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610128'])->sum('LineTotal') > 0)
+                                            @php
+                                                $delivery = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610128'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($delivery,2)}}
+                                            </td> {{--610128 --}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610131'])->sum('LineTotal') > 0)
+                                            @php
+                                                $insurance = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610131'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($insurance,2)}}
+                                            </td> {{--610131--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['630000'])->sum('LineTotal') > 0)
+                                            @php
+                                                $brokerage = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['630000'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($brokerage,2)}}
+                                            </td> {{--630000--}}
+                                            <td>
+                                                @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610145'])->sum('LineTotal') > 0)
+                                            @php
+                                                $export = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610145'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                            @endphp
+                                            @endif
+                                            {{number_format($export,2)}}
+                                            </td> {{--610145--}}
                                             <td>
                                                 {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200']) as $inv)
                                                 {{$inv->LineTotal}} <br>
                                              @endforeach --}}
                                              @php
                                                  $commission = ($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620000'])->sum('LineTotal');
-                                                 $gross_profit = $invoice->Php_Value-$frieght-$commission-$invoice->COS_RM;
+                                                 $gross_profit = $invoice->Php_Value-$frieght-$commission-$invoice->COS_RM-$delivery-$insurance-$export-$brokerage;
                                                  if(str_contains($invoice->WhsCode,"TRI"))                                                 
                                                     {
-                                                        $frieght = 0;
+                                                        $freight = 0;
+                                                        $delivery = 0;
+                                                        $insurance = 0;
+                                                        $export = 0;
                                                         $commission = 0;
-                                                        $gross_profit = 0;
 
                                                     }
                                                  if($gross_profit != 0)
@@ -271,7 +364,6 @@
                                                
                                              @endphp
                                              {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620000'])->sum('LineTotal'),2)}}
-
                                             </td>
                                             <td>
 
