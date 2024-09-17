@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/report', 'ReportController@index');
     Route::post('/new_remarks', 'RemarkController@store');
     Route::post('/update_remarks/{id}', 'RemarkController@update');
+    Route::post('/notifications/mark-as-read/{id}', 'NotificationController@markAsRead')->name('notifications.markAsRead');
 
 
 

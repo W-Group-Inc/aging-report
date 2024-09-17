@@ -8625,6 +8625,38 @@ body.md-skin {
   font-weight: 500 !important;
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.dropdown-item .mr-3 img {
+    border-radius: 50%;
+}
+
+.dropdown-item div {
+    margin-left: 10px;
+}
+
+/* .text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+} */
+
+.small.text-muted {
+    color: #6c757d;
+}
+.bg-read {
+  background-color: #f3f3f4;
+}
+
+.bg-unread {
+  background-color: white; 
+}
+
 
 
 

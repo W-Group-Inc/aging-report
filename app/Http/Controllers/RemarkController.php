@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Notification;
 use App\Remark;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -22,7 +24,17 @@ class RemarkController extends Controller
         $new_remarks->user_id = $request->user_id;
         $new_remarks->save();
 
-        Alert::success('Success Title', 'Success Message');
+        $notificationMessage = $new_remarks->wasRecentlyCreated 
+        ? 'Remark added for invoice #' . $new_remarks->docentry 
+        : 'Remark updated for invoice #' . $new_remarks->docentry;
+
+        $new_notification = new Notification;
+        $new_notification->user_id = auth()->id();
+        $new_notification->invoice_id = $new_remarks->docentry;
+        $new_notification->action = "Add";
+        $new_notification->save();
+
+        Alert::success('Success', 'Remarks Added Successfully');
         return back();
     }
 

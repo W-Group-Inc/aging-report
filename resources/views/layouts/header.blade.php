@@ -116,6 +116,47 @@
                               <i class="fa fa-sign-out"></i> Log out
                           </a>
                       </li>
+                      <li class="notification-bell dropdown">
+                        <a class="nav-link" href="#" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge" id="notificationCount">{{ auth()->user()->unreadNotifications()->count() }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" style="height: 400px; overflow-y: scroll;" aria-labelledby="notificationDropdown">
+                            @forelse(auth()->user()->notifications as $notification)
+                                <a class="dropdown-item d-flex {{ $notification->is_read == 1 ? 'bg-read' : 'bg-unread' }}" href="#" data-id="{{ $notification->id }}" data-read="{{ $notification->is_read }}"
+                                  data-toggle="modal" data-target="#notificationModal{{ $notification->id }}">
+                                    <div class="mr-3">
+                                        <img src="{{ asset('/images/profile.png') }}" alt="User Icon" width="50" height="50">
+                                    </div>
+                                    <div class="notification-content">
+                                        <div>
+                                            <span class="small text-muted">{{ $notification->userInfo->email }}</span>
+                                            <span class="small text-muted">
+                                                @if ($notification->action == "Add")
+                                                    Added Remarks For
+                                                @else
+                                                    Updated Remarks For
+                                                @endif
+                                            </span>
+                                            <span>
+                                                {{ $notification->notifInvoice->NumAtCard }}
+                                            </span>
+                                        </div>
+                                        <div class="small text-muted">
+                                            on
+                                            @if ($notification->action == "Add")
+                                                {{ $notification->created_at->format('M d, H:i') }}
+                                            @else
+                                                {{ $notification->updated_at->format('M d, H:i') }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                </a>
+                            @empty
+                                <a class="dropdown-item" href="#">No notifications</a>
+                            @endforelse
+                        </div>                                                            
+                    </li>                    
                   </ul>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
@@ -181,6 +222,35 @@
         }
     }
     }
+
+    $('.dropdown-item').on('click', function() {
+    var notificationId = $(this).data('id');
+    var clickedItem = $(this); 
+    var isRead = $(this).data('read');
+    console.log(notificationId)
+    if (isRead) {
+        return;
+    }
+    $.ajax({
+        url: '{{ url('/notifications/mark-as-read') }}/' + notificationId,
+        method: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            id: notificationId
+        },
+        success: function(response) {
+            if (response.success) {
+                clickedItem.removeClass('bg-unread').addClass('bg-read');
+                
+                var currentCount = $('#notificationCount').text();
+                $('#notificationCount').text(currentCount - 1);
+            }
+        }
+    });
+});
 </script>
+@foreach(auth()->user()->notifications as $notification)
+@include('whi-report.notif_invoice')
+@endforeach
 </body>
 </html>
