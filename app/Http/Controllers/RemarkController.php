@@ -32,6 +32,7 @@ class RemarkController extends Controller
         $new_notification->user_id = auth()->id();
         $new_notification->invoice_id = $new_remarks->docentry;
         $new_notification->action = "Add";
+        $new_notification->remarks = $request->remarks;
         $new_notification->save();
 
         Alert::success('Success', 'Remarks Added Successfully');
@@ -49,6 +50,7 @@ class RemarkController extends Controller
         $new_notification->user_id = auth()->id();
         $new_notification->invoice_id = $update_remarks->docentry;
         $new_notification->action = "Update";
+        $new_notification->remarks = $request->remarks;
         $new_notification->save();
 
         Alert::success('Success Title', 'Success Message');

@@ -122,7 +122,7 @@
                             <span class="badge" id="notificationCount">{{ auth()->user()->unreadNotifications()->count() }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" style="height: 400px; overflow-y: scroll;" aria-labelledby="notificationDropdown">
-                            @forelse(auth()->user()->notifications as $notification)
+                            @forelse(App\Notification::all() as $notification)
                                 <a class="dropdown-item d-flex {{ $notification->is_read == 1 ? 'bg-read' : 'bg-unread' }}" href="#" data-id="{{ $notification->id }}" data-read="{{ $notification->is_read }}"
                                   data-toggle="modal" data-target="#notificationModal{{ $notification->id }}">
                                     <div class="mr-3">
@@ -141,6 +141,7 @@
                                             <span>
                                                 {{ $notification->notifInvoice->NumAtCard }}
                                             </span>
+                                            <span class="small text-muted">-{{ $notification->remarks }}</span>
                                         </div>
                                         <div class="small text-muted">
                                             on
