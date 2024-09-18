@@ -46,7 +46,8 @@
                 </thead>
                 <tbody>
                     @php
-                        $invoice = $invoices->firstWhere('DocNum', $notification->invoice_id);
+                        // $invoice = $invoices->firstWhere('DocNum', $notification->invoice_id)  ?? '';
+                        $invoice = collect($invoices)->firstWhere('DocNum', $notification->invoice_id) ?? '';
                         $total_usd = 0;
                         $total_usd_in_ph = 0;
                         $total_euro = 0;
@@ -356,7 +357,8 @@
                     </tr>
                     @endif
                     @php
-                        $last_invoice = $last_invoices->firstWhere('DocNum', $notification->invoice_id);
+                        // $last_invoice = $last_invoices->firstWhere('DocNum', $notification->invoice_id)  ?? '';
+                        $last_invoice = collect($last_invoices)->firstWhere('DocNum', $notification->invoice_id) ?? '';
                     @endphp
                     @if($last_invoice)
                     <tr>

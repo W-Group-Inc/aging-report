@@ -45,6 +45,12 @@ class RemarkController extends Controller
         $update_remarks->user_id = $request->user_id;
         $update_remarks->update();
 
+        $new_notification = new Notification;
+        $new_notification->user_id = auth()->id();
+        $new_notification->invoice_id = $update_remarks->docentry;
+        $new_notification->action = "Update";
+        $new_notification->save();
+
         Alert::success('Success Title', 'Success Message');
         return back();
     }

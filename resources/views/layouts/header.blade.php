@@ -153,7 +153,7 @@
                                     </div>
                                 </a>
                             @empty
-                                <a class="dropdown-item" href="#">No notifications</a>
+                                No notifications
                             @endforelse
                         </div>                                                            
                     </li>                    
