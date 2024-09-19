@@ -228,7 +228,6 @@
     var notificationId = $(this).data('id');
     var clickedItem = $(this); 
     var isRead = $(this).data('read');
-    console.log(notificationId)
     if (isRead) {
         return;
     }
@@ -242,9 +241,13 @@
         success: function(response) {
             if (response.success) {
                 clickedItem.removeClass('bg-unread').addClass('bg-read');
-                
+                clickedItem.data('read', true);
+
                 var currentCount = $('#notificationCount').text();
-                $('#notificationCount').text(currentCount - 1);
+                // $('#notificationCount').text(currentCount - 1);
+                if (currentCount > 0) {
+                    $('#notificationCount').text(currentCount - 1);
+                }
             }
         }
     });
