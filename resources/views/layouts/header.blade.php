@@ -250,7 +250,7 @@
     });
 });
 </script>
-@foreach(auth()->user()->notifications as $notification)
+@foreach(App\Notification::all() as $notification)
 @include('whi-report.notif_invoice')
 @endforeach
 </body>
