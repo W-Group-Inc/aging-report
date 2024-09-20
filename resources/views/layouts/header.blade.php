@@ -119,7 +119,7 @@
                       <li class="notification-bell dropdown">
                         <a class="nav-link" href="#" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bell"></i>
-                            <span class="badge" id="notificationCount">{{ auth()->user()->unreadNotifications()->count() }}</span>
+                            <span class="badge" id="notificationCount">{{ App\Notification::where('is_read', '0')->get()->count() }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" style="height: 400px; overflow-y: scroll;" aria-labelledby="notificationDropdown">
                             @forelse(App\Notification::orderBy('id', 'desc')->get() as $notification)
