@@ -816,7 +816,7 @@
         </div>
     </div>
     <div class="modal fade" id="add_remarks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form method="POST" action="{{url('new_remarks')}}" autocomplete="off">
+        <form method="POST" action="{{url('new_remarks')}}" autocomplete="off" onsubmit='show()'>
             @csrf
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -853,7 +853,7 @@
     @foreach($invoices as $invoice)
         @if ($invoice->remark)
             <div class="modal fade" id="edit_remarks{{ $invoice->remark->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <form action="{{ url('update_remarks/'.$invoice->remark->id) }}" method="POST">
+                <form action="{{ url('update_remarks/'.$invoice->remark->id) }}" method="POST" onsubmit='show()'>
                     @csrf
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
