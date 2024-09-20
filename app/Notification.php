@@ -14,7 +14,15 @@ class Notification extends Model
     {
         return $this->belongsTo(OINV::class, 'invoice_id', 'DocNum');
     }
+    public function notifInvoicePBI()
+    {
+        return $this->belongsTo(OINV_PBI::class, 'invoice_id', 'DocNum');
+    }
 
+    public function notifInvoiceCCC()
+    {
+        return $this->belongsTo(OINV_CCC::class, 'invoice_id', 'DocNum');
+    }
     public function userInfo()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

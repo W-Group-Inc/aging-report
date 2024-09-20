@@ -829,6 +829,13 @@
                     <div class="modal-body">
                         <input name="docentry" id="docentry" type="hidden">
                         <input name="user_id" id="user_id" type="hidden" value="{{ auth()->user()->id }}">
+                        @if ($company === 'WHI')
+                        <input name="invoice_company" id="invoice_company" type="hidden" value="WHI">
+                        @elseif ($company === 'PBI')
+                        <input name="invoice_company" id="invoice_company" type="hidden" value="PBI">
+                        @elseif ($company === 'CCC')
+                        <input name="invoice_company" id="invoice_company" type="hidden" value="CCC">
+                        @endif
                         <div class="row">
                             <div class="col-12 mb-10">
                                 <input name="remarks" id="remarks" class="form-control" type="text" placeholder="Enter Remarks" required>
@@ -861,6 +868,15 @@
                                     <div class="col-12 mb-10">
                                         <label>Remarks</label>
                                         <input name="remarks" id="remarks{{ $invoice->id }}" class="form-control" type="text" value="{{ $invoice->remark['remarks'] ?? '' }}">
+                                    </div>
+                                    <div class="col-12">
+                                        @if ($company === 'WHI')
+                                        <input name="invoice_company" id="invoice_company" type="hidden" value="WHI">
+                                        @elseif ($company === 'PBI')
+                                        <input name="invoice_company" id="invoice_company" type="hidden" value="PBI">
+                                        @elseif ($company === 'CCC')
+                                        <input name="invoice_company" id="invoice_company" type="hidden" value="CCC">
+                                        @endif
                                     </div>
                                 </div>
                             </div>

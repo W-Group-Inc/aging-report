@@ -139,8 +139,18 @@
                                                 @endif
                                             </span>
                                             <span>
-                                                {{ $notification->notifInvoice->NumAtCard }}
+                                                @if ($notification->invoice_company == "WHI")
+                                                    {{ $notification->notifInvoice->NumAtCard }} 
+                                                @elseif ($notification->invoice_company == "PBI")
+                                                    {{ $notification->notifInvoicePBI->NumAtCard }} 
+                                                @elseif ($notification->invoice_company == "CCC")
+                                                    {{ $notification->notifInvoiceCCC->NumAtCard }} 
+                                                @endif
                                             </span>
+                                            <span class="small text-muted">
+                                               for
+                                            </span>
+                                            <span class="small text-muted">{{ $notification->invoice_company }} SAP</span>
                                             <span class="small text-muted">-{{ $notification->remarks }}</span>
                                         </div>
                                         <div class="small text-muted">
