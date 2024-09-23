@@ -121,7 +121,7 @@
                             <i class="fa fa-bell"></i>
                             <span class="badge" id="notificationCount">{{ App\Notification::where('is_read', '0')->get()->count() }}</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" style="height: 400px; overflow-y: scroll;" aria-labelledby="notificationDropdown">
+                        <div class="dropdown-menu dropdown-menu-right" style="width: 450px; height: 400px; overflow-y: scroll;" aria-labelledby="notificationDropdown">
                             @forelse(App\Notification::orderBy('id', 'desc')->get() as $notification)
                                 <a class="dropdown-item d-flex {{ $notification->is_read == 1 ? 'bg-read' : 'bg-unread' }}" href="#" data-id="{{ $notification->id }}" data-read="{{ $notification->is_read }}"
                                   data-toggle="modal" data-target="#notificationModal{{ $notification->id }}">
