@@ -25,4 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/gp-report','GPReportController@index');
+
+    Route::get('/monthly_sales', 'MonthlySalesController@index');
+
 });

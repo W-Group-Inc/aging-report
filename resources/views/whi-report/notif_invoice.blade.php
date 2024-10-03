@@ -116,7 +116,7 @@
                             echo $currencySymbol . '' . number_format($finalTotal, 2);
                             ?></td>
                         <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
-                        <td>{{$invoice->terms->PymntGroup}}</td>
+                        <td>{{ $invoice->terms ? $invoice->terms->PymntGroup : '' }}</td>
                         <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
                         <td>
                             @if(!empty($invoice->U_DueDateAR))
@@ -342,7 +342,7 @@
                         @endphp
                         <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
                         <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td> 
-                        <td>{{$invoice->manager->SlpName}}</td>
+                        <td>{{ $invoice->manager ? $invoice->manager->SlpName : '' }}</td>
                         <td> 
                             @if($invoice->remark)
                                 {{$invoice->remark->remarks}}
@@ -358,7 +358,9 @@
                     @endif
                     @php
                         // $last_invoice = $last_invoices->firstWhere('DocNum', $notification->invoice_id)  ?? '';
-                        $last_invoice = collect($last_invoices)->firstWhere('DocNum', $notification->invoice_id) ?? '';
+                        $last_invoice = isset($last_invoices) && is_array($last_invoices) 
+                        ? collect($last_invoices)->firstWhere('DocNum', $notification->invoice_id) 
+                        : null;
                     @endphp
                     @if($last_invoice)
                     <tr>

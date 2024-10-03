@@ -103,6 +103,9 @@
                   <li class="">
                       <a aria-expanded="false" role="button" href="{{url('/')}}"> AR Aging Report</a>
                   </li>
+                  <li class="">
+                    <a aria-expanded="false" role="button" href="{{url('/monthly_sales')}}"> Monthly Sales</a>
+                </li>
                   @if(auth()->user()->gp_report == 1)
                   <li class="">
                       <a aria-expanded="false" role="button" href="{{url('/gp-report')}}"> GP Report</a>
