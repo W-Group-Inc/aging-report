@@ -36,6 +36,7 @@
                                                 <select name='company' class='form-control' required>
                                                     <option value=''>Company</option>
                                                     <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
+                                                    <option value='Triangle Shipments' @if($company == "Triangle Shipments") selected @endif>Triangle Shipments</option>
                                                     <option value='PBI' @if($company == "PBI") selected @endif>PBI</option>
                                                     <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
                                                 </select>
@@ -336,8 +337,9 @@
                                             $total_over_days_php = 0;
                                         @endphp
                                         @foreach ($invoices as $invoice)
-                                        <tr>
-                                            <td align="center">
+                                        <tr id="row-{{ $invoice->DocNum }}">
+                                            
+                                            <td id="button-{{ $invoice->DocNum }}" align="center">
                                                 @if($invoice->remark)
                                                     <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
                                                 @else
@@ -609,178 +611,7 @@
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
                                             <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td> 
                                             <td>{{$invoice->manager->SlpName}}</td>
-                                            <td> 
-                                                @if($invoice->remark)
-                                                    {{$invoice->remark->remarks}}
-                                                    <br>
-                                                    <span style="font-size: 10px">Date Created: <span class="label label-primary">{{ $invoice->remark->created_at->format('M. d, Y g:i A') }}</span>
-                                                    <br>
-                                                    <span style="font-size: 10px">Date Updated: <span class="label label-warning">{{ $invoice->remark->updated_at->format('M. d, Y g:i A') }}</span>
-                                                @else
-                                                    N/A
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        @foreach ($last_invoices as $invoice)
-                                        <tr>
-                                            <td align="center">
-                                                @if($invoice->remark)
-                                                    <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
-                                                @else
-                                                    <button onclick="" type="button" class="btn btn-primary btn-outline" title="Add Remarks" data-toggle="modal" data-target="#add_remarks" id="addRemarksBtn"><i class="fa fa fa-plus"></i></button>
-                                                @endif
-                                            </td>
-                                            <td>{{$invoice->CardName}}</td>
-                                            <td>{{$invoice->U_invNo}}</td>
-                                            <td>{{$invoice->NumAtCard}}</td>
-                                            {{-- <td>{{ $invoice->DocCur .' '. number_format($invoice->DocTotalFC, 2) }}</td> --}}
-                                            <td> <?php
-                                                $currencySymbol = '';
-                                                if ($invoice->DocCur === 'USD') {
-                                                    $currencySymbol = '$';
-                                                } elseif ($invoice->DocCur === 'EUR') {
-                                                    $currencySymbol = '€';
-                                                } elseif ($invoice->DocCur === 'PHP') {
-                                                    $currencySymbol = '₱';
-                                                }
-                                                $totalFrgnTRIWhse = 0;
-                                                foreach ($invoice->inv1 as $item) {
-                                                    if ($item->WhsCode === 'TRI Whse') {
-                                                        $totalFrgnTRIWhse += $item->TotalFrgn;
-                                                    }
-                                                    else {
-                                                        $totalFrgnTRIWhse = 0;
-                                                    }
-                                                }
-
-                                                $finalTotal = $invoice->DocTotalFC - $totalFrgnTRIWhse;
-
-                                                echo $currencySymbol . '' . number_format($finalTotal, 2);
-                                                ?></td>
-                                            <td>{{date('m/d/Y', strtotime($invoice->DocDate))}}</td>
-                                            <td>{{$invoice->terms->PymntGroup}}</td>
-                                            <td>@if($invoice->U_BaseDate != null){{date('m/d/Y', strtotime($invoice->U_BaseDate))}}@else NA @endif</td>
-                                            <td>{{date('m/d/Y', strtotime($invoice->U_DueDateAR))}}</td>
-                                            @php
-                                            $final_amount = + 25000.00;
-                                            $usd = "";
-                                            $euro = "";
-                                            $php = "";
-                                            if ($invoice->DocCur == "USD") {
-                                                    $total_usd += $final_amount;
-                                                    $usd = number_format($final_amount, 2);
-                                                
-                                                    $end_date = strtotime(Request::get('end_date'));
-                                                    if (empty($end_date)) {
-                                                        $end_date = time(); 
-                                                    }
-                                                    if (empty($invoice->U_DueDateAR)) {
-                                                        $total_current_usd += $final_amount; 
-                                                    } else {
-                                                        $dueDateTimestamp = strtotime($invoice->U_DueDateAR);
-                                                        if ($dueDateTimestamp === false) {
-                                                            $total_current_usd += $final_amount;
-                                                        } else {
-                                                            $daysLate = ceil(($end_date - $dueDateTimestamp) / (60 * 60 * 24));
-
-                                                            if ($daysLate <= 0) {
-                                                                $total_current_usd += $final_amount;
-                                                            } elseif ($daysLate >= 1 && $daysLate <= 30) {
-                                                                $total_month_usd += $final_amount;
-                                                            } elseif ($daysLate >= 31 && $daysLate <= 60) {
-                                                                $total_twomonth_usd += $final_amount;
-                                                            } elseif ($daysLate >= 61 && $daysLate <= 90) {
-                                                                $total_threemonth_usd += $final_amount;
-                                                            } else {
-                                                                $total_over_days_usd += $final_amount;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                // if($invoice->DocCur == "USD")
-                                                // {
-                                                //     $total_usd = $total_usd + 25000.00;
-                                                //     $usd = number_format(25000.00,2);
-                                                // }
-                                                elseif($invoice->DocCur == "EUR") {
-                                                    $total_euro = $total_euro+$final_amount;
-                                                    $euro = number_format($final_amount,2);
-                                                }
-                                                else {
-                                                    $php = number_format($invoice->DocTotal - $invoice->PaidToDate,2);
-                                                    $final_amount = $invoice->DocTotal - $invoice->PaidToDate;
-                                                }
-                                            @endphp
-                                            <td>@if($usd != null){{$usd}} @else NA @endif</td>
-                                            <td>@if($euro != null){{$euro}} @else NA @endif</td>
-                                            <td>@if($invoice->DocCur == 'PHP')
-                                                    @if($invoice->DocType == "I")
-                                                        @php
-                                                            $total_php_t = $total_php_t + $invoice->DocTotal - $invoice->PaidToDate; 
-                                                        @endphp {{$php}}
-                                                    @else NA 
-                                                    @endif
-                                                @else NA 
-                                                @endif
-                                            </td>
-                                            <td>@if($invoice->DocCur == 'PHP')
-                                                    @if($invoice->DocType == "S") 
-                                                        @php
-                                                            $total_php_nt = $total_php_nt + $invoice->DocTotal - $invoice->PaidToDate; 
-                                                        @endphp 
-                                                    {{$php}}
-                                                    @else NA 
-                                                    @endif
-                                                @else NA 
-                                                @endif
-                                            </td>
-                                            @php
-                                                $end_date = strtotime(Request::get('end_date'));
-                                                if (empty($end_date)) {
-                                                        $end_date = time(); 
-                                                    }
-                                                $your_date = strtotime(date('m/d/Y', strtotime($invoice->U_DueDateAR)));
-                                                $datediff = $end_date - $your_date
-                                            @endphp
-                                            <td>{{ceil($datediff / (60 * 60 * 24)). " days"}}</td>
-                                            @php
-                                                if (ceil($datediff / (60 * 60 * 24)) <= 0) {
-                                                    $total_current++;
-                                                    $status = 'Current';
-                                                }
-                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 1) && (ceil($datediff / (60 * 60 * 24)) <= 30))
-                                                {
-                                                    $status = '1  to 30 days Late';
-                                                    
-                                                    $total_month++;
-                                                }
-                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 31) && (ceil($datediff / (60 * 60 * 24)) <= 60))
-                                                {
-                                                    $status = '31  to 60 days Late';
-                                                    $total_twomonth++;
-                                                }
-                                                elseif ((ceil($datediff / (60 * 60 * 24)) >= 61) && (ceil($datediff / (60 * 60 * 24)) <= 90))
-                                                {
-                                                    $status = '61  to 90 days Late';
-                                                    
-                                                    $total_threemonth++;
-                                                }
-                                                else
-                                                {
-                                                    $total_over_days++;
-                                                    $status = 'Over 90 days Late';
-                                                }
-                                            @endphp
-                                            <td>{{$status}}</td>
-                                            <td>{{$invoice->DocRate}}</td>
-                                            @php
-                                                $total_php = $final_amount*$invoice->DocRate + $total_php;
-                                            @endphp
-                                            <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
-                                            <td>{{$invoice->location->ocrg->GroupName ?? 'N/A'}}</td> 
-                                            <td>{{$invoice->manager->SlpName}}</td>
-                                            <td>
+                                            <td id="remark-{{ $invoice->DocNum }}">
                                                 @if($invoice->remark)
                                                     {{$invoice->remark->remarks}}
                                                     <br>
@@ -815,8 +646,9 @@
             </div>
         </div>
     </div>
+    {{-- new additon oct 7 2024 --}}
     <div class="modal fade" id="add_remarks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form method="POST" action="{{url('new_remarks')}}" autocomplete="off" onsubmit='show()'>
+        <form method="POST" id="remarksForm" action="{{url('new_remarks')}}" autocomplete="off" >
             @csrf
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -853,7 +685,7 @@
     @foreach($invoices as $invoice)
         @if ($invoice->remark)
             <div class="modal fade" id="edit_remarks{{ $invoice->remark->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <form action="{{ url('update_remarks/'.$invoice->remark->id) }}" method="POST" onsubmit='show()'>
+                <form id="editRemarkForm{{ $invoice->remark->id }}" data-remark-id="{{ $invoice->remark->id }}" method="POST">
                     @csrf
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -1003,6 +835,113 @@
 
         });
 
+        $('#remarksForm').on('submit', function(e) {
+            e.preventDefault(); 
+            let formData = $(this).serialize(); 
+
+            $.ajax({
+                url: "{{ url('new_remarks') }}", 
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    
+                    $('#add_remarks').modal('hide');
+
+                   
+                    let remarkTd = $('#remark-' + response.docentry);
+                    remarkTd.html(`
+                        ${response.remarks}
+                        <br>
+                        <span style="font-size: 10px">Date Created: 
+                            <span class="label label-primary">${response.created_at}</span>
+                        </span>
+                        <br>
+                        <span style="font-size: 10px">Date Updated: 
+                            <span class="label label-warning">${response.updated_at}</span>
+                        </span>
+                    `);
+
+                    let buttonTd = $('#button-' + response.docentry);
+                    console.log(response.remark_id);
+                    buttonTd.html(`
+                        <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks${response.remark_id}" id="editRemarksBtn">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    `);
+                    let modalHtml = `
+                        <div class="modal fade" id="edit_remarks${response.remark_id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form id="editRemarkForm${response.remark_id}" data-remark-id="${response.remark_id}" method="POST">
+                                @csrf
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="exampleModalLabel">Edit Remarks</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12 mb-10">
+                                                    <label>Remarks</label>
+                                                    <input name="remarks" id="remarks${response.docentry}" class="form-control" type="text" value="${response.remarks}">
+                                                </div>
+                                                <div class="col-12">
+                                                    <input name="invoice_company" id="invoice_company" type="hidden" value="${response.company}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    `;
+                    $('body').append(modalHtml);
+                },
+                error: function(xhr) {
+                    alert('Failed to add remarks.');
+                }
+            });
+        });
+
+        $(document).on('submit', 'form[id^="editRemarkForm"]', function(e) {
+            e.preventDefault(); 
+            let remarkId = $(this).data('remark-id');
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: "{{ url('update_remarks') }}/" + remarkId, 
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    
+                    $('#remark-' + response.docentry).html(`
+                        ${response.remarks}
+                        <br>
+                        <span style="font-size: 10px">Date Created: 
+                            <span class="label label-primary">${response.created_at}</span>
+                        </span>
+                        <br>
+                        <span style="font-size: 10px">Date Updated: 
+                            <span class="label label-warning">${response.updated_at}</span>
+                        </span>
+                    `);
+                    
+                    $('#edit_remarks' + remarkId).modal('hide');
+                },
+                error: function(xhr) {
+                    alert('Failed to update remarks.');
+                }
+            });
+        });
+
+        // $('#add_remarks').on('hidden.bs.modal', function () {
+        //     $(this).find('input').val(''); 
+        // });
     });
 var end_date_param = '<?php echo Request::get("end_date"); ?>';
 var end_date;
@@ -1013,13 +952,10 @@ if (end_date_param !== '') {
     end_date = Date.now(); 
 }
    var invoicesData = <?php echo json_encode($invoices); ?> ;
-   var last_invoices = <?php echo json_encode($last_invoices); ?>;
-
-   var combinedData = invoicesData.concat(last_invoices);
-   console.log(combinedData);
+   console.log(invoicesData);
 function openModal(filterColumn) {
     console.log(filterColumn);
-    var filteredData = combinedData.filter(function (item) {
+    var filteredData = invoicesData.filter(function (item) {
         var currentDate = new Date();
         // var dueDate = new Date(item.U_DueDateAR);
         var dueDate = item.U_DueDateAR ? new Date(item.U_DueDateAR) : null;
@@ -1054,7 +990,7 @@ function openModal(filterColumn) {
 
 
 function openModalByStatusAndCurrency(status, currency) {
-    var filteredData = combinedData.filter(function(item) {
+    var filteredData = invoicesData.filter(function(item) {
        
         var currentDate = new Date();
         // var dueDate = new Date(item.U_DueDateAR);
@@ -1092,7 +1028,7 @@ function openModalByStatusAndCurrency(status, currency) {
 }
 
 function openModalByStatusAndCurrencyAndType(status, currency, type) {
-    var filteredData = combinedData.filter(function(item) {
+    var filteredData = invoicesData.filter(function(item) {
         var currentDate = new Date();
         var dueDate =item.U_DueDateAR ? new Date(item.U_DueDateAR) : null;
 
