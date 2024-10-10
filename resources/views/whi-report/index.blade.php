@@ -36,9 +36,9 @@
                                                 <select name='company' class='form-control' required>
                                                     <option value=''>Company</option>
                                                     <option value='WHI' @if($company == "WHI") selected @endif>WHI</option>
-                                                    <option value='Triangle Shipments' @if($company == "Triangle Shipments") selected @endif>Triangle Shipments</option>
                                                     <option value='PBI' @if($company == "PBI") selected @endif>PBI</option>
                                                     <option value='CCC' @if($company == "CCC") selected @endif>CCC</option>
+                                                    <option value='Triangle Shipments' @if($company == "Triangle Shipments") selected @endif>Triangle Shipments</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-2" style="display: flex;justify-content: center;align-items: center;">
