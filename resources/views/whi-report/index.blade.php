@@ -648,7 +648,7 @@
     </div>
     {{-- new additon oct 7 2024 --}}
     <div class="modal fade" id="add_remarks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form method="POST" id="remarksForm" action="{{url('new_remarks')}}" autocomplete="off" >
+        <form method="POST" class="remarksForm" action="{{url('new_remarks')}}" autocomplete="off" >
             @csrf
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -835,7 +835,7 @@
 
         });
 
-        $('#remarksForm').on('submit', function(e) {
+        $('.remarksForm').on('submit', function(e) {
             e.preventDefault(); 
             let formData = $(this).serialize(); 
 
@@ -861,7 +861,7 @@
                         </span>
                     `);
 
-                    var invoice = invoicesData.find(item => item.DocEntry == response.docentry);
+                    var invoice = invoicesData.find(item => item.DocNum == response.docentry);
                     if (invoice) {
                         invoice.remark = {
                             id: response.remark_id,
@@ -869,8 +869,10 @@
                             created_at: response.created_at,
                             updated_at: response.updated_at
                         };
-                    }
 
+
+                    }
+                    console.log(invoice);
                     let buttonTd = $('.button-' + response.docentry);
                     console.log(response.remark_id);
                     buttonTd.html(`
@@ -878,6 +880,7 @@
                             <i class="fa fa-pencil"></i>
                         </button>
                     `);
+                    
                     let modalHtml = `
                         <div class="modal fade" id="edit_remarks${response.remark_id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <form id="editRemarkForm${response.remark_id}" data-remark-id="${response.remark_id}" method="POST">
