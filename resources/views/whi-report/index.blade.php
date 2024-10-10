@@ -861,6 +861,16 @@
                         </span>
                     `);
 
+                    var invoice = invoicesData.find(item => item.DocEntry == response.docentry);
+                    if (invoice) {
+                        invoice.remark = {
+                            id: response.remark_id,
+                            remarks: response.remarks,
+                            created_at: response.created_at,
+                            updated_at: response.updated_at
+                        };
+                    }
+
                     let buttonTd = $('#button-' + response.docentry);
                     console.log(response.remark_id);
                     buttonTd.html(`
@@ -930,6 +940,15 @@
                             <span class="label label-warning">${response.updated_at}</span>
                         </span>
                     `);
+                    var invoice = invoicesData.find(item => item.DocEntry == response.docentry);
+                    if (invoice) {
+                        invoice.remark = {
+                            id: response.remark_id,
+                            remarks: response.remarks,
+                            created_at: response.created_at,
+                            updated_at: response.updated_at
+                        };
+                    }
                     
                     $('#edit_remarks' + remarkId).modal('hide');
                 },
@@ -1070,6 +1089,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
 
     tableBody.empty();
     tableHeader.empty();
+    
     var headerRow = '<tr>' +
         '<th>Action</th>' +
         '<th>Customer Name</th>' +
@@ -1195,8 +1215,8 @@ function renderModalContent(data, filterColumn, status, currency, type) {
         remarksHtml = 'N/A';
     }
 
-    var row = '<tr>' +
-        '<td align="center">' + remarksButtonHtml + '</td>' +
+    var row = '<tr id="row-' + item.DocNum + '">' +
+        '<td align="center" id="button-' + item.DocNum + '">' + remarksButtonHtml + '</td>' +
         '<td>' + item.CardName + '</td>' +
         '<td>' + item.U_invNo + '</td>' +
         '<td>' + item.NumAtCard + '</td>' +
@@ -1215,7 +1235,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
         '<td>' + (finalAmount * item.DocRate).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</td>' +
         '<td>' + ((item.location && item.location.ocrg && item.location.ocrg.GroupName !== "") ? item.location.ocrg.GroupName : "NA") + '</td>' +
         '<td>' + item.manager.SlpName + '</td>' +
-        '<td>' + remarksHtml + '</td>' +
+        '<td id="remark-' + item.DocNum + '">' + remarksHtml + '</td>' +
         '</tr>';
 
     
