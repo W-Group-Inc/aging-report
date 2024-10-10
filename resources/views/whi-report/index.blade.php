@@ -337,9 +337,9 @@
                                             $total_over_days_php = 0;
                                         @endphp
                                         @foreach ($invoices as $invoice)
-                                        <tr id="row-{{ $invoice->DocNum }}">
+                                        <tr class="row-{{ $invoice->DocNum }}">
                                             
-                                            <td id="button-{{ $invoice->DocNum }}" align="center">
+                                            <td class="button-{{ $invoice->DocNum }}" align="center">
                                                 @if($invoice->remark)
                                                     <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks{{$invoice->remark->id}}" id="editRemarksBtn"><i class="fa fa fa-pencil"></i></button>
                                                 @else
@@ -611,7 +611,7 @@
                                             <td>{{number_format($final_amount*$invoice->DocRate,2)}}</td>
                                             <td>{{ $invoice->location->ocrg->GroupName ?? 'N/A' }}</td> 
                                             <td>{{$invoice->manager->SlpName}}</td>
-                                            <td id="remark-{{ $invoice->DocNum }}">
+                                            <td class="remark-{{ $invoice->DocNum }}">
                                                 @if($invoice->remark)
                                                     {{$invoice->remark->remarks}}
                                                     <br>
@@ -848,7 +848,7 @@
                     $('#add_remarks').modal('hide');
 
                    
-                    let remarkTd = $('#remark-' + response.docentry);
+                    let remarkTd = $('.remark-' + response.docentry);
                     remarkTd.html(`
                         ${response.remarks}
                         <br>
@@ -871,7 +871,7 @@
                         };
                     }
 
-                    let buttonTd = $('#button-' + response.docentry);
+                    let buttonTd = $('.button-' + response.docentry);
                     console.log(response.remark_id);
                     buttonTd.html(`
                         <button type="button" class="btn btn-success btn-outline" title="Edit Remarks" data-toggle="modal" data-target="#edit_remarks${response.remark_id}" id="editRemarksBtn">
@@ -929,7 +929,7 @@
                 data: formData,
                 success: function(response) {
                     
-                    $('#remark-' + response.docentry).html(`
+                    $('.remark-' + response.docentry).html(`
                         ${response.remarks}
                         <br>
                         <span style="font-size: 10px">Date Created: 
@@ -1215,8 +1215,8 @@ function renderModalContent(data, filterColumn, status, currency, type) {
         remarksHtml = 'N/A';
     }
 
-    var row = '<tr id="row-' + item.DocNum + '">' +
-        '<td align="center" id="button-' + item.DocNum + '">' + remarksButtonHtml + '</td>' +
+    var row = '<tr class="row-' + item.DocNum + '">' +
+        '<td align="center" class="button-' + item.DocNum + '">' + remarksButtonHtml + '</td>' +
         '<td>' + item.CardName + '</td>' +
         '<td>' + item.U_invNo + '</td>' +
         '<td>' + item.NumAtCard + '</td>' +
@@ -1235,7 +1235,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
         '<td>' + (finalAmount * item.DocRate).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</td>' +
         '<td>' + ((item.location && item.location.ocrg && item.location.ocrg.GroupName !== "") ? item.location.ocrg.GroupName : "NA") + '</td>' +
         '<td>' + item.manager.SlpName + '</td>' +
-        '<td id="remark-' + item.DocNum + '">' + remarksHtml + '</td>' +
+        '<td class="remark-' + item.DocNum + '">' + remarksHtml + '</td>' +
         '</tr>';
 
     
