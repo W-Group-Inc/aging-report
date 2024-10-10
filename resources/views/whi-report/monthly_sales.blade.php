@@ -42,7 +42,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-2" style="display: flex;justify-content: center;align-items: center;">
-                                                <h3 id="aging_date">Monthly Sales:&nbsp;<span id="aging_span"></span></h3> 
+                                                <h3 id="aging_date">Monthly Sales For:</h3> 
                                             </div>
                                             <div class="col-lg-5">
                                                 <div class="row">

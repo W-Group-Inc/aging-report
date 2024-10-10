@@ -377,6 +377,13 @@
                                                         }
                                                     }
                                                     $finalTotal = $invoice->DocTotalFC - $totalFrgnTRIWhse;
+                                                }  elseif ($company === 'Triangle Shipments') {
+                                                    foreach ($invoice->inv1 as $item) {
+                                                        if ($item->WhsCode === 'TRI Whse') {
+                                                            $totalFrgnTRIWhse += $item->TotalFrgn;
+                                                        }
+                                                    }
+                                                    $finalTotal =  $totalFrgnTRIWhse;
                                                 } else {
                                                     $finalTotal = $invoice->DocTotalFC;
                                                 }
