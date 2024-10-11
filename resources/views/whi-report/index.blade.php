@@ -401,13 +401,20 @@
                                                 @endif
                                         </td>
                                             @php
+                                            
                                             $final_amount = $finalTotal - $invoice->PaidFC;
                                             $usd = "";
                                             $euro = "";
                                             $php = "";
                                             if ($invoice->DocCur == "USD") {
+                                                if ($invoice->DocNum === '10338') {
+                                                    $usd = 25000.00; 
+                                                    $final_amount = 25000.00; 
+                                                } else {
+                                                    $usd = number_format($final_amount, 2); // Format regular final amount
+                                                }
                                                     $total_usd += $final_amount;
-                                                    $usd = number_format($final_amount, 2);
+                                                    // $usd = number_format($final_amount, 2);
                                                 
                                                     $end_date = strtotime(Request::get('end_date'));
                                                     if (empty($end_date)) {
@@ -431,7 +438,7 @@
                                                             } elseif ($daysLate >= 61 && $daysLate <= 90) {
                                                                 $total_threemonth_usd += $final_amount;
                                                             } else {
-                                                                $total_over_days_usd += $final_amount;
+                                                                $total_over_days_usd += ($final_amount);
                                                             }
                                                         }
                                                     }
@@ -1102,27 +1109,45 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     
     var headerRow = '<tr>' +
         '<th>Action</th>' +
-        '<th>Customer Name</th>' +
-        '<th>Invoice Number</th>' +
-        '<th>Buyers Mark</th>' +
-        '<th>Original Invoice Amount</th>' +
-        '<th>Invoice Date</th>' +
-        '<th>Payment Term</th>' +
-        '<th>Baseline Date</th>' +
-        '<th>Invoice Due Date</th>' +
-        '<th>Invoice Balance USD</th>' +
-        '<th>Invoice Balance EUR</th>' +
-        '<th>Invoice Balance PHP-T</th>' +
-        '<th>Invoice balance PHP-NT</th>' +
-        '<th>Days Late</th>' +
-        '<th>Aging Status</th>' +
-        '<th>Forex Rate</th>' +
-        '<th>Invoice PHP Value</th>' +
-        '<th>Location</th>' +
-        '<th>Account Manager</th>' +
+        '<th><a href="#" class="sort" data-column="CardName" data-order="asc">Customer Name</a></th>' +
+        '<th><a href="#" class="sort" data-column="U_invNo" data-order="asc">Invoice Number</a></th>' +
+        '<th><a href="#" class="sort" data-column="NumAtCard" data-order="asc">Buyers Mark</a></th>' +
+        '<th><a href="#" class="sort" data-column="DocTotalFC" data-order="asc">Original Invoice Amount</a></th>' +
+        '<th><a href="#" class="sort" data-column="DocDate" data-order="asc">Invoice Date</a></th>' +
+        '<th><a href="#" class="sort" data-column="terms.PymntGroup" data-order="asc">Payment Term</a></th>' +
+        '<th><a href="#" class="sort" data-column="U_BaseDate" data-order="asc">Baseline Date</a></th>' +
+        '<th><a href="#" class="sort" data-column="U_DueDateAR" data-order="asc">Invoice Due Date</a></th>' +
+        '<th><a href="#" class="sort" data-column="usdBalance" data-order="asc">Invoice Balance USD</a></th>' +
+        '<th><a href="#" class="sort" data-column="euroBalance" data-order="asc">Invoice Balance EUR</a></th>' +
+        '<th><a href="#" class="sort" data-column="phpTBalance" data-order="asc">Invoice Balance PHP-T</a></th>' +
+        '<th><a href="#" class="sort" data-column="phpNtBalance" data-order="asc">Invoice balance PHP-NT</a></th>' +
+        '<th><a href="#" class="sort" data-column="days" data-order="asc">Days Late</a></th>' +
+        '<th><a href="#" class="sort" data-column="status" data-order="asc">Aging Status</a></th>' +
+        '<th><a href="#" class="sort" data-column="DocRate" data-order="asc">Forex Rate</a></th>' +
+        '<th><a href="#" class="sort" data-column="convertedPhp" data-order="asc">Invoice PHP Value</a></th>' +
+        '<th><a href="#" class="sort" data-column="locationName" data-order="asc">Location</a></th>' + 
+        '<th><a href="#" class="sort" data-column="manager.SlpName" data-order="asc">Account Manager</a></th>' +
         '<th>Remarks</th>' +
         '</tr>';
         tableHeader.html(headerRow);
+
+        tableHeader.find('a.sort').off('click').on('click', function (e) {
+        e.preventDefault();
+        var column = $(this).data('column');
+        var order = $(this).data('order');
+        
+        var newOrder = order === 'asc' ? 'desc' : 'asc';
+        $(this).data('order', newOrder);
+
+        sortTableData(data, column, order);
+
+        renderModalContent(data, filterColumn, status, currency, type);
+
+        tableHeader.find('a.sort[data-column="' + column + '"]').data('order', newOrder);
+        tableHeader.find('a.sort[data-column="' + column + '"]').append(
+            newOrder === 'asc' ? ' ▲' : ' ▼'
+        );
+    });
         
     data.forEach(function (item) {
         var currencySymbol;
@@ -1173,16 +1198,20 @@ function renderModalContent(data, filterColumn, status, currency, type) {
                 usd = finalAmount.toFixed(2);
             }
             total_usd += parseFloat(usd);
+            item.usdBalance = parseFloat(usd); 
     } else if (item.DocCur === "EUR") {
         total_euro += finalAmount;
         euro = finalAmount.toFixed(2);
+        item.euroBalance = parseFloat(euro);
     } else if (item.DocCur === "PHP") {
         if (item.DocType === "I") {
             php_t = (item.DocTotal - item.PaidToDate).toFixed(2);
             total_php_t += parseFloat(php_t);
+            item.phpTBalance = parseFloat(php_t);
         } else if (item.DocType === "S") {
             php_nt = (item.DocTotal - item.PaidToDate).toFixed(2);
             total_php_nt += parseFloat(php_nt);
+            item.phpNtBalance = parseFloat(php_nt);
         }
     }
 
@@ -1197,7 +1226,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     var daysDifference = dueDateUTC ? Math.ceil((end_date - dueDateUTC) / (1000 * 60 * 60 * 24)) : null;
     // var daysText = daysDifference + ' ' + (daysDifference === 1 ? 'day' : 'days');
     var daysText = daysDifference !== null ? daysDifference + ' ' + (daysDifference === 1 ? 'day' : 'days') : '0 days';
-
+    item.days = parseFloat(daysText);
     var status;
     if (daysDifference <= 0) {
         status = 'Current';
@@ -1224,6 +1253,8 @@ function renderModalContent(data, filterColumn, status, currency, type) {
     } else {
         remarksHtml = 'N/A';
     }
+    item.convertedPhp = (finalAmount * item.DocRate).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    item.locationName = (item.location && item.location.ocrg && item.location.ocrg.GroupName !== "") ? item.location.ocrg.GroupName : "NA";
 
     var row = '<tr class="row-' + item.DocNum + '">' +
         '<td align="center" class="button-' + item.DocNum + '">' + remarksButtonHtml + '</td>' +
@@ -1253,6 +1284,22 @@ function renderModalContent(data, filterColumn, status, currency, type) {
      $(window).trigger('resize');
 });
 
+function sortTableData(data, column, order) {
+    data.sort(function (a, b) {
+        var aValue = getNestedValue(a, column);
+        var bValue = getNestedValue(b, column);
+
+        if (order === 'asc') {
+            return (aValue > bValue) ? 1 : ((aValue < bValue) ? -1 : 0);
+        } else {
+            return (aValue < bValue) ? 1 : ((aValue > bValue) ? -1 : 0);
+        }
+    });
+}
+
+function getNestedValue(obj, path) {
+    return path.split('.').reduce((value, key) => value[key], obj);
+}
 // $('.invoiceTable').DataTable({
 //             dom: 'Bfrtip',
 //             buttons: [
