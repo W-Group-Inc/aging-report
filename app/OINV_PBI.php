@@ -20,7 +20,7 @@ class OINV_PBI extends Model
     }
     public function manager()
     {
-        return $this->belongsTo(OSLP::class,'SlpCode','SlpCode');
+        return $this->belongsTo(OSLP_PBI::class,'SlpCode','SlpCode');
     }
     public function location()
     {
