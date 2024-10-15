@@ -8,4 +8,5 @@ class OSLP_PBI extends Model
 {
     protected $connection = 'sqlsrv_pbi';
     protected $table = 'OSLP';
+    
 }
