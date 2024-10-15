@@ -20,7 +20,7 @@ class OINV_CCC extends Model
     }
     public function manager()
     {
-        return $this->belongsTo(OSLP::class,'SlpCode','SlpCode');
+        return $this->belongsTo(OSLP_CCC::class,'SlpCode','SlpCode');
     }
     public function location()
     {
