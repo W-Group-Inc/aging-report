@@ -115,6 +115,9 @@
                                             @endif
                                             <th>Gross Profit - RM </th>
                                             <th>GP%</th>
+                                            <th>Incoterm</th>
+                                            <th>Mode of Shipment</th>
+                                            <th>Product Classification</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -382,6 +385,9 @@
                                             </td>
                                             <td>{{number_format($gp*100,2)}} %</td>
                                             @endif
+                                            <td>{{ $invoice->U_Inco }}</td>
+                                            <td>{{ $invoice->U_ModeShip }}</td>
+                                            <td>{{ $invoice->Product_Classification }}</td>
                                         </tr>
                                         @endif
                                         @endforeach

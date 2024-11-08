@@ -28,6 +28,8 @@ class GPReportController extends Controller
                 $invoices = OINV::select(
                     'T0.DocNum',
                     'T1.U_InvoiceNo',
+                    'T0.U_ModeShip',
+                    'T0.U_Inco',
                     'T0.DocDate as Date_of_Invoice',
                     'T0.U_ExInvoiceNo as Export_Invoice_No',
                     'T0.CardName as Client',
@@ -75,6 +77,8 @@ class GPReportController extends Controller
                 $invoices = OINV_PBI::select(
                     'T0.DocNum',
                     'T1.U_InvoiceNo',
+                    'T0.U_ModeShip',
+                    'T0.U_Inco',
                     'T0.DocDate as Date_of_Invoice',
                     'T0.U_ExInvoiceNo as Export_Invoice_No',
                     'T0.CardName as Client',
@@ -122,6 +126,8 @@ class GPReportController extends Controller
                 $invoices = OINV_CCC::select(
                     'T0.DocNum',
                     'T1.U_InvoiceNo',
+                    'T0.U_ModeShip',
+                    'T0.U_Inco',
                     'T0.DocDate as Date_of_Invoice',
                     'T0.U_ExInvoiceNo as Export_Invoice_No',
                     'T0.CardName as Client',
