@@ -81,6 +81,8 @@
                                         <tr>
                                             <th>Date of Invoice</th>
                                             <th>Accounts</th>
+                                            <th>Incoterm</th>
+                                            <th>Mode of Shipment</th>
                                             <th>Export Invoice No.</th>
                                             <th>Buyer's Code</th>
                                             <th>Client</th>
@@ -115,8 +117,6 @@
                                             @endif
                                             <th>Gross Profit - RM </th>
                                             <th>GP%</th>
-                                            <th>Incoterm</th>
-                                            <th>Mode of Shipment</th>
                                             <th>Product Classification</th>
                                         </tr>
                                     </thead>
@@ -150,6 +150,8 @@
                                         <tr>
                                             <td>{{date('Y-m-d',strtotime($invoice->Date_of_Invoice))}}</td>
                                             <td>{{$invoice->WhsCode}}</td>
+                                            <td>{{ $invoice->U_Inco }}</td>
+                                            <td>{{ $invoice->U_ModeShip }}</td>
                                             <td>
                                                 {{-- {{$invoice->DocNum}}  --}}
                                                 {{$invoice->U_InvoiceNo}}</td>
@@ -385,8 +387,6 @@
                                             </td>
                                             <td>{{number_format($gp*100,2)}} %</td>
                                             @endif
-                                            <td>{{ $invoice->U_Inco }}</td>
-                                            <td>{{ $invoice->U_ModeShip }}</td>
                                             <td>{{ $invoice->Product_Classification }}</td>
                                         </tr>
                                         @endif
