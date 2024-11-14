@@ -155,7 +155,7 @@
                                             <td>
                                                 {{-- {{$invoice->DocNum}}  --}}
                                                 {{$invoice->U_InvoiceNo}}</td>
-                                            <td>{{$invoice->Export_Invoice_No}} </td>
+                                            <td>{{$invoice->NumAtCard}} </td>
                                             <td>{{$invoice->Client}}</td>
                                             <td>{{$invoice->PRODUCT_EXPORTED}}</td>
                                             <td>{{number_format($invoice->VOLUME,2)}}</td>
@@ -392,6 +392,219 @@
                                         @endif
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        @php
+                                            $total_volume = 0;
+                                            $ave_unit_price = 0;
+                                            $total_dollar = 0;
+                                            $total_euro = 0;
+                                            $total_php = 0;
+                                            $total_cos_rm = 0;
+                                            $total_freight = 0;
+                                            $total_delivery = 0;
+                                            $total_insurance = 0;
+                                            $total_export = 0;
+                                            $total_commission = 0;
+                                            $total_brokerage = 0;
+                                            $ave_gp=0;
+                                            $total_gross_profit=0;
+                                        @endphp
+                                        
+                                        @foreach($invoices as $invoice)
+                                            @if(!str_contains($invoice->PRODUCT_EXPORTED, "Delivery"))
+                                                @php
+                                                $freight_per_invoice = 0;
+                                                $delivery_per_invoice = 0;
+                                                $insurance_per_invoice = 0;
+                                                $export_per_invoice = 0; 
+                                                $brokerage_per_invoice = 0;
+                                                $commission_per_invoice = 0;
+                                                    if ($company == "WHI") {
+                                                        if ($invoice->CurrencyType == "_SYS00000000168") {
+                                                            $total_dollar += $invoice->Dollar_Value;
+                                                        } elseif ($invoice->CurrencyType == "_SYS00000000171") {
+                                                            $total_euro += $invoice->Dollar_Value;
+                                                        }
+                                                    } elseif ($company == "CCC") {
+                                                        if ($invoice->CurrencyType == "_SYS00000000674") {
+                                                            $total_dollar += $invoice->Dollar_Value;
+                                                        } elseif ($invoice->CurrencyType == "_SYS00000000401") {
+                                                            $total_euro += $invoice->Dollar_Value;
+                                                        }
+                                                    } elseif ($company == "PBI") {
+                                                        if ($invoice->CurrencyType == "_SYS00000000372") {
+                                                            $total_dollar += $invoice->Dollar_Value;
+                                                        } elseif ($invoice->CurrencyType == "_SYS00000000548") {
+                                                            $total_euro += $invoice->Dollar_Value;
+                                                        }
+                                                    }
+
+                                                    if($company == "WHI") {
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620300'])->sum('LineTotal') > 0) {
+                                                            $freight_per_invoice = ($invoice->ap_whi->whereIn('chart_of_account.FatherNum', ['620300'])->sum('LineTotal') / $invoices->where('U_InvoiceNo', $invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME;
+                                                            $total_freight += $freight_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400'])->sum('LineTotal') > 0) {
+                                                            $delivery_per_invoice = ($invoice->ap_whi->whereIn('chart_of_account.FatherNum', ['620400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo', $invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME;
+                                                            $total_delivery += $delivery_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['621400'])->sum('LineTotal') > 0) {
+                                                            $insurance_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['621400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_insurance += $insurance_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620500'])->sum('LineTotal') > 0) {
+                                                            $brokerage_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620500'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_brokerage += $brokerage_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620700'])->sum('LineTotal') > 0) {
+                                                            $export_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_export += $export_per_invoice;
+                                                        }
+                                                        
+                                                        $commission_per_invoice = (($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200'])->sum('LineTotal'));
+                                                        $total_commission += $commission_per_invoice;
+
+                                                        $gross_profit = $invoice->Php_Value-$freight_per_invoice-$commission_per_invoice-$invoice->COS_RM-$delivery_per_invoice-$insurance_per_invoice-$export_per_invoice-$brokerage_per_invoice;
+                                                        if(str_contains($invoice->WhsCode,"TRI"))                                                 
+                                                            {
+                                                                $freight_per_invoice = 0;
+                                                                $delivery_per_invoice = 0;
+                                                                $insurance_per_invoice = 0;
+                                                                $export_per_invoice = 0;
+                                                                $commission_per_invoice = 0;
+
+                                                            }
+                                                            if($gross_profit != 0)
+                                                            {
+                                                                $total_gross_profit += $gross_profit;
+
+                                                            }
+                                                    } elseif($company == "PBI") {
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400'])->sum('LineTotal') > 0) {
+                                                            $freight_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_freight += $freight_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710500'])->sum('LineTotal') > 0) {
+                                                            $delivery_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710500'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_delivery += $delivery_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710700'])->sum('LineTotal') > 0) {
+                                                            $insurance_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_insurance += $insurance_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['711000'])->sum('LineTotal') > 0) {
+                                                            $brokerage_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['711000'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_brokerage += $brokerage_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710800'])->sum('LineTotal') > 0) {
+                                                            $export_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710800'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_export += $export_per_invoice;
+                                                        }
+                                                        
+                                                        $commission_per_invoice = ($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710600'])->sum('LineTotal');
+                                                        $total_commission += $commission_per_invoice;
+
+                                                        $gross_profit = $invoice->Php_Value-$freight_per_invoice-$commission_per_invoice-$invoice->COS_RM-$delivery_per_invoice-$insurance_per_invoice-$export_per_invoice-$brokerage_per_invoice;
+                                                        if(str_contains($invoice->WhsCode,"TRI"))                                                 
+                                                            {
+                                                                $freight_per_invoice = 0;
+                                                                $delivery_per_invoice = 0;
+                                                                $insurance_per_invoice = 0;
+                                                                $export_per_invoice = 0;
+                                                                $commission_per_invoice = 0;
+
+                                                            }
+                                                            if($gross_profit != 0)
+                                                            {
+                                                                $total_gross_profit += $gross_profit;
+
+                                                            }
+                                                    } elseif($company == "CCC") {
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610127'])->sum('LineTotal') > 0) {
+                                                            $freight_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610127'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_freight += $freight_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610128'])->sum('LineTotal') > 0) {
+                                                            $delivery_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610128'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_delivery += $delivery_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610131'])->sum('LineTotal') > 0) {
+                                                            $insurance_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610131'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_insurance += $insurance_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['630000'])->sum('LineTotal') > 0) {
+                                                            $brokerage_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['630000'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_brokerage += $brokerage_per_invoice;
+                                                        }
+                                                        if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['610145'])->sum('LineTotal') > 0) {
+                                                            $export_per_invoice = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['610145'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
+                                                            $total_export += $export_per_invoice;
+                                                        }
+                                                        
+                                                        $commission_per_invoice = ($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620000'])->sum('LineTotal');
+                                                        $total_commission += $commission_per_invoice;
+
+                                                        $gross_profit = $invoice->Php_Value-$freight_per_invoice-$commission_per_invoice-$invoice->COS_RM-$delivery_per_invoice-$insurance_per_invoice-$export_per_invoice-$brokerage_per_invoice;
+                                                        if(str_contains($invoice->WhsCode,"TRI"))                                                 
+                                                            {
+                                                                $freight_per_invoice = 0;
+                                                                $delivery_per_invoice = 0;
+                                                                $insurance_per_invoice = 0;
+                                                                $export_per_invoice = 0;
+                                                                $commission_per_invoice = 0;
+
+                                                            }
+                                                            if($gross_profit != 0)
+                                                            {
+                                                                $total_gross_profit += $gross_profit;
+
+                                                            }
+                                                    }
+
+                                        
+                                                    $total_volume += $invoice->VOLUME;
+                                                    $total_php += $invoice->Php_Value;
+                                                    $total_cos_rm += $invoice->COS_RM;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                        @php
+                                            if ($total_php != 0) {
+                                                $ave_gp = ($total_gross_profit / $total_php) * 100;
+                                            }
+
+                                            $total_foreign_value = $total_dollar + $total_euro;
+                                            if ($total_volume != 0) {
+                                                $ave_unit_price = $total_foreign_value / $total_volume;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td><td></td><td></td><td></td><td></td>
+                                            <td>{{ number_format($total_volume, 2) }}</td>
+                                            <td>{{ number_format($ave_unit_price, 2) }}</td>
+                                            <td>{{ number_format($total_dollar, 2) }}</td>
+                                            <td>{{ number_format($total_euro, 2) }}</td>
+                                            <td>{{ number_format($total_php, 2) }}</td>
+                                            <td>{{ number_format($total_cos_rm, 2) }}</td>
+                                            {{-- @if ($company=='WHI') --}}
+                                            <td>{{ number_format($total_freight, 2) }}</td>
+                                            <td>{{ number_format($total_delivery, 2) }}</td>
+                                            <td>{{ number_format($total_insurance, 2) }}</td>
+                                            <td>{{ number_format($total_brokerage, 2) }}</td>
+                                            <td>{{ number_format($total_export, 2) }}</td>
+                                            <td>{{ number_format($total_commission, 2) }}</td>
+                                            <td>{{ number_format($total_gross_profit, 2) }}</td>
+                                            <td>{{number_format(($ave_gp),2)}} %</td>
+                                            {{-- @endif --}}
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    
+                                    
+                                                                    
                                 </table>
                             </div>
                         </div>
