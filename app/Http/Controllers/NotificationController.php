@@ -17,14 +17,21 @@ class NotificationController extends Controller
 {
     public function markAsRead(Request $request, $id)
     {
-        if ($request->has('notification_id')) {
-            $notification = Notification::findOrFail($id);
-            if ($notification) {
-                $notification->update(['is_read' => true]);
-            }
-        } else {
-            auth()->user()->unreadNotifications()->update(['is_read' => true]);
+        $notification = Notification::findOrFail($id);
+
+        if ($notification) {
+            $notification->is_read = true;
+            $notification->update();
         }
+        // dd($id);
+        // if ($request->has('notification_id')) {
+        //     $notification = Notification::findOrFail($id);
+        //     if ($notification) {
+        //         $notification->update(['is_read' => true]);
+        //     }
+        // } else {
+        //     auth()->user()->unreadNotifications()->update(['is_read' => true]);
+        // }
 
         return response()->json(['success' => true]);
     }

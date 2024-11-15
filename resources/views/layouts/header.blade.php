@@ -33,7 +33,7 @@
     @yield('css')
     <link href="{{ asset('/inside/login_css/css/animate.css')}}" rel="stylesheet">
     <link href="{{ asset('/inside/login_css/css/style.css')}}" rel="stylesheet">
-   
+
   <!-- End plugin css for this page -->
     <style>
       .center {
@@ -81,8 +81,27 @@
         float: left;
         text-align: left;
         }
-        .shownext { display: none; }
-        li:hover + .shownext { display: block; }
+        /* Ensure submenus stay hidden until hovered */
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+        }
+                                                           
+        .dropdown-submenu:hover > .dropdown-menu {
+            display: block;
+        }
+        .dropdown-submenu .dropdown-submenu:hover > .dropdown-menu {
+            display: block;
+            top: 0;
+            left: 100%;
+        }
+
     </style>
 </head>
 <body class="top-navigation">
@@ -111,7 +130,138 @@
                       <a aria-expanded="false" role="button" href="{{url('/gp-report')}}"> GP Report</a>
                   </li>
                   @endif
-                 
+                  {{-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Print
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">WHI</a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">SOA</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaUsaModal">
+                                                SOA USA Commercial Invoice
+                                            </a>
+                                        </li>       
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaEurModal">
+                                                SOA EUR Commercial Invoice
+                                            </a>
+                                        </li>     
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaPhpModal">
+                                                SOA PHP Commercial Invoice
+                                            </a>
+                                        </li>                                        
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Billing Statement</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#tradeBilling">
+                                                Trade
+                                            </a>
+                                        </li>       
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaEurModal">
+                                                Non Trade
+                                            </a>
+                                        </li>                                   
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Credit Note</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="{{url('/credit_note')}}">
+                                                Credit Note
+                                            </a>
+                                        </li>                                         
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item" href="{{url('/whi_bir_invoice')}}">
+                                        BIR Template Commercial Invoice List
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">PBI</a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">SOA</a>
+                                    <ul class="dropdown-menu">    
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaPbiEurModal">
+                                                SOA EUR Commercial Invoice
+                                            </a>
+                                        </li>     
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaPbiPhpModal">
+                                                SOA PHP Commercial Invoice
+                                            </a>
+                                        </li>                                        
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Billing Statement</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#tradeBilling">
+                                                Trade
+                                            </a>
+                                        </li>       
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaEurModal">
+                                                Non Trade
+                                            </a>
+                                        </li>                                   
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item" href="{{url('/pbi_bir_invoice')}}">
+                                        BIR Template Sales Invoice List
+                                    </a>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item" href="{{url('/pbi_debit_memo')}}">
+                                        Debit Memo
+                                    </a>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item" href="{{url('/pbi_credit_note')}}">
+                                        Credit Note
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">CCC</a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Credit Note</a>
+                                    <ul class="dropdown-menu">    
+                                        <li>
+                                            <a class="dropdown-item" href="{{url('/credit_note_ccc')}}">
+                                                Credit Note
+                                            </a>
+                                        </li>                                        
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item" href="{{url('/ccc_bir_invoice')}}">
+                                        BIR Template Commercial Invoice List
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>                                                                                --}}
               </ul>
                   <ul class="nav navbar-top-links navbar-right">
                       <li>
@@ -122,10 +272,18 @@
                       <li class="notification-bell dropdown">
                         <a class="nav-link" href="#" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bell"></i>
-                            <span class="badge" id="notificationCount">{{ App\Notification::where('is_read', '0')->get()->count() }}</span>
+                            <span class="badge" id="notificationCount">{{ App\Notification::where('is_read', '0')->where('invoice_company', request('company'))->whereNotNull('invoice_company')
+                                    ->where('invoice_company', '!=', '')->get()->count() }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" style="width: 450px; height: 400px; overflow-y: scroll;" aria-labelledby="notificationDropdown">
-                            @forelse(App\Notification::orderBy('id', 'desc')->get() as $notification)
+                            @php
+                                $notifications = App\Notification::where('invoice_company', request('company'))
+                                    ->whereNotNull('invoice_company')
+                                    ->where('invoice_company', '!=', '')
+                                    ->orderBy('id', 'desc')
+                                    ->get();
+                            @endphp
+                            @forelse($notifications as $notification)
                                 <a class="dropdown-item d-flex {{ $notification->is_read == 1 ? 'bg-read' : 'bg-unread' }}" href="#" data-id="{{ $notification->id }}" data-read="{{ $notification->is_read }}"
                                   data-toggle="modal" data-target="#notificationModal{{ $notification->id }}">
                                     <div class="mr-3">
@@ -186,7 +344,20 @@
           </div>
         </div>
     </div>
- 
+@if(isset($invoices))
+    @foreach(App\Notification::all() as $notification)
+        @include('whi-report.notif_invoice')
+    @endforeach
+@endif
+
+{{-- @include('print_templates.print_modals.soa_usa_commercial_invoice')
+@include('print_templates.print_modals.soa_eur_commercial_invoice')
+@include('print_templates.print_modals.soa_php_commercial_invoice')
+@include('print_templates.print_modals.billing_trade')
+@include('print_templates.print_modals.pbi_modals.soa_eur_commercial_invoice')
+@include('print_templates.print_modals.pbi_modals.php_commercial_invoice')
+@include('print_templates.print_modals.bir.whi_commercial_invoice') --}}
+
 <script>
     function show() {
                 document.getElementById("loader").style.display="block";
@@ -239,6 +410,7 @@
 
     $('.dropdown-item').on('click', function() {
     var notificationId = $(this).data('id');
+    console.log(notificationId);
     var clickedItem = $(this); 
     var isRead = $(this).data('read');
     if (isRead) {
@@ -249,7 +421,7 @@
         method: 'POST',
         data: {
             _token: '{{ csrf_token() }}',
-            id: notificationId
+            notification_id: notificationId
         },
         success: function(response) {
             if (response.success) {
@@ -266,8 +438,5 @@
     });
 });
 </script>
-@foreach(App\Notification::all() as $notification)
-@include('whi-report.notif_invoice')
-@endforeach
 </body>
 </html>
