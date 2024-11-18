@@ -118,6 +118,7 @@
                                             <th>Gross Profit - RM </th>
                                             <th>GP%</th>
                                             <th>Product Classification</th>
+                                            <th>Account Manager</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -388,6 +389,7 @@
                                             <td>{{number_format($gp*100,2)}} %</td>
                                             @endif
                                             <td>{{ $invoice->Product_Classification }}</td>
+                                            <td>{{ $invoice->SlpName }}</td>
                                         </tr>
                                         @endif
                                         @endforeach

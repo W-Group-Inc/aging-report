@@ -39,6 +39,7 @@ class GPReportController extends Controller
                     'T1.Price as UNIT_PRICE',
                     'T1.WhsCode as WhsCode',
                     'T0.CtlAccount as CurrencyType',
+                    'T5.SlpName',
                     \DB::raw("CASE WHEN T2.BaseLine = T1.LineNum THEN (COALESCE(T1.TotalFrgn, 0.00) - COALESCE(T2.TotalFrgn, 0.00)) ELSE COALESCE(T1.TotalFrgn, 0.00) END as Dollar_Value"),
                     \DB::raw("CASE WHEN T2.BaseLine = T1.LineNum THEN (COALESCE(T1.LineTotal, 0.00) - COALESCE(T2.LineTotal, 0.00)) ELSE COALESCE(T1.LineTotal, 0.00) END as Php_Value"),
                     \DB::raw("CASE 
@@ -57,6 +58,7 @@ class GPReportController extends Controller
                 ->leftJoin('RIN1 as T2', 'T0.DocNum', '=', 'T2.BaseRef')
                 ->join('OITM as T3', 'T1.ItemCode', '=', 'T3.ItemCode')
                 ->join('OITB as T4', 'T3.ItmsGrpCod', '=', 'T4.ItmsGrpCod')
+                ->join('OSLP as T5', 'T0.SlpCode', '=', 'T5.SlpCode')
                 ->where('T0.U_TypeofSale', '=', '2')
                 ->where('T1.LineStatus', '=', 'O')
                 ->where('T0.DocCur', '<>', 'PHP')
@@ -89,6 +91,7 @@ class GPReportController extends Controller
                     'T1.Price as UNIT_PRICE',
                     'T1.WhsCode as WhsCode',
                     'T0.CtlAccount as CurrencyType',
+                    'T5.SlpName',
                     \DB::raw("CASE WHEN T2.BaseLine = T1.LineNum THEN (COALESCE(T1.TotalFrgn, 0.00) - COALESCE(T2.TotalFrgn, 0.00)) ELSE COALESCE(T1.TotalFrgn, 0.00) END as Dollar_Value"),
                     \DB::raw("CASE WHEN T2.BaseLine = T1.LineNum THEN (COALESCE(T1.LineTotal, 0.00) - COALESCE(T2.LineTotal, 0.00)) ELSE COALESCE(T1.LineTotal, 0.00) END as Php_Value"),
                     \DB::raw("CASE 
@@ -107,6 +110,7 @@ class GPReportController extends Controller
                 ->leftJoin('RIN1 as T2', 'T0.DocNum', '=', 'T2.BaseRef')
                 ->join('OITM as T3', 'T1.ItemCode', '=', 'T3.ItemCode')
                 ->join('OITB as T4', 'T3.ItmsGrpCod', '=', 'T4.ItmsGrpCod')
+                ->join('OSLP as T5', 'T0.SlpCode', '=', 'T5.SlpCode')
                 ->where('T0.U_TypeofSale', '=', '2')
                 ->where('T1.LineStatus', '=', 'O')
                 ->where('T0.DocCur', '<>', 'PHP')
@@ -139,6 +143,8 @@ class GPReportController extends Controller
                     'T1.Price as UNIT_PRICE',
                     'T1.WhsCode as WhsCode',
                     'T0.CtlAccount as CurrencyType',
+                    'T5.SlpName',
+
                     \DB::raw("CASE WHEN T2.BaseLine = T1.LineNum THEN (COALESCE(T1.TotalFrgn, 0.00) - COALESCE(T2.TotalFrgn, 0.00)) ELSE COALESCE(T1.TotalFrgn, 0.00) END as Dollar_Value"),
                     \DB::raw("CASE WHEN T2.BaseLine = T1.LineNum THEN (COALESCE(T1.LineTotal, 0.00) - COALESCE(T2.LineTotal, 0.00)) ELSE COALESCE(T1.LineTotal, 0.00) END as Php_Value"),
                     \DB::raw("CASE 
@@ -157,6 +163,7 @@ class GPReportController extends Controller
                 ->leftJoin('RIN1 as T2', 'T0.DocNum', '=', 'T2.BaseRef')
                 ->join('OITM as T3', 'T1.ItemCode', '=', 'T3.ItemCode')
                 ->join('OITB as T4', 'T3.ItmsGrpCod', '=', 'T4.ItmsGrpCod')
+                ->join('OSLP as T5', 'T0.SlpCode', '=', 'T5.SlpCode')
                 ->where('T0.U_TypeofSale', '=', '2')
                 ->where('T1.LineStatus', '=', 'O')
                 ->where('T0.DocCur', '<>', 'PHP')
