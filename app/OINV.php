@@ -41,4 +41,24 @@ class OINV extends Model
     {
         return $this->hasMany(PCH1::class,'U_InvoiceNo','U_InvoiceNo');
     }
+    public function octgModel()
+    {
+        return $this->belongsTo(OCTG::class,'GroupNum','GroupNum');
+    }
+    public function asNew() 
+    {
+        return $this->hasOne(BirInvoice::class, 'DocNum', 'DocEntry');
+    }
+    public function ocrdModel()
+    {
+        return $this->belongsTo(OCRD::class,'CardCode','CardCode');
+    }
+    public function NewCreditNote() 
+    {
+        return $this->hasOne(CreditNote::class, 'DocNum', 'DocEntry');
+    }
+    public function newNonTrade() 
+    {
+        return $this->hasOne(BillingStatement::class, 'DocNum', 'DocEntry');
+    }
 }

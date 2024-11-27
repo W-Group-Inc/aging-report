@@ -34,4 +34,13 @@ class OINV_PBI extends Model
     {
         return $this->hasMany(PCH1_PBI::class,'U_InvoiceNo','U_InvoiceNo');
     }
+    public function warehouse()
+    {
+        return $this->belongsTo(INV_PBI::class,'DocEntry','DocEntry');
+    }
+    public function octgModel()
+    {
+        return $this->belongsTo(OCTG_PBI::class,'GroupNum','GroupNum');
+    }
+
 }

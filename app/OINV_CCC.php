@@ -34,4 +34,17 @@ class OINV_CCC extends Model
     {
         return $this->hasMany(PCH1_CCC::class,'U_InvoiceNo','U_InvoiceNo');
     }
+    public function warehouse()
+    {
+        return $this->belongsTo(INV_CCC::class,'DocEntry','DocEntry');
+    }
+    public function octgModel()
+    {
+        return $this->belongsTo(OCTG_CCC::class,'GroupNum','GroupNum');
+    }
+    public function NewCreditNote() 
+    {
+        return $this->hasOne(CreditNote::class, 'DocNum', 'DocEntry');
+    }
+    
 }

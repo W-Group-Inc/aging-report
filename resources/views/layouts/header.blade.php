@@ -130,7 +130,7 @@
                       <a aria-expanded="false" role="button" href="{{url('/gp-report')}}"> GP Report</a>
                   </li>
                   @endif
-                  {{-- <li class="nav-item dropdown">
+                  <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                         Print
                     </a>
@@ -167,7 +167,10 @@
                                             </a>
                                         </li>       
                                         <li>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaEurModal">
+                                            {{-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#nonTradeBilling">
+                                                Non Trade
+                                            </a> --}}
+                                            <a class="dropdown-item" href="{{url('/billing_statement_list')}}">
                                                 Non Trade
                                             </a>
                                         </li>                                   
@@ -183,6 +186,11 @@
                                         </li>                                         
                                     </ul>
                                 </li>
+                                {{-- <li class="dropdown-submenu">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#birWhiCommercialInvoice">
+                                        BIR Template Commercial Invoice
+                                    </a>
+                                </li> --}}
                                 <li class="dropdown-submenu">
                                     <a class="dropdown-item" href="{{url('/whi_bir_invoice')}}">
                                         BIR Template Commercial Invoice List
@@ -208,7 +216,7 @@
                                         </li>                                        
                                     </ul>
                                 </li>
-                                <li class="dropdown-submenu">
+                                {{-- <li class="dropdown-submenu">
                                     <a class="dropdown-item dropdown-toggle" href="#">Billing Statement</a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -222,7 +230,7 @@
                                             </a>
                                         </li>                                   
                                     </ul>
-                                </li>
+                                </li> --}}
                                 <li class="dropdown-submenu">
                                     <a class="dropdown-item" href="{{url('/pbi_bir_invoice')}}">
                                         BIR Template Sales Invoice List
@@ -258,10 +266,18 @@
                                         BIR Template Commercial Invoice List
                                     </a>
                                 </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item" href="{{url('/ccc_bir_sales_invoice')}}">
+                                        BIR Template Sales Invoice List
+                                    </a>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" data-toggle="modal" data-target="#cccBillingStatement">Billing Statement</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
-                </li>                                                                                --}}
+                </li>                                                                               
               </ul>
                   <ul class="nav navbar-top-links navbar-right">
                       <li>
@@ -350,13 +366,15 @@
     @endforeach
 @endif
 
-{{-- @include('print_templates.print_modals.soa_usa_commercial_invoice')
+@include('print_templates.print_modals.soa_usa_commercial_invoice')
 @include('print_templates.print_modals.soa_eur_commercial_invoice')
 @include('print_templates.print_modals.soa_php_commercial_invoice')
 @include('print_templates.print_modals.billing_trade')
+@include('print_templates.print_modals.billing_non_trade')
 @include('print_templates.print_modals.pbi_modals.soa_eur_commercial_invoice')
 @include('print_templates.print_modals.pbi_modals.php_commercial_invoice')
-@include('print_templates.print_modals.bir.whi_commercial_invoice') --}}
+@include('print_templates.print_modals.bir.whi_commercial_invoice')
+@include('print_templates.ccc.billing_statement.ccc_billing')
 
 <script>
     function show() {
