@@ -308,13 +308,13 @@
               @php
                     $total += $detail->TotalFrgn;
                     $vatable_amount = 0;
-                    if (($detail)->DocCur == 'EUR') {
-                            $vatable_amount = 0.21 * $detail->TotalFrgn;
-                            $value_added_tax += $vatable_amount;
-                        } else {
+                    // if (($detail)->DocCur == 'EUR') {
+                    //         $vatable_amount = 0.21 * $detail->TotalFrgn;
+                    //         $value_added_tax += $vatable_amount;
+                    //     } else {
                             $vatable_amount = 0.12 * $detail->TotalFrgn;
                             $value_added_tax += $vatable_amount;
-                        }
+                        // }
               @endphp
                @php
                     $total_amount_payable = $total + $value_added_tax;

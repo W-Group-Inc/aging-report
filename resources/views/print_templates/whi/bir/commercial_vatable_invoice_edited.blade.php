@@ -438,16 +438,16 @@
             @foreach ($details as $detail)
             @foreach ($detail->products as $product)
             @php
-                    if (($product)->DocCur == 'EUR') {
-                        $unit_price = ($product->Amount) /  ($product->Quantity) ;
-                        $vatable_unit_price = $unit_price * 0.21;
-                        $total_vatable_unit_price += $vatable_unit_price;
-                        $vatable_amount = ($product->Amount) * 0.21;
-                        $total_vatable_amount += $vatable_amount;
+                    // if (($product)->DocCur == 'EUR') {
+                    //     $unit_price = ($product->Amount) /  ($product->Quantity) ;
+                    //     $vatable_unit_price = $unit_price * 0.21;
+                    //     $total_vatable_unit_price += $vatable_unit_price;
+                    //     $vatable_amount = ($product->Amount) * 0.21;
+                    //     $total_vatable_amount += $vatable_amount;
 
-                        $total += $product->Amount;
-                        $vat_inclusive = $total + $total_vatable_amount;
-                    } else {
+                    //     $total += $product->Amount;
+                    //     $vat_inclusive = $total + $total_vatable_amount;
+                    // } else {
                         $unit_price = ($product->Amount) /  ($product->Quantity) ;
                         $vatable_unit_price = $unit_price * 0.12;
                         $total_vatable_unit_price += $vatable_unit_price;
@@ -456,7 +456,7 @@
 
                         $total += $product->Amount;
                         $vat_inclusive = $total + $total_vatable_amount;
-                    }
+                    // }
             @endphp
             <tr>
                 <td style="font-weight: bold">{{ $product->Description }}</td>
@@ -487,11 +487,11 @@
                 <td style="font-weight: bold"></td>
                 <td></td>
                 <td></td>
-                @if ( $detail->DocCur == 'EUR')
+                {{-- @if ( $detail->DocCur == 'EUR')
                     <td><strong>ADD:21% VAT</strong></td>
-                    @else
+                    @else --}}
                     <td><strong>ADD:12% VAT</strong></td>
-                @endif
+                {{-- @endif --}}
                 <td> 
                     {{-- {{ optional($product)->DocCur }} {{ $vatable_unit_price }} --}}
                 </td>

@@ -435,15 +435,15 @@
                     $total += $detail->TotalFrgn;
                     $vatable_unit_price = 0;
                     $vatable_amount = 0;
-                    if (($detail)->DocCur == 'EUR') {
-                            $vatable_amount = 0.21 * $detail->TotalFrgn;
-                            $vatable_unit_price = 0.21 * $detail->Price;
-                            $value_added_tax += $vatable_amount;
-                        } else {
+                    // if (($detail)->DocCur == 'EUR') {
+                            // $vatable_amount = 0.21 * $detail->TotalFrgn;
+                            // $vatable_unit_price = 0.21 * $detail->Price;
+                            // $value_added_tax += $vatable_amount;
+                        // } else {
                             $vatable_amount = 0.12 * $detail->TotalFrgn;
                             $vatable_unit_price = 0.12 * $detail->Price;
                             $value_added_tax += $vatable_amount;
-                        }
+                        // }
               @endphp
               @php
                 $total_amount_payable = $total + $value_added_tax;
@@ -497,11 +497,11 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                @if ( $detail->DocCur == 'EUR')
-                <td>ADD:21% VAT</td>
-                @else
+                {{-- @if ( $detail->DocCur == 'EUR') --}}
+                {{-- <td>ADD:21% VAT</td> --}}
+                {{-- @else --}}
                 <td>ADD:12% VAT</td>
-                @endif
+                {{-- @endif --}}
                 <td></td>
                 {{-- <td >{{ $detail->DocCur }} {{ number_format($vatable_unit_price,2) }}</td> --}}
                 <td>{{ $detail->DocCur }} {{ number_format($vatable_amount,2) }}</td>

@@ -303,19 +303,19 @@
               @endphp
               @foreach ($details as $detail)
                 @php
-                if (($detail)->DocCur == 'EUR') {
+                // if (($detail)->DocCur == 'EUR') {
+                //     $total += ($detail->Quantity) * ($detail->Price);
+                //     $vatable_amount = 0;
+                //     $vatable_amount = 0.21 * ($detail->Quantity) * ($detail->Price);
+                //     $value_added_tax += $vatable_amount;
+                //     $total_amount_payable += ($total  + $value_added_tax);
+                // } else {
                     $total += ($detail->Quantity) * ($detail->Price);
                     $vatable_amount = 0;
                     $vatable_amount = 0.12 * ($detail->Quantity) * ($detail->Price);
                     $value_added_tax += $vatable_amount;
                     $total_amount_payable += ($total  + $value_added_tax);
-                } else {
-                    $total += ($detail->Quantity) * ($detail->Price);
-                    $vatable_amount = 0;
-                    $vatable_amount = 0.12 * ($detail->Quantity) * ($detail->Price);
-                    $value_added_tax += $vatable_amount;
-                    $total_amount_payable += ($total  + $value_added_tax);
-                }
+                // }
                     
                 @endphp
               <tbody>
@@ -335,11 +335,11 @@
                   </tr>
                   <tr>
                     <td style="width: 103px;"></td>
-                    @if ( $detail->DocCur == 'EUR')
+                    {{-- @if ( $detail->DocCur == 'EUR')
                         <td style="width: 305px; text-align:left"><strong>ADD:21% VAT</strong></td>
-                    @else
+                    @else --}}
                         <td style="width: 305px; text-align:left"><strong>ADD:12% VAT</strong></td>
-                    @endif
+                    {{-- @endif --}}
                     <td style="width: 100px;"></td>
                     <td style="width: 74px;"></td>
                     <td style="width: 103px;;">{{ number_format($vatable_amount,2) }}</td>

@@ -305,17 +305,17 @@
               @endphp
               @foreach ($detail->products as $product)
               @php
-              if (($detail)->DocCur == 'EUR') {
-                 $amount_tax = 0.21 * $product->Amount;
-                  $vatable_amount += $amount_tax;
-                  $total += $product->Amount;
-                  $total_amount_payable += ($total  + $vatable_amount);
-              } else {
+            //   if (($detail)->DocCur == 'EUR') {
+            //      $amount_tax = 0.21 * $product->Amount;
+            //       $vatable_amount += $amount_tax;
+            //       $total += $product->Amount;
+            //       $total_amount_payable += ($total  + $vatable_amount);
+            //   } else {
                   $amount_tax = 0.12 * $product->Amount;
                   $vatable_amount += $amount_tax;
                   $total += $product->Amount;
                   $total_amount_payable += ($total  + $vatable_amount);
-              }
+            //   }
               @endphp
               <tbody>
                   <tr>
@@ -334,11 +334,11 @@
                   </tr>
                   <tr>
                     <td style="width: 103px;"></td>
-                    @if ( $detail->DocCur == 'EUR')
+                    {{-- @if ( $detail->DocCur == 'EUR')
                         <td style="width: 305px; text-align:left"><strong>ADD:21% VAT</strong></td>
-                    @else
+                    @else --}}
                         <td style="width: 305px; text-align:left"><strong>ADD:12% VAT</strong></td>
-                    @endif
+                    {{-- @endif --}}
                     <td style="width: 100px;"></td>
                     <td style="width: 74px;"></td>
                     <td style="width: 103px;;">{{ number_format($amount_tax, 2) }}</td>

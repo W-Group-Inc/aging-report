@@ -50,7 +50,6 @@
                                             <td>
                                                 @if ($detail->id)
                                                 <button onclick="" type="button" class="btn btn-primary btn-outline" title="Edit Invoice" data-toggle="modal" data-target="#EditDebitMemo{{ $detail->id }}" ><i class="fa fa fa-pencil"></i></button>
-                                                @include('print_templates.pbi.debit_memo.edit')
                                                 @endif
                                                 <a target='_blank' href="{{ url('print_debit_note', $detail->id) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a></td>
                                             <td>{{ $detail->date }}</td>
@@ -69,6 +68,9 @@
     </div>
 </div>
 
+@foreach ($details as $detail)
+@include('print_templates.pbi.debit_memo.edit')
+@endforeach
 @endsection
 @section('footer')
 <script src="{{ asset('/inside/login_css/js/plugins/dataTables/datatables.min.js')}}"></script>
