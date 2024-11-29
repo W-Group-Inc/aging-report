@@ -363,7 +363,7 @@
         </div>
 
         <div class="line-one">
-            <strong>PHILIPPINE BIO-INDUSTRIES, INC.</strong> 
+            <strong>PHILIPPINE BIO INDUSTRIES, INC.</strong> 
         </div>
         <div class="line-two">
             <span class="header-small-text"><strong>Plant Address:</strong> 103 Integrity Avenue, Carmelray Industrial Park 1, Canlubang, Calamba City, Laguna 4028</span>
