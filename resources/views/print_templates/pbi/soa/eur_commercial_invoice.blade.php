@@ -367,10 +367,10 @@
         </div>
         <div class="line-two">
             <span class="header-small-text"><strong>Plant Address:</strong> 103 Integrity Avenue, Carmelray Industrial Park 1, Canlubang, Calamba City, Laguna 4028</span>
-            <span class="header-small-text"><strong>Head Office:</strong> 26F W Building, Fifth Avenue, Bonifacio Global City 1634 Taguig City, Philippines</span>
+            <span class="header-small-text"><strong>Admin Office:</strong> 26F W Building, Fifth Avenue, Bonifacio Global City 1634 Taguig City, Philippines</span>
             <span class="header-small-text">Phone: +632 8856 3838 | Fax: +632 8856 1033</span>
             <span class="header-small-text">vat@rico.com.ph | www.rico.com.ph</span>
-            <span class="header-small-text">VAT No.: NL823951613B01</span>
+            <span class="header-small-text">VAT No.: NL826469425B01</span>
         </div>
     </div>
 </div>

@@ -345,7 +345,7 @@
             </span>
             <div style="text-align: center">
                 <div class="line-one">
-                    <span class="header-large-text">W Hydrocolloids, Inc</span>
+                    <span class="header-large-text">W Hydrocolloids, Inc.</span>
                 </div>
                 <div style="font-size: 12px"><strong>A member of the W Group, Inc</strong></div>
             </div>
@@ -354,7 +354,7 @@
 
         <div class="line-two">
             <span class="header-small-text"><strong>Plant Address:</strong> Block 10 Lot 1 Phase 4 Mountview 1 Industrial Complex, Bancal,  4116 Carmona, Cavite, Philippines</span>
-            <span class="header-small-text"><strong>Head Office:</strong> 26/F. W Fifth Ave. Bldg. 3051 5th Ave. cor. 32nd St., Bonifacio Global City, Taguig City, 1634 Philippines</span>
+            <span class="header-small-text"><strong>Admin Office:</strong> 26/F. W Fifth Ave. Bldg. 3051 5th Ave. cor. 32nd St., Bonifacio Global City, Taguig City, 1634 Philippines</span>
             <span class="header-small-text"><strong>Phone:</strong> (+632) 8856.3838 | Fax: (+632) 8856.1033 </span>
             <span class="header-small-text">sales@rico.com.ph | www.rico </span>
         </div>
@@ -415,12 +415,12 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 28%; height: 16px;">Description</th>
-                <th style="width: 12%;border-right: none;">Packing</th>
+                <th style="width: 24%; height: 16px;">Description</th>
+                <th style="width: 13%;border-right: none;">Packing</th>
                 <th style="width: 1%; border-left: none; border-right: none;"></th> 
-                <th style="width: 11%;">Unit</th>
-                <th style="width: 14%">Quantity</th>
-                <th style="width: 16%">Unit Price</th>
+                <th style="width: 12%;">Unit</th>
+                <th style="width: 15%">Quantity</th>
+                <th style="width: 17%">Unit Price</th>
                 <th style="width: 19%">Amount</th>
             </tr>
         </thead>
@@ -763,13 +763,17 @@
             <span class="info-detail">{{optional($details->first())->U_OceanVessel }}</span>
         </div>
         @if (optional($details->first())->U_ABILL)
+        <div class="info-row">
             <span class="info-name">Airway Bill No.</span>
             <span class="info-colon">:</span>
             <span class="info-detail">{{ optional($details->first())->U_ABILL }}</span>
+        </div>
         @else
+        <div class="info-row">
             <span class="info-name">Bill of Lading</span>
             <span class="info-colon">:</span>
             <span class="info-detail"></span>
+        </div>
         @endif
         <div class="info-row">
             <span class="info-name">Container No.</span>
@@ -836,14 +840,14 @@
     </div>
     <div class="new-col-right">
         <div class="center-align">
-            <strong>W HYDROCOLLOIDS INC.</strong>
+            <strong>W HYDROCOLLOIDS, INC.</strong>
             <div class="signatory">
                 <div class="signature-space"><span>{{ $prepared_by }}</span></div>
                 
             </div>
             <div class="text">
                 <span style="display: block">Authorized Representative</span>
-                <span style="display: block">Signatureover Printed Name</span>
+                <span style="display: block">Signature over Printed Name</span>
             </div>
             <br>
         </div>
