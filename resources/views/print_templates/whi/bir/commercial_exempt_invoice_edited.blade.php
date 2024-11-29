@@ -470,7 +470,20 @@
             </tr> --}}
             @endforeach
             @endforeach
-
+            <tr>
+                <td style=" padding:10px; text-align: center">{!! nl2br(e(optional($details->first())->Remarks )) !!}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td style=" padding:10px; text-align: center">{!! nl2br(e(optional($details->first())->RemarksTwo )) !!}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td ></td>
+            </tr>
         </tbody>
     </table>
 </div>

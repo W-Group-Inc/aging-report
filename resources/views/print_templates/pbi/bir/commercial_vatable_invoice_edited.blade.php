@@ -122,7 +122,7 @@
             width: 100%;
         }
         .product-details .top-table td{
-            padding: 8px; 
+            padding: 2px; 
             /* border-left: 1px solid #000; */
             text-align: center; 
             /* border-right: 1px solid #000; */
@@ -305,10 +305,17 @@
               @endphp
               @foreach ($detail->products as $product)
               @php
+              if (($detail)->DocCur == 'EUR') {
+                 $amount_tax = 0.21 * $product->Amount;
+                  $vatable_amount += $amount_tax;
+                  $total += $product->Amount;
+                  $total_amount_payable += ($total  + $vatable_amount);
+              } else {
                   $amount_tax = 0.12 * $product->Amount;
                   $vatable_amount += $amount_tax;
                   $total += $product->Amount;
                   $total_amount_payable += ($total  + $vatable_amount);
+              }
               @endphp
               <tbody>
                   <tr>
@@ -327,7 +334,11 @@
                   </tr>
                   <tr>
                     <td style="width: 103px;"></td>
-                    <td style="width: 305px; text-align:left">Add 12% VAT</td>
+                    @if ( $detail->DocCur == 'EUR')
+                        <td style="width: 305px; text-align:left"><strong>ADD:21% VAT</strong></td>
+                    @else
+                        <td style="width: 305px; text-align:left"><strong>ADD:12% VAT</strong></td>
+                    @endif
                     <td style="width: 100px;"></td>
                     <td style="width: 74px;"></td>
                     <td style="width: 103px;;">{{ number_format($amount_tax, 2) }}</td>

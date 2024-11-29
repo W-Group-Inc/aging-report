@@ -103,8 +103,8 @@
                                                     <a target='_blank' href="{{ url('bir_edited_commercial_invoice', $detail->asNew->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
                                                 @else
                                                     <button onclick="" type="button" class="btn btn-primary btn-outline" title="Edit Invoice" data-toggle="modal" data-target="#CccBirCommercialEdit{{ $detail->DocEntry }}" ><i class="fa fa fa-plus"></i></button>
+                                                    <a target='_blank' href="{{ url('ccc_bir_original_commercial_invoice', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
                                                 @endif
-                                                <a target='_blank' href="{{ url('ccc_bir_original_commercial_invoice', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
                                             </td>
                                             {{-- <td>
                                                 @if ($detail->asNew)

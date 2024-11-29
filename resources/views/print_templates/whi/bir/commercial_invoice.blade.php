@@ -8,7 +8,7 @@
     <style>
        @page{
         /* margin: 15px 25px; */
-        margin: 70px 0 15 -20px;
+        margin: 72px 0 15 -20px;
        }
         
         body {
@@ -133,7 +133,7 @@
             word-wrap: break-word;
         }
         .product-details table {
-            margin-top: 10px;
+            margin-top: 12px;
             width: 100%;
             border-collapse: collapse; /* Collapses table borders */
         }

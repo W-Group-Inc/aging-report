@@ -122,7 +122,7 @@
             width: 100%;
         }
         .product-details .top-table td{
-            padding: 8px; 
+            padding: 2px; 
             /* border-left: 1px solid #000; */
             text-align: center; 
             /* border-right: 1px solid #000; */
@@ -303,11 +303,20 @@
               @endphp
               @foreach ($details as $detail)
                 @php
+                if (($detail)->DocCur == 'EUR') {
                     $total += ($detail->Quantity) * ($detail->Price);
                     $vatable_amount = 0;
                     $vatable_amount = 0.12 * ($detail->Quantity) * ($detail->Price);
                     $value_added_tax += $vatable_amount;
                     $total_amount_payable += ($total  + $value_added_tax);
+                } else {
+                    $total += ($detail->Quantity) * ($detail->Price);
+                    $vatable_amount = 0;
+                    $vatable_amount = 0.12 * ($detail->Quantity) * ($detail->Price);
+                    $value_added_tax += $vatable_amount;
+                    $total_amount_payable += ($total  + $value_added_tax);
+                }
+                    
                 @endphp
               <tbody>
                   <tr>
@@ -326,7 +335,11 @@
                   </tr>
                   <tr>
                     <td style="width: 103px;"></td>
-                    <td style="width: 305px; text-align:left">ADD 12% VAT</td>
+                    @if ( $detail->DocCur == 'EUR')
+                        <td style="width: 305px; text-align:left"><strong>ADD:21% VAT</strong></td>
+                    @else
+                        <td style="width: 305px; text-align:left"><strong>ADD:12% VAT</strong></td>
+                    @endif
                     <td style="width: 100px;"></td>
                     <td style="width: 74px;"></td>
                     <td style="width: 103px;;">{{ number_format($vatable_amount,2) }}</td>
@@ -342,7 +355,7 @@
                         <td></td>
                         <td></td>
                         <td class="label-column"></td>
-                        <td class="value-column" style="padding-top: 1px;">{{ (number_format($total,2)) }}</td>
+                        <td class="value-column" style="padding-top: 1px;">{{ $detail->DocCur }} {{ (number_format($total,2)) }}</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -366,7 +379,7 @@
                         <td></td>
                         <td></td>
                         <td class="label-column"></td>
-                        <td class="value-column">{{ (number_format($value_added_tax,2)) }}</td>
+                        <td class="value-column">{{ $detail->DocCur }} {{ (number_format($value_added_tax,2)) }}</td>
                     </tr>
                     <tr>
                       <td></td>

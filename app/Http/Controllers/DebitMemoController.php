@@ -31,7 +31,8 @@ class DebitMemoController extends Controller
         $save_debit_memo->debit_memo_no = $request->DebitNo; 
         $save_debit_memo->client = $request->Client; 
         $save_debit_memo->client_address = $request->ClientAddress; 
-        $save_debit_memo->date = $request->debit_date; 
+        $save_debit_memo->client_address = $request->ClientAddress; 
+        $save_debit_memo->Currency = $request->CUrrency; 
         $save_debit_memo->save();
 
 
@@ -44,7 +45,7 @@ class DebitMemoController extends Controller
             $save_as_item->Quantity = $request->Quantity[$index];
             $save_as_item->Unit = $request->Unit[$index];
             $save_as_item->UnitPrice = $request->UnitPrice[$index];
-            $save_as_item->Currency = $request->Currency[$index];
+            // $save_as_item->Currency = $request->Currency[$index];
             $save_as_item->save(); 
         }
 
@@ -74,6 +75,7 @@ class DebitMemoController extends Controller
         $update_debit_memo->client = $request->Client; 
         $update_debit_memo->client_address = $request->ClientAddress;
         $update_debit_memo->date = $request->debit_date;
+        $update_debit_memo->Currency = $request->Currency;
         $update_debit_memo->update();
 
         foreach ($request->Description as $index => $description) {
@@ -91,7 +93,7 @@ class DebitMemoController extends Controller
             $edit_item->Quantity = $request->Quantity[$index];
             $edit_item->Unit = $request->Unit[$index];
             $edit_item->UnitPrice = $request->UnitPrice[$index];
-            $edit_item->Currency = $request->Currency[$index];
+            // $edit_item->Currency = $request->Currency[$index];
             $edit_item->save(); 
         }
 

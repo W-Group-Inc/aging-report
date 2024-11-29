@@ -145,6 +145,7 @@ class CommercialInvoiceController extends Controller
             }
         })        
         //   ->orderBy('OINV.DocEntry', 'desc')
+          ->where('CANCELED' ,'!=', 'Y' )
           ->paginate(15);
         
         return view($view, 
@@ -184,6 +185,9 @@ class CommercialInvoiceController extends Controller
         $save_as_new->SealNo = $request->SealNo;
         $save_as_new->TermsOfPayment = $request->TermsOfPayment;
         $save_as_new->SoNo = $request->SoNo;
+        $save_as_new->Remarks = $request->Remarks;
+        $save_as_new->RemarksTwo = $request->RemarksTwo;
+
         $save_as_new->save();
         foreach ($request->Description as $index => $description) {
             // $quantity = (float) str_replace(',', '', $request->Quantity[$index]);
@@ -926,6 +930,7 @@ function sales_invoice_index(Request $request)
             }
         })        
           ->orderBy('ODLN.DocEntry', 'desc')
+          ->where('CANCELED' ,'!=', 'Y' )
           ->paginate(15);
         
         return view($view, 

@@ -1,4 +1,4 @@
-<div class="modal fade" id="NewCreditNoteEdit{{ $detail->NewCreditNote->id }}" tabindex="-1" aria-labelledby="NewCreditNoteLabel" aria-hidden="true">
+<div class="modal fade" id="NewCreditNoteEditCCC{{ $detail->NewCreditNote->id }}" tabindex="-1" aria-labelledby="NewCreditNoteLabel" aria-hidden="true">
     <form method="POST" id="CreditNote" action="{{ url('edit_credit_note_ccc/'. $detail->NewCreditNote->id) }}" autocomplete="off">
       @csrf
       <div class="modal-dialog modal-lg">
@@ -28,6 +28,14 @@
                   <label>Reason</label>
                   <input name="SingleLabel" class="form-control" type="text" value="{{ $detail->NewCreditNote->Label2 }}">
               </div>
+              <div class="col-md-12">
+                <label >Currency</label>
+                <select name="Currency" class="form-control">
+                  <option value="USD" {{ $detail->NewCreditNote->Currency == 'USD' ? 'selected' : '' }}>USD</option>
+                  <option value="EUR" {{ $detail->NewCreditNote->Currency == 'EUR' ? 'selected' : '' }}>EUR</option>
+                  <option value="PHP" {{ $detail->NewCreditNote->Currency == 'PHP' ? 'selected' : '' }}>PHP</option>
+                </select>
+              </div>
             </div>   
             <div class="row" style="margin-top: 10px">
                 <div class="table-responsive mt-4">
@@ -56,15 +64,15 @@
                             <td><input type="text" name="Label5[]" class="form-control" value="{{ $body->Label5 }}"></td>
                             <td><input type="text" name="Label6[]" class="form-control" value="{{ $body->Label6 }}"></td>
                             <td><input type="text" name="Label7[]" class="form-control" value="{{ $body->Label7 }}"></td>
-                            <td><input type="text" name="Label8[]" class="form-control" value="{{ $body->Label8 }}"></td>
+                            <td><input type="text" name="Label8[]" class="form-control product-amount" value="{{ $body->Label8 }}"></td>
                           </tr>
                           @endforeach
                         </tbody>
                       </table> 
                       <div class="col-md-6">
                         <label>Total</label>
-                        <input name="ProductTotal" class="form-control" type="text" value="{{ $detail->NewCreditNote->Total }}">
-                      </div>  
+                        <input id="ProductTotal{{ $detail->NewCreditNote->id }}" name="ProductTotal" class="form-control product-total" type="text" value="{{ $detail->NewCreditNote->Total }}" readonly>
+                    </div>
                   </div>  
             </div> 
             <div class="row" style="margin-top: 20px">
@@ -81,15 +89,38 @@
     </div>
 
     <script>
+        function updateProductTotal(modalId) {
+            const modal = document.getElementById(modalId);
+            const amounts = modal.querySelectorAll('.product-amount');
+            let total = 0;
+            amounts.forEach(function(amount) {
+                const value = parseFloat(amount.value) || 0;
+                total += value;
+            });
+
+            const productTotal = modal.querySelector('#ProductTotal' + modalId.replace('NewCreditNoteEditCCC', ''));
+            productTotal.value = total.toFixed(2); 
+        }
+
         document.getElementById('addRowBtn{{ $detail->NewCreditNote->id }}').addEventListener('click', function() {
             const table = document.getElementById('creditNoteTable{{ $detail->NewCreditNote->id }}').getElementsByTagName('tbody')[0];
             const newRow = table.rows[0].cloneNode(true);
             
             const inputs = newRow.getElementsByTagName('input');
             for (let input of inputs) {
-                input.value = '';
+                input.value = ''; 
             }
-    
+
             table.appendChild(newRow);
+            updateProductTotal('NewCreditNoteEditCCC{{ $detail->NewCreditNote->id }}'); // Update total after adding a row
         });
+
+        document.getElementById('creditNoteTable{{ $detail->NewCreditNote->id }}').addEventListener('input', function(e) {
+            if (e.target.name === 'Label8[]') {
+                updateProductTotal('NewCreditNoteEditCCC{{ $detail->NewCreditNote->id }}');
+            }
+        });
+
+        updateProductTotal('NewCreditNoteEditCCC{{ $detail->NewCreditNote->id }}');
+
     </script>

@@ -12,7 +12,6 @@
             padding: 0;
         }
         .header-container {
-            top: 0;
             display: table; 
             width: 100%; 
             padding-bottom: 10px; 
@@ -64,7 +63,7 @@
         .left-column, .right-column {
             float: left; 
             width: 55%; 
-            font-size: 13px;
+            font-size: 12px;
             line-height: 1.5;
         }
         /* .right-column {
@@ -92,14 +91,14 @@
             margin-top: 10px;
             width: 100%;
             border-collapse: collapse; /* Collapses table borders */
-            font-size: 13px;
+            font-size: 12px;
         }
         .product-details .top-table th{
             border: 1px solid #000; /* Table cell borders */
             text-align: center; /* Align text to the left */
         }
         .product-details .top-table td{
-            padding: 8px; /* Padding inside cells */
+            padding: 2px; /* Padding inside cells */
             border-left: 1px solid #000;
             text-align: center; /* Align text to the left */
 
@@ -111,7 +110,7 @@
         .middle-table{
             width: 100%;
             border-collapse: collapse; /* Collapses table borders */
-            font-size: 13px;
+            font-size: 12px;
         }
         .middle-table tr:last-child td {
             border-bottom: 1px solid black;
@@ -134,7 +133,7 @@
         .bottom-table{
             width: 100%;
             border-collapse: collapse; /* Collapses table borders */
-            font-size: 13px;
+            font-size: 12px;
         }
         .bottom-table tr:last-child td {
             border-bottom: 1px solid black;
@@ -187,14 +186,14 @@
 <div class="header-container">
     <div class="left">
         <div class="header">
-            <div class="line-two">FR-ACC-16rev02</div>
+            <div class="line-two">WS-L3-FM-23</div>
             <div class="new-row">
               <div class="group">
                 <div class="image" style="float: left">
                   <img src="{{ asset('/images/pbi_logo.webp')}}" alt="Company Logo" style="width: 100px; width:100px"> 
             </div>
             <div class="text" style="float: right">
-              <span class="header-small-text">PHILIPPINE BIO INDUSTRIES, INC</span>
+              <span class="header-small-text">PHILIPPINE BIO INDUSTRIES, INC.</span>
               <span class="header-small-text">103 Integrity Avenue, Carmelray Industrial</span>
               <span class="header-small-text">Park 1, Canlubang, Calamba City,</span>
               <span class="header-small-text">Laguna 4028, Philippines</span>
@@ -205,8 +204,10 @@
         </div>
     </div>
     <div class="right">
-        <div style="bottom: 0; margin-left: 25px;  text-align: left; background-color:rebeccapurple">
-          <span class="header-small-text">VAT REG. TIN: 000-316-923-000</span>
+        <div class="container">
+            <div style="top: 0; margin-left: 25px;  text-align: left;">
+                <span class="header-small-text">VAT REG. TIN: 000-316-923-000</span>
+            </div>
         </div>
     </div>
 </div>
@@ -307,12 +308,17 @@
               @php
                     $total += $detail->TotalFrgn;
                     $vatable_amount = 0;
-                    if ($soa_type == 'vatable') {
-                       $vatable_amount = 0.12 * $detail->TotalFrgn;
-                       $value_added_tax += $vatable_amount;
-                       $total_amount_payable += ($total  + $value_added_tax);
-                    }
+                    if (($detail)->DocCur == 'EUR') {
+                            $vatable_amount = 0.21 * $detail->TotalFrgn;
+                            $value_added_tax += $vatable_amount;
+                        } else {
+                            $vatable_amount = 0.12 * $detail->TotalFrgn;
+                            $value_added_tax += $vatable_amount;
+                        }
               @endphp
+               @php
+                    $total_amount_payable = $total + $value_added_tax;
+                @endphp
               <tbody>
                   <tr>
                       <td></td>
@@ -323,7 +329,7 @@
                   </tr>
                   <tr>
                       <td></td>
-                      <td>{{ $detail->U_label_as }}</td>
+                      <td style="text-align: left">{{ $detail->U_label_as }}</td>
                       <td>{{ number_format($detail->Quantity, 2) }}</td>
                       <td>{{ number_format($detail->Price, 2) }}</td>
                       <td>{{ number_format($detail->TotalFrgn, 2) }}</td>
@@ -332,7 +338,7 @@
 
                       <tr>
                         <td></td>
-                        <td>Add 12% Vat</td>
+                        <td style="text-align: left">Add 12% Vat</td>
                         <td></td>
                         <td></td>
                         <td>{{ number_format($vatable_amount,2) }}</td>
@@ -340,21 +346,21 @@
                   @endif
                   <tr>
                       <td></td>
-                      <td>{{ $detail->U_Remarks1 }}</td>
+                      <td style="text-align: left">{{ $detail->U_Remarks1 }}</td>
                       <td></td>
                       <td></td>
                       <td></td>
                   </tr>
                   <tr>
                       <td></td>
-                      <td>{{ $detail->U_Remarks2 }}</td>
+                      <td style="text-align: left">{{ $detail->U_Remarks2 }}</td>
                       <td></td>
                       <td></td>
                       <td></td>
                   </tr>
                   <tr>
                       <td></td>
-                      <td>{{ $detail->U_Remarks3 }}</td>
+                      <td style="text-align: left">{{ $detail->U_Remarks3 }}</td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -497,9 +503,15 @@
                         {{ $line }} <br>
                     @endforeach
                 @endif</td>
+                @php
+                    $name = auth()->user()->name;
+                    $parts = explode(' ', $name);
+                    $initial = strtoupper(substr($parts[0], 0, 1)) . '.';
+                    $lastName = isset($parts[1]) ? $parts[1] : '';
+                @endphp
                   <td class="">
                     Prepared by <br> <br>
-                    <span>{{ auth()->user()->name }}</span> <br> <br>
+                    <span>{{ $initial }} {{ $lastName }}</span> <br> <br>
                     Checked by <br> <br>
                     <span></span> <br> <br></td>
                   <td class=""></td>
@@ -519,10 +531,10 @@
             <p>Document No. WS-L3-FM-23</p>
             <p>Effectivity Date: June 1, 2022 </p>
         </div>
-        {{-- <div class="footer-right">
-            <p>Page {PAGE_NUM} of {PAGE_COUNT}</p>
+        <div class="footer-right">
             <p>Rev.01</p>
-        </div> --}}
+            {{-- <p>Page {PAGE_NUM} of {PAGE_COUNT}</p> --}}
+        </div>
     </div>
 </div>
 

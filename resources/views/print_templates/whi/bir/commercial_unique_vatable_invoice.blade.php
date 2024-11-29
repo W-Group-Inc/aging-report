@@ -452,7 +452,28 @@
 
             @foreach ($details as $detail)
                 @php
-                    if ($detail->U_Label_as == 'Ricogel 86130D (Sample)') {
+                    if ($detail->DocCur == 'EUR') {
+                        if ($detail->U_Label_as == 'Ricogel 86130D (Sample)') {
+                        $total_packing_exp1 += $detail->U_Bagsperlot;
+                        $total_quantity_exp1 += $detail->Quantity;
+                        $total_amount_exp1 += $detail->Linetotal;
+                        $vatable_unit_price_exp1 = ($total_amount_exp1 / $total_quantity_exp1) * 0.21;
+                        $vatable_amount_exp1 = $total_amount_exp1 * 0.21;
+                    } elseif ($detail->U_Label_as == 'Ricogel 83985') {
+                        $total_packing_exp2 += $detail->U_Bagsperlot;
+                        $total_quantity_exp2 += $detail->Quantity;
+                        $total_amount_exp2 += $detail->Linetotal;
+                        $vatable_unit_price_exp2 = ($total_amount_exp2 / $total_quantity_exp2) * 0.21;
+                        $vatable_amount_exp2 = $total_amount_exp2 * 0.21;
+                    } else {
+                        $total_packing += $detail->U_Bagsperlot;
+                        $total_quantity += $detail->Quantity;
+                        $total_amount += $detail->Linetotal; 
+                        $vatable_unit_price = ($total_amount / $total_quantity) * 0.21;
+                        $vatable_amount = $total_amount * 0.21;
+                    }
+                    } else {
+                        if ($detail->U_Label_as == 'Ricogel 86130D (Sample)') {
                         $total_packing_exp1 += $detail->U_Bagsperlot;
                         $total_quantity_exp1 += $detail->Quantity;
                         $total_amount_exp1 += $detail->Linetotal;
@@ -471,6 +492,8 @@
                         $vatable_unit_price = ($total_amount / $total_quantity) * 0.12;
                         $vatable_amount = $total_amount * 0.12;
                     }
+                    }
+
                     $total_vatable_amount_sum = $vatable_amount + $vatable_amount_exp2 + $vatable_amount_exp1;
                 @endphp
             @endforeach

@@ -438,6 +438,16 @@
             @endphp
             @foreach ($details as $detail)
             @php
+            if (($detail)->DocCur == 'EUR') {
+                    $unit_price = ($detail->Linetotal) /  ($detail->Quantity) ;
+                    $vatable_unit_price = $unit_price * 0.21;
+                    $total_vatable_unit_price += $vatable_unit_price;
+                    $vatable_amount = ($detail->Linetotal) * 0.21;
+                    $total_vatable_amount += $vatable_amount;
+
+                    $total += $detail->Linetotal;
+                    $vat_inclusive = $total + $total_vatable_amount;
+                } else {
                     $unit_price = ($detail->Linetotal) /  ($detail->Quantity) ;
                     $vatable_unit_price = $unit_price * 0.12;
                     $total_vatable_unit_price += $vatable_unit_price;
@@ -446,6 +456,7 @@
 
                     $total += $detail->Linetotal;
                     $vat_inclusive = $total + $total_vatable_amount;
+                }
             @endphp
             <tr>
                 <td style="font-weight: bold">{{ $detail->U_Label_as }}</td>
@@ -472,7 +483,7 @@
                 </td>
                 <td> 
                      {{-- @if ($detail->U_Netweight != '') --}}
-                     {{ optional($details->first())->DocCur }} {{ ($detail->Linetotal) /  ($detail->Quantity)}} /
+                     {{ optional($details->first())->DocCur }} {{ number_format(($detail->Linetotal) /  ($detail->Quantity),2)}} /
                      @if ($detail->U_printUOM == 'lbs')
                         lb
                      @else
@@ -489,9 +500,13 @@
                 <td style="font-weight: bold"></td>
                 <td></td>
                 <td></td>
-                <td><strong>Add: 12%</strong></td>
+                @if ( $detail->DocCur == 'EUR')
+                    <td><strong>ADD:21% VAT</strong></td>
+                @else
+                    <td><strong>ADD:12% VAT</strong></td>
+                @endif
                 <td> 
-                    {{ optional($details->first())->DocCur }} {{ $vatable_unit_price }}
+                    {{-- {{ optional($details->first())->DocCur }} {{ $vatable_unit_price }} --}}
                 </td>
                 <td>{{ optional($details->first())->DocCur }} {{ number_format($vatable_amount, 2) }}</td>
             </tr>

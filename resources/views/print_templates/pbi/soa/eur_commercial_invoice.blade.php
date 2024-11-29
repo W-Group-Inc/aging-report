@@ -19,22 +19,22 @@
             margin-bottom: 20px; 
         }
         .header-container .left .header span {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: bold;
         }
         .header-container .left .header .line-one {
-            font-size: 11px;
+            font-size:10px;
         }
         .header-container .left .header .line-two {
-            font-size: 11px;
+            font-size:10px;
             font-style: italic;
         }
         .header-container .left .header .line-three {
-            font-size: 11px;
+            font-size:10px;
         }
         .header-container .left .header .date {
             margin-top: 10px;
-            font-size: 11px;
+            font-size:10px;
         }
         .left, .middle, .right {
             display: table-cell;
@@ -56,7 +56,7 @@
         .header-container .right .line-two {
             font-style: italic;
             line-height: 1;
-            font-size: 11px;
+            font-size:10px;
         }
         .header-medium-text{
             font-size: 10px;
@@ -77,7 +77,7 @@
         .left-column, .right-column {
             float: left; 
             width: 55%; 
-            font-size: 13px;
+            font-size: 12px;
             line-height: 0.8;
         }
         .right-column {
@@ -91,14 +91,14 @@
             vertical-align: top;  
         }
         .customer-container .left-column .info-label{
-            width: 25%; /* Fixed width for labels */
+            width: 18%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
             font-size: 12px;
         }
         .customer-container .right-column .info-label{
-            width: 35%; /* Fixed width for labels */
+            width: 29%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
@@ -123,13 +123,21 @@
             width: 100%;
             border-collapse: collapse; /* Collapses table borders */
             font-size: 12px;
-        }
-        .product-details th{
-            border: 1px solid #000; /* Table cell borders */
+        } .product-details th{
+            border: 1px solid #000; 
+            border-bottom: 2px solid #000; 
             text-align: center; /* Align text to the left */
         }
+        .product-details th:first-child,
+        td:first-child {
+            border-left: none;
+        }
+        .product-details th:last-child,
+        td:last-child {
+            border-right: none;
+        }
         .product-details td{
-            padding: 8px; /* Padding inside cells */
+            padding: 2px; /* Padding inside cells */
             text-align: center; /* Align text to the left */
         }
         .product-total {
@@ -145,8 +153,8 @@
         .total-left-column, .total-right-column {
             float: left; 
             width: 50%; 
-            font-size: 13px;
-            line-height: 0.8;
+            font-size: 12px;
+            line-height: 1;
 
         }
         .total-left-column, {
@@ -187,7 +195,7 @@
             margin: 0
         }
         .info-colon {
-            width: 5%; /* Fixed width for labels */
+            width: 3%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;   /* Align the label with the top of the value */
         }
@@ -198,28 +206,34 @@
             
         }
         .new-col-right .info-detail {
-            width: 50%;
+            width: 65%;
             display: inline-block;
             vertical-align: top;  
-            font-size: 13px;
+            font-size: 12px;
             word-wrap: break-word;
         }
-        .new-col-left .info-detail {
-            width: 50%;
+        .new-col-right .info-name {
+            width: 30%; 
             display: inline-block;
             vertical-align: top;  
-            font-size: 13px;
+            margin: 0
+        }
+        .new-col-left .info-detail {
+            width: 65%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 12px;
             word-wrap: break-word;
         }
         .new-col-left .info-name{
-            width: 35%; /* Fixed width for labels */
+            width: 30%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
-            font-size: 13px;
+            font-size: 12px;
         }
         .column-container{
-            margin-top: 30px;
+            margin-top: 10px;
         }
 
         .total {
@@ -234,7 +248,7 @@
 
         .label, .arrow, .total-value {
             display: table-cell;
-            vertical-align: middle;
+            vertical-align: bottom;
         }
 
         .label {
@@ -243,11 +257,12 @@
         }
 
         .total-value {
+            padding-top:10px;
             font-weight: bold;
             text-align: center;
             position: relative;
             border-top: 1px solid #000; 
-            border-bottom: 1px solid #000; 
+            border-bottom: 5px double;
             margin-right: 50%;
         }
         .remarks{
@@ -275,16 +290,16 @@
         .new-col-right {
             float: right; 
             width: 50%; 
-            font-size: 13px;
+            font-size: 12px;
         }
         .new-col-left {
             float: left; 
             width: 50%; 
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .right-box .new-col {
-            font-size: 11px;
+            font-size:10px;
             border: solid black;
             padding: 10px;
             align-items: center;
@@ -298,7 +313,7 @@
         .signature-space {
             border-bottom: 1px solid #000; /* Create a line for the signature */
             width: 200px; /* Set the width of the signature line */
-            margin: 10 auto; /* Center horizontally and add vertical space */
+            margin: 10 auto 0 auto; /* Center horizontally and add vertical space */
             display: block; /* Ensure it's treated as a block-level element */
         }
         .footer {
@@ -326,11 +341,11 @@
         <div class="header">
             <span class="line-one">COMMERCIAL INVOICE</span>
             <div class="line-three">FR-ACC-16</div>
-            <div class="line-three">No.: {{ $soa_no }}</div>
+            <div class="line-three">No.: <strong>{{ $soa_no }}</strong></div>
             @if ($details->isNotEmpty())
             <div class="date">Dated: {{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</div>
             @endif
-            <div style="font-size: 11px;">VAT Reg. TIN 000-316-923-000</div>
+            <div style="font-size:10px;">VAT Reg. TIN 000-316-923-000</div>
         </div>
     </div>
     <div class="middle">
@@ -348,7 +363,7 @@
         </div>
 
         <div class="line-one">
-            <strong>PHILIPPINE BIO-INDUSTRIES, INC.,</strong> 
+            <strong>PHILIPPINE BIO-INDUSTRIES, INC.</strong> 
         </div>
         <div class="line-two">
             <span class="header-small-text"><strong>Plant Address:</strong> 103 Integrity Avenue, Carmelray Industrial Park 1, Canlubang, Calamba City, Laguna 4028</span>
@@ -409,12 +424,13 @@
     <table>
         <thead>
             <tr>
-                <th>Description</th>
-                <th>Packing</th>
-                <th>Unit</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Amount</th>
+                <th style="width: 28%; height: 16px;">Description</th>
+                <th style="width: 12%;border-right: none;">Packing</th>
+                <th style="width: 1%; border-left: none; border-right: none;"></th> 
+                <th style="width: 11%;">Unit</th>
+                <th style="width: 14%">Quantity</th>
+                <th style="width: 16%">Unit Price</th>
+                <th style="width: 19%">Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -429,13 +445,22 @@
                     $vatable_unit_price = 0;
                     $vatable_amount = 0;
                     if ($soa_type == 'vatable') {
-                       $vatable_amount = 0.12 * $detail->TotalFrgn;
-                       $vatable_unit_price = 0.12 * $detail->Price;
-                       $value_added_tax += $vatable_amount;
-                       $total_amount_payable += ($total  + $value_added_tax);
+                        if (($detail)->DocCur == 'EUR') {
+                            $vatable_amount = 0.21 * $detail->TotalFrgn;
+                            $vatable_unit_price = 0.21 * $detail->Price;
+                            $value_added_tax += $vatable_amount;
+                        } else {
+                            $vatable_amount = 0.12 * $detail->TotalFrgn;
+                            $vatable_unit_price = 0.12 * $detail->Price;
+                            $value_added_tax += $vatable_amount;
+                        }
                     }
               @endphp
+              @php
+                $total_amount_payable = $total + $value_added_tax;
+              @endphp
             <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -453,8 +478,10 @@
                         bag
                     @endif
                     @if ($detail->U_Bagsperlot != 0)
-                    <span style="float: right; text-align:end">x</span>
                     @endif
+                </td>
+                <td style="width: 0; text-align: center;">
+                    @if ($detail->U_Netweight)x @endif
                 </td>
                 <td>
                     @if ($detail->U_Netweight)
@@ -488,8 +515,14 @@
             <td></td>
             <td></td>
             <td></td>
-            <td>ADD:12% VAT</td>
-            <td >{{ $detail->DocCur }} {{ number_format($vatable_unit_price,2) }}</td>
+            <td></td>
+                @if ( $detail->DocCur == 'EUR')
+                <td>ADD:21% VAT</td>
+                @else
+                <td>ADD:12% VAT</td>
+                @endif
+            <td></td>
+            {{-- <td >{{ $detail->DocCur }} {{ number_format($vatable_unit_price,2) }}</td> --}}
             <td>{{ $detail->DocCur }} {{ number_format($vatable_amount,2) }}</td>
             @endif
             @endforeach
@@ -569,11 +602,11 @@
         <div class="remarks">
             <div class="info-row">
                 <span class="left-span">
-                 {{-- The Exporter PHREX2020P02A23JUN0000010257 of the products 
+                 The Exporter PHREX2021P02A12FEB0000010538 of the products 
                  covered by this document declares that, except where otherwise clearly 
                  indicated, these products are of  Philippine preferential origin according 
                  to the rules of origin of the Generalised System of Preferences of the 
-                 European Union and that the origin criterion met is "W". --}}
+                 European Union and that the origin criterion met is "W".
                 </span>
              </div>
         </div>
@@ -649,11 +682,11 @@
         <div class="remarks">
             <div class="info-row">
                 <span class="left-span">
-                 {{-- The Exporter PHREX2020P02A23JUN0000010257 of the products 
+                 The Exporter PHREX2021P02A12FEB0000010538 of the products 
                  covered by this document declares that, except where otherwise clearly 
                  indicated, these products are of  Philippine preferential origin according 
                  to the rules of origin of the Generalised System of Preferences of the 
-                 European Union and that the origin criterion met is "W". --}}
+                 European Union and that the origin criterion met is "W".
                 </span>
              </div>
         </div>
@@ -731,11 +764,11 @@
         <div class="remarks">
             <div class="info-row">
                 <span class="left-span">
-                 {{-- The Exporter PHREX2020P02A23JUN0000010257 of the products 
+                 The Exporter PHREX2021P02A12FEB0000010538 of the products 
                  covered by this document declares that, except where otherwise clearly 
                  indicated, these products are of  Philippine preferential origin according 
                  to the rules of origin of the Generalised System of Preferences of the 
-                 European Union and that the origin criterion met is "W". --}}
+                 European Union and that the origin criterion met is "W".
                 </span>
              </div>
         </div>
@@ -788,7 +821,7 @@
         <div class="info-row">
             <span class="info-name">Invoice Due Date</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->U_SOADueDate)->format('F j, Y') }}</span>
+            <span class="info-detail">{{ optional($details->first())->U_SOADueDate ? \Carbon\Carbon::parse(optional($details->first())->U_SOADueDate)->format('F j, Y') : '' }}</span>
         </div>
         <div class="right-box">
             <div class="new-col">

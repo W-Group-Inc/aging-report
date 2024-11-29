@@ -93,7 +93,20 @@
                 <label>Amount</label>
                 <input class="form-control" name="Amount[]" type="text" value="{{ number_format($product->Amount, 2) }}" >
             </div>
+            @endforeach
             <div class="row">
+                <div class="col-md-6">
+                    <label for="">Remarks</label>
+                    <textarea name="Remarks" class="form-control" rows="10">
+                        {{ $detail->asNew->Remarks }}
+                    </textarea>
+                </div>
+                <div class="col-md-6">
+                    <label for="">Remark 2</label>
+                    <textarea name="RemarksTwo" class="form-control" rows="10">
+                        {{ $detail->asNew->RemarksTwo }}
+                    </textarea>
+                </div>
                 <div class="col-md-12">
                     <label for="">Payment Instruction</label>
                     <textarea name="PaymentInstruction" class="form-control" rows="10">
@@ -149,7 +162,6 @@
                 <label>Invoice Due Date</label>
                 <input name="InvoiceDueDate" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($detail->asNew)->InvoiceDueDate)->format('Y-m-d')}}">
             </div>   
-            @endforeach
             </div>           
           </div>
           <div class="modal-footer">

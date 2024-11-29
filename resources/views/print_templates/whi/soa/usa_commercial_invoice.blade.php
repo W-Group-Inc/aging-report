@@ -33,7 +33,7 @@
             font-weight: bold;
         }
         .header-container .left .header .date {
-            font-size: 13px;
+            font-size: 12px;
         }
         .left, .middle, .right {
             display: table-cell;
@@ -48,8 +48,8 @@
             text-align: center; 
         }
         .middle img {
-            width: 120px;
-            height: 40px; 
+            width: 110px;
+            height: auto; 
         }
         .right {
             width: 80%;
@@ -62,7 +62,7 @@
         }
         .header-container .right .line-two {
             margin-top: 30px;
-            font-size: 13px;
+            font-size: 12px;
             margin-left: -50px;
             font-weight: bold;
         }
@@ -77,37 +77,37 @@
         .left-column, .right-column {
             float: left; 
             width: 50%; 
-            font-size: 13px;
+            font-size: 12px;
         }
         .right-column {
             margin-left: 50px; 
         }
         .customer-container .left-column .info-label{
-            width: 20%; /* Fixed width for labels */
+            width: 18%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
-            font-size: 13px;
+            font-size: 12px;
         }
         .customer-container .right-column .info-label{
-            width: 30%; /* Fixed width for labels */
+            width: 32%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
-            font-size: 13px;
+            font-size: 12px;
         }
         .customer-container .left-column .info-value{
             width: 60%;
             display: inline-block;
             vertical-align: top;  
-            font-size: 13px;
+            font-size: 12px;
             word-wrap: break-word;
         }
         .customer-container .right-column .info-value{
             width: 60%;
             display: inline-block;
             vertical-align: top;  
-            font-size: 13px;
+            font-size: 12px;
             word-wrap: break-word;
         }
         .info-row {
@@ -141,9 +141,9 @@
             border-right: none;
         }
         .product-details td{
-            padding: 8px; /* Padding inside cells */
+            padding: 2px; /* Padding inside cells */
             text-align: center; /* Align text to the left */
-            font-size: 13px;
+            font-size: 12px;
         }
         .product-total {
             width: 100%;
@@ -158,7 +158,7 @@
         .total-left-column, .total-right-column {
             float: left; 
             width: 50%; 
-            font-size: 13px;
+            font-size: 12px;
         }
         .total-left-column {
             margin-right:-60px
@@ -178,7 +178,7 @@
             font-size: 12px;
         }
         .info-colon {
-            width: 5%; /* Fixed width for labels */
+            width: 3%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;   /* Align the label with the top of the value */
         }
@@ -186,7 +186,7 @@
             width: 35%;
             display: inline-block;
             vertical-align: top;  
-            font-size: 13px;
+            font-size: 12px;
             word-wrap: break-word;
         }
         .total {
@@ -195,12 +195,12 @@
             width: 35%;
             display: table;
             font-family: Arial, sans-serif;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .label, .arrow, .total-value {
             display: table-cell;
-            vertical-align: middle;
+            vertical-align: bottom;
         }
 
         .label {
@@ -209,11 +209,12 @@
         }
 
         .total-value {
+            padding-top:10px;
             font-weight: bold;
             text-align: center;
             position: relative;
             border-top: 1px solid #000; 
-            border-bottom: 1px solid #000; 
+            border-bottom: 5px double;
             margin-right: 50%;
 
         }
@@ -221,7 +222,21 @@
         .single-column {
             width: 100%;
             margin-top: 30px;
-            margin-left: 130px;
+            margin-left: 100px;
+        }
+        .single-column  .info-name {
+            width: 30%; 
+            display: inline-block;
+            vertical-align: top;  
+            margin: 0;
+            font-size: 12px;
+        }
+        .single-column  .info-detail {
+            width: 65%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 12px;
+            word-wrap: break-word;
         }
         .single-column::after {
             content: "";
@@ -231,14 +246,14 @@
         .new-col {
             float: left; 
             width: 50%; 
-            font-size: 13px;
+            font-size: 12px;
         }
         .new-col {
             margin-left:250px
         }
 
         .another-column .new-col{
-            margin-top: 30px;
+            margin-top: 10px;
             margin-left:0;
         }
         .another-column .info-name{
@@ -247,6 +262,13 @@
             vertical-align: top;  
             margin: 0;
             font-size: 12px;
+        }
+        .another-column .info-detail {
+            width: 60%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 12px;
+            word-wrap: break-word;
         }
         .right-box {
             width: 100%;
@@ -260,7 +282,7 @@
         .right-box .new-col {
             float: left; 
             width: 45%; 
-            font-size: 13px;
+            font-size: 12px;
             border: solid black;
             padding: 10px;
             align-items: center;
@@ -272,12 +294,13 @@
         .new-col-left {
             float: left; 
             width: 50%; 
-            font-size: 13px;
+            font-size: 12px;
+            margin-top:50px
         }
         .new-col-right {
             float: right; 
             width: 50%; 
-            font-size: 13px;
+            font-size: 12px;
         }
         .center-align {
             text-align: center;
@@ -290,7 +313,7 @@
         .signature-space {
             border-bottom: 1px solid #000; /* Create a line for the signature */
             width: 200px; /* Set the width of the signature line */
-            margin: 10 auto; /* Center horizontally and add vertical space */
+            margin: 10 auto 0 auto; /* Center horizontally and add vertical space */
             display: block; /* Ensure it's treated as a block-level element */
         }
         .footer {
@@ -308,6 +331,12 @@
         .footer-right {
             float: right; 
         }
+        .desc-max-col-width{
+            max-width: 150px; 
+            word-wrap: break-word; 
+            word-break: break-word; 
+            white-space: normal;
+        }
     </style>
 </head>
 <body>
@@ -316,7 +345,7 @@
     <div class="left">
         <div class="header">
             <span class="line-one">USA COMMERCIAL INVOICE</span>
-            <div class="line-two">FR-S&M-18rev00</div>
+            {{-- <div class="line-two">FR-S&M-18rev00</div> --}}
             <div class="line-three">SOA No.: {{ $soa_no }}</div>
             @if ($details->isNotEmpty())
             <div class="date">Dated: {{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</div>
@@ -368,12 +397,13 @@
     <table>
         <thead>
             <tr>
-                <th>Description</th>
-                <th>Packing</th>
-                <th>Unit</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Amount</th>
+                <th style="width: 28%; height: 16px;">Description</th>
+                <th style="width: 12%;border-right: none;">Packing</th>
+                <th style="width: 1%; border-left: none; border-right: none;"></th> 
+                <th style="width: 11%;">Unit</th>
+                <th style="width: 14%">Quantity</th>
+                <th style="width: 16%">Unit Price</th>
+                <th style="width: 19%">Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -381,6 +411,7 @@
                 $total = 0;
                 $value_added_tax = 0;
                 $total_amount_payable = 0;
+                
             @endphp
             @foreach ($details as $detail)
             @php
@@ -388,15 +419,23 @@
                     $vatable_unit_price = 0;
                     $vatable_amount = 0;
                     if ($soa_type == 'vatable') {
-                       $vatable_amount = 0.12 * $detail->LineTotal;
-                       $vatable_unit_price = 0.12 * $detail->Price;
-                       $value_added_tax += $vatable_amount;
-                       $total_amount_payable += ($total  + $value_added_tax);
+                        if (($detail)->DocCur == 'EUR') {
+                            $vatable_amount = 0.21 * $detail->LineTotal;
+                            $vatable_unit_price = 0.21 * $detail->Price;
+                            $value_added_tax += $vatable_amount;
+                        } else {
+                            $vatable_amount = 0.12 * $detail->LineTotal;
+                            $vatable_unit_price = 0.12 * $detail->Price;
+                            $value_added_tax += $vatable_amount;
+                        }
                     }
               @endphp
+              @php
+                $total_amount_payable = $total + $value_added_tax;
+              @endphp
             <tr>
-                <td>{{ $detail->U_label_as }}</td>
-                <td>{{ $detail->U_Bagsperlot }}
+                <td class="desc-max-col-width">{{ $detail->U_label_as }}</td>
+                <td style="vertical-align: middle;">{{ $detail->U_Bagsperlot }}
                     @if ($detail->U_Bagsperlot > 1)
                         bags
                     @elseif ($detail->U_Bagsperlot == 0)
@@ -405,8 +444,11 @@
                         bag
                     @endif
                     @if ($detail->U_Bagsperlot != 0)
-                    <span style="float: right; text-align:end">x</span>
+                    {{-- <span style="text-align:end">x</span> --}}
                     @endif
+                </td>
+                <td style="width: 0; text-align: center;">
+                    @if ($detail->U_Netweight)x @endif
                 </td>
                 <td>
                     @if ($detail->U_Netweight)
@@ -437,11 +479,17 @@
                 <td>{{ optional($detail)->DocCur }} {{ number_format($detail->LineTotal, 2) }}</td>
             </tr>
             @if ($soa_type == 'vatable')
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                @if ( $detail->DocCur == 'EUR')
+                <td>ADD:21% VAT</td>
+                @else
+                <td>ADD:12% VAT</td>
+                @endif
             <td></td>
-            <td></td>
-            <td></td>
-            <td>ADD:12% VAT</td>
-            <td >{{ $detail->DocCur }} {{ number_format($vatable_unit_price,2) }}</td>
+            {{-- <td >{{ $detail->DocCur }} {{ number_format($vatable_unit_price,2) }}</td> --}}
             <td>{{ $detail->DocCur }} {{ number_format($vatable_amount,2) }}</td>
             @endif
             @endforeach
@@ -523,7 +571,7 @@
         <div class="info-row">
             <span class="info-name">VATable Sales</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ (number_format($total,2)) }}</span>
+            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ (number_format($total,2)) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">VAT-Exempt Sales</span>
@@ -651,7 +699,7 @@
         <div class="info-row">
             <span class="info-name">Invoice Due Date</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->U_SAODueDate)->format('F j, Y') }}</span>
+            <span class="info-detail">{{ optional($details->first())->U_SAODueDate ? \Carbon\Carbon::parse(optional($details->first())->U_SAODueDate)->format('F j, Y') : '' }}</span>
         </div>
     </div>
 </div>
@@ -691,7 +739,7 @@
 <div class="right-box">
    
     <div class="new-col">
-        <div>For ACH/Direct Deposit to our Account: </div>
+        {{-- <div>For ACH/Direct Deposit to our Account: </div>
         <div class="center-align">
             <div class="info-row">
                 <span class="info-name">Bank</span>
@@ -718,6 +766,28 @@
                 <span class="info-colon">:</span>
                 <span class="info-detail">011900254</span>
             </div>
+        </div> --}}
+        <div class="payment-instruction">
+            <div>Payment Instructions: </div>
+        <div class="left-align">
+            <div class="info-row" style="margin: 10px 0px">
+                <span>{{ optional($details->first())->U_T1 }}</span>
+            </div>
+            <div class="info-row">
+                @if($details->first() && $details->first()->U_T3)
+                    <?php
+                        $intermediaryBankDetails = optional($details->first())->U_T2 . ' / ' . optional($details->first())->U_T3 . ' / ' . optional($details->first())->U_T4 . ' / ' . optional($details->first())->U_T5 . ' / ' . optional($details->first())->U_T6;
+
+                        $formattedDetails = preg_replace('/^\/+|\/+$/', '', $intermediaryBankDetails);
+                        $lines = explode('/', $formattedDetails);
+                        $lines = array_map('trim', $lines);
+                    ?>
+                    @foreach ($lines as $line)
+                        {{ $line }} <br>
+                    @endforeach
+                @endif
+            </div>
+        </div>
         </div>
     </div>
 </div>
@@ -744,17 +814,17 @@
     </div>
 </div>
 
-{{-- <div class="new-row">
+<div class="new-row">
     <div class="footer">
         <div class="footer-left">
             <p>WHI-TP-ACC-008</p>
             <p>Rev. 0 03/11/2024 </p>
         </div>
-        <div class="footer-right">
+        {{-- <div class="footer-right">
             <p>Page {PAGE_NUM} of {PAGE_COUNT}</p>
-        </div>
+        </div> --}}
     </div>
-</div> --}}
+</div>
 
 </body>
 </html>

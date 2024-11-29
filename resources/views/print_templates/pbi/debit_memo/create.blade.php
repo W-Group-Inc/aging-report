@@ -27,6 +27,14 @@
                     <label>Address:</label>
                     <textarea name="ClientAddress" class="form-control" rows="3"></textarea>
                 </div>
+                <div class="col-md-12">
+                  <label >Currency</label>
+                  <select name="Currency" class="form-control">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="PHP">PHP</option>
+                  </select>
+              </div>
             </div>      
             <div class="col-md-12 row"><h3>Product</h3></div> 
             <div class="row">
@@ -51,7 +59,7 @@
                                 <td><input type="text" name="Unit[]" class="form-control" value=""></td>
                                 <td><input type="text" name="Description[]" class="form-control" value=""></td>
                                 <td><input type="number" name="UnitPrice[]" class="form-control" value=""></td>
-                                <td><input type="text" name="Currency[]" class="form-control" value=""></td>
+                                {{-- <td><input type="text" name="Currency[]" class="form-control" value=""></td> --}}
                                 <td><input type="text" name="Total[]" class="form-control" value=""></td>
                               </tr>
                             </tbody>

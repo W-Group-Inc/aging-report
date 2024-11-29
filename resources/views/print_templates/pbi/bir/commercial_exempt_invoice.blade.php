@@ -122,7 +122,7 @@
             width: 100%;
         }
         .product-details .top-table td{
-            padding: 8px; 
+            padding: 2px; 
             /* border-left: 1px solid #000; */
             text-align: center; 
             /* border-right: 1px solid #000; */
@@ -310,7 +310,7 @@
                       <td style="width: 305px; text-align:left">{{ $detail->U_label_as }}</td>
                       <td style="width: 100px;">{{ number_format($detail->Quantity, 2) }}</td>
                       <td style="width: 74px;">{{ number_format($detail->Price, 2) }}</td>
-                      <td style="width: 103px;;">{{ number_format($detail->LineTotal, 2) }}</td>
+                      <td style="width: 103px;;">{{ number_format($detail->TotalFrgn, 2) }}</td>
                   </tr>
               </tbody>
               @endforeach
@@ -322,7 +322,7 @@
                   @php
                       $total = 0;
                       foreach ($details as $detail){
-                          $total += $detail->LineTotal;
+                          $total += $detail->TotalFrgn;
                       }
                   @endphp
                     <tr>
@@ -370,7 +370,7 @@
                   @php
                       $total = 0;
                       foreach ($details as $detail){
-                          $total += $detail->LineTotal;
+                          $total += $detail->TotalFrgn;
                       }
                   @endphp
                     <tr style="">

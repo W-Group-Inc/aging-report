@@ -428,7 +428,7 @@
                     <td>{{ $detailBody->Label5 }}</td>
                     <td>{{ $detailBody->Label6 }}</td>
                     <td>{{ $detailBody->Label7 }}</td>
-                    <td>{{ $detailBody->Label8 }}</td>
+                    <td>{{ optional($detail)->Currency }} {{ $detailBody->Label8 }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -441,7 +441,7 @@
 <div class="column-container">
     <div class="total" >
         <div class="total-label">TOTAL</div>
-        <div class="total-value" >{{ optional($detail)->Total }}</div>
+        <div class="total-value" >{{ optional($detail)->Currency }} {{ optional($detail)->Total }}</div>
     </div>
 </div>
 

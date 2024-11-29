@@ -122,7 +122,7 @@
             width: 100%;
         }
         .product-details .top-table td{
-            padding: 8px; 
+            padding: 2px; 
             /* border-left: 1px solid #000; */
             text-align: center; 
             /* border-right: 1px solid #000; */

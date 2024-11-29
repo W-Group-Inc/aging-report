@@ -27,6 +27,14 @@
                     <label>Address:</label>
                     <textarea name="ClientAddress" class="form-control" rows="3">{{ $detail->client_address }}</textarea>
                 </div>
+                <div class="col-md-12">
+                  <label >Currency</label>
+                  <select name="Currency" class="form-control">
+                    <option value="USD" {{ $detail->Currency == 'USD' ? 'selected' : '' }}>USD</option>
+                    <option value="EUR" {{ $detail->Currency == 'EUR' ? 'selected' : '' }}>EUR</option>
+                    <option value="PHP" {{ $detail->Currency == 'PHP' ? 'selected' : '' }}>PHP</option>
+                  </select>
+                </div>
             </div>      
             <div class="col-md-12 row"><h3>Product</h3></div> 
             <div class="row">
@@ -40,7 +48,7 @@
                                 <th>Unit</th>
                                 <th>Description</th>
                                 <th>Unit Price</th>
-                                <th>Currency</th>
+                                {{-- <th>Currency</th> --}}
                                 <th>Total</th>
                               </tr>
                             </thead>
@@ -53,7 +61,7 @@
                                 <td><input type="text" name="Unit[]" class="form-control" value="{{ $item->Unit }}"></td>
                                 <td><input type="text" name="Description[]" class="form-control" value="{{ $item->description }}"></td>
                                 <td><input type="text" name="UnitPrice[]" class="form-control" value="{{ $item->UnitPrice }}"></td>
-                                <td><input type="text" name="Currency[]" class="form-control" value="{{ $item->Currency }}"></td>
+                                {{-- <td><input type="text" name="Currency[]" class="form-control" value="{{ $item->Currency }}"></td> --}}
                                 <td><input type="text" name="Total[]" class="form-control" value="{{ $item->total }}"></td>
                               </tr>
                               @endforeach

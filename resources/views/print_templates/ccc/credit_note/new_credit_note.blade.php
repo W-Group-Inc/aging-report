@@ -28,6 +28,14 @@
                   <label>Reason</label>
                   <input name="SingleLabel" class="form-control" type="text" value="">
               </div>
+              <div class="col-md-12">
+                <label >Currency</label>
+                <select name="Currency" class="form-control">
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="PHP">PHP</option>
+                </select>
+              </div>
             </div>   
             <div class="row" style="margin-top: 10px">
                 <div class="table-responsive mt-4">
@@ -53,13 +61,13 @@
                             <td><input type="text" name="Label5[]" class="form-control"></td>
                             <td><input type="text" name="Label6[]" class="form-control"></td>
                             <td><input type="text" name="Label7[]" class="form-control"></td>
-                            <td><input type="text" name="Label8[]" class="form-control"></td>
+                            <td><input type="text" name="Label8[]" class="form-control product-amount" value=""></td>
                           </tr>
                         </tbody>
                       </table> 
                       <div class="col-md-6">
                         <label>Total</label>
-                        <input name="ProductTotal" class="form-control" type="text" value="">
+                        <input name="ProductTotal" class="form-control product-total" type="text" value="">
                       </div>  
                   </div>  
             </div> 
@@ -77,15 +85,37 @@
     </div>
 
     <script>
-        document.getElementById('addRowBtn{{ $detail->DocEntry }}').addEventListener('click', function() {
-            const table = document.getElementById('creditNoteTable{{ $detail->DocEntry }}').getElementsByTagName('tbody')[0];
-            const newRow = table.rows[0].cloneNode(true);
-            
-            const inputs = newRow.getElementsByTagName('input');
-            for (let input of inputs) {
-                input.value = '';
-            }
-    
-            table.appendChild(newRow);
-        });
+        function updateProductTotal(modalId) {
+          const modal = document.getElementById(modalId);
+          const amounts = modal.querySelectorAll('.product-amount');
+          let total = 0;
+          amounts.forEach(function(amount) {
+              const value = parseFloat(amount.value) || 0;
+              total += value;
+          });
+
+          const productTotal = modal.querySelector('[name="ProductTotal"]');
+          productTotal.value = total.toFixed(2); 
+      }
+
+      document.getElementById('addRowBtn{{ $detail->DocEntry }}').addEventListener('click', function() {
+          const table = document.getElementById('creditNoteTable{{ $detail->DocEntry }}').getElementsByTagName('tbody')[0];
+          const newRow = table.rows[0].cloneNode(true);
+          
+          const inputs = newRow.getElementsByTagName('input');
+          for (let input of inputs) {
+              input.value = ''; 
+          }
+
+          table.appendChild(newRow);
+          updateProductTotal('NewCreditNote{{ $detail->DocEntry }}'); // Update total after adding a row
+      });
+
+      document.getElementById('creditNoteTable{{ $detail->DocEntry }}').addEventListener('input', function(e) {
+          if (e.target.name === 'Label8[]') {
+              updateProductTotal('NewCreditNote{{ $detail->DocEntry }}');
+          }
+      });
+
+      updateProductTotal('NewCreditNote{{ $detail->DocEntry }}');
     </script>

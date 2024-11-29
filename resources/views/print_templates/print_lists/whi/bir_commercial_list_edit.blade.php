@@ -15,7 +15,7 @@
                     <input name="DocEntry" class="form-control" type="hidden" value="{{ $detail->DocEntry }}">
                 </div>
                 <div class="col-md-12">
-                    @foreach ( $detail->dln1 as $arDetail)
+                    @foreach ( $detail->first()->dln1 as $arDetail)
                     <label >Date:</label>
                     <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->DocDate)->format('Y-m-d') }}">
                     @endforeach
@@ -82,8 +82,8 @@
             </div>
             <div class="col-md-3">
                 <label>Unit</label>
-                {{-- <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->U_Bagsperlot) && $product->U_Bagsperlot != 0 ? number_format($product->Quantity / $product->U_Bagsperlot, 2) : '' }}" readonly> --}}
-                <input class="form-control" type="text" value="{{ number_format($product->U_Netweight) }}" readonly>
+                {{-- <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->U_Bagsperlot) && $product->U_Bagsperlot != 0 ? number_format($product->Quantity / $product->U_Bagsperlot, 2) : '' }}"> --}}
+                <input class="form-control" type="text" value="{{ number_format($product->U_Netweight) }}">
             </div>
             <div class="col-md-3">
                 <label>Unit of Measurement</label>
@@ -91,14 +91,14 @@
             </div>
             <div class="col-md-4">
                 <label>Quantity</label>
-                <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}" readonly>
+                <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}">
             </div>
             <div class="col-md-4">
                 <label>Unit Price</label>
                 @if ($detail->DocCur == 'PHP')
-                    <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->LineTotal / $product->Quantity, 2) : '' }}" readonly>
+                    <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->LineTotal / $product->Quantity, 2) : '' }}">
                 @else
-                    <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 && !empty($product->Rate) && $product->Rate != 0 ? number_format(($product->LineTotal / $product->Rate) / $product->Quantity, 2) : '' }}"  readonly>
+                    <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 && !empty($product->Rate) && $product->Rate != 0 ? number_format(($product->LineTotal / $product->Rate) / $product->Quantity, 2) : '' }}" >
                 @endif
             </div>
             <div class="col-md-4">
@@ -112,6 +112,16 @@
             @endforeach
             </div>   
             <div class="row">
+                <div class="col-md-6">
+                    <label for="">Remarks</label>
+                    <textarea name="Remarks" class="form-control" rows="10">
+                    </textarea>
+                </div>
+                <div class="col-md-6">
+                    <label for="">Remark 2</label>
+                    <textarea name="RemarksTwo" class="form-control" rows="10">
+                    </textarea>
+                </div>
                 <div class="col-md-12">
                     <label for="">Payment Instruction</label>
                     <textarea name="PaymentInstruction" class="form-control" rows="10">
@@ -146,10 +156,11 @@
                     @endif</textarea>
                 </div>
             </div>    
-            @foreach ( $detail->dln1 as $arDetail)
             <div class="col-md-6">
-                <label>Date of Shipment</label>
-                <input name="DateOfShipment" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->U_ShipmentSched)->format('Y-m-d') }}">
+                @foreach ( $detail->first()->dln1 as $arDetail)
+                    <label>Date of Shipment</label>
+                    <input name="DateOfShipment" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->U_ShipmentSched)->format('Y-m-d') }}">          
+                @endforeach
             </div>
             <div class="col-md-6">
                 <label>Port of Loading</label>
@@ -192,10 +203,11 @@
                 <input name="TermsOfPayement" class="form-control" type="text" value="{{ $detail->whiOctg->PymntGroup }}">
             </div>
             <div class="col-md-6">
-                <label>Invoice Due Date</label>
-                <input name="InvoiceDueDate" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->DocDueDate)->format('Y-m-d')}}">
+                @foreach ( $detail->first()->dln1 as $arDetail)
+                    <label>Invoice Due Date</label>
+                    <input name="InvoiceDueDate" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->DocDueDate)->format('Y-m-d')}}">
+                @endforeach
             </div>
-            @endforeach
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

@@ -53,7 +53,7 @@
                                         <tr>
                                             <td>
                                                 @if ($detail->NewCreditNote)
-                                                    <button onclick="" type="button" class="btn btn-primary btn-outline" title="Edit Invoice" data-toggle="modal" data-target="#NewCreditNoteEdit{{ $detail->NewCreditNote->id }}" ><i class="fa fa fa-pencil"></i></button>
+                                                    <button onclick="" type="button" class="btn btn-primary btn-outline" title="Edit Invoice" data-toggle="modal" data-target="#NewCreditNoteEditCCC{{ $detail->NewCreditNote->id }}" ><i class="fa fa fa-pencil"></i></button>
                                                     @include('print_templates.ccc.credit_note.new_credit_note_edit')
                                                     <a target='_blank' href="{{ url('credit_note_internal_ccc', $detail->NewCreditNote->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
                                                 @else

@@ -410,7 +410,7 @@
                     <td style="width: 7%;">{{ $item->Unit }}</td>
                     <td style="width: 49.5%;">{{ $item->description }}</td>
                     <td style="width: 11%;">{{ $item->UnitPrice }}</td>
-                    <td style="width: 15%;">{{ $item->Currency }} {{ number_format($item->total, 2) }}</td>
+                    <td style="width: 15%;">{{ optional($detail)->Currency }} {{ number_format($item->total, 2) }}</td>
                 </tr>
                 @php
                     $grandTotal += $item->total;
@@ -434,7 +434,7 @@
                 <td></td>
                 <td><strong></strong></td>
                 <td></td>
-                <td style="padding-top: 3px !important;"><strong>{{ number_format($grandTotal, 2) }}</strong></td>
+                <td style="padding-top: 3px !important;"><strong>{{ optional($detail)->Currency }} {{ number_format($grandTotal, 2) }}</strong></td>
             </tr>
         </tbody>              
     </table>

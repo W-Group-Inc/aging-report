@@ -454,7 +454,7 @@
                 @endforeach
             @endforeach
             <tr>
-                <td style=" padding:10px; text-align: center">{!! nl2br(e(optional($details->first())->Remarks )) !!}</td>
+                <td style=" padding:2px; text-align: center">{!! nl2br(e(optional($details->first())->Remarks )) !!}</td>
                 <td></td>
                 <td></td>
                 <td></td>

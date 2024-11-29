@@ -438,14 +438,25 @@
             @foreach ($details as $detail)
             @foreach ($detail->products as $product)
             @php
-                    $unit_price = ($product->Amount) /  ($product->Quantity) ;
-                    $vatable_unit_price = $unit_price * 0.12;
-                    $total_vatable_unit_price += $vatable_unit_price;
-                    $vatable_amount = ($product->Amount) * 0.12;
-                    $total_vatable_amount += $vatable_amount;
+                    if (($product)->DocCur == 'EUR') {
+                        $unit_price = ($product->Amount) /  ($product->Quantity) ;
+                        $vatable_unit_price = $unit_price * 0.21;
+                        $total_vatable_unit_price += $vatable_unit_price;
+                        $vatable_amount = ($product->Amount) * 0.21;
+                        $total_vatable_amount += $vatable_amount;
 
-                    $total += $product->Amount;
-                    $vat_inclusive = $total + $total_vatable_amount;
+                        $total += $product->Amount;
+                        $vat_inclusive = $total + $total_vatable_amount;
+                    } else {
+                        $unit_price = ($product->Amount) /  ($product->Quantity) ;
+                        $vatable_unit_price = $unit_price * 0.12;
+                        $total_vatable_unit_price += $vatable_unit_price;
+                        $vatable_amount = ($product->Amount) * 0.12;
+                        $total_vatable_amount += $vatable_amount;
+
+                        $total += $product->Amount;
+                        $vat_inclusive = $total + $total_vatable_amount;
+                    }
             @endphp
             <tr>
                 <td style="font-weight: bold">{{ $product->Description }}</td>
@@ -476,9 +487,13 @@
                 <td style="font-weight: bold"></td>
                 <td></td>
                 <td></td>
-                <td><strong>Add: 12%</strong></td>
+                @if ( $detail->DocCur == 'EUR')
+                    <td><strong>ADD:21% VAT</strong></td>
+                    @else
+                    <td><strong>ADD:12% VAT</strong></td>
+                @endif
                 <td> 
-                    {{ optional($product)->DocCur }} {{ $vatable_unit_price }}
+                    {{-- {{ optional($product)->DocCur }} {{ $vatable_unit_price }} --}}
                 </td>
                 <td>{{ optional($product)->DocCur }} {{ number_format($vatable_amount, 2) }}</td>
             </tr>
@@ -491,7 +506,20 @@
             </tr> --}}
             @endforeach
             @endforeach
-
+            <tr>
+                <td style=" padding:10px; text-align: center">{!! nl2br(e(optional($details->first())->Remarks )) !!}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td style=" padding:10px; text-align: center">{!! nl2br(e(optional($details->first())->RemarksTwo )) !!}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td ></td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -577,7 +605,7 @@
 
 <div class="column-container" style="min-height:15px; max-height:15.5px;">
     <div class="total">
-        <div class="total-value">{{ optional($details->first()->products->first())->DocCur }} {{ number_format($total, 2) }}</div>
+        <div class="total-value">{{ optional($details->first()->products->first())->DocCur }} {{ number_format($vat_inclusive, 2) }}</div>
     </div>
 </div>
 

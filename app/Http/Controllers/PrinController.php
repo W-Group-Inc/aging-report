@@ -49,6 +49,7 @@ class PrinController extends Controller
             'T0.U_SOANum',
             'T0.U_ModeShip',
             'T0.U_Delivery',
+            'T0.CANCELED',
             'T1.U_label_as',
             'T1.U_Bagsperlot',
             'T1.U_packUOM',
@@ -74,13 +75,36 @@ class PrinController extends Controller
             'T0.U_ABill',
             'T0.U_Seal',
             'T0.U_ContainerNo',
-            'T0.U_BillLading'
+            'T0.U_BillLading',
+            'g.U_T1',
+            'g.U_T2',
+            'g.U_T3',
+            'g.U_T4',
+            'g.U_T5',
+            'g.U_T6'
         )
         ->from('ORDR as T0')
         ->leftJoin('RDR1 as T1', 'T0.DocEntry', '=', 'T1.DocEntry')
         ->leftJoin('OCTG as T2', 'T0.GroupNum', '=', 'T2.GroupNum')
+        ->leftJoin('OCRD as T3', 'T0.CardCode', '=', 'T3.CardCode')
+        ->leftJoin('@Payment_Instruction as g', 'g.Code', '=', \DB::raw("
+            CASE 
+                WHEN T3.QryGroup2  = 'Y' THEN 'SBC-WCC-USD1'
+                WHEN T3.QryGroup3  = 'Y' THEN 'BDO-USD'
+                WHEN T3.QryGroup4  = 'Y' THEN 'MBTC-USD'
+                WHEN T3.QryGroup5  = 'Y' THEN 'SBC-WCC-EUR'
+                WHEN T3.QryGroup6  = 'Y' THEN 'SBC-WCC-USD'
+                WHEN T3.QryGroup7  = 'Y' THEN 'SBC-WCC-PHP'
+                WHEN T3.QryGroup8  = 'Y' THEN 'SBC-MARKET-PHP'
+                WHEN T3.QryGroup9  = 'Y' THEN 'SBC-MARKET-USD'
+                WHEN T3.QryGroup10 = 'Y' THEN 'BOA-PO BOX'
+                WHEN T3.QryGroup11 = 'Y' THEN 'BOA-ACH'
+                WHEN T3.QryGroup16 = 'Y' THEN 'BPI-W 5th-EUR'
+            END
+        "))
         // ->where('T0.U_SOANum', '=', $soa_no)
         ->where('T0.NumAtCard', '=', $customer_ref)
+        ->where('T0.CANCELED', '!=', 'Y')
         ->orderBy('T0.DocNum', 'ASC')
         ->get();
 
@@ -97,7 +121,17 @@ class PrinController extends Controller
             'prepared_by' => $prepared_by,
         ])->setPaper('A4', 'portrait');
 
-        // Output PDF as a response
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+
+        // Add dynamic page numbers
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $font = $fontMetrics->getFont('Helvetica', 'normal');
+            $size = 10; // Font size
+            $x = 520;  // Adjust horizontal position
+            $y = 820;  // Adjust vertical position
+            $canvas->text($x, $y, "Page $pageNumber of $pageCount", $font, $size);
+        });
         return $pdf->stream('SOA_USA_Commercial_Invoice.pdf');
     }
 
@@ -123,6 +157,7 @@ class PrinController extends Controller
             'T0.U_SOANum',
             'T0.U_ModeShip',
             'T0.U_Delivery',
+            'T0.CANCELED',
             'T1.U_label_as',
             'T1.U_Bagsperlot',
             'T1.U_packUOM',
@@ -194,6 +229,7 @@ class PrinController extends Controller
             END
         "))
         ->where('T0.NumAtCard', '=', $customer_ref)
+        ->where('T0.CANCELED', '!=', 'Y')
         ->orderBy('T0.DocNum', 'ASC')
         ->get();
         View::share('details', $details);
@@ -207,6 +243,18 @@ class PrinController extends Controller
             'soa_type' => $soa_type,
         ])->setPaper('A4', 'portrait');
 
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+
+        // Add dynamic page numbers
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $font = $fontMetrics->getFont('Helvetica', 'normal');
+            $size = 10; // Font size
+            $x = 520;  // Adjust horizontal position
+            $y = 820;  // Adjust vertical position
+            $canvas->text($x, $y, "Page $pageNumber of $pageCount", $font, $size);
+        });
+        
         return $pdf->stream('SOA_EUR_Commercial_Invoice.pdf');
     }
 
@@ -232,6 +280,7 @@ class PrinController extends Controller
             'T0.U_SOANum',
             'T0.U_ModeShip',
             'T0.U_Delivery',
+            'T0.CANCELED',
             'T1.U_label_as',
             'T1.U_Bagsperlot',
             'T1.U_packUOM',
@@ -303,6 +352,7 @@ class PrinController extends Controller
             END
         "))
         ->where('T0.NumAtCard', '=', $customer_ref)
+        ->where('T0.CANCELED', '!=', 'Y')
         ->orderBy('T0.DocNum', 'ASC')
         ->get();
         View::share('details', $details);
@@ -924,6 +974,7 @@ class PrinController extends Controller
             'T0.U_TaxID',
             'T0.Address2',
             'T0.ShipToCode',
+            'T0.CANCELED',
             'T1.U_label_as',
             'T1.U_Bagsperlot',
             'T1.U_packUOM',
@@ -979,6 +1030,7 @@ class PrinController extends Controller
             END
         "))
         ->where('T0.NumAtCard', '=', $customer_ref)
+        ->where('T0.CANCELED', '!=', 'Y')
         ->orderBy('T0.DocNum', 'ASC')
         ->get();
         View::share('details', $details);
@@ -991,7 +1043,17 @@ class PrinController extends Controller
             'soa_type' => $soa_type,
             // 'prepared_by' => $prepared_by,
         ])->setPaper('A4', 'portrait');
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
 
+        // Add dynamic page numbers
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $font = $fontMetrics->getFont('Helvetica', 'normal');
+            $size = 10; // Font size
+            $x = 520;  // Adjust horizontal position
+            $y = 820;  // Adjust vertical position
+            $canvas->text($x, $y, "Page $pageNumber of $pageCount", $font, $size);
+        });
         return $pdf->stream('SOA_PBI_PHP_Commercial_Invoice.pdf');
     }
 
@@ -1246,6 +1308,7 @@ class PrinController extends Controller
         $save_new_credit_note->CreditNoteNumber = $request->CreditNoteNumber;
         $save_new_credit_note->Label2 = $request->SingleLabel;
         $save_new_credit_note->Total = $request->ProductTotal;
+        $save_new_credit_note->Currency = $request->Currency;
         $save_new_credit_note->save();
 
         foreach ($request->Label1 as $index => $label1) {
@@ -1272,6 +1335,7 @@ class PrinController extends Controller
         $update_credit_note->CreditNoteNumber = $request->CreditNoteNumber;
         $update_credit_note->Label2 = $request->SingleLabel;
         $update_credit_note->Total = $request->ProductTotal;
+        $update_credit_note->Currency = $request->Currency;
         $update_credit_note->update();
 
 

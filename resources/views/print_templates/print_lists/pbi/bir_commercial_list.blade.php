@@ -65,20 +65,22 @@
                                                 @else
                                                     <button onclick="" type="button" class="btn btn-primary btn-outline" title="Edit Invoice" data-toggle="modal" data-target="#pbiBirCommercialEdit{{ $detail->DocEntry }}" ><i class="fa fa fa-plus"></i></button>
                                                     @include('print_templates.print_lists.pbi.bir_commercial_list_edit')
+                                                    <a target='_blank' href="{{ url('pbi_bir_original_commercial_invoice', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
                                                 @endif
-                                                <a target='_blank' href="{{ url('pbi_bir_original_commercial_invoice', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
                                             </td>
                                             <td>
                                                 @if ($detail->asNew)
                                                 <a target='_blank' href="{{ url('pbi_bir_edited_commercial_vatable_invoice', $detail->asNew->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
-                                                @endif
+                                                @else 
                                                 <a target='_blank' href="{{ url('pbi_bir_original_commercial_vatable_invoice', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
+                                                @endif
                                             </td> 
                                             <td>
                                                 @if ($detail->asNew)
                                                 <a target='_blank' href="{{ url('pbi_bir_edited_commercial_exempt_invoice', $detail->asNew->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
-                                                @endif
+                                                @else 
                                                 <a target='_blank' href="{{ url('pbi_bir_original_commercial_exempt_invoice', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
+                                                @endif
                                             </td>       
                                             {{-- <td>{{ $detail->U_invNo }}</td> --}}
                                             <td>{{ $detail->DocDate }}</td>
