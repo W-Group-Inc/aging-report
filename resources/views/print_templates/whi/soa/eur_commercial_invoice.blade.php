@@ -75,7 +75,7 @@
             float: left; 
             width: 50%; 
             font-size: 12px;
-            line-height: 0.8;
+            line-height: 1;
         }
         .right-column {
             margin-left: 50px; 
@@ -351,7 +351,7 @@
         </div>
 
         <div class="line-one">
-            <strong>W Hydrocolloids,</strong> 
+            <strong>W Hydrocolloids, Inc.</strong> 
         </div>
         <div class="line-two">
             <span class="header-small-text"><strong>Plant Address:</strong> Block 10 Lot 1 Phase 4 Mountview 1 Industrial Complex, Bancal,  4116 Carmona, Cavite, Philippines</span>
@@ -814,9 +814,9 @@
                 <div class="shape">
                     <div> <a href=""><img  style='width: 30px; height:50%;' src="{{URL::asset('/images/arrow.png')}}" height='45px' alt="AVATAR"></a></div>
                 </div>
-                <div class="payment-instruction">
+                <div class="payment-instruction" style="font-size: 13px">
                     <div>Payment Instructions: </div>
-                <div class="left-align">
+                <div class="left-align" style="font-size: 12px">
                     <div class="info-row" style="margin: 10px 0px">
                         <span>{{ optional($details->first())->U_T1 }}</span>
                     </div>
@@ -854,7 +854,7 @@
             </div>
             <div class="text">
                 <span style="display: block">Authorized Representative</span>
-                <span style="display: block">Signatureover Printed Name</span>
+                <span style="display: block">Signature over Printed Name</span>
             </div>
             <br>
         </div>

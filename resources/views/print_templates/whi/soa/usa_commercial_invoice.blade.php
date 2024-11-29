@@ -807,7 +807,7 @@
             </div>
             <div class="text">
                 <span style="display: block">Authorized Representative</span>
-                <span style="display: block">Signatureover Printed Name</span>
+                <span style="display: block">Signature over Printed Name</span>
             </div>
             <br>
         </div>

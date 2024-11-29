@@ -83,7 +83,7 @@
             float: left; 
             width: 50%; 
             font-size: 12px;
-            line-height: 0.8;
+            line-height:1;
         }
         .right-column {
             margin-left: 50px; 
@@ -806,7 +806,7 @@
                 <div class="shape">
                     <div> <a href=""><img  style='width: 30px; height:50%;' src="{{URL::asset('/images/arrow.png')}}" height='45px' alt="AVATAR"></a></div>
                 </div>
-                <div class="payment-instruction">
+                <div class="payment-instruction" style="font-size: 12px">
                     <div>Payment Instructions: </div>
                 <div class="left-align">
                     <div class="info-row" style="margin: 10px 0px">
