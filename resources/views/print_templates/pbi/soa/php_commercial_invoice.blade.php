@@ -79,11 +79,11 @@
         .info-label {
             width: 30%; /* Fixed width for labels */
             display: inline-block;
-            margin-right: 30px;
+            margin-right: 0;
             vertical-align: top;   /* Align the label with the top of the value */
         }
         .info-value {
-            width: 40%; /* Width for values */
+            width: 43%; /* Width for values */
             word-wrap: break-word; /* Allow long values to break to the next line */
             vertical-align: top;   /* Align the value with the top */
         }
@@ -98,7 +98,7 @@
             text-align: center; /* Align text to the left */
         }
         .product-details .top-table td{
-            padding: 2px; /* Padding inside cells */
+            padding: 8px; /* Padding inside cells */
             border-left: 1px solid #000;
             text-align: center; /* Align text to the left */
 
@@ -148,7 +148,7 @@
         }
         .bottom-table .label-column{
             text-align: left;
-            width: 20%;
+            width: 22%;
             padding-left: 10px
         }
 
@@ -344,7 +344,7 @@
                         <td>{{ number_format($vatable_amount,2) }}</td>
                       </tr>
                   @endif
-                  <tr>
+                  <tr >
                       <td></td>
                       <td style="text-align: left">{{ $detail->U_Remarks1 }}</td>
                       <td></td>
@@ -507,7 +507,11 @@
                     $name = auth()->user()->name;
                     $parts = explode(' ', $name);
                     $initial = strtoupper(substr($parts[0], 0, 1)) . '.';
-                    $lastName = isset($parts[1]) ? $parts[1] : '';
+                    if (count($parts) > 2) {
+                        $lastName = $parts[count($parts) - 1];
+                    } else {
+                        $lastName = isset($parts[1]) ? $parts[1] : '';
+                    }
                 @endphp
                   <td class="">
                     Prepared by <br> <br>

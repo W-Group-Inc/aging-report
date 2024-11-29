@@ -78,7 +78,7 @@
             float: left; 
             width: 55%; 
             font-size: 12px;
-            line-height: 0.8;
+            line-height: 1;
         }
         .right-column {
             margin-left: 50px; 
@@ -831,7 +831,7 @@
                 <div class="payment-instruction" style="font-size: 13px">
                     <div>Payment Instructions: </div>
                 <div class="left-align">
-                    <div class="info-row" style="margin: 10px 0px; font-size: 13px">
+                    <div class="info-row" style="margin: 10px 0px 0px 0; font-size: 13px">
                         <span>{{ optional($details->first())->U_T1 }}</span>
                     </div>
                     <div class="info-row" style="font-size: 13px">
