@@ -442,8 +442,8 @@
                 $vatable_amount = 0;
                 if ($soa_type == 'vatable') {
                         // if (($detail)->DocCur == 'EUR') {
-                            $vatable_amount = 0.12 * $detail->TotalFrgn;
-                            $vatable_unit_price = 0.12 * $detail->Price;
+                            $vatable_amount = 0.21 * $detail->TotalFrgn;
+                            $vatable_unit_price = 0.21 * $detail->Price;
                             $value_added_tax += $vatable_amount;
                         // } else {
                             // $vatable_amount = 0.12 * $detail->TotalFrgn;
