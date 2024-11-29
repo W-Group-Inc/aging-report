@@ -397,12 +397,12 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 28%; height: 16px;">Description</th>
-                <th style="width: 12%;border-right: none;">Packing</th>
+                <th style="width: 24%; height: 16px;">Description</th>
+                <th style="width: 13%;border-right: none;">Packing</th>
                 <th style="width: 1%; border-left: none; border-right: none;"></th> 
-                <th style="width: 11%;">Unit</th>
-                <th style="width: 14%">Quantity</th>
-                <th style="width: 16%">Unit Price</th>
+                <th style="width: 12%;">Unit</th>
+                <th style="width: 15%">Quantity</th>
+                <th style="width: 17%">Unit Price</th>
                 <th style="width: 19%">Amount</th>
             </tr>
         </thead>
@@ -434,7 +434,7 @@
                 $total_amount_payable = $total + $value_added_tax;
               @endphp
             <tr>
-                <td class="desc-max-col-width">{{ $detail->U_label_as }}</td>
+                <td class="desc-max-col-width">{!! nl2br(e($detail->U_label_as )) !!}</td>
                 <td style="vertical-align: middle;">{{ $detail->U_Bagsperlot }}
                     @if ($detail->U_Bagsperlot > 1)
                         bags

@@ -243,7 +243,7 @@
             width: 35%;
             display: table;
             font-family: Arial, sans-serif;
-            font-size: 18px;
+            font-size: 15px;
         }
 
         .label, .arrow, .total-value {
