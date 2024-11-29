@@ -519,7 +519,7 @@
                 {{-- @if ( $detail->DocCur == 'EUR')
                 <td>ADD:21% VAT</td>
                 @else --}}
-                <td>ADD:12% VAT</td>
+                <td>ADD:21% VAT</td>
                 {{-- @endif --}}
             <td></td>
             {{-- <td >{{ $detail->DocCur }} {{ number_format($vatable_unit_price,2) }}</td> --}}
