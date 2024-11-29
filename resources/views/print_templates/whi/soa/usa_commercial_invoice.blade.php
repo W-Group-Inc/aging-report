@@ -800,7 +800,7 @@
     </div>
     <div class="new-col-right">
         <div class="center-align">
-            <strong>W HYDROCOLLOIDS INC.</strong>
+            <strong>W HYDROCOLLOIDS, INC.</strong>
             <div class="signatory">
                 <div class="signature-space"><span>{{ $prepared_by }}</span></div>
                 
