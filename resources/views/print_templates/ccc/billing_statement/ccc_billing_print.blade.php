@@ -198,7 +198,7 @@
             border: 1px solid black;
             padding: 15px;
             vertical-align: top;
-            padding-top:50px;
+            padding-top:40px;
         }
         .products {
             width: 100%;
@@ -417,8 +417,22 @@
                                         <td class="table-cell">{{ $detail->RefNumber ?? 'N/A' }}</td>
                                         <td class="table-cell">{{ $detail->U_Label }} dddddd</td>
                                         <td class="table-cell text-right">{{ number_format($detail->Quantity, 2) }}</td>
-                                        <td class="table-cell text-right">€ {{ number_format($detail->Price, 2) }}</td>
-                                        <td class="table-cell text-right">€ {{ number_format($detail->Linetotal, 2) }}</td>
+                                        <td class="table-cell text-right">
+                                            @if ($detail->DocCur == 'PHP')
+                                                ₱
+                                            @elseif ($detail->DocCur == 'USD')
+                                                $
+                                            @elseif ($detail->DocCur == 'EUR')
+                                                €
+                                            @endif {{ number_format($detail->Price, 2) }}</td>
+                                        <td class="table-cell text-right">
+                                            @if ($detail->DocCur == 'PHP')
+                                                ₱
+                                            @elseif ($detail->DocCur == 'USD')
+                                                $
+                                            @elseif ($detail->DocCur == 'EUR')
+                                                €
+                                            @endif {{ number_format($detail->Linetotal, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
