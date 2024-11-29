@@ -219,14 +219,14 @@
             margin: 0
         }
         .new-col-left .info-detail {
-            width: 65%;
+            width: 63%;
             display: inline-block;
             vertical-align: top;  
             font-size: 12px;
             word-wrap: break-word;
         }
         .new-col-left .info-name{
-            width: 30%; /* Fixed width for labels */
+            width: 32%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
@@ -812,7 +812,7 @@
             </div>
         </div>
     </div>
-    <div class="new-col-right">
+    <div class="new-col-right" >
         <div class="info-row">
             <span class="info-name">Terms of Payment</span>
             <span class="info-colon">:</span>
@@ -828,13 +828,13 @@
                 <div class="shape">
                     <div> <a href=""><img  style='width: 30px; height:50%;' src="{{URL::asset('/images/arrow.png')}}" height='45px' alt="AVATAR"></a></div>
                 </div>
-                <div class="payment-instruction">
+                <div class="payment-instruction" style="font-size: 13px">
                     <div>Payment Instructions: </div>
                 <div class="left-align">
-                    <div class="info-row" style="margin: 10px 0px">
+                    <div class="info-row" style="margin: 10px 0px; font-size: 13px">
                         <span>{{ optional($details->first())->U_T1 }}</span>
                     </div>
-                    <div class="info-row">
+                    <div class="info-row" style="font-size: 13px">
                         @if($details->first() && $details->first()->U_T3)
                             <?php
                                 $intermediaryBankDetails = optional($details->first())->U_T2 . ' / ' . optional($details->first())->U_T3 . ' / ' . optional($details->first())->U_T4 . ' / ' . optional($details->first())->U_T5 . ' / ' . optional($details->first())->U_T6;
