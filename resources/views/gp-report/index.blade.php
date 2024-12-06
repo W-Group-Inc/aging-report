@@ -129,23 +129,32 @@
                                             $dollar = 0;
                                             $euro = 0;
                                             if ($company == "WHI") {
-                                                if ($invoice->CurrencyType == "_SYS00000000168") {
+                                                if (($invoice->CurrencyType == "_SYS00000000168") || ($invoice->CurrencyType == "_SYS00000001680")) {
                                                     $dollar = $invoice->Dollar_Value;
-                                                } elseif ($invoice->CurrencyType == "_SYS00000000171") {
+                                                } else {
                                                     $euro = $invoice->Dollar_Value;
                                                 }
+                                                // elseif ($invoice->CurrencyType == "_SYS00000000171") {
+                                                //     $euro = $invoice->Dollar_Value;
+                                                // }
                                             } elseif ($company == "CCC") {
                                                 if ($invoice->CurrencyType == "_SYS00000000674") {
                                                     $dollar = $invoice->Dollar_Value;
-                                                } elseif ($invoice->CurrencyType == "_SYS00000000401") {
+                                                }  else {
                                                     $euro = $invoice->Dollar_Value;
                                                 }
+                                                // elseif ($invoice->CurrencyType == "_SYS00000000401") {
+                                                //     $euro = $invoice->Dollar_Value;
+                                                // }
                                             } elseif ($company == "PBI") {
                                                 if ($invoice->CurrencyType == "_SYS00000000372") {
                                                     $dollar = $invoice->Dollar_Value;
-                                                } elseif ($invoice->CurrencyType == "_SYS00000000548") {
+                                                } else {
                                                     $euro = $invoice->Dollar_Value;
                                                 }
+                                                // elseif ($invoice->CurrencyType == "_SYS00000000548") {
+                                                //     $euro = $invoice->Dollar_Value;
+                                                // }
                                             }
                                         @endphp
                                         <tr>

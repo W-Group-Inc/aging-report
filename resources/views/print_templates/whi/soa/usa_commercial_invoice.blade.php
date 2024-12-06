@@ -767,7 +767,7 @@
                 <span class="info-detail">011900254</span>
             </div>
         </div> --}}
-        <div class="payment-instruction">
+        <div class="payment-instruction" style="font-size:15px">
             <div>Payment Instructions: </div>
         <div class="left-align">
             <div class="info-row" style="margin: 10px 0px">
