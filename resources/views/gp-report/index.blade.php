@@ -431,23 +431,32 @@
                                                 $brokerage_per_invoice = 0;
                                                 $commission_per_invoice = 0;
                                                     if ($company == "WHI") {
-                                                        if ($invoice->CurrencyType == "_SYS00000000168") {
+                                                        if (($invoice->CurrencyType == "_SYS00000000168") || ($invoice->CurrencyType == "_SYS00000001680")) {
                                                             $total_dollar += $invoice->Dollar_Value;
-                                                        } elseif ($invoice->CurrencyType == "_SYS00000000171") {
+                                                        } else {
                                                             $total_euro += $invoice->Dollar_Value;
                                                         }
+                                                        // elseif ($invoice->CurrencyType == "_SYS00000000171") {
+                                                        //     $total_euro += $invoice->Dollar_Value;
+                                                        // }
                                                     } elseif ($company == "CCC") {
                                                         if ($invoice->CurrencyType == "_SYS00000000674") {
                                                             $total_dollar += $invoice->Dollar_Value;
-                                                        } elseif ($invoice->CurrencyType == "_SYS00000000401") {
+                                                        }  else {
                                                             $total_euro += $invoice->Dollar_Value;
                                                         }
+                                                        //  elseif ($invoice->CurrencyType == "_SYS00000000401") {
+                                                        //     $total_euro += $invoice->Dollar_Value;
+                                                        // }
                                                     } elseif ($company == "PBI") {
                                                         if ($invoice->CurrencyType == "_SYS00000000372") {
                                                             $total_dollar += $invoice->Dollar_Value;
-                                                        } elseif ($invoice->CurrencyType == "_SYS00000000548") {
+                                                        } else {
                                                             $total_euro += $invoice->Dollar_Value;
                                                         }
+                                                        // elseif ($invoice->CurrencyType == "_SYS00000000548") {
+                                                        //     $total_euro += $invoice->Dollar_Value;
+                                                        // }
                                                     }
 
                                                     if($company == "WHI") {
