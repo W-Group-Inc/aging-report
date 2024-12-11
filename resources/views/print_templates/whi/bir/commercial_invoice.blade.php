@@ -233,8 +233,11 @@
             font-size: 11px;
             word-wrap: break-word;
         }
-        .new-col-right .container {
-            margin-left: 3px;
+        .new-col-right .container .info-name {
+            width: 31%; /* Fixed width for labels */
+            display: inline-block;
+            vertical-align: top;  
+            margin: 0
         }
         .new-col-left .info-row {
             margin-bottom: 1.5px;
@@ -247,7 +250,7 @@
             word-wrap: break-word;
         }
         .new-col-left .info-name{
-            width: 33%; /* Fixed width for labels */
+            width: 30%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
@@ -319,7 +322,7 @@
         .signature-space {
             width: 200px; /* Set the width of the signature line */
             /* margin: 17px auto;  */
-            margin: 40px 137px 0 87px;
+            margin: 40px 128px 0 98px;
             display: block; /* Ensure it's treated as a block-level element */
             font-weight: bold;
         }
@@ -616,7 +619,7 @@
     </div>
     <div class="new-col-right">
         <div class="container">
-            <div class="info-row" style="margin-top:5px; margin-bottom:3px">
+            <div class="info-row" style="margin-top:0px; margin-bottom:8px">
                 <span class="info-name"></span>
                 <span class="info-colon"></span>
                 <span class="info-detail">{{ optional($details->first())->PymntGroup }}</span>
