@@ -8,7 +8,7 @@
     <style>
        @page{
         /* margin: 15px 25px; */
-        margin: 72px 0 15 -20px;
+        margin: 70px 0 15 -20px;
        }
         
         body {
@@ -35,8 +35,8 @@
             font-weight: bold;
         }
         .header-container .left .header .date {
-            margin-top: 37.7px;
-            margin-bottom: 15px;
+            margin-top: 31.7px;
+            margin-bottom: 19px;
             margin-left: 37px;
             font-size: 12px;
         }
@@ -70,6 +70,7 @@
             display: block;
         }
         .customer-container {
+            height: 90px;
             width: 100%;
         }
         .customer-container::after {
@@ -84,6 +85,7 @@
             line-height: 1;
         }
         .right-column {
+            margin-top: 12px;
             margin-left: 53px; 
         }
         .info-row {
@@ -100,13 +102,6 @@
             margin: 0;
             font-size: 13px;
             padding: 0;
-        }
-        .customer-container .right-column .info-label{
-            width: 35%; /* Fixed width for labels */
-            display: inline-block;
-            vertical-align: top;  
-            margin: 0;
-            font-size: 13px;
         }
         .customer-container .right-column .info-row{
             margin-bottom: 1.5px
@@ -133,7 +128,7 @@
             word-wrap: break-word;
         }
         .product-details table {
-            margin-top: 12px;
+            margin-top: 10px;
             width: 100%;
             border-collapse: collapse; /* Collapses table borders */
         }
@@ -238,8 +233,11 @@
             font-size: 11px;
             word-wrap: break-word;
         }
+        .new-col-right .container {
+            margin-left: 3px;
+        }
         .new-col-left .info-row {
-            margin-bottom: 3.8px;
+            margin-bottom: 1.5px;
         }
         .new-col-left .info-detail {
             width: 50%;
@@ -321,7 +319,7 @@
         .signature-space {
             width: 200px; /* Set the width of the signature line */
             /* margin: 17px auto;  */
-            margin: 40px 130px 0 93px;
+            margin: 40px 137px 0 87px;
             display: block; /* Ensure it's treated as a block-level element */
             font-weight: bold;
         }
@@ -379,11 +377,6 @@
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value"></span>
-        </div>
-        <div class="info-row">
-            <span class="info-label"></span>
-            <span class="info-colon"></span>
             <span class="info-value">{{ optional($details->first())->U_BuyersPO }}</span>
         </div>
         <div class="info-row">
@@ -406,9 +399,14 @@
             <span class="info-colon"></span>
             <span class="info-value"></span>
         </div>
+        <div class="info-row">
+            <span class="info-label"></span>
+            <span class="info-colon"></span>
+            <span class="info-value"></span>
+        </div>
     </div>
 </div>
-<div class="product-details" style="min-height: 255px; max-height:255px; margin-left:20px; margin-right:40px;">
+<div class="product-details" style="min-height: 257px; max-height:257px; margin-left:20px; margin-right:40px;">
     <table style="">
         <thead>
             <tr>
@@ -500,7 +498,7 @@
             <span class="info-colon"></span>
             <span class="info-detail"></span>
         </div>
-        <div class="info-row">
+        <div class="info-row" style="margin-bottom:3px">
             <span class="info-name"></span>
             <span class="info-colon"></span>
             <span class="info-detail"></span>
@@ -564,7 +562,7 @@
 </div>
 
 <div class="new-row">
-    <div class="new-col-left" style="margin-top: 66px">
+    <div class="new-col-left" style="margin-top: 69px; font-size:16px; height:80px">
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
@@ -617,15 +615,17 @@
         </div>
     </div>
     <div class="new-col-right">
-        <div class="info-row">
-            <span class="info-name"></span>
-            <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->PymntGroup }}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-name"></span>
-            <span class="info-colon"></span>
-            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->ArDueDate)->format('F j, Y') }}</span>
+        <div class="container">
+            <div class="info-row" style="margin-top:5px; margin-bottom:3px">
+                <span class="info-name"></span>
+                <span class="info-colon"></span>
+                <span class="info-detail">{{ optional($details->first())->PymntGroup }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-name"></span>
+                <span class="info-colon"></span>
+                <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->ArDueDate)->format('F j, Y') }}</span>
+            </div>
         </div>
         <div class="right-box" style="min-height: 210px;max-height: 210px">
             <div class="new-col">
@@ -634,7 +634,7 @@
                 </div>
                 <div class="payment-instruction">
                 <div class="left-align">
-                    <div class="info-row" style="margin: 8px 0px">
+                    <div class="info-row" style="margin: 2px 0 8px 0px">
                         <span>{{ optional($details->first())->U_T1 }}</span>
                     </div>
                     <div class="info-row">

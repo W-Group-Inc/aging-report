@@ -619,7 +619,7 @@
                                             <td>{{ number_format($total_gross_profit, 2) }}</td>
                                             <td>{{number_format(($ave_gp),2)}} %</td>
                                             {{-- @endif --}}
-                                            <td></td>
+                                            <td></td><td></td>
                                         </tr>
                                     </tfoot>
                                     
