@@ -356,8 +356,8 @@
         <div class="line-two">
             <span class="header-small-text"><strong>Plant Address:</strong> Block 10 Lot 1 Phase 4 Mountview 1 Industrial Complex, Bancal,  4116 Carmona, Cavite, Philippines</span>
             <span class="header-small-text"><strong>Admin Office:</strong> 26/F. W Fifth Ave. Bldg. 3051 5th Ave. cor. 32nd St., Bonifacio Global City, Taguig City, 1634 Philippines</span>
-            <span class="header-small-text"><strong>Phone:</strong> (+632) 8856.3838 | Fax: (+632) 8856</span>
-            <span class="header-small-text">sales@rico.com.ph | www.rico </span>
+            <span class="header-small-text"><strong>Phone:</strong> (+632) 8856.3838 | Fax: (+632) 8856 1033</span>
+            <span class="header-small-text">sales@rico.com.ph | www.rico.com.ph </span>
             <span class="header-small-text">VAT No.: NL823951613B01</span>
         </div>
     </div>
