@@ -32,6 +32,7 @@
         .header-small-text{
             font-size: 12px;
             display: block;
+            margin-left: 110px
         }
         .left, .right {
             display: table-cell;
@@ -192,7 +193,7 @@
                 <div class="image" style="float: left">
                   <img src="{{ asset('/images/pbi_logo.webp')}}" alt="Company Logo" style="width: 100px; width:100px"> 
             </div>
-            <div class="text" style="float: right">
+            <div class="text">
               <span class="header-small-text">PHILIPPINE BIO INDUSTRIES, INC.</span>
               <span class="header-small-text">103 Integrity Avenue, Carmelray Industrial</span>
               <span class="header-small-text">Park 1, Canlubang, Calamba City,</span>
@@ -204,10 +205,8 @@
         </div>
     </div>
     <div class="right">
-        <div class="container">
-            <div style="top: 0; margin-left: 25px;  text-align: left;">
-                <span class="header-small-text">VAT REG. TIN: 000-316-923-000</span>
-            </div>
+        <div style="margin:10px 0 0 30px;text-align: left; font-size: 12px;">
+            <span class=""> VAT REG. TIN: 000-316-923-000</span>
         </div>
     </div>
 </div>

@@ -117,8 +117,8 @@ class CommercialInvoiceController extends Controller
             'ODLN.U_Destinationport',
             'ODLN.U_ModeShip',
             'ODLN.U_Delivery',
-            'ODLN.U_Feeder',
-            'ODLN.U_Ocean',
+            'ODLN.U_FeedVessel',
+            'ODLN.U_OceanVessel',
             'ODLN.U_BillLading',
             'ODLN.U_ContainerNo',
             'ODLN.U_Seal',
@@ -177,7 +177,6 @@ class CommercialInvoiceController extends Controller
         $save_as_new->PortOfDestination = $request->PortOfDestination;
         $save_as_new->ModeOfShipment = $request->ModeOfShipment;
         $save_as_new->TermsOfDelivery = $request->TermsOfDelivery;
-        $save_as_new->TermsOfPayment = $request->TermsOfPayment;
         $save_as_new->FedderVessel = $request->FedderVessel;
         $save_as_new->OceanVessel = $request->OceanVessel;
         $save_as_new->BillOfLading = $request->BillOfLading;

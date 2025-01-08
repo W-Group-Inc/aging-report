@@ -313,7 +313,7 @@
         .signature-space {
             border-bottom: 1px solid #000; /* Create a line for the signature */
             width: 200px; /* Set the width of the signature line */
-            margin: 10 auto 0 auto; /* Center horizontally and add vertical space */
+            margin: 0 auto 0 auto; /* Center horizontally and add vertical space */
             display: block; /* Ensure it's treated as a block-level element */
         }
         .footer {
@@ -857,8 +857,11 @@
     <div class="new-col-right">
         <div class="center-align">
             <div class="signatory">
+                <div class="esign" style="margin-bottom: -15px;">
+                    <img src="{{ asset(auth()->user()->signature) }}" 
+                         style="width: 80px; height: auto;">
+                </div>
                 <div class="signature-space"><span>{{ $prepared_by }}</span></div>
-                
             </div>
             <div class="text">
                 <span style="display: block">Authorized Representative</span>
