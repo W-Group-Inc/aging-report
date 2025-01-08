@@ -282,10 +282,30 @@
         .right-box .new-col {
             float: left; 
             width: 45%; 
-            font-size: 12px;
+            font-size: 15px;
             border: solid black;
             padding: 10px;
             align-items: center;
+        }
+
+        .right-box .new-col .info-name {
+            width: 40%; /* Fixed width for labels */
+            display: inline-block;
+            vertical-align: top;  
+            margin: 0;
+            font-size: 15px;
+        }
+        .right-box .new-col .info-colon {
+            width: 3%; /* Fixed width for labels */
+            display: inline-block;
+            vertical-align: top;   /* Align the label with the top of the value */
+        }
+        .right-box .new-col .info-detail {
+            width: 40%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 15px;
+            word-wrap: break-word;
         }
         .right-box .center-align {
             margin: 10px;
@@ -739,7 +759,9 @@
 <div class="right-box">
    
     <div class="new-col">
-        {{-- <div>For ACH/Direct Deposit to our Account: </div>
+        <div class="payment-instruction" style="font-size:15px !important">
+            <div>Payment Instructions: </div>
+        <div>For ACH/Direct Deposit to our Account: </div>
         <div class="center-align">
             <div class="info-row">
                 <span class="info-name">Bank</span>
@@ -759,15 +781,16 @@
             <div class="info-row">
                 <span class="info-name">Account No.</span>
                 <span class="info-colon">:</span>
-                <span class="info-detail">3850-1879-5268</span>
+                <span class="info-detail">3830-2623-4250</span>
             </div>
             <div class="info-row">
                 <span class="info-name">Routing No.</span>
                 <span class="info-colon">:</span>
-                <span class="info-detail">011900254</span>
+                <span class="info-detail">******084</span>
             </div>
-        </div> --}}
-        <div class="payment-instruction" style="font-size:15px">
+        </div>
+        </div>
+       {{--  <div class="payment-instruction" style="font-size:15px">
             <div>Payment Instructions: </div>
         <div class="left-align">
             <div class="info-row" style="margin: 10px 0px">
@@ -775,12 +798,12 @@
             </div>
             <div class="info-row">
                 @if($details->first() && $details->first()->U_T3)
-                    <?php
-                        $intermediaryBankDetails = optional($details->first())->U_T2 . ' / ' . optional($details->first())->U_T3 . ' / ' . optional($details->first())->U_T4 . ' / ' . optional($details->first())->U_T5 . ' / ' . optional($details->first())->U_T6;
+                    ?php 
+                        // $intermediaryBankDetails = optional($details->first())->U_T2 . ' / ' . optional($details->first())->U_T3 . ' / ' . optional($details->first())->U_T4 . ' / ' . optional($details->first())->U_T5 . ' / ' . optional($details->first())->U_T6;
 
-                        $formattedDetails = preg_replace('/^\/+|\/+$/', '', $intermediaryBankDetails);
-                        $lines = explode('/', $formattedDetails);
-                        $lines = array_map('trim', $lines);
+                        // $formattedDetails = preg_replace('/^\/+|\/+$/', '', $intermediaryBankDetails);
+                        // $lines = explode('/', $formattedDetails);
+                        // $lines = array_map('trim', $lines);
                     ?>
                     @foreach ($lines as $line)
                         {{ $line }} <br>
@@ -788,7 +811,7 @@
                 @endif
             </div>
         </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 
