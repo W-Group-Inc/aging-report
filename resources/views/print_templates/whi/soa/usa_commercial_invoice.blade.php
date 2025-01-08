@@ -281,7 +281,7 @@
         }
         .right-box .new-col {
             float: left; 
-            width: 45%; 
+            width: 50%; 
             font-size: 15px;
             border: solid black;
             padding: 10px;
@@ -289,23 +289,11 @@
         }
 
         .right-box .new-col .info-name {
-            width: 40%; /* Fixed width for labels */
+            width: 100%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
             font-size: 15px;
-        }
-        .right-box .new-col .info-colon {
-            width: 3%; /* Fixed width for labels */
-            display: inline-block;
-            vertical-align: top;   /* Align the label with the top of the value */
-        }
-        .right-box .new-col .info-detail {
-            width: 40%;
-            display: inline-block;
-            vertical-align: top;  
-            font-size: 15px;
-            word-wrap: break-word;
         }
         .right-box .center-align {
             margin: 10px;
@@ -760,33 +748,25 @@
    
     <div class="new-col">
         <div class="payment-instruction" style="font-size:15px !important">
-            <div>Payment Instructions: </div>
-        <div>For ACH/Direct Deposit to our Account: </div>
+            <div style="margin-bottom:10px">Payment Instructions: </div>
         <div class="center-align">
-            <div class="info-row">
-                <span class="info-name">Bank</span>
-                <span class="info-colon">:</span>
-                <span class="info-detail">Bank of America</span>
+            <div class="info-row" style="MARGIN-BOTTOM:10PX">
+                <span class="info-name">- For ACH/Direct Deposit to our Account: </span>
             </div>
             <div class="info-row">
-                <span class="info-name">Account Name</span>
-                <span class="info-colon">:</span>
-                <span class="info-detail">W Hydrocollids, LLC</span>
+                <span class="info-name">- Bank: BANK OF AMERICA</span>
             </div>
             <div class="info-row">
-                <span class="info-name">Account Type</span>
-                <span class="info-colon">:</span>
-                <span class="info-detail">Checking</span>
+                <span class="info-name">- Account Name: W HYDROCOLLOIDS, LLC</span>
             </div>
             <div class="info-row">
-                <span class="info-name">Account No.</span>
-                <span class="info-colon">:</span>
-                <span class="info-detail">3830-2623-4250</span>
+                <span class="info-name">- Account Type: Checking</span>
             </div>
             <div class="info-row">
-                <span class="info-name">Routing No.</span>
-                <span class="info-colon">:</span>
-                <span class="info-detail">******084</span>
+                <span class="info-name">- Account No.: 3830-2623-4250</span>
+            </div>
+            <div class="info-row">
+                <span class="info-name">- Routing No.: ******084</span>
             </div>
         </div>
         </div>
