@@ -35,8 +35,8 @@
             font-weight: bold;
         }
         .header-container .left .header .date {
-            margin-top: 37.7px;
-            margin-bottom: 15px;
+            margin-top: 31.7px;
+            margin-bottom: 19px;
             margin-left: 37px;
             font-size: 12px;
         }
@@ -70,6 +70,7 @@
             display: block;
         }
         .customer-container {
+            height: 90px;
             width: 100%;
         }
         .customer-container::after {
@@ -84,6 +85,7 @@
             line-height: 1;
         }
         .right-column {
+            margin-top: 12px;
             margin-left: 53px; 
         }
         .info-row {
@@ -159,7 +161,7 @@
         }
         .product-total {
             width: 100%;
-            margin-top: 12.5px;
+            margin-top: 14px;
             margin-left: 100px;
             
         }
@@ -183,7 +185,7 @@
             width: 40%; 
             font-size: 13px;
             line-height: 1;
-            margin-left:-20px
+            margin-left:-40px
         }
         .total-left-column .info-name{
             width: 35%; /* Fixed width for labels */
@@ -232,14 +234,23 @@
             word-wrap: break-word;
         }
         .new-col-right .info-detail {
-            width: 55%;
+            width: 54%;
             display: inline-block;
             vertical-align: top;  
             font-size: 11px;
             word-wrap: break-word;
         }
+        .new-col-right .info-row.multiline .info-detail {
+            margin-top: -8px;
+        }
+        .new-col-right .container .info-name {
+            width: 31%; /* Fixed width for labels */
+            display: inline-block;
+            vertical-align: top;  
+            margin: 0
+        }
         .new-col-left .info-row {
-            margin-bottom: 3.8px;
+            margin-bottom: 1.5px;
         }
         .new-col-left .info-detail {
             width: 50%;
@@ -272,7 +283,7 @@
         .total-value {
             font-weight: bold;
             position: relative;
-            margin-left: 78%;
+            margin-left: 75%;
             font-size: 18px
         }
         .remarks{
@@ -323,7 +334,7 @@
         .signature-space {
             width: 200px; /* Set the width of the signature line */
             /* margin: 17px auto;  */
-            margin: 40px 130px 0 93px;
+            margin: 40px 128px 0 98px;
             display: block; /* Ensure it's treated as a block-level element */
             font-weight: bold;
         }
@@ -378,11 +389,11 @@
         </div>
     </div>
     <div class="right-column">
-        <div class="info-row">
+        {{-- <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
             <span class="info-value"></span>
-        </div>
+        </div> --}}
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
@@ -608,7 +619,7 @@
 </div>
 
 <div class="new-row">
-    <div class="new-col-left" style="margin-top: 66px; min-height: 197px;max-height: 197px;">
+    <div class="new-col-left" style="margin-top: 69px; font-size:16px; height:80px">
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
@@ -661,15 +672,17 @@
         </div>
     </div>
     <div class="new-col-right">
-        <div class="info-row">
-            <span class="info-name"></span>
-            <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->PymntGroup }}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-name"></span>
-            <span class="info-colon"></span>
-            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</span>
+        <div class="container" style="background:red; height:40px">
+            <div class="info-row" style="margin-top:0px; margin-bottom:8px">
+                <span class="info-name"></span>
+                <span class="info-colon"></span>
+                <span class="info-detail">{{ optional($details->first())->PymntGroup }}</span>
+            </div>
+            <div class="info-row {{ strlen(optional($details->first())->PymntGroup) > 35 ? 'multiline' : '' }}">
+                <span class="info-name"></span>
+                <span class="info-colon"></span>
+                <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</span>
+            </div>
         </div>
         <div class="right-box" style="min-height: 210px;max-height: 210px">
             <div class="new-col">

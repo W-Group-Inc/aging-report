@@ -35,8 +35,8 @@
             font-weight: bold;
         }
         .header-container .left .header .date {
-            margin-top: 37.7px;
-            margin-bottom: 15px;
+            margin-top: 31.7px;
+            margin-bottom: 19px;
             margin-left: 37px;
             font-size: 12px;
         }
@@ -70,6 +70,7 @@
             display: block;
         }
         .customer-container {
+            height: 90px;
             width: 100%;
         }
         .customer-container::after {
@@ -84,6 +85,7 @@
             line-height: 1;
         }
         .right-column {
+            margin-top: 12px;
             margin-left: 53px; 
         }
         .info-row {
@@ -102,7 +104,7 @@
             padding: 0;
         }
         .customer-container .right-column .info-label{
-            width: 35%; /* Fixed width for labels */
+            width: 35%;
             display: inline-block;
             vertical-align: top;  
             margin: 0;
@@ -238,8 +240,14 @@
             font-size: 11px;
             word-wrap: break-word;
         }
+        .new-col-right .container .info-name {
+            width: 31%; /* Fixed width for labels */
+            display: inline-block;
+            vertical-align: top;  
+            margin: 0
+        }
         .new-col-left .info-row {
-            margin-bottom: 3.8px;
+            margin-bottom: 1.5px;
         }
         .new-col-left .info-detail {
             width: 50%;
@@ -249,7 +257,7 @@
             word-wrap: break-word;
         }
         .new-col-left .info-name{
-            width: 33%; /* Fixed width for labels */
+            width: 30%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
@@ -321,7 +329,7 @@
         .signature-space {
             width: 200px; /* Set the width of the signature line */
             /* margin: 17px auto;  */
-            margin: 40px 130px 0 93px;
+            margin: 40px 128px 0 98px;
             display: block; /* Ensure it's treated as a block-level element */
             font-weight: bold;
         }
@@ -379,11 +387,6 @@
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value"></span>
-        </div>
-        <div class="info-row">
-            <span class="info-label"></span>
-            <span class="info-colon"></span>
             <span class="info-value">{{ optional($details->first())->BuyersPo }}</span>
         </div>
         <div class="info-row">
@@ -406,9 +409,14 @@
             <span class="info-colon"></span>
             <span class="info-value"></span>
         </div>
+        <div class="info-row">
+            <span class="info-label"></span>
+            <span class="info-colon"></span>
+            <span class="info-value"></span>
+        </div>
     </div>
 </div>
-<div class="product-details" style="min-height: 255px; max-height:255px; margin-left:20px; margin-right:40px;">
+<div class="product-details" style="min-height: 257px; max-height:257px; margin-left:20px; margin-right:40px;">
     <table style="">
         <thead>
             <tr>
@@ -500,7 +508,7 @@
             <span class="info-colon"></span>
             <span class="info-detail"></span>
         </div>
-        <div class="info-row">
+        <div class="info-row" style="margin-bottom:3px">
             <span class="info-name"></span>
             <span class="info-colon"></span>
             <span class="info-detail"></span>
@@ -564,7 +572,7 @@
 </div>
 
 <div class="new-row">
-    <div class="new-col-left" style="margin-top: 66px">
+    <div class="new-col-left" style="margin-top: 69px; font-size:16px; height:80px">
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
@@ -617,7 +625,8 @@
         </div>
     </div>
     <div class="new-col-right">
-        <div class="info-row">
+        <div class="container">
+        <div class="info-row" style="margin-top:0px; margin-bottom:8px">
             <span class="info-name"></span>
             <span class="info-colon"></span>
             <span class="info-detail">{{ optional($details->first())->TermsOfPayment }}</span>
@@ -627,6 +636,7 @@
             <span class="info-colon"></span>
             <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') }}</span>
         </div>
+        </div>
         <div class="right-box" style="min-height: 210px;max-height: 210px">
             <div class="new-col">
                 <div class="shape" style="width: 30px">
@@ -634,7 +644,7 @@
                 </div>
                 <div class="payment-instruction">
                 <div class="left-align">
-                    <div class="info-row" style="margin: 8px 0px"></span>
+                    <div class="info-row" style="margin: 2px 0 8px 0px"></span>
                     </div>
                     <div class="info-row">
                         {!! nl2br(e(optional($details->first())->PaymentInstruction)) !!}

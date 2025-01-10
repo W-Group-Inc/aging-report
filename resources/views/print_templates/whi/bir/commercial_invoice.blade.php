@@ -271,7 +271,7 @@
         .total-value {
             font-weight: bold;
             position: relative;
-            margin-left: 78%;
+            margin-left: 75%;
             font-size: 18px
         }
         .remarks{
