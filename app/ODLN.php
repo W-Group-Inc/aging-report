@@ -11,7 +11,7 @@ class ODLN extends Model
 
     public function inv1()
     {
-        return $this->hasMany(INV1::class, 'DocEntry', 'DocEntry');
+        return $this->hasMany(INV1::class, 'docentry', 'docentry');
     }
     public function dln1()
     {

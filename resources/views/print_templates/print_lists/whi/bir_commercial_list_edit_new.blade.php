@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-md-12">
                     <label>Address</label>
-                    <input name="Address" class="form-control" type="text" value="{{  $detail->asNew->Address }}">
+                    <input name="ClientAddress" class="form-control" type="text" value="{{  $detail->asNew->Address }}">
                 </div>
                 {{-- <div class="col-md-6">
                     <label>TIN</label>

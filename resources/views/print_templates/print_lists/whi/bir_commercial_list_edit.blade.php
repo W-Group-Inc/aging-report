@@ -15,7 +15,7 @@
                     <input name="DocEntry" class="form-control" type="hidden" value="{{ $detail->DocEntry }}">
                 </div>
                 <div class="col-md-12">
-                    @foreach ( $detail->first()->dln1 as $arDetail)
+                    @foreach ( $detail->dln1 as $arDetail)
                     <label >Date:</label>
                     <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->DocDate)->format('Y-m-d') }}">
                     @endforeach
@@ -157,7 +157,7 @@
                 </div>
             </div>    
             <div class="col-md-6">
-                @foreach ( $detail->first()->dln1 as $arDetail)
+                @foreach ( $detail->dln1 as $arDetail)
                     <label>Date of Shipment</label>
                     <input name="DateOfShipment" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->U_ShipmentSched)->format('Y-m-d') }}">          
                 @endforeach
@@ -180,11 +180,11 @@
             </div>
             <div class="col-md-6">
                 <label>Fedder Vessel</label>
-                <input name="FedderVesssel" class="form-control" type="text" value="{{ $detail->U_Feeder }}">
+                <input name="FedderVesssel" class="form-control" type="text" value="{{ $detail->U_FeedVessel }}">
             </div>
             <div class="col-md-6">
                 <label>Ocean Vessel</label>
-                <input name="OceanVessel" class="form-control" type="text" value="{{ $detail->U_Ocean }}">
+                <input name="OceanVessel" class="form-control" type="text" value="{{ $detail->U_OceanVessel }}">
             </div>
             <div class="col-md-6">
                 <label>Bill of Lading No.</label>
@@ -200,10 +200,10 @@
             </div>
             <div class="col-md-6">
                 <label>Terms of Payment</label>
-                <input name="TermsOfPayement" class="form-control" type="text" value="{{ $detail->whiOctg->PymntGroup }}">
+                <input name="TermsOfPayment" class="form-control" type="text" value="{{ $detail->whiOctg->PymntGroup }}">
             </div>
             <div class="col-md-6">
-                @foreach ( $detail->first()->dln1 as $arDetail)
+                @foreach ( $detail->dln1 as $arDetail)
                     <label>Invoice Due Date</label>
                     <input name="InvoiceDueDate" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->DocDueDate)->format('Y-m-d')}}">
                 @endforeach
