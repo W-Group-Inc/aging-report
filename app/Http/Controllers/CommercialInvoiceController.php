@@ -382,7 +382,7 @@ function original_print(Request $request, $invoice_number){
             'a.U_SWBuyersRef',
             'l.DocDate as Dated',
             'l.DocDueDate as ArDueDate',
-            'l.U_ShipmentSched as ArShipment',
+            'l.U_BaseDate as ArShipment',
             'j.ItemName',
             \DB::raw("(SUBSTRING((SELECT DISTINCT ', ' + CONVERT(VARCHAR(20), i.U_BuyersPO) AS [text()]
                     FROM OINV a 
