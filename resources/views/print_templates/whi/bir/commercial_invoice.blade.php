@@ -234,7 +234,7 @@
             word-wrap: break-word;
         }
         .new-col-right .container .info-name {
-            width: 31%; /* Fixed width for labels */
+            width: 30%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0
@@ -250,7 +250,7 @@
             word-wrap: break-word;
         }
         .new-col-left .info-name{
-            width: 30%; /* Fixed width for labels */
+            width: 28%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
@@ -322,7 +322,7 @@
         .signature-space {
             width: 200px; /* Set the width of the signature line */
             /* margin: 17px auto;  */
-            margin: 40px 128px 0 98px;
+            margin: 40px 130px 0 95px;
             display: block; /* Ensure it's treated as a block-level element */
             font-weight: bold;
         }
@@ -415,6 +415,7 @@
             <tr>
                 <th style="width: 34%; height: 16px;"></th>
                 <th style="width: 13%"></th>
+                <th style="width: 1%; border-left: none; border-right: none;"></th> 
                 <th style="width: 13%"></th>
                 <th style="width: 15%"></th>
                 <th style="width: 15%"></th>
@@ -437,6 +438,9 @@
                     {{-- @if ($detail->U_Bagsperlot != 0)
                         <span style="float: right; text-align:end">x</span>
                     @endif --}}
+                </td>
+                <td style="width: 0; text-align: center;">
+                    @if ($detail->U_Netweight)x @endif
                 </td>
                 <td>
                     @if ($detail->U_Netweight)
@@ -619,7 +623,7 @@
     </div>
     <div class="new-col-right">
         <div class="container">
-            <div class="info-row" style="margin-top:0px; margin-bottom:8px">
+            <div class="info-row" style="margin-top:0px; margin-bottom:7px">
                 <span class="info-name"></span>
                 <span class="info-colon"></span>
                 <span class="info-detail">{{ optional($details->first())->PymntGroup }}</span>
