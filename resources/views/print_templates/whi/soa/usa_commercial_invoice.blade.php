@@ -739,7 +739,7 @@
             <div class="info-row">
                 <span class="info-name">Terms of Delivery</span>
                 <span class="info-colon">:</span>
-                <span class="info-detail">{{optional($details->first())->U_Delivery }}</span>
+                <span class="info-detail">{{optional($details->first())->U_Inco }}</span>
             </div>
     </div>
 </div>
