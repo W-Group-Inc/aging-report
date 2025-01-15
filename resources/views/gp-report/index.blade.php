@@ -249,7 +249,9 @@
                                                  }
                                                
                                              @endphp
-                                             {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200'])->sum('LineTotal'),2)}}
+                                             {{number_format(($invoice->ap_has_commision)->sum('TotalFrgn'),2)}}
+
+                                             {{-- {{ number_format(optional($invoice->ap_has_commision)->OpenSumFC, 2) }} --}}
                                             </td>
                                             <td>
 

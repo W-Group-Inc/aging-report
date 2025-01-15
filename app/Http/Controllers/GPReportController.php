@@ -28,6 +28,7 @@ class GPReportController extends Controller
                 $invoices = OINV::select(
                     'T0.DocNum',
                     'T1.U_InvoiceNo',
+                    'T1.U_InvoiceNo2',
                     'T0.U_ModeShip',
                     'T0.U_Inco',
                     'T0.NumAtCard',

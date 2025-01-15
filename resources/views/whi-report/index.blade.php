@@ -751,7 +751,7 @@
 <script src="{{ asset('/inside/login_css/js/plugins/chosen/chosen.jquery.js') }}"></script>
 <script>
 
-   
+
 
     var total_current = {!! json_encode($total_current) !!};
     var total_month = {!! json_encode($total_month) !!};
@@ -828,6 +828,8 @@
     document.getElementById("total_threemonth_php_nt").innerHTML = total_threemonth_php_nt;
     document.getElementById("total_over_days_php_nt").innerHTML = total_over_days_php_nt;
     
+    var company = {!! json_encode($company) !!};
+   
    
     $(document).ready(function(){
 
@@ -1019,7 +1021,7 @@ function openModal(filterColumn) {
             return status.toLowerCase() === filterColumn.toLowerCase();
         }
     });
-    renderModalContent(filteredData, filterColumn);
+    renderModalContent(filteredData, filterColumn, null, null, null, company);
 
     $('#myModal').modal('show');
 }
@@ -1058,7 +1060,7 @@ function openModalByStatusAndCurrency(status, currency) {
         }
     });
 
-    renderModalContent(filteredData, status, currency);
+    renderModalContent(filteredData, null, status, currency, null,company);
 
     $('#myModal').modal('show');
 }
@@ -1094,12 +1096,12 @@ function openModalByStatusAndCurrencyAndType(status, currency, type) {
         }
     });
 
-    renderModalContent(filteredData, status, currency, type);
+    renderModalContent(filteredData,null, status, currency, type, company);
 
     $('#myModal').modal('show');
 }
 
-function renderModalContent(data, filterColumn, status, currency, type) {
+function renderModalContent(data, filterColumn, status, currency, type, company) {
     var modalBody = $('#myModal .modal-body');
     var tableBody = modalBody.find('#invoiceTable tbody');
     var tableHeader = modalBody.find('#invoiceTable thead');
@@ -1141,7 +1143,7 @@ function renderModalContent(data, filterColumn, status, currency, type) {
 
         sortTableData(data, column, order);
 
-        renderModalContent(data, filterColumn, status, currency, type);
+        renderModalContent(data, filterColumn, status, currency, type, company);
 
         tableHeader.find('a.sort[data-column="' + column + '"]').data('order', newOrder);
         tableHeader.find('a.sort[data-column="' + column + '"]').append(
@@ -1161,19 +1163,35 @@ function renderModalContent(data, filterColumn, status, currency, type) {
         currencySymbol = ""; 
     }
 
+    console.log(company);
     var totalFrgnTRIWhse = 0;
-            if (item.inv1 && Array.isArray(item.inv1)) {
+    var finalTotal = 0;
+    if (company === 'WHI') {
+        if (item.inv1 && Array.isArray(item.inv1)) {
                 item.inv1.forEach(function (subItem) {
                     if (subItem.WhsCode === 'TRI Whse') {
                         totalFrgnTRIWhse += subItem.TotalFrgn;
                     }
                 });
-            } else {
-                totalFrgnTRIWhse = 0;
             }
+            finalTotal = item.DocTotalFC - totalFrgnTRIWhse;
+    } else if (company === 'Triangle Shipments') {
+        if (item.inv1 && Array.isArray(item.inv1)) {
+                item.inv1.forEach(function (subItem) {
+                    if (subItem.WhsCode === 'TRI Whse') {
+                        totalFrgnTRIWhse += subItem.TotalFrgn;
+                    }
+                });
+            }
+            finalTotal = totalFrgnTRIWhse;
 
-    var finalTotal = item.DocTotalFC - totalFrgnTRIWhse;
-    var formattedFinalTotal = currencySymbol + '' + finalTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    } else {
+        finalTotal = item.DocTotalFC;
+    }
+            
+    finalTotal = parseFloat(finalTotal).toFixed(2);
+
+    var formattedFinalTotal = currencySymbol + '' + finalTotal.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         
     var finalAmount = finalTotal - item.PaidFC;
 

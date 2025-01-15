@@ -61,4 +61,8 @@ class OINV extends Model
     {
         return $this->hasOne(BillingStatement::class, 'DocNum', 'DocEntry');
     }
+    public function ap_has_commision()
+    {
+        return $this->hasMany(PCH1::class,'U_InvoiceNo2','U_InvoiceNo2');
+    }
 }
