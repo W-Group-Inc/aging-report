@@ -321,7 +321,9 @@
                                                  }
                                                
                                              @endphp
-                                             {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710600'])->sum('LineTotal'),2)}}
+                                             {{number_format(($invoice->ap_has_commision)->sum('TotalFrgn'),2)}}
+
+                                             {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710600'])->sum('LineTotal'),2)}} --}}
                                             </td>
                                             <td>
 
@@ -391,7 +393,8 @@
                                                  }
                                                
                                              @endphp
-                                             {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620000'])->sum('LineTotal'),2)}}
+                                             {{number_format(($invoice->ap_has_commision)->sum('TotalFrgn'),2)}}
+                                             {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620000'])->sum('LineTotal'),2)}} --}}
                                             </td>
                                             <td>
 
@@ -483,7 +486,7 @@
                                                             $total_export += $export_per_invoice;
                                                         }
                                                         
-                                                        $commission_per_invoice = (($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200'])->sum('LineTotal'));
+                                                        $commission_per_invoice = (($invoice->ap_has_commision)->sum('TotalFrgn'));
                                                         $total_commission += $commission_per_invoice;
 
                                                         $gross_profit = $invoice->Php_Value-$freight_per_invoice-$commission_per_invoice-$invoice->COS_RM-$delivery_per_invoice-$insurance_per_invoice-$export_per_invoice-$brokerage_per_invoice;
@@ -523,7 +526,7 @@
                                                             $total_export += $export_per_invoice;
                                                         }
                                                         
-                                                        $commission_per_invoice = ($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710600'])->sum('LineTotal');
+                                                        $commission_per_invoice = ($invoice->ap_has_commision)->sum('TotalFrgn');
                                                         $total_commission += $commission_per_invoice;
 
                                                         $gross_profit = $invoice->Php_Value-$freight_per_invoice-$commission_per_invoice-$invoice->COS_RM-$delivery_per_invoice-$insurance_per_invoice-$export_per_invoice-$brokerage_per_invoice;
@@ -563,7 +566,7 @@
                                                             $total_export += $export_per_invoice;
                                                         }
                                                         
-                                                        $commission_per_invoice = ($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620000'])->sum('LineTotal');
+                                                        $commission_per_invoice =($invoice->ap_has_commision)->sum('TotalFrgn');
                                                         $total_commission += $commission_per_invoice;
 
                                                         $gross_profit = $invoice->Php_Value-$freight_per_invoice-$commission_per_invoice-$invoice->COS_RM-$delivery_per_invoice-$insurance_per_invoice-$export_per_invoice-$brokerage_per_invoice;

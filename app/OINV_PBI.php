@@ -42,5 +42,9 @@ class OINV_PBI extends Model
     {
         return $this->belongsTo(OCTG_PBI::class,'GroupNum','GroupNum');
     }
+    public function ap_has_commision()
+    {
+        return $this->hasMany(PCH1_PBI::class,'U_InvoiceNo2','U_InvoiceNo2');
+    }
 
 }

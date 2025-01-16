@@ -46,5 +46,8 @@ class OINV_CCC extends Model
     {
         return $this->hasOne(CreditNote::class, 'DocNum', 'DocEntry');
     }
-    
+    public function ap_has_commision()
+    {
+        return $this->hasMany(PCH1_CCC::class,'U_InvoiceNo2','U_InvoiceNo2');
+    }
 }
