@@ -224,7 +224,7 @@ class CommercialInvoiceController extends Controller
 
     function edit_new_invoice(Request $request, $id){
         $update_saved_invoice = BirInvoice::find($id);
-        $update_saved_invoice->SoldTo = $request->SoldTo; 
+        $update_saved_invoice->SoldTo = $request->Client; 
         $update_saved_invoice->Address = $request->ClientAddress;
         $update_saved_invoice->Tin = $request->Tin;
         $update_saved_invoice->BusinessStyle = $request->BusinessStyle;

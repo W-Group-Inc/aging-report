@@ -241,7 +241,7 @@
             word-wrap: break-word;
         }
         .new-col-right .container .info-name {
-            width: 31%; /* Fixed width for labels */
+            width: 30%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0
@@ -257,7 +257,7 @@
             word-wrap: break-word;
         }
         .new-col-left .info-name{
-            width: 30%; /* Fixed width for labels */
+            width: 28%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
@@ -278,7 +278,7 @@
         .total-value {
             font-weight: bold;
             position: relative;
-            margin-left: 78%;
+            margin-left: 75%;
             font-size: 18px
         }
         .remarks{
@@ -329,7 +329,7 @@
         .signature-space {
             width: 200px; /* Set the width of the signature line */
             /* margin: 17px auto;  */
-            margin: 40px 128px 0 98px;
+            margin: 40px 130px 0 95px;
             display: block; /* Ensure it's treated as a block-level element */
             font-weight: bold;
         }
@@ -422,6 +422,7 @@
             <tr>
                 <th style="width: 34%; height: 16px;"></th>
                 <th style="width: 13%"></th>
+                <th style="width: 1%; border-left: none; border-right: none;"></th> 
                 <th style="width: 13%"></th>
                 <th style="width: 15%"></th>
                 <th style="width: 15%"></th>
@@ -448,6 +449,9 @@
                 <td style="font-weight: bold">{{ $product->Description }}</td>
                 <td>{{ $product->Packing }} {{ $product->Uom }}
                 </td>
+                <td style="width: 0; text-align: center;">
+                    @if ($product->Packing)x @endif
+                </td>
                 <td>
                     {{ !empty($product->Quantity) && !empty($product->Packing) && $product->Packing != 0 ? number_format($product->Quantity / $product->Packing, 2) : '' }}
                     {{ $product->printUom }}
@@ -467,7 +471,7 @@
                <td>{{ $product->DocCur }} {{ number_format(optional($product)->Amount, 2) }}</td>
             </tr>
             <tr>
-                <td>{{ ($detail->SupplierCode) }}</td>
+                <td>{{ ($product->SupplierCode) }}</td>
             </tr>
             {{-- <tr>
                 <td style=" padding:10px; text-align: center">{{ optional($details->first())->U_Remark1 }}</td>
@@ -626,7 +630,7 @@
     </div>
     <div class="new-col-right">
         <div class="container">
-        <div class="info-row" style="margin-top:0px; margin-bottom:8px">
+        <div class="info-row" style="margin-top:0px; margin-bottom:7px">
             <span class="info-name"></span>
             <span class="info-colon"></span>
             <span class="info-detail">{{ optional($details->first())->TermsOfPayment }}</span>

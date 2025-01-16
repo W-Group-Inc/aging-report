@@ -180,7 +180,7 @@
             </div>
             <div class="col-md-6">
                 <label>Fedder Vessel</label>
-                <input name="FedderVesssel" class="form-control" type="text" value="{{ $detail->U_FeedVessel }}">
+                <input name="FedderVessel" class="form-control" type="text" value="{{ $detail->U_FeedVessel }}">
             </div>
             <div class="col-md-6">
                 <label>Ocean Vessel</label>

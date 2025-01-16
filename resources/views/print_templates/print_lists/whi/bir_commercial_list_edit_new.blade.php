@@ -65,6 +65,14 @@
                 <label>Description</label>
                 <input name="Description[]" class="form-control" type="text" value="{{ $product->Description }}">
             </div>
+            <div class="col-md-6">
+                <label>Supplier Code</label>
+                <input name="SupplierCode[]" class="form-control" type="text" value="{{ $product->SupplierCode }}">
+            </div>
+            <div class="col-md-6">
+                <label>Currency</label>
+                <input name="DocCur[]" class="form-control" type="text" value="{{ $detail->DocCur }}">
+            </div>
             <div class="col-md-3">
                 <label>Packing</label>
                 <input name="Packing[]" class="form-control" type="text" value="{{ $product->Packing }}">
