@@ -114,11 +114,11 @@
             </div>
             <div class="col-md-4">
                 <label>Quantity</label>
-                <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}" readonly>
+                <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}" >
             </div>
             <div class="col-md-4">
                 <label>Unit Price</label>
-                <input class="form-control" name="UnitPrice[]" type="text" value="{{number_format($product->Price,2) }}" readonly>
+                <input class="form-control" name="UnitPrice[]" type="text" value="{{number_format($product->Price,2) }}" >
                 {{-- @if ($detail->DocCur == 'PHP')
                     <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->LineTotal / $product->Quantity, 2) : '' }}" readonly>
                 @else
@@ -127,7 +127,7 @@
             </div>
             <div class="col-md-4">
                 <label>Amount</label>
-                <input class="form-control" name="Amount[]" type="text" value="{{ number_format(($product->Quantity) * ($product->Price), 2) }}" readonly>
+                <input class="form-control" name="Amount[]" type="text" value="{{ number_format(($product->Quantity) * ($product->Price), 2) }}" >
                 {{-- @if ($detail->DocCur == 'PHP')
                     <input class="form-control" name="Amount[]" type="text" value="{{ number_format($product->LineTotal, 2) }}" readonly>
                 @else

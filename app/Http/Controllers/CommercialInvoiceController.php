@@ -118,10 +118,9 @@ class CommercialInvoiceController extends Controller
             'ODLN.U_ModeShip',
             'ODLN.U_Delivery',
             // 'ODLN.U_FeedVessel',
-            $request->is('whi_bir_invoice') ? 'ODLN.U_FeedVessel' : ($request->is('ccc_bir_invoice') ? 'ODLN.DocNum' : ($request->is('pbi_bir_invoice') ? 'ODLN.DocNum' : 'ODLN.U_FeedVessel')),
-            $request->is('whi_bir_invoice') ? 'ODLN.U_OceanVessel' : ($request->is('ccc_bir_invoice') ? 'ODLN.DocNum' : ($request->is('pbi_bir_invoice') ? 'ODLN.DocNum' : 'ODLN.U_OceanVessel')),
+            DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_FeedVessel' : ($request->is('ccc_bir_invoice') ? 'ODLN.U_Feeder' : 'NULL AS U_FeedVessel')),
+            DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_OceanVessel' : ($request->is('ccc_bir_invoice') ? 'ODLN.U_Ocean' : 'NULL AS U_OceanVessel')),
 
-            // 'ODLN.U_OceanVessel',
             'ODLN.U_BillLading',
             'ODLN.U_ContainerNo',
             'ODLN.U_Seal',
