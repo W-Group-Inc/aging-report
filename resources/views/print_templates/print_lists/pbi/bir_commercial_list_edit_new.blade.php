@@ -170,18 +170,19 @@
     </div>
 
     <script>
-        document.getElementById('addRowBtn{{ $detail->id }}').addEventListener('click', function() {
-            const table = document.getElementById('customer_request{{ $cRequest->id }}').getElementsByTagName('tbody')[0];
-            const newRow = table.rows[0].cloneNode(true);
-            
-            const inputs = newRow.getElementsByTagName('input');
-            for (let input of inputs) {
-                // Skip resetting the 'PbiSiType' input field
-                if (input.name !== 'PbiSiType[]') {
-                    input.value = ''; // Reset other input fields
+        @foreach ($detail->asNew->clientRequest as $cRequest)
+            document.getElementById('addRowBtn{{ $detail->id }}').addEventListener('click', function() {
+                const table = document.getElementById('customer_request{{ $cRequest->id }}').getElementsByTagName('tbody')[0];
+                const newRow = table.rows[0].cloneNode(true);
+                
+                const inputs = newRow.getElementsByTagName('input');
+                for (let input of inputs) {
+                    if (input.name !== 'PbiSiType[]') {
+                        input.value = ''; 
+                    }
                 }
-            }
-            table.appendChild(newRow);
-        });
+                table.appendChild(newRow);
+            });
+        @endforeach
     </script>
     
