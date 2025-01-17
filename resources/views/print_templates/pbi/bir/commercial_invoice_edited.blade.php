@@ -225,7 +225,7 @@
           <div class="left-column">
               <div class="info-row" style="max-height: 44px; min-height:44px">
                   <span class="info-label"></span>
-                  <span class="info-value">{{ optional($details->first())->Address }}
+                  <span class="info-value">{{ optional($details->first())->SoldTo }}
                   </span>
               </div>
               <div class="info-row" style="max-height: 45px; min-height:45px">
@@ -312,7 +312,7 @@
                       <td style="width: 103px;;">{{ $product->DocCur }}</td>
                   </tr>
                   <tr>
-                      <td style="width: 103px;"></td>
+                      <td style="width: 103px;">{{ $product->ProductCode }}</td>
                       <td style="width: 305px; text-align:left">{{ $product->Description }}</td>
                       <td style="width: 100px;">{{ number_format($product->Quantity, 2) }}</td>
                       <td style="width: 74px;">{{ number_format($product->UnitPrice, 2) }}</td>
