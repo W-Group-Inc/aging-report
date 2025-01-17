@@ -466,7 +466,7 @@
                 </td>
                 <td> 
                     {{ $product->DocCur }} {{ !empty($product->Amount) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->Amount / $product->Quantity, 2) : '' }} /
-                    {{ $product->printUom }}
+                    kg
                 </td>
                <td>{{ $product->DocCur }} {{ number_format(optional($product)->Amount, 2) }}</td>
             </tr>
