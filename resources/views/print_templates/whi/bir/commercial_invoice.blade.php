@@ -647,7 +647,7 @@
             <div class="info-row">
                 <span class="info-name"></span>
                 <span class="info-colon"></span>
-                <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->ArDueDate)->format('F j, Y') }}</span>
+                <span class="info-detail">{{ optional($details->first())->ArDueDate ? \Carbon\Carbon::parse($details->first()->ArDueDate)->format('F j, Y') : '' }}</span>
             </div>
         </div>
         <div class="right-box" style="min-height: 210px;max-height: 210px">
