@@ -83,7 +83,7 @@
             </div>
             <div class="col-md-3">
                 <label>Unit</label>
-                <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->Packing) && $product->Packing != 0 ? number_format($product->Quantity / $product->Packing, 2) : '' }}" readonly>
+                <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->Packing) && $product->Packing != 0 ? number_format($product->Quantity / $product->Packing, 2) : '' }}">
             </div>
             <div class="col-md-3">
                 <label>Unit of Measurement</label>
@@ -91,11 +91,11 @@
             </div>
             <div class="col-md-4">
                 <label>Quantity</label>
-                <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}" readonly>
+                <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}">
             </div>
             <div class="col-md-4">
                 <label>Unit Price</label>
-                <input class="form-control" type="text" value="{{ !empty($product->Amount) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->Amount / $product->Quantity, 2) : '' }}" readonly>
+                <input class="form-control" type="text" value="{{ !empty($product->Amount) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->Amount / $product->Quantity, 2) : '' }}">
             </div>
             <div class="col-md-4">
                 <label>Amount</label>
