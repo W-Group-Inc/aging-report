@@ -452,22 +452,38 @@
                     @endif
                 </td>
                 <td>
-                    @if ($detail->Quantity)
-                    {{ number_format($detail->Quantity, 2) }}
-                    @endif
-                    @if ($detail->U_Netweight != '')
-                        {{ $detail->U_printUOM }}
+                    @if ($detail->U_printUOM == "lbs")
+                        {{ number_format(2.2 * $detail->Quantity, 2) }} {{ $detail->U_printUOM }}
+                    @else
+                        @if ($detail->Quantity)
+                            {{ number_format($detail->Quantity, 2) }}
+                        @endif
+
+                        @if (!empty($detail->U_Netweight))
+                            {{ $detail->U_printUOM }}
+                        @endif
                     @endif
                 </td>
                 <td> 
                      {{-- @if ($detail->U_Netweight != '') --}}
                      {{-- {{ optional($details->first())->DocCur }} {{ ($detail->Linetotal) /  ($detail->Quantity)}} / --}}
-                     {{ optional($details->first())->DocCur }} {{ (number_format($detail->Price,2))}} /
-                     @if ($detail->U_printUOM == 'lbs')
+                     @if ($detail->U_printUOM == "lbs")
+                        {{ optional($details->first())->DocCur }} {{ (number_format($detail->Price / 2.2 ,2))}} /
+                        @if ($detail->U_printUOM == 'lbs')
                         lb
-                     @else
+                        @else
                         kg   
-                     @endif
+                        @endif
+                    @else
+                        {{ optional($details->first())->DocCur }} {{ (number_format($detail->Price,2))}} /
+                        @if ($detail->U_printUOM == 'lbs')
+                        lb
+                        @else
+                        kg   
+                        @endif
+                    @endif
+
+                     
                     {{-- @endif --}}
                 </td>
                 <td>{{ optional($details->first())->DocCur }} {{ number_format($detail->Linetotal, 2) }}</td>
@@ -573,7 +589,7 @@
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->ArShipment)->format('F j, Y') }}</span>
+            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->U_BaseDate)->format('F j, Y') }}</span>
         </div>
         <div class="info-row">
             <span class="info-name"></span>

@@ -91,14 +91,22 @@
             </div>
             <div class="col-md-4">
                 <label>Quantity</label>
-                <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}">
+                <input class="form-control" name="Quantity[]" type="text" 
+                value="{{ $product->U_printUOM == 'lbs' 
+                ? number_format(2.2 * $product->Quantity, 2) 
+                : ($product->Quantity ? number_format($product->Quantity, 2) . (!empty($product->U_Netweight) ? ' ' . $product->U_printUOM : '') : '') }}">
             </div>
             <div class="col-md-4">
                 <label>Unit Price</label>
                 @if ($detail->DocCur == 'PHP')
                     <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->LineTotal / $product->Quantity, 2) : '' }}">
                 @else
-                    <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 && !empty($product->Rate) && $product->Rate != 0 ? number_format(($product->LineTotal / $product->Rate) / $product->Quantity, 2) : '' }}" >
+                    <input class="form-control" type="text" 
+                    value="{{ $product->U_printUOM == 'lbs' 
+                    ? number_format(($product->LineTotal / $product->Rate) / $product->Quantity / 2.2, 2) 
+                    : (!empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 && !empty($product->Rate) && $product->Rate != 0
+                        ? number_format(($product->LineTotal / $product->Rate) / $product->Quantity, 2)
+                        : '') }}" >
                 @endif
             </div>
             <div class="col-md-4">
@@ -159,7 +167,7 @@
             <div class="col-md-6">
                 @foreach ( $detail->dln1 as $arDetail)
                     <label>Date of Shipment</label>
-                    <input name="DateOfShipment" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->U_ShipmentSched)->format('Y-m-d') }}">          
+                    <input name="DateOfShipment" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($detail)->U_BaseDate)->format('Y-m-d') }}">          
                 @endforeach
             </div>
             <div class="col-md-6">
