@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                     @foreach ( $detail->dln1 as $arDetail)
                     <label >Date:</label>
-                    <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->DocDate)->format('Y-m-d') }}">
+                    <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($detail->asNew)->invoice_date)->format('Y-m-d') }}">
                     @endforeach
                 </div>
                 <div class="col-md-12">
