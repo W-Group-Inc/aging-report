@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-12">
                     <label >Sold To:</label>
-                    <input name="SoldTo" class="form-control" type="text" value="{{  $detail->asNew->SoldTo }}">
+                    <input name="Client" class="form-control" type="text" value="{{  $detail->asNew->SoldTo }}">
                 </div>
                 <div class="col-md-12">
                     <label>Address</label>

@@ -352,7 +352,7 @@
             <span style="font-size: 17px"></span>
             {{-- <div class="line-three">No.: {{ $soa_no }}</div> --}}
             @if ($details->isNotEmpty())
-            <div class="date"> {{ \Carbon\Carbon::parse(optional($details->first())->Dated)->format('F j, Y') }}</div>
+            <div class="date"> {{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</div>
             @endif
         </div>
     </div>
