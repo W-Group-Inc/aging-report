@@ -411,7 +411,7 @@
                             @endforeach
                       @endif</td>
                       <td class="" style="padding-left: 13px; padding-top:35px;">
-                        {{ auth()->user()->name }} <br> <br>
+                        {{ substr(auth()->user()->name, 0, 1) }}. {{ last(explode(' ', auth()->user()->name)) }} <br> <br>
                         </td>
                       <td class=""></td>
                       <td style="padding-top:40px;">J. Galera</td>

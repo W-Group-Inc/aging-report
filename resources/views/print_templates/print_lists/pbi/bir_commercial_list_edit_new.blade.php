@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-md-4">
                     <label>Payment Terms</label>
-                    <input name="TermsOfPayement" class="form-control" type="text" value="{{ $detail->asNew->TermsOfPayment }}">
+                    <input name="TermsOfPayment" class="form-control" type="text" value="{{ $detail->asNew->TermsOfPayment }}">
                 </div>
                 <div class="col-md-4">
                     <label>SO #</label>

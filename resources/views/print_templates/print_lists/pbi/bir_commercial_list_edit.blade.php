@@ -17,12 +17,12 @@
                 <div class="col-md-12">
                     <label >Date:</label>
                     @foreach ( $detail->dln1 as $arDetail)
-                    <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvPbi)->DocDate)->format('Y-m-d') }}">
+                    <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($detail)->DocDueDate)->format('Y-m-d') }}">
                     @endforeach
                 </div>
                 <div class="col-md-12">
                     <label >Sold To:</label>
-                    <input name="ClientAddress" class="form-control" type="text" value="{{ $detail->Billtoaddress }}">
+                    <input name="Client" class="form-control" type="text" value="{{ $detail->Billtoaddress }}">
                 </div>
                 {{-- <div class="col-md-12">
                     <label>Address</label>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-md-4">
                     <label>Payment Terms</label>
-                    <input name="TermsOfPayement" class="form-control" type="text" value="{{ $detail->octgModel->PymntGroup }}">
+                    <input name="TermsOfPayment" class="form-control" type="text" value="{{ $detail->octgModel->PymntGroup }}">
                 </div>
                 <div class="col-md-4">
                     <label>SO #</label>
