@@ -176,7 +176,7 @@
             </div>
             <div class="col-md-6">
                 <label>Port of Destination</label>
-                <input name="PortOfDestination" class="form-control" type="text" value="{{ $detail->U_Destinationport }}">
+                <input name="PortOfDestination" class="form-control" type="text" value="{{ $detail->U_PortDestination }}">
             </div>
             <div class="col-md-6">
                 <label>Mode of Shipment</label>
