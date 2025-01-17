@@ -127,12 +127,12 @@
                     <textarea name="PaymentInstruction" class="form-control" rows="10">
                         @if($detail && $detail->U_T3)
                         <?php
-                            $intermediaryBankDetailsU_T1 = optional($details->first())->U_T1;
-                            $intermediaryBankDetailsU_T2 = optional($details->first())->U_T2;
-                            $intermediaryBankDetailsU_T3 = optional($details->first())->U_T3;
-                            $intermediaryBankDetailsU_T4 = optional($details->first())->U_T4;
-                            $intermediaryBankDetailsU_T5 = optional($details->first())->U_T5;
-                            $intermediaryBankDetailsU_T6 = optional($details->first())->U_T6;
+                            $intermediaryBankDetailsU_T1 = optional($detail)->U_T1;
+                            $intermediaryBankDetailsU_T2 = optional($detail)->U_T2;
+                            $intermediaryBankDetailsU_T3 = optional($detail)->U_T3;
+                            $intermediaryBankDetailsU_T4 = optional($detail)->U_T4;
+                            $intermediaryBankDetailsU_T5 = optional($detail)->U_T5;
+                            $intermediaryBankDetailsU_T6 = optional($detail)->U_T6;
                     
                             $formattedText = trim(str_replace('/', "\n", $intermediaryBankDetailsU_T1));
                             $formattedText = preg_replace('/^\s+/m', '', $formattedText);
