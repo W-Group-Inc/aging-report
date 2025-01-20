@@ -253,6 +253,8 @@ class CommercialInvoiceController extends Controller
         $update_saved_invoice->TermsOfPayment = $request->TermsOfPayment;
         $update_saved_invoice->SoNo = $request->SoNo;
         $update_saved_invoice->invoice_date = $request->invoice_date;
+        $update_saved_invoice->Remarks = $request->Remarks;
+        $update_saved_invoice->RemarksTwo = $request->RemarksTwo;
 
         $update_saved_invoice->update();
 
