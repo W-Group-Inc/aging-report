@@ -308,8 +308,19 @@
                   <tr>
                       <td style="width: 103px;"></td>
                       <td style="width: 305px; text-align:left">{{ $detail->U_label_as }}</td>
-                      <td style="width: 100px;">{{ number_format($detail->Quantity, 2) }}</td>
-                      <td style="width: 74px;">{{ number_format($detail->Price, 2) }}</td>
+                      <td style="width: 100px;">
+                        @if ($detail->U_printUOM == 'lbs')
+                        {{ number_format($detail->Quantity * 2.2, 2) }}
+                        @else
+                        {{ number_format($detail->Quantity, 2) }}</td>
+                        @endif
+                      </td>
+                      <td style="width: 74px;">
+                        @if ($detail->U_printUOM == 'lbs')
+                        {{ number_format($detail->Price/2.2, 2) }}</td>
+                        @else
+                        {{ number_format($detail->Price, 2) }}</td>
+                        @endif
                       <td style="width: 103px;;">{{ number_format(($detail->Quantity) * ($detail->Price), 2) }}</td>
                   </tr>
               </tbody>

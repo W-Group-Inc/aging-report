@@ -193,7 +193,8 @@ class CommercialInvoiceController extends Controller
         $save_as_new->RemarksTwo = $request->RemarksTwo;
 
         $save_as_new->save();
-        foreach ($request->Description as $index => $description) {
+        foreach ($request->input('Description') as $index => $description) {
+            $description = str_replace('@', ' ', $description);
             // $quantity = (float) str_replace(',', '', $request->Quantity[$index]);
             // $amount = (float) str_replace(',', '', $request->Amount[$index]);
             $quantity = isset($request->Quantity[$index]) && $request->Quantity[$index] !== '' 
@@ -257,6 +258,7 @@ class CommercialInvoiceController extends Controller
 
         foreach ($request->Description as $index => $description) {
             $productId = $request->product_id[$index];
+            $description = str_replace('@', ' ', $description);
             
             if ($productId) {
                 // Update existing product
@@ -1053,4 +1055,16 @@ function sales_invoice_index(Request $request)
         
     }
 
+    public function deleteProduct($id)
+{
+
+    $product = BirInvoiceProduct::find($id);
+    if ($product) {
+        $product->delete();
+        return response()->json(['success' => true]);
+    }
+    return response()->json(['success' => false]);
+}
+
+    
 }

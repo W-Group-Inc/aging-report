@@ -313,7 +313,7 @@
                   </tr>
                   <tr>
                       <td style="width: 103px;">{{ $product->ProductCode }}</td>
-                      <td style="width: 305px; text-align:left">{{ $product->Description }}</td>
+                      <td style="width: 305px; text-align:left;">{{ $product->Description }}</td>
                       <td style="width: 100px;">{{ number_format($product->Quantity, 2) }}</td>
                       <td style="width: 74px;">{{ number_format($product->UnitPrice, 2) }}</td>
                       <td style="width: 103px;;">{{ number_format($product->Amount, 2) }}</td>
@@ -328,7 +328,7 @@
                   @foreach ($detail->clientRequest as $clientreq)
                   <tr>
                     <td style="width: 103px;">{{ $clientreq->ProductCode }}</td>
-                    <td style="width: 305px; text-align:left">{{ $clientreq->Description }}</td>
+                    <td style="width: 305px; text-align:left;white-space: pre;">{{ e($clientreq->Description) }}</td>
                     <td style="width: 100px;"></td>
                     <td style="width: 74px;"></td>
                     <td style="width: 103px;;">{{ $clientreq->Amount == 0 || is_null($clientreq->Amount) ? '' : number_format($clientreq->Amount, 2) }}</td>

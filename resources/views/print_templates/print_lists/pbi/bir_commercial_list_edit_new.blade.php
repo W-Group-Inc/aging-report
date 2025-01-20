@@ -139,26 +139,27 @@
                 <div class="row" style="margin: 0;">
                     <div class="col-md-12" style="margin: 0; padding: 0;">
                         <div class="mt-4">
-                            @foreach ($detail->asNew->clientRequest as $cRequest) 
-                                <table class="table table-bordered" id="customer_request{{ $cRequest->id }}" style="margin: 0; padding: 0;">
-                                    <tbody>
-                                        <tr>
-                                            <input name="product_id[]" class="form-control" type="hidden" value="{{  $cRequest->id }}">
-                                            <td><input type="text" name="ProductCode[]" class="form-control" value="{{ $cRequest->ProductCode }}"></td>
-                                            <td><input type="text" name="Description[]" class="form-control" value="{{ $cRequest->Description }}"></td>
-                                            <td><input type="text" name="Amount[]" class="form-control" value="{{ $cRequest->Amount }}"></td>
-                                            <td><input type="hidden" name="PbiSiType[]" class="form-control" value="PbiSi"></td>
-                                            <td><input type="hidden" name="UnitPrice[]" class="form-control" value="0"></td>
-                                        </tr>
-                                    </tbody>
-                                </table> 
-                            @endforeach    
+                            <table class="table table-bordered customer_request-{{ $detail->asNew->id }}" style="margin: 0; padding: 0;">
+                                <tbody>
+                                    @foreach ($detail->asNew->clientRequest as $cRequest)
+                                    <tr>
+                                        <input name="product_id[]" class="form-control" type="hidden" value="{{  $cRequest->id }}">
+                                        <td><input type="text" name="ProductCode[]" class="form-control" value="{{ $cRequest->ProductCode }}"></td>
+                                        <td><input type="text" name="Description[]" class="form-control" value="{{ $cRequest->Description }}"></td>
+                                        <td><input type="text" name="Amount[]" class="form-control" value="{{ $cRequest->Amount }}"></td>
+                                        <td><input type="hidden" name="PbiSiType[]" class="form-control" value="PbiSi"></td>
+                                        <td><input type="hidden" name="UnitPrice[]" class="form-control" value="0"></td>
+                                        <td><button type="button" class="btn btn-danger btn-sm deleteRowBtn">Delete</button></td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             <div class="row" style="margin-top: 20px; padding: 0;">
-                                <button type="button" class="btn btn-primary" id="addRowBtn{{ $detail->id }}" style="margin-top: 0;">Add Row</button>            
+                                <button type="button" class="btn btn-primary addRowBtn" style="margin-top: 0;">Add Row</button>
                             </div>
-                        </div>  
-                    </div> 
-                </div> 
+                        </div>
+                    </div>
+                </div>                                       
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -168,21 +169,78 @@
       </div>
     </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <script>
-        @foreach ($detail->asNew->clientRequest as $cRequest)
-            document.getElementById('addRowBtn{{ $detail->id }}').addEventListener('click', function() {
-                const table = document.getElementById('customer_request{{ $cRequest->id }}').getElementsByTagName('tbody')[0];
-                const newRow = table.rows[0].cloneNode(true);
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.addRowBtn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var table = button.closest('.mt-4').querySelector('table');
+
+                var newRow = document.createElement('tr');
+
+                newRow.innerHTML = `
+                    <input name="product_id[]" class="form-control" type="hidden" value="">
+                    <td><input type="text" name="ProductCode[]" class="form-control"></td>
+                    <td><input type="text" name="Description[]" class="form-control"></td>
+                    <td><input type="text" name="Amount[]" class="form-control"></td>
+                    <td><input type="hidden" name="PbiSiType[]" class="form-control" value="PbiSi"></td>
+                    <td><input type="hidden" name="UnitPrice[]" class="form-control" value="0"></td>
+                    <td><button type="button" class="btn btn-danger btn-sm deleteRowBtn">Delete</button></td>
+                `;
                 
-                const inputs = newRow.getElementsByTagName('input');
-                for (let input of inputs) {
-                    if (input.name !== 'PbiSiType[]') {
-                        input.value = ''; 
-                    }
-                }
-                table.appendChild(newRow);
+                table.querySelector('tbody').appendChild(newRow);
             });
-        @endforeach
-    </script>
-    
+        });
+
+        document.addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('deleteRowBtn')) {
+            var row = event.target.closest('tr');
+            var productId = row.querySelector('input[name="product_id[]"]').value; 
+
+            if (productId) {
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, this action cannot be undone.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: `delete-product/${productId}`,
+                            type: 'DELETE',
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(data) {
+                                if (data.success) {
+                                    row.querySelectorAll('input').forEach(function(input) {
+                                        input.value = ''; 
+                                    });
+                                    row.parentNode.removeChild(row);
+                                    swal("Deleted!", "The product has been deleted.", "success");
+                                } else {
+                                    swal("Error!", "Failed to delete the product.", "error");
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error:', error);
+                                swal("Error!", "There was an error deleting the record.", "error");
+                            }
+                        });
+                    } else {
+                        swal("Cancelled", "Your product is safe.", "info");
+                    }
+                });
+            } else {
+                row.parentNode.removeChild(row);
+            }
+        }
+    });
+
+});
+
+</script>

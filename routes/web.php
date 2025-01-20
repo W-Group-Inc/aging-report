@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\CommercialInvoiceController;
 
 Auth::routes();
 
@@ -82,6 +83,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pbi_bir_edited_commercial_exempt_invoice/{DocNum}', 'CommercialInvoiceController@edit_print')->name('pbi_bir_edited_commercial_exempt_invoice');
     Route::post('/pbi_save_as_new_invoice', 'CommercialInvoiceController@save_as_new_invoice');
     Route::post('/pbi_edit_new_invoice/{id}', 'CommercialInvoiceController@edit_new_invoice');
+    Route::delete('/delete-product/{id}', 'CommercialInvoiceController@deleteProduct');
+
+
     // Debit Memo
     Route::get('/pbi_debit_memo', 'DebitMemoController@index');
     Route::post('/save_debit_memo_pbi', 'DebitMemoController@pbi_save_debit_memo');

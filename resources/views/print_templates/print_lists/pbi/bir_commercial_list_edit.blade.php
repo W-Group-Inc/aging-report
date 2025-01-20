@@ -86,7 +86,7 @@
             </div>
             <div class="col-md-12">
                 <label>Description</label>
-                <input name="Description[]" class="form-control" type="text" value="{{ $product->U_Label_as }}">
+                <input name="Description[]" style="white-space: pre;" class="form-control" type="text" value="{{ $product->U_Label_as }}">
             </div>
             {{-- <div class="col-md-6">
                 <label>Supplier Code</label>
@@ -114,11 +114,13 @@
             </div>
             <div class="col-md-4">
                 <label>Quantity</label>
-                <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}" >
+                <input class="form-control" name="Quantity[]" type="text" value="{{ $product->U_printUOM == 'lbs' ? number_format($product->Quantity * 2.2, 2) : number_format($product->Quantity, 2) }}" >
             </div>
             <div class="col-md-4">
                 <label>Unit Price</label>
-                <input class="form-control" name="UnitPrice[]" type="text" value="{{number_format($product->Price,2) }}" >
+                {{-- <input class="form-control" name="UnitPrice[]" type="text" value="{{number_format($product->Price,2) }}" > --}}
+                <input class="form-control" name="UnitPrice[]" type="text" value="{{ $product->U_printUOM == 'lbs' ? number_format($product->Price / 2.2, 2) : number_format($product->Price, 2) }}" >
+
                 {{-- @if ($detail->DocCur == 'PHP')
                     <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->LineTotal / $product->Quantity, 2) : '' }}" readonly>
                 @else
@@ -148,10 +150,10 @@
                             <tbody>
                               <tr>
                                 <td><input type="text" name="ProductCode[]" class="form-control" value=""></td>
-                                <td><input type="text" name="Description[]" class="form-control" value=""></td>
+                                <td><input type="text" name="Description[]" class="form-control" style="white-space: pre;"></td>
                                 <td><input type="text" name="Amount[]" class="form-control" value=""></td>
-                                <td><input type="hidden" name="PbiSiType[]" class="form-control" value="PbiSi"></td>
-                                <td><input type="hidden" name="UnitPrice[]" class="form-control" value=""></td>
+                                <input type="hidden" name="PbiSiType[]" class="form-control" value="PbiSi">
+                                <input type="hidden" name="UnitPrice[]" class="form-control" value="">
                               </tr>
                             </tbody>
                           </table> 

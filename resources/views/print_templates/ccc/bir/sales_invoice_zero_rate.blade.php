@@ -411,6 +411,11 @@
             <span class="info-colon"></span>
             <span class="info-value"></span>
         </div>
+        <div class="info-row">
+            <span class="info-label"></span>
+            <span class="info-colon"></span>
+            <span class="info-value">sdsds</span>
+        </div>
     </div>
 </div>
 <div class="product-details" style="min-height: 280px; max-height:280px; margin-left:20px; margin-right:40px;">
