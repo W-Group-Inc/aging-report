@@ -449,7 +449,7 @@
                 <?php
                 $label = str_replace('(', '<br>(', $product->Description);
                 ?>
-                <td style="font-weight: bold">{{ $product->Description }}</td>
+                <td style="font-weight: bold">{!! $label !!}</td>
                 <td>{{ $product->Packing }} {{ $product->Uom }}
                 </td>
                 <td style="width: 0; text-align: center;">
