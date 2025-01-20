@@ -13,10 +13,10 @@
           <div class="modal-body">
             <div class="row">
                 <div class="col-md-12">
-                    @foreach ( $detail->dln1 as $arDetail)
+                    {{-- @foreach ( $detail->dln1 as $arDetail) --}}
                     <label >Date:</label>
                     <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($detail->asNew)->invoice_date)->format('Y-m-d') }}">
-                    @endforeach
+                    {{-- @endforeach --}}
                 </div>
                 <div class="col-md-12">
                     <label >Sold To:</label>
