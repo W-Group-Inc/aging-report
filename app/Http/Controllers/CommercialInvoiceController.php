@@ -189,8 +189,8 @@ class CommercialInvoiceController extends Controller
         $save_as_new->SealNo = $request->SealNo;
         $save_as_new->TermsOfPayment = $request->TermsOfPayment;
         $save_as_new->SoNo = $request->SoNo;
-        $save_as_new->Remarks = $request->Remarks;
-        $save_as_new->RemarksTwo = $request->RemarksTwo;
+        $save_as_new->Remarks = str_replace('/', "\n", $request->Remarks);
+$save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
 
         $save_as_new->save();
         foreach ($request->input('Description') as $index => $description) {
@@ -253,8 +253,8 @@ class CommercialInvoiceController extends Controller
         $update_saved_invoice->TermsOfPayment = $request->TermsOfPayment;
         $update_saved_invoice->SoNo = $request->SoNo;
         $update_saved_invoice->invoice_date = $request->invoice_date;
-        $update_saved_invoice->Remarks = $request->Remarks;
-        $update_saved_invoice->RemarksTwo = $request->RemarksTwo;
+        $update_saved_invoice->Remarks = str_replace('/', "\n", $request->Remarks);
+        $update_saved_invoice->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
 
         $update_saved_invoice->update();
 
