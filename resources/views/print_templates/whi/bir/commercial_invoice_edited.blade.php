@@ -446,6 +446,9 @@
                   $total += $product->Amount;
             @endphp
             <tr>
+                <?php
+                $label = str_replace('(', '<br>(', $product->Description);
+                ?>
                 <td style="font-weight: bold">{{ $product->Description }}</td>
                 <td>{{ $product->Packing }} {{ $product->Uom }}
                 </td>

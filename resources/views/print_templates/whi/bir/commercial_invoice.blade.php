@@ -433,7 +433,10 @@
             @foreach ($details as $detail)
             
             <tr>
-                <td style="font-weight: bold">{{ $detail->U_Label_as }}</td>
+                <?php
+                $label = str_replace('(', '<br>(', $detail->U_Label_as);
+                ?>
+                <td style="font-weight: bold">{!! $label !!}</td>
                 <td>{{ $detail->U_Bagsperlot }} {{ $detail->U_packUOM }}
                     {{-- @if ($detail->U_Bagsperlot != 0)
                         <span style="float: right; text-align:end">x</span>
