@@ -172,7 +172,7 @@
             </div>
             <div class="col-md-6">
                 <label>Port of Loading</label>
-                <input name="PortOfLoading" class="form-control" type="text" value="{{ $detail->U_PlaceLoading }}">
+                <input name="PortOfLoading" class="form-control" type="text" value="{{ $detail->U_PortLoad }}">
             </div>
             <div class="col-md-6">
                 <label>Port of Destination</label>
