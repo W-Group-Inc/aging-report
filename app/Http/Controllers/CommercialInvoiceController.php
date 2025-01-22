@@ -114,7 +114,7 @@ class CommercialInvoiceController extends Controller
             'ODLN.DocDueDate',
             // 'ODLN.U_BaseDate',
             DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_BaseDate AS U_BaseDate' : 'NULL AS U_Destinationport'),
-            'ODLN.U_PlaceLoading',
+            'ODLN.U_PortLoad',
             'ODLN.DocCur',
             DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_PortDestination' : ($request->is('ccc_bir_invoice') ? 'ODLN.U_Destinationport' : 'NULL AS U_Destinationport')),
             // 'ODLN.U_Destinationport',
