@@ -15,10 +15,10 @@
                     <input name="DocEntry" class="form-control" type="hidden" value="{{ $detail->DocEntry }}">
                 </div>
                 <div class="col-md-12">
-                    @foreach ( $detail->dln1 as $arDetail)
+                    {{-- @foreach ( $detail->dln1 as $arDetail) --}}
                     <label >Date:</label>
                     <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($detail)->DocDueDate)->format('Y-m-d') }}">
-                    @endforeach
+                    {{-- @endforeach --}}
                 </div>
                 <div class="col-md-12">
                     <label >Sold To:</label>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-md-12">
                     <label>Address</label>
-                    <input name="ClientAddress" class="form-control" type="text" value="{{ $detail->Address }}">
+                    <input name="ClientAddress" class="form-control" type="text" value="{{ str_replace("\r", ' ', $detail->Address) }}">
                 </div>
                 {{-- <div class="col-md-6">
                     <label>TIN</label>
