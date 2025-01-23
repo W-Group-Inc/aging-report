@@ -55,45 +55,45 @@
                     <input name="ScPwd" class="form-control" type="text" value="{{  $detail->asNew->ScPwd }}">
                 </div> --}}
             </div>      
-            <div class="col-md-12 row"><h3>Product</h5></div> 
-            <div class="row">
+            <div class="row" id="productContainerEdit{{ $detail->asNew->id }}">
             @foreach (  $detail->asNew->products as $product)
+            <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h5></div> 
             <div class="col-md-12">
                 <input name="product_id[]" class="form-control" type="hidden" value="{{  $product->id }}">
             </div>
-            <div class="col-md-12">
+            <div class="col-md-4">
                 <label>Description</label>
                 <input name="Description[]" class="form-control" type="text" value="{{ $product->Description }}">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label>Supplier Code</label>
                 <input name="SupplierCode[]" class="form-control" type="text" value="{{ $product->SupplierCode }}">
             </div>
-            <div class="col-md-6">
-                <label>Currency</label>
+            <div class="col-md-1">
+                <label>Cur</label>
                 <input name="DocCur[]" class="form-control" type="text" value="{{ $detail->DocCur }}">
             </div>
-            <div class="col-md-3">
-                <label>Packing</label>
+            <div class="col-md-2">
+                <label>Pkg</label>
                 <input name="Packing[]" class="form-control" type="text" value="{{ $product->Packing }}">
             </div>
-            <div class="col-md-3">
-                <label>Unit of Measurement</label>
+            <div class="col-md-1">
+                <label>UoM</label>
                 <input name="Uom[]" class="form-control" type="text" value="{{ $product->Uom }}">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label>Unit</label>
                 <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->Packing) && $product->Packing != 0 ? number_format($product->Quantity / $product->Packing, 2) : '' }}">
             </div>
-            <div class="col-md-3">
-                <label>Unit of Measurement</label>
+            <div class="col-md-1">
+                <label>UoM</label>
                 <input class="form-control" name="printUom[]" type="text" value="{{ $product->printUom}}">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>Quantity</label>
                 <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <label>Unit Price</label>
                 <input class="form-control" type="text" name="UnitPrice[]" value="{{ $product->UnitPrice}}">
             </div>
@@ -102,6 +102,10 @@
                 <input class="form-control" name="Amount[]" type="text" value="{{ number_format($product->Amount, 2) }}" >
             </div>
             @endforeach
+        </div>
+        <div class="col-md-12 mt-3" style="padding: 20px;">
+            <button type="button" class="btn btn-primary" id="addRowButtonEdit{{ $detail->asNew->id }}" >Add Row</button>
+        </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="">Remarks</label>
@@ -169,8 +173,7 @@
             <div class="col-md-6">
                 <label>Invoice Due Date</label>
                 <input name="InvoiceDueDate" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($detail->asNew)->InvoiceDueDate)->format('Y-m-d')}}">
-            </div>   
-            </div>           
+            </div>            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -180,4 +183,78 @@
       </div>
     </form>
     </div>
+
+    <script>
+        document.getElementById('addRowButtonEdit{{ $detail->asNew->id }}').addEventListener('click', function () {
+            const productContainer = document.getElementById('productContainerEdit{{ $detail->asNew->id }}');
+            
+            const newRow = `
+            <div class="product-row">
+                <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h5></div> 
+                <div class="col-md-12">
+                    <input name="product_id[]" class="form-control" type="hidden" value="">
+                </div>
+                <div class="col-md-4">
+                    <label>Description</label>
+                    <input name="Description[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-4">
+                    <label>Supplier Code</label>
+                    <input name="SupplierCode[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-1">
+                    <label>Cur</label>
+                    <input name="DocCur[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-2">
+                    <label>Pkg</label>
+                    <input name="Packing[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-1">
+                    <label>UoM</label>
+                    <input name="Uom[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-2">
+                    <label>Unit</label>
+                    <input class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-1">
+                    <label>Uom</label>
+                    <input class="form-control" name="printUom[]" type="text" value="">
+                </div>
+                <div class="col-md-3">
+                    <label>Quantity</label>
+                    <input class="form-control" name="Quantity[]" type="text" value="">
+                </div>
+                <div class="col-md-2">
+                    <label>Unit Price</label>
+                    <input class="form-control" type="text" name="UnitPrice[]" value="">
+                </div>
+                <div class="col-md-4">
+                    <label>Amount</label>
+                    <input class="form-control" name="Amount[]" type="text" value="">
+                </div>
+                <div class="col-md-12 text-end mt-2">
+                    <button type="button" class="btn btn-danger delete-row">Delete</button>
+                </div>
+            </div>
+            `;
+    
+            productContainer.insertAdjacentHTML('beforeend', newRow);
+            const deleteButtons = productContainer.querySelectorAll('.delete-row');
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', function () {
+                    button.closest('.product-row').remove();
+                });
+            });
+        });
+    
+        document.querySelectorAll('.delete-row').forEach((button) => {
+            button.addEventListener('click', function () {
+                button.closest('.product-row').remove();
+            });
+        });
+    
+    </script>
 @endif
+

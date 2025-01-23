@@ -271,7 +271,7 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
                 $save_as_product = BirInvoiceProduct::find($productId);
             } else {
                 $save_as_product = new BirInvoiceProduct();
-                $save_as_product->DocNum = $update_saved_invoice->id; // Assuming you need to link the product to the invoice
+                $save_as_product->DocNum = $update_saved_invoice->id; 
             }
     
             $save_as_product->Description = $description ?? null;

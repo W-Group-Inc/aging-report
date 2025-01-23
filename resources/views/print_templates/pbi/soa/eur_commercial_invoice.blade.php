@@ -30,11 +30,13 @@
             font-style: italic;
         }
         .header-container .left .header .line-three {
-            font-size:10px;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
         }
         .header-container .left .header .date {
-            margin-top: 10px;
-            font-size:10px;
+            margin-top: 30px;
+            font-size: 12px;
         }
         .left, .middle, .right {
             display: table-cell;
@@ -339,13 +341,13 @@
 <div class="header-container">
     <div class="left">
         <div class="header">
-            <span class="line-one">COMMERCIAL INVOICE</span>
+            <span style="font-size: 17px">COMMERCIAL INVOICE</span>
             {{-- <div class="line-three">FR-ACC-16</div> --}}
-            <div class="line-three">No.: <strong>{{ $soa_no }}</strong></div>
+            <div class="line-three">No.: {{ $soa_no }}</div>
             @if ($details->isNotEmpty())
             <div class="date">Dated: {{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</div>
             @endif
-            <div style="font-size:10px;">VAT Reg. TIN 000-316-923-000</div>
+            <div style="font-size:11px;">VAT Reg. TIN 000-316-923-000</div>
         </div>
     </div>
     <div class="middle">

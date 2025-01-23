@@ -57,70 +57,70 @@
                     <input name="ScPwd" class="form-control" type="text">
                 </div> --}}
             </div>      
-            <div class="col-md-12 row"><h3>Product</h5></div> 
-            <div class="row" id="productContainer">
-            @foreach ( $detail->dln1 as $product)
-            <div class="col-md-12">
-                <label>Description</label>
-                <input name="Description[]" class="form-control" type="text" value="{{ $product->U_Label_as }}">
-            </div>
-            <div class="col-md-6">
-                <label>Supplier Code</label>
-                <input name="SupplierCode[]" class="form-control" type="text" value="{{ $product->U_SupplierCode }}">
-            </div>
-            <div class="col-md-6">
-                <label>Currency</label>
-                <input name="DocCur[]" class="form-control" type="text" value="{{ $detail->DocCur }}">
-            </div>
-            <div class="col-md-3">
-                <label>Packing</label>
-                <input name="Packing[]" class="form-control" type="text" value="{{ $product->U_Bagsperlot }}">
-            </div>
-            <div class="col-md-3">
-                <label>Unit of Measurement</label>
-                <input name="Uom[]" class="form-control" type="text" value="{{ $product->U_packUOM }}">
-            </div>
-            <div class="col-md-3">
-                <label>Unit</label>
-                {{-- <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->U_Bagsperlot) && $product->U_Bagsperlot != 0 ? number_format($product->Quantity / $product->U_Bagsperlot, 2) : '' }}"> --}}
-                <input class="form-control" type="text" value="{{ number_format($product->U_Netweight) }}">
-            </div>
-            <div class="col-md-3">
-                <label>Unit of Measurement</label>
-                <input class="form-control" name="printUom[]" type="text" value="{{ $product->U_printUOM}}">
-            </div>
-            <div class="col-md-4">
-                <label>Quantity</label>
-                <input class="form-control" name="Quantity[]" type="text" 
-                value="{{ $product->U_printUOM == 'lbs' 
-                ? number_format(2.2 * $product->Quantity, 2) 
-                : ($product->Quantity ? number_format($product->Quantity, 2) . (!empty($product->U_Netweight) ? ' ' . $product->U_printUOM : '') : '') }}">
-            </div>
-            <div class="col-md-4">
-                <label>Unit Price</label>
-                @if ($detail->DocCur == 'PHP')
-                    <input class="form-control" type="text" name="UnitPrice[]" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? ($product->LineTotal / $product->Quantity) : '' }}">
-                @else
-                    <input class="form-control" type="text" name="UnitPrice[]"
-                    value="{{ $product->U_printUOM == 'lbs' 
-                    ? (($product->LineTotal / $product->Rate) / $product->Quantity / 2.2) 
-                    : (!empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 && !empty($product->Rate) && $product->Rate != 0
-                        ? (($product->LineTotal / $product->Rate) / $product->Quantity)
-                        : '') }}" >
-                @endif
-            </div>
-            <div class="col-md-4">
-                <label>Amount</label>
-                @if ($detail->DocCur == 'PHP')
-                    <input class="form-control" name="Amount[]" type="text" value="{{ number_format($product->LineTotal, 2) }}" >
-                @else
-                    <input class="form-control" name="Amount[]" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Rate) && $product->Rate != 0 ? number_format($product->LineTotal / $product->Rate, 2) : '' }}" >
-                @endif
-            </div>
-            @endforeach
-            </div>   
+            <div class="row" id="productContainer{{ $detail->DocEntry }}">
+                @foreach ( $detail->dln1 as $product)
+                    <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h5></div> 
+                    <div class="col-md-4">
+                        <label>Description</label>
+                        <input name="Description[]" class="form-control" type="text" value="{{ $product->U_Label_as }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Supplier Code</label>
+                        <input name="SupplierCode[]" class="form-control" type="text" value="{{ $product->U_SupplierCode }}">
+                    </div>
+                    <div class="col-md-1">
+                        <label>Cur</label>
+                        <input name="DocCur[]" class="form-control" type="text" value="{{ $detail->DocCur }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label>Pkg</label>
+                        <input name="Packing[]" class="form-control" type="text" value="{{ $product->U_Bagsperlot }}">
+                    </div>
+                    <div class="col-md-1">
+                        <label>UoM</label>
+                        <input name="Uom[]" class="form-control" type="text" value="{{ $product->U_packUOM }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label>Unit</label>
+                        {{-- <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->U_Bagsperlot) && $product->U_Bagsperlot != 0 ? number_format($product->Quantity / $product->U_Bagsperlot, 2) : '' }}"> --}}
+                        <input class="form-control" type="text" value="{{ number_format($product->U_Netweight) }}">
+                    </div>
+                    <div class="col-md-1">
+                        <label>UoM</label>
+                        <input class="form-control" name="printUom[]" type="text" value="{{ $product->U_printUOM}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Quantity</label>
+                        <input class="form-control" name="Quantity[]" type="text" 
+                        value="{{ $product->U_printUOM == 'lbs' 
+                        ? number_format(2.2 * $product->Quantity, 2) 
+                        : ($product->Quantity ? number_format($product->Quantity, 2) . (!empty($product->U_Netweight) ? ' ' . $product->U_printUOM : '') : '') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label>Unit Price</label>
+                        @if ($detail->DocCur == 'PHP')
+                            <input class="form-control" type="text" name="UnitPrice[]" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? ($product->LineTotal / $product->Quantity) : '' }}">
+                        @else
+                            <input class="form-control" type="text" name="UnitPrice[]"
+                            value="{{ $product->U_printUOM == 'lbs' 
+                            ? (($product->LineTotal / $product->Rate) / $product->Quantity / 2.2) 
+                            : (!empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 && !empty($product->Rate) && $product->Rate != 0
+                                ? (($product->LineTotal / $product->Rate) / $product->Quantity)
+                                : '') }}" >
+                        @endif
+                    </div>
+                    <div class="col-md-4">
+                        <label>Amount</label>
+                        @if ($detail->DocCur == 'PHP')
+                            <input class="form-control" name="Amount[]" type="text" value="{{ number_format($product->LineTotal, 2) }}" >
+                        @else
+                            <input class="form-control" name="Amount[]" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Rate) && $product->Rate != 0 ? number_format($product->LineTotal / $product->Rate, 2) : '' }}" >
+                        @endif
+                    </div>
+                @endforeach
+        </div> 
             <div class="col-md-12 mt-3" style="padding: 20px;">
-                <button type="button" class="btn btn-primary" id="addRowButton" >Add Row</button>
+                <button type="button" class="btn btn-primary" id="addRowButton{{ $detail->DocEntry }}" >Add Row</button>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -230,45 +230,45 @@
     </div>
 
     <script>
-        document.getElementById('addRowButton').addEventListener('click', function () {
-            const productContainer = document.getElementById('productContainer');
+        document.getElementById('addRowButton{{ $detail->DocEntry }}').addEventListener('click', function () {
+            const productContainer = document.getElementById('productContainer{{ $detail->DocEntry }}');
             
             const newRow = `
-            <div class="col-md-12 row"><h3>Product</h5></div> 
             <div class="product-row">
-                <div class="col-md-12">
+                <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h5></div> 
+                <div class="col-md-4">
                     <label>Description</label>
                     <input name="Description[]" class="form-control" type="text" value="">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label>Supplier Code</label>
                     <input name="SupplierCode[]" class="form-control" type="text" value="">
                 </div>
-                <div class="col-md-6">
-                    <label>Currency</label>
+                <div class="col-md-1">
+                    <label>Cur</label>
                     <input name="DocCur[]" class="form-control" type="text" value="">
                 </div>
-                <div class="col-md-3">
-                    <label>Packing</label>
+                <div class="col-md-2">
+                    <label>Pkg</label>
                     <input name="Packing[]" class="form-control" type="text" value="">
                 </div>
-                <div class="col-md-3">
-                    <label>Unit of Measurement</label>
+                <div class="col-md-1">
+                    <label>UoM</label>
                     <input name="Uom[]" class="form-control" type="text" value="">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>Unit</label>
                     <input class="form-control" type="text" value="">
                 </div>
-                <div class="col-md-3">
-                    <label>Unit of Measurement</label>
+                <div class="col-md-1">
+                    <label>Uom</label>
                     <input class="form-control" name="printUom[]" type="text" value="">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label>Quantity</label>
                     <input class="form-control" name="Quantity[]" type="text" value="">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label>Unit Price</label>
                     <input class="form-control" type="text" name="UnitPrice[]" value="">
                 </div>
@@ -276,10 +276,26 @@
                     <label>Amount</label>
                     <input class="form-control" name="Amount[]" type="text" value="">
                 </div>
+                <div class="col-md-12 text-end mt-2">
+                    <button type="button" class="btn btn-danger delete-row">Delete</button>
+                </div>
             </div>
             `;
 
             productContainer.insertAdjacentHTML('beforeend', newRow);
+            const deleteButtons = productContainer.querySelectorAll('.delete-row');
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', function () {
+                    button.closest('.product-row').remove();
+                });
+            });
+        });
+
+        // Attach delete functionality to existing rows
+        document.querySelectorAll('.delete-row').forEach((button) => {
+            button.addEventListener('click', function () {
+                button.closest('.product-row').remove();
+            });
         });
 
     </script>
