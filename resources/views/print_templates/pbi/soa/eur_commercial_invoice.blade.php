@@ -340,7 +340,7 @@
     <div class="left">
         <div class="header">
             <span class="line-one">COMMERCIAL INVOICE</span>
-            <div class="line-three">FR-ACC-16</div>
+            {{-- <div class="line-three">FR-ACC-16</div> --}}
             <div class="line-three">No.: <strong>{{ $soa_no }}</strong></div>
             @if ($details->isNotEmpty())
             <div class="date">Dated: {{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</div>
@@ -367,7 +367,7 @@
         </div>
         <div class="line-two">
             <span class="header-small-text"><strong>Plant Address:</strong> 103 Integrity Avenue, Carmelray Industrial Park 1, Canlubang, Calamba City, Laguna 4028</span>
-            <span class="header-small-text"><strong>Admin Office:</strong> 26F W Building, Fifth Avenue, Bonifacio Global City 1634 Taguig City, Philippines</span>
+            <span class="header-small-text"><strong>Admin Office:</strong> 26/F. W Fifth Ave. Bldg. 3051 5th Ave. cor. 32nd St., Bonifacio Global City, Taguig City, 1634 Philippines</span>
             <span class="header-small-text">Phone: +632 8856 3838 | Fax: +632 8856 1033</span>
             <span class="header-small-text">vat@rico.com.ph | www.rico.com.ph</span>
             <span class="header-small-text">VAT No.: NL826469425B01</span>
@@ -869,6 +869,17 @@
             </div>
             <br>
         </div>
+    </div>
+</div>
+<div class="new-row">
+    <div class="footer">
+        <div class="footer-left">
+            <p>WHI-TP-ACC-008</p>
+            <p>Rev. 0 03/11/2024 </p>
+        </div>
+        {{-- <div class="footer-right">
+            <p>Page {PAGE_NUM} of {PAGE_COUNT}</p>
+        </div> --}}
     </div>
 </div>
 </body>

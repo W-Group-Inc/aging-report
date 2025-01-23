@@ -58,7 +58,7 @@
                 </div> --}}
             </div>      
             <div class="col-md-12 row"><h3>Product</h5></div> 
-            <div class="row">
+            <div class="row" id="productContainer">
             @foreach ( $detail->dln1 as $product)
             <div class="col-md-12">
                 <label>Description</label>
@@ -99,13 +99,13 @@
             <div class="col-md-4">
                 <label>Unit Price</label>
                 @if ($detail->DocCur == 'PHP')
-                    <input class="form-control" type="text" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->LineTotal / $product->Quantity, 2) : '' }}">
+                    <input class="form-control" type="text" name="UnitPrice[]" value="{{ !empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 ? ($product->LineTotal / $product->Quantity) : '' }}">
                 @else
-                    <input class="form-control" type="text" 
+                    <input class="form-control" type="text" name="UnitPrice[]"
                     value="{{ $product->U_printUOM == 'lbs' 
-                    ? number_format(($product->LineTotal / $product->Rate) / $product->Quantity / 2.2, 2) 
+                    ? (($product->LineTotal / $product->Rate) / $product->Quantity / 2.2) 
                     : (!empty($product->LineTotal) && !empty($product->Quantity) && $product->Quantity != 0 && !empty($product->Rate) && $product->Rate != 0
-                        ? number_format(($product->LineTotal / $product->Rate) / $product->Quantity, 2)
+                        ? (($product->LineTotal / $product->Rate) / $product->Quantity)
                         : '') }}" >
                 @endif
             </div>
@@ -119,6 +119,9 @@
             </div>
             @endforeach
             </div>   
+            <div class="col-md-12 mt-3" style="padding: 20px;">
+                <button type="button" class="btn btn-primary" id="addRowButton" >Add Row</button>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="">Remarks</label>
@@ -225,3 +228,58 @@
       </div>
     </form>
     </div>
+
+    <script>
+        document.getElementById('addRowButton').addEventListener('click', function () {
+            const productContainer = document.getElementById('productContainer');
+            
+            const newRow = `
+            <div class="col-md-12 row"><h3>Product</h5></div> 
+            <div class="product-row">
+                <div class="col-md-12">
+                    <label>Description</label>
+                    <input name="Description[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-6">
+                    <label>Supplier Code</label>
+                    <input name="SupplierCode[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-6">
+                    <label>Currency</label>
+                    <input name="DocCur[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-3">
+                    <label>Packing</label>
+                    <input name="Packing[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-3">
+                    <label>Unit of Measurement</label>
+                    <input name="Uom[]" class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-3">
+                    <label>Unit</label>
+                    <input class="form-control" type="text" value="">
+                </div>
+                <div class="col-md-3">
+                    <label>Unit of Measurement</label>
+                    <input class="form-control" name="printUom[]" type="text" value="">
+                </div>
+                <div class="col-md-4">
+                    <label>Quantity</label>
+                    <input class="form-control" name="Quantity[]" type="text" value="">
+                </div>
+                <div class="col-md-4">
+                    <label>Unit Price</label>
+                    <input class="form-control" type="text" name="UnitPrice[]" value="">
+                </div>
+                <div class="col-md-4">
+                    <label>Amount</label>
+                    <input class="form-control" name="Amount[]" type="text" value="">
+                </div>
+            </div>
+            `;
+
+            productContainer.insertAdjacentHTML('beforeend', newRow);
+        });
+
+    </script>

@@ -500,7 +500,14 @@ function original_print(Request $request, $invoice_number){
         ->where('a.DocEntry', '=', $customer_ref)
         ->orderBy('a.DocNum', 'ASC')
         ->get();
+        $PoNumber = ORDR::select('U_BuyersPO') 
+        ->where('NumAtCard', '=', DB::raw("(SELECT NumAtCard FROM ODLN WHERE DocEntry = {$customer_ref})"))
+        ->get();
+
+        $PoNumbers = $PoNumber->pluck('U_BuyersPO')->implode(', ');
+        
         View::share('details', $details);
+        View::share('PoNumber', $PoNumbers);
         
         if (Route::currentRouteName() === 'bir_original_invoice') {
             $view = 'print_templates.whi.bir.commercial_invoice';
@@ -521,6 +528,7 @@ function original_print(Request $request, $invoice_number){
         $pdf = PDF::loadView($view, [
             array(
                 'details' =>$details,
+                'PoNumber' => $PoNumbers,
             ),
             'prepared_by' => $prepared_by,
         ])

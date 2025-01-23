@@ -380,7 +380,7 @@
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ optional($details->first())->U_BuyersPO }}</span>
+            <span class="info-value">{{ $PoNumber }}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>

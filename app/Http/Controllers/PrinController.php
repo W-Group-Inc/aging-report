@@ -940,6 +940,16 @@ class PrinController extends Controller
             'prepared_by' => $prepared_by,
             'soa_type' => $soa_type,
         ])->setPaper('A4', 'portrait');
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $font = $fontMetrics->getFont('Helvetica', 'normal');
+            $size = 10; // Font size
+            $x = 520;  // Adjust horizontal position
+            $y = 820;  // Adjust vertical position
+            $canvas->text($x, $y, "Page $pageNumber of $pageCount", $font, $size);
+        });
 
         return $pdf->stream('SOA_PBI_EUR_Commercial_Invoice.pdf');
     }

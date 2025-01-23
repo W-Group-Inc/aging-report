@@ -95,7 +95,7 @@
             </div>
             <div class="col-md-4">
                 <label>Unit Price</label>
-                <input class="form-control" type="text" value="{{ !empty($product->Amount) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->Amount / $product->Quantity, 2) : '' }}">
+                <input class="form-control" type="text" name="UnitPrice[]" value="{{ $product->UnitPrice}}">
             </div>
             <div class="col-md-4">
                 <label>Amount</label>

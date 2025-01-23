@@ -468,11 +468,13 @@
                     @endif
                 </td>
                 <td> 
-                    {{ $product->DocCur }} {{ !empty($product->Amount) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->Amount / $product->Quantity, 2) : '' }} /
+                    {{ $product->DocCur }} {{ !empty($product->UnitPrice) ? ($product->UnitPrice) : '' }} 
                     @if ($product->printUom == "lbs")
-                        lb
+                        / lb
+                    @elseif ($product->printUom == "kgs")
+                        / kg
                     @else
-                        kg
+                        
                     @endif
                 </td>
                <td>{{ $product->DocCur }} {{ number_format(optional($product)->Amount, 2) }}</td>
