@@ -114,7 +114,9 @@ class CommercialInvoiceController extends Controller
             'ODLN.DocDueDate',
             // 'ODLN.U_BaseDate',
             DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_BaseDate AS U_BaseDate' : 'NULL AS U_Destinationport'),
-            'ODLN.U_PortLoad',
+            // 'ODLN.U_PortLoad',
+            DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_PortLoad' : 'NULL AS U_PortLoad'),
+
             'ODLN.DocCur',
             DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_PortDestination' : ($request->is('ccc_bir_invoice') ? 'ODLN.U_Destinationport' : 'NULL AS U_Destinationport')),
             // 'ODLN.U_Destinationport',
@@ -263,10 +265,8 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
             $description = str_replace('@', ' ', $description);
             
             if ($productId) {
-                // Update existing product
                 $save_as_product = BirInvoiceProduct::find($productId);
             } else {
-                // Create a new product if no productId is provided
                 $save_as_product = new BirInvoiceProduct();
                 $save_as_product->DocNum = $update_saved_invoice->id; // Assuming you need to link the product to the invoice
             }
@@ -280,7 +280,6 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
             $save_as_product->Uom = $request->Uom[$index] ?? null;
             $save_as_product->printUom = $request->printUom[$index] ?? null;
     
-            // Handling Quantity and Amount
             $save_as_product->Quantity = isset($request->Quantity[$index]) && $request->Quantity[$index] !== '' 
                 ? (float) str_replace(',', '', $request->Quantity[$index]) 
                 : null;
@@ -288,8 +287,12 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
             $save_as_product->Amount = isset($request->Amount[$index]) && $request->Amount[$index] !== '' 
                 ? (float) str_replace(',', '', $request->Amount[$index]) 
                 : null;
+
+            $save_as_product->UnitPrice = isset($request->UnitPrice[$index]) 
+                ? (float) str_replace(',', '', $request->UnitPrice[$index]) 
+                : null;
     
-            $save_as_product->save(); // Use save() to insert or update
+            $save_as_product->save(); 
         }
     return redirect()->back()->with('success', 'Invoice edited successfully.');
 }
