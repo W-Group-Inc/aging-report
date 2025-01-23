@@ -44,16 +44,20 @@ class CommercialInvoiceController extends Controller
 
         $search = $request->input('search');
         $model = null;
+        $salesOrder = null;
         $view = '';
 
         if ($request->is('pbi_bir_invoice')) {
             $model = ODLN_PBI::query();
+            $salesOrder = ORDR_PBI::query();
             $view = 'print_templates.print_lists.pbi.bir_commercial_list';
         } elseif ($request->is('whi_bir_invoice')) {
             $model = ODLN::query();
+            $salesOrder = ORDR::query();
             $view = 'print_templates.print_lists.whi.bir_commercial_list';
         } elseif ($request->is('ccc_bir_invoice')) {
             $model = ODLN_CCC::query();
+            $salesOrder = ORDR_CCC::query();
             $view = 'print_templates.print_lists.ccc.bir_commercial_list';
         } else {
             abort(404); 
@@ -154,7 +158,6 @@ class CommercialInvoiceController extends Controller
         //   ->orderBy('OINV.DocEntry', 'desc')
           ->where('CANCELED' ,'!=', 'Y' )
           ->paginate(15);
-        
         return view($view, 
             array(
                 'details' =>$details,

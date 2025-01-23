@@ -25,4 +25,8 @@ class ODLN extends Model
     {
         return $this->hasOne(BirInvoice::class, 'DocNum', 'DocEntry');
     }
+    public function PoNumbers() 
+    {
+        return $this->hasMany(ORDR::class, 'NumAtCard', 'NumAtCard')->select('U_BuyersPO');
+    }
 }

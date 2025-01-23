@@ -38,7 +38,7 @@
                 </div> --}}
                 <div class="col-md-4">
                     <label>Buyer's PO No.</label>
-                    <input name="BuyersPo" class="form-control" type="text" value="{{ $detail->U_BuyersPO }}">
+                    <input name="BuyersPo" class="form-control" type="text" value="{{ implode(', ', $detail->PoNumbers->pluck('U_BuyersPO')->toArray()) }}">
                 </div>
                 <div class="col-md-4">
                     <label>Buyer's Ref No.</label>

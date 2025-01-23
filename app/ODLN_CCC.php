@@ -25,4 +25,8 @@ class ODLN_CCC extends Model
     {
         return $this->hasOne(CreditNote::class, 'DocNum', 'DocEntry');
     }
+    public function PoNumbers() 
+    {
+        return $this->hasMany(ORDR_CCC::class, 'NumAtCard', 'NumAtCard')->select('U_BuyersPO');
+    }
 }
