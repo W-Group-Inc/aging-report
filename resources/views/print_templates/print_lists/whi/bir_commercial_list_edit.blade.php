@@ -261,7 +261,7 @@
                     <input class="form-control" type="text" value="">
                 </div>
                 <div class="col-md-1">
-                    <label>Uom</label>
+                    <label>UoM</label>
                     <input class="form-control" name="printUom[]" type="text" value="">
                 </div>
                 <div class="col-md-3">
