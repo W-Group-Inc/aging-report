@@ -10,16 +10,17 @@
             font-family: sans-serif;
             margin: 0;
             padding: 0;
+
         }
         @page {
-            margin-top: 100px ; 
+            margin-top: 180px ; 
             /* margin-right: 50px ; */
-            margin-bottom: 100px ;
+            margin-bottom: 50px ;
             /* margin-left: 50px; */
         }
         header {
             position: fixed;
-            top: -80px; /* Distance from the top of the page */
+            /* top: -80px; */
             left: 0;
             right: 0;
             height: 50px;
@@ -27,7 +28,7 @@
             line-height: 35px;
         }
 
-        footer {
+        /* footer {
             position: fixed;
            
             left: 0;
@@ -35,19 +36,20 @@
             height: 40px;
             text-align: center;
             line-height: 15px;
-        }
+        } */
 
         .content {
             margin-top: 50px;
-            margin-bottom: 100px;
+            margin-bottom: 50px;
             display: block;
         }
 
         .header-container {
             display: table; 
             width: 100%; 
+            padding-top: 0px;
             padding-bottom: 10px; 
-            margin-bottom: 20px; 
+            margin-bottom: 10px; 
         }
         .left, .middle, .right {
             display: table-cell;
@@ -75,15 +77,18 @@
             display: block;
             font-size: 22px; 
             font-weight: bold;
-            line-height: 1; /* Adjust line height to reduce space */
+            line-height: 0; /* Adjust line height to reduce space */
             margin: 0; /* Remove margin */
             padding: 0; /* Remove padding */
         }
         .group-text{
+            line-height: 1;
             margin-top: -40px;
         }
         .middle-sub-text {
-            display: block;
+            margin: 0;
+            padding: 0;
+            /* display: block; */
             font-size: 13px; 
         }
 
@@ -92,12 +97,15 @@
             text-align: right; 
         }
         .header-container .right .line-two {
-            margin-top: 100px;
+            margin-top: 10px;
             line-height: 1;
         }
         .header-soaNo {
-            border-bottom: solid #000;
+            font-weight: bold;
+            border-bottom: solid 1px #000; /* 1px border at the bottom */
             font-size: 16px;
+            line-height: 2; 
+            display: inline-block;
         }
         .header-large-text{
             font-size: 26px;
@@ -112,6 +120,7 @@
             display: block;
         }
         .customer-container {
+            margin-top:10px;
             width: 100%;
         }
         .customer-container::after {
@@ -136,7 +145,7 @@
         .info-label {
             font-size: 13px;
             font-style: italic;
-            width: 30%; /* Fixed width for labels */
+            width: 20%; /* Fixed width for labels */
             display: inline-block;
             margin-right: 30px;
             vertical-align: top;   /* Align the label with the top of the value */
@@ -146,6 +155,10 @@
             width: 55%; /* Width for values */
             word-wrap: break-word; /* Allow long values to break to the next line */
             vertical-align: top;   /* Align the value with the top */
+        }
+        .product-details {
+            height: 380px;
+            overflow: hidden;
         }
         .product-details table {
             margin-top: 10px;
@@ -199,6 +212,25 @@
             width: 100%; 
             font-size: 13px;
         }
+        .new-col-left .info-name {
+            width: 20%; 
+            display: inline-block;
+            vertical-align: top;  
+            margin: 0;
+            font-size: 12px;
+        }
+        .new-col-left .info-colon {
+            width: 5%; 
+            display: inline-block;
+            vertical-align: top;  
+        }
+        .new-col-left .info-detail {
+            width: 55%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 13px;
+            
+        }
         .bottom-layout {
             width: 100%;
             /* bottom: 0 */
@@ -211,6 +243,7 @@
         .signature th {
             text-align: center;
             padding-bottom: 50px;
+            font-weight: normal;
         }
         .signature td {
             text-align: center;
@@ -220,6 +253,8 @@
             display: inline-block;
             border-bottom: 1px solid black;
             padding: 0 40px;
+            font-weight: bold;
+            font-size: 12px;
         }
         .signature .position {
             font-size: 10px;
@@ -250,11 +285,11 @@
         <div class="middle">
             {{-- <span class="middle-logo">
                 <img src="{{ asset('/images/w-logo.png')}}" alt="Company Logo">
-            </span>
+            </span> --}}
             <div class="group-text">
                 <span class="middle-header">BILLING STATEMENT</span>
-            <span class="middle-sub-text">FR-ACC-04 rev01</span>
-            </div> --}}
+                <span class="middle-sub-text">FR-ACC-04 rev01</span>
+            </div>
         </div>
         
         <div class="right">
@@ -282,19 +317,23 @@
     <div class="customer-container">
         <div class="left-column">
             <div class="info-row">
-                <span class="info-label">Date:</span>
+                <span class="info-label">Date</span>
+                <span class="info-colon">:</span>
                 <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->DocDate)->format('F j, Y') }}</span>
             </div>
             <div class="info-row">
-                <span class="info-label">Client:</span>
+                <span class="info-label">Client</span>
+                <span class="info-colon">:</span>
                 <span class="info-value" style="font-weight: bold; font-size:14px">{{ optional($details->first())->CardName }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label"></span>
+                <span class="info-colon"></span>
                 <span class="info-value">{{ optional($details->first())->Address }}</span>
             </div>
             <div class="info-row">
-                <span class="info-label">Attention:</span>
+                <span class="info-label">Attention</span>
+                <span class="info-colon">:</span>
                 <span class="info-value" style="font-weight: bold">Accounting Department</span>
             </div>
         </div>
@@ -329,11 +368,11 @@
     
     <div class="bottom-layout">
         <div class="new-row">
-            <div class="new-col-left" style="margin-top: 100px">
+            <div class="new-col-left" style="margin-top: 10px">
                 <div class="info-row">
                     <span class="info-name">Note</span>
                     <span class="info-colon">:</span>
-                    <span class="info-detail">{{ optional($details->first())->Comments}}</span>
+                    <span class="info-detail">{!! nl2br(e(optional($details->first())->Comments)) !!}</span>
                 </div>
                 <div class="info-row">
                     <span class="info-name">Terms of Payment</span>
@@ -355,13 +394,13 @@
                     $total += $detail->LineTotal;
                 }
                 @endphp
-               <div class="underline" style="margin-bottom:1px; border-bottom: 1px solid black"> <strong>Total. {{  number_format($total,2) }}</strong></div>
+               <div class="underline" style="margin-bottom:1px; border-bottom: 1px solid black; font-size: 16px;"> <strong>Total. {{  number_format($total,2) }}</strong></div>
             </div>
         </div>
         <div class="new-row" style="">
             <div class="new-col-left">
                 <div class="info-row">
-                    <span style="font-style: italic">Please make check payable to <strong>W Hydrocolloids</strong></span>
+                    <span style="font-style: italic">Please make check payable to <strong>W Hydrocolloids, Inc.</strong></span>
                 </div>
                 <table class="signature">
                     <tr>
