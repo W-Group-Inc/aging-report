@@ -209,9 +209,9 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
             $amount = isset($request->Amount[$index]) && $request->Amount[$index] !== '' 
                 ? (float) str_replace(',', '', $request->Amount[$index]) 
                 : null;
-            $unit_price = isset($request->UnitPrice[$index]) && $request->UnitPrice[$index] !== '' 
-                ? (float) str_replace(',', '', $request->UnitPrice[$index]) 
-                : null;
+            // $unit_price = isset($request->UnitPrice[$index]) && $request->UnitPrice[$index] !== '' 
+            //     ? (float) str_replace(',', '', $request->UnitPrice[$index]) 
+            //     : null;
             $save_as_product = new BirInvoiceProduct; 
             $save_as_product->DocNum = $save_as_new->id; 
             $save_as_product->Description = $description ?? null;
@@ -221,7 +221,7 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
             $save_as_product->PbiSiType = $request->PbiSiType[$index] ?? null;
             $save_as_product->Packing = $request->Packing[$index] ?? null;
             $save_as_product->Uom = $request->Uom[$index] ?? null;
-            $save_as_product->UnitPrice = $unit_price ?? null;
+            $save_as_product->UnitPrice = $request->UnitPrice[$index] ?? null;
             $save_as_product->printUom = $request->printUom[$index] ?? null;
             $save_as_product->Quantity = $quantity ?? null;
             $save_as_product->Amount = $amount ?? null;
@@ -282,6 +282,7 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
             $save_as_product->Packing = $request->Packing[$index] ?? null;
             $save_as_product->Uom = $request->Uom[$index] ?? null;
             $save_as_product->printUom = $request->printUom[$index] ?? null;
+            $save_as_product->UnitPrice = $request->UnitPrice[$index] ?? null;
     
             $save_as_product->Quantity = isset($request->Quantity[$index]) && $request->Quantity[$index] !== '' 
                 ? (float) str_replace(',', '', $request->Quantity[$index]) 
@@ -291,9 +292,9 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
                 ? (float) str_replace(',', '', $request->Amount[$index]) 
                 : null;
 
-            $save_as_product->UnitPrice = isset($request->UnitPrice[$index]) 
-                ? (float) str_replace(',', '', $request->UnitPrice[$index]) 
-                : null;
+            // $save_as_product->UnitPrice = isset($request->UnitPrice[$index]) 
+            //     ? (float) str_replace(',', '', $request->UnitPrice[$index]) 
+            //     : null;
     
             $save_as_product->save(); 
         }
