@@ -212,7 +212,7 @@
 </div>
 
 <div class="content">
-    <div class="customer-container">
+    <div class="customer-container" style="margin-bottom: 15px">
         <div class="left-column">
       
         </div>
@@ -328,7 +328,7 @@
                   </tr>
                   <tr>
                       <td></td>
-                      <td style="text-align: left">{{ $detail->U_label_as }}</td>
+                      <td style="text-align: left; padding-bottom:20px">{{ $detail->U_label_as }}</td>
                       <td>{{ number_format($detail->Quantity, 2) }}</td>
                       <td>{{ number_format($detail->Price, 2) }}</td>
                       <td>{{ number_format($detail->TotalFrgn, 2) }}</td>
@@ -359,7 +359,7 @@
                   </tr>
                   <tr>
                       <td></td>
-                      <td style="text-align: left">{{ $detail->U_Remarks3 }}</td>
+                      <td style="text-align: left; padding-bottom:20px">{{ $detail->U_Remarks3 }}</td>
                       <td></td>
                       <td></td>
                       <td></td>
