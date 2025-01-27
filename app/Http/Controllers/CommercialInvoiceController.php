@@ -507,7 +507,7 @@ function original_print(Request $request, $invoice_number){
         ->where('NumAtCard', '=', DB::raw("(SELECT NumAtCard FROM ODLN WHERE DocEntry = {$customer_ref})"))
         ->get();
 
-        $PoNumbers = $PoNumber->pluck('U_BuyersPO')->implode(', ');
+        $PoNumbers = $PoNumber->pluck('U_BuyersPO')->unique()->implode(', ');
         
         View::share('details', $details);
         View::share('PoNumber', $PoNumbers);
