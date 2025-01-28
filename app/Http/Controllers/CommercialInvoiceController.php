@@ -195,11 +195,12 @@ class CommercialInvoiceController extends Controller
         $save_as_new->TermsOfPayment = $request->TermsOfPayment;
         $save_as_new->SoNo = $request->SoNo;
         $save_as_new->Remarks = str_replace('/', "\n", $request->Remarks);
-$save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
+        $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
 
         $save_as_new->save();
         foreach ($request->input('Description') as $index => $description) {
-            $description = str_replace('@', ' ', $description);
+            $description = str_replace(['@', '/'], [' ', "\n"], $description);
+
             // $quantity = (float) str_replace(',', '', $request->Quantity[$index]);
             // $amount = (float) str_replace(',', '', $request->Amount[$index]);
             $quantity = isset($request->Quantity[$index]) && $request->Quantity[$index] !== '' 
@@ -265,7 +266,7 @@ $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
 
         foreach ($request->Description as $index => $description) {
             $productId = $request->product_id[$index];
-            $description = str_replace('@', ' ', $description);
+            $description = str_replace(['@', '/'], [' ', "\n"], $description);
             
             if ($productId) {
                 $save_as_product = BirInvoiceProduct::find($productId);
