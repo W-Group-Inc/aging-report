@@ -240,8 +240,11 @@
             font-size: 11px;
             word-wrap: break-word;
         }
+        .new-col-right .info-row.multiline .info-detail {
+            margin-top: -8px;
+        }
         .new-col-right .container .info-name {
-            width: 30%; /* Fixed width for labels */
+            width: 28%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0
@@ -447,9 +450,9 @@
             @endphp
             <tr>
                 <?php
-                $label = str_replace('(', '<br>(', $product->Description);
+                $label = str_replace('(', '<br>(', $product->Description); 
                 ?>
-                <td style="font-weight: bold">{!! $label !!}</td>
+                <td style="font-weight: bold">{!! nl2br($label)!!}</td>
                 <td>{{ $product->Packing }} {{ $product->Uom }}
                 </td>
                 <td style="width: 0; text-align: center;">
@@ -638,13 +641,13 @@
         </div>
     </div>
     <div class="new-col-right">
-        <div class="container">
-        <div class="info-row" style="margin-top:0px; margin-bottom:7px">
+        <div class="container" style="height:40px">
+        <div class="info-row" style="margin-top:0px; margin-bottom:8px">
             <span class="info-name"></span>
             <span class="info-colon"></span>
             <span class="info-detail">{{ optional($details->first())->TermsOfPayment }}</span>
         </div>
-        <div class="info-row">
+        <div class="info-row {{ strlen(optional($details->first())->TermsOfPayment) > 35 ? 'multiline' : '' }}">
             <span class="info-name"></span>
             <span class="info-colon"></span>
             <span class="info-detail">  {{ optional($details->first())->InvoiceDueDate ? \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') : '' }}</span>

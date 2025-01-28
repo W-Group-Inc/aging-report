@@ -233,8 +233,11 @@
             font-size: 11px;
             word-wrap: break-word;
         }
+        .new-col-right .info-row.multiline .info-detail {
+            margin-top: -8px;
+        }
         .new-col-right .container .info-name {
-            width: 30%; /* Fixed width for labels */
+            width: 28%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0
@@ -641,16 +644,16 @@
         </div>
     </div>
     <div class="new-col-right">
-        <div class="container">
-            <div class="info-row" style="margin-top:0px; margin-bottom:7px">
+        <div class="container" style="height:40px">
+            <div class="info-row" style="margin-top:0px; margin-bottom:8px">
                 <span class="info-name"></span>
                 <span class="info-colon"></span>
                 <span class="info-detail">{{ optional($details->first())->PymntGroup }}</span>
             </div>
-            <div class="info-row">
+            <div class="info-row {{ strlen(optional($details->first())->PymntGroup) > 35 ? 'multiline' : '' }}">
                 <span class="info-name"></span>
                 <span class="info-colon"></span>
-                <span class="info-detail">{{ optional($details->first())->ArDueDate ? \Carbon\Carbon::parse($details->first()->ArDueDate)->format('F j, Y') : '' }}</span>
+                <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</span>
             </div>
         </div>
         <div class="right-box" style="min-height: 210px;max-height: 210px">
