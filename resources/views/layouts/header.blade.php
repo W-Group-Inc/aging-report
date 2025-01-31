@@ -130,6 +130,7 @@
                       <a aria-expanded="false" role="button" href="{{url('/gp-report')}}"> GP Report</a>
                   </li>
                   @endif
+                  @if(auth()->user()->print == 1)
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                         Print
@@ -277,7 +278,8 @@
                             </ul>
                         </li>
                     </ul>
-                </li>                                                                               
+                </li>
+                @endif                                                                               
               </ul>
                   <ul class="nav navbar-top-links navbar-right">
                       <li>
