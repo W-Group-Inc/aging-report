@@ -145,7 +145,7 @@
                                             <th><input type="text" placeholder="Search Brokerage Charges" class="column_filter" data-column="17"></th>
                                             <th><input type="text" placeholder="Search Export Processing Fees" class="column_filter" data-column="18"></th>
                                             <th><input type="text" placeholder="Search Commission Expenses" class="column_filter" data-column="19"></th>
-                                            <th><input type="text" placeholder="Search Total Expenses" class="column_filter" data-column="24"></th>
+                                            <th><input type="text" placeholder="Search Total Expenses" class="column_filter" data-column="20"></th>
                                             @elseif($company == "PBI")
                                             <th><input type="text" placeholder="Search Freight & Handling" class="column_filter" data-column="14"></th>
                                             <th><input type="text" placeholder="Search Export Processing Fees" class="column_filter" data-column="15"></th>
@@ -153,7 +153,7 @@
                                             <th><input type="text" placeholder="Search Brokerage" class="column_filter" data-column="17"></th>
                                             <th><input type="text" placeholder="Search Insurance & Bonds" class="column_filter" data-column="18"></th>
                                             <th><input type="text" placeholder="Search Commission Expenses" class="column_filter" data-column="19"></th>
-                                            <th><input type="text" placeholder="Search Total Expenses" class="column_filter" data-column="24"></th>
+                                            <th><input type="text" placeholder="Search Total Expenses" class="column_filter" data-column="20"></th>
                                             @elseif($company == "CCC")
                                             <th><input type="text" placeholder="Search Delivery Expenses" class="column_filter" data-column="14"></th>
                                             <th><input type="text" placeholder="Search Insurance Expense" class="column_filter" data-column="15"></th>
@@ -161,13 +161,60 @@
                                             <th><input type="text" placeholder="Search Processing Fees" class="column_filter" data-column="17"></th>
                                             <th><input type="text" placeholder="Search Delivery and Trucking" class="column_filter" data-column="18"></th>
                                             <th><input type="text" placeholder="Search Commission" class="column_filter" data-column="19"></th>
-                                            <th><input type="text" placeholder="Search Total Expenses" class="column_filter" data-column="24"></th>
+                                            <th><input type="text" placeholder="Search Total Expenses" class="column_filter" data-column="20"></th>
                                             @endif
-                                            <th><input type="text" placeholder="Search Gross Profit - RM" class="column_filter" data-column="20"></th>
-                                            <th><input type="text" placeholder="Search GP%" class="column_filter" data-column="21"></th>
-                                            <th><input type="text" placeholder="Search Product Classification" class="column_filter" data-column="22"></th>
-                                            <th><input type="text" placeholder="Search Account Manager" class="column_filter" data-column="23"></th>
-                                        </tr>                        
+                                            <th><input type="text" placeholder="Search Gross Profit - RM" class="column_filter" data-column="21"></th>
+                                            <th><input type="text" placeholder="Search GP%" class="column_filter" data-column="22"></th>
+                                            <th><input type="text" placeholder="Search Product Classification" class="column_filter" data-column="23"></th>
+                                            <th><input type="text" placeholder="Search Account Manager" class="column_filter" data-column="24"></th>
+                                        </tr> 
+                                        <tr>
+                                            <th><select class="column_filter_select" data-column="0"></select></th>
+                                            <th><select class="column_filter_select" data-column="1"></select></th>
+                                            <th><select class="column_filter_select" data-column="2"></select></th>
+                                            <th><select class="column_filter_select" data-column="3"></select></th>
+                                            <th><select class="column_filter_select" data-column="4"></select></th>
+                                            <th><select class="column_filter_select" data-column="5"></select></th>
+                                            <th><select class="column_filter_select" data-column="6"></select></th>
+                                            <th><select class="column_filter_select" data-column="7"></select></th>
+                                            <th><select class="column_filter_select" data-column="8"></select></th>
+                                            <th><select class="column_filter_select" data-column="9"></select></th>
+                                            <th><select class="column_filter_select" data-column="10"></select></th>
+                                            <th><select class="column_filter_select" data-column="11"></select></th>
+                                            <th><select class="column_filter_select" data-column="12"></select></th>
+                                            <th><select class="column_filter_select" data-column="13"></select></th>
+                                            
+                                            @if($company == "WHI")
+                                                <th><select class="column_filter_select" data-column="14"></select></th>
+                                                <th><select class="column_filter_select" data-column="15"></select></th>
+                                                <th><select class="column_filter_select" data-column="16"></select></th>
+                                                <th><select class="column_filter_select" data-column="17"></select></th>
+                                                <th><select class="column_filter_select" data-column="18"></select></th>
+                                                <th><select class="column_filter_select" data-column="19"></select></th>
+                                                <th><select class="column_filter_select" data-column="20"></select></th>
+                                            @elseif($company == "PBI")
+                                                <th><select class="column_filter_select" data-column="14"></select></th>
+                                                <th><select class="column_filter_select" data-column="15"></select></th>
+                                                <th><select class="column_filter_select" data-column="16"></select></th>
+                                                <th><select class="column_filter_select" data-column="17"></select></th>
+                                                <th><select class="column_filter_select" data-column="18"></select></th>
+                                                <th><select class="column_filter_select" data-column="19"></select></th>
+                                                <th><select class="column_filter_select" data-column="20"></select></th>
+                                            @elseif($company == "CCC")
+                                                <th><select class="column_filter_select" data-column="14"></select></th>
+                                                <th><select class="column_filter_select" data-column="15"></select></th>
+                                                <th><select class="column_filter_select" data-column="16"></select></th>
+                                                <th><select class="column_filter_select" data-column="17"></select></th>
+                                                <th><select class="column_filter_select" data-column="18"></select></th>
+                                                <th><select class="column_filter_select" data-column="19"></select></th>
+                                                <th><select class="column_filter_select" data-column="20"></select></th>
+                                            @endif
+                                        
+                                            <th><select class="column_filter_select" data-column="21"></select></th>
+                                            <th><select class="column_filter_select" data-column="22"></select></th>
+                                            <th><select class="column_filter_select" data-column="23"></select></th>
+                                            <th><select class="column_filter_select" data-column="24"></select></th>
+                                        </tr>                       
                                     </thead>
                                     <tbody>
                                         @foreach($invoices as $invoice)
@@ -216,12 +263,12 @@
                                             <td>{{$invoice->NumAtCard}} </td>
                                             <td>{{$invoice->Client}}</td>
                                             <td>{{$invoice->PRODUCT_EXPORTED}}</td>
-                                            <td>{{number_format($invoice->VOLUME,2)}}</td>
-                                            <td>{{number_format($invoice->UNIT_PRICE,2)}}</td>
-                                            <td>{{number_format($dollar,2)}}</td>
-                                            <td>{{number_format($euro,2)}}</td>
-                                            <td>{{number_format($invoice->Php_Value,2)}}</td>
-                                            <td>{{number_format($invoice->COS_RM,2)}}</td>
+                                            <td class="text-right">{{number_format($invoice->VOLUME,2)}}</td>
+                                            <td class="text-right">{{number_format($invoice->UNIT_PRICE,2)}}</td>
+                                            <td class="text-right">{{number_format($dollar,2)}}</td>
+                                            <td class="text-right">{{number_format($euro,2)}}</td>
+                                            <td class="text-right">{{number_format($invoice->Php_Value,2)}}</td>
+                                            <td class="text-right">{{number_format($invoice->COS_RM,2)}}</td>
                                             @php
                                                 $frieght = 0;
                                                 $delivery = 0;
@@ -235,7 +282,7 @@
                                             @if($company == "WHI")
                                             @if(count($invoice->ap_whi) >0)
                                                 @endif
-                                            <td>
+                                            <td class="text-right">
                                                 
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620300'])->sum('LineTotal') > 0)
                                             @php
@@ -244,7 +291,7 @@
                                             @endif
                                             {{number_format($frieght,2)}}
                                             </td> {{--620300--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400'])->sum('LineTotal') > 0)
                                             @php
                                                 $delivery = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -252,7 +299,7 @@
                                             @endif
                                             {{number_format($delivery,2)}}
                                             </td> {{--620400 --}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['621400'])->sum('LineTotal') > 0)
                                             @php
                                                 $insurance = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['621400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -260,7 +307,7 @@
                                             @endif
                                             {{number_format($insurance,2)}}
                                             </td> {{--621400--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620500'])->sum('LineTotal') > 0)
                                             @php
                                                 $brokerage = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620500'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -268,7 +315,7 @@
                                             @endif
                                             {{number_format($brokerage,2)}}
                                             </td> {{--620500--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620700'])->sum('LineTotal') > 0)
                                             @php
                                                 $export = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -276,7 +323,7 @@
                                             @endif
                                             {{number_format($export,2)}}
                                             </td> {{--620700--}}
-                                            <td>
+                                            <td class="text-right">
                                                 {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200']) as $inv)
                                                 {{$inv->LineTotal}} <br>
                                              @endforeach --}}
@@ -303,16 +350,16 @@
 
                                              {{-- {{ number_format(optional($invoice->ap_has_commision)->OpenSumFC, 2) }} --}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{number_format($totalExpense,2)}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
 
                                                 {{number_format($gross_profit ,2)}}
                                             </td>
-                                            <td>{{number_format($gp*100,2)}} %</td>
+                                            <td class="text-right">{{number_format($gp*100,2)}} %</td>
                                             @elseif($company == "PBI")
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400'])->sum('LineTotal') > 0)
                                             @php
                                                 $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710400'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -320,7 +367,7 @@
                                             @endif
                                             {{number_format($frieght,2)}}
                                             </td> {{--710400--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710500'])->sum('LineTotal') > 0)
                                             @php
                                                 $delivery = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710500'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -328,7 +375,7 @@
                                             @endif
                                             {{number_format($delivery,2)}}
                                             </td> {{--710500 --}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710700'])->sum('LineTotal') > 0)
                                             @php
                                                 $insurance = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710700'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -336,7 +383,7 @@
                                             @endif
                                             {{number_format($insurance,2)}}
                                             </td> {{--710700--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['711000'])->sum('LineTotal') > 0)
                                             @php
                                                 $brokerage = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['711000'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -344,7 +391,7 @@
                                             @endif
                                             {{number_format($brokerage,2)}}
                                             </td> {{--711000--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710800'])->sum('LineTotal') > 0)
                                             @php
                                                 $export = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710800'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -352,7 +399,7 @@
                                             @endif
                                             {{number_format($export,2)}}
                                             </td> {{--710800--}}
-                                            <td>
+                                            <td class="text-right">
                                                 {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200']) as $inv)
                                                 {{$inv->LineTotal}} <br>
                                              @endforeach --}}
@@ -379,16 +426,16 @@
 
                                              {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['710600'])->sum('LineTotal'),2)}} --}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{number_format($totalExpense,2)}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
 
                                                 {{number_format($gross_profit ,2)}}
                                             </td>
-                                            <td>{{number_format($gp*100,2)}} %</td>
+                                            <td class="text-right">{{number_format($gp*100,2)}} %</td>
                                             @elseif($company == "CCC")
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610127'])->sum('LineTotal') > 0)
                                             @php
                                                 $frieght = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610127'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -396,7 +443,7 @@
                                             @endif
                                             {{number_format($frieght,2)}}
                                             </td> {{--610127--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610128'])->sum('LineTotal') > 0)
                                             @php
                                                 $delivery = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610128'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -404,7 +451,7 @@
                                             @endif
                                             {{number_format($delivery,2)}}
                                             </td> {{--610128 --}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610131'])->sum('LineTotal') > 0)
                                             @php
                                                 $insurance = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610131'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -412,7 +459,7 @@
                                             @endif
                                             {{number_format($insurance,2)}}
                                             </td> {{--610131--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['630000'])->sum('LineTotal') > 0)
                                             @php
                                                 $brokerage = ((($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['630000'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -420,7 +467,7 @@
                                             @endif
                                             {{number_format($brokerage,2)}}
                                             </td> {{--630000--}}
-                                            <td>
+                                            <td class="text-right">
                                                 @if(($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610145'])->sum('LineTotal') > 0)
                                             @php
                                                 $export = ((($invoice->ap_whi)->whereIn('chart_of_account.Segment_0',['610145'])->sum('LineTotal') / $invoices->where('U_InvoiceNo',$invoice->U_InvoiceNo)->sum('VOLUME')) * $invoice->VOLUME);
@@ -428,7 +475,7 @@
                                             @endif
                                             {{number_format($export,2)}}
                                             </td> {{--610145--}}
-                                            <td>
+                                            <td class="text-right">
                                                 {{-- @foreach(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620200']) as $inv)
                                                 {{$inv->LineTotal}} <br>
                                              @endforeach --}}
@@ -454,14 +501,14 @@
                                                 {{ $commission }}
                                              {{-- {{number_format(($invoice->ap_whi)->whereIn('chart_of_account.FatherNum',['620000'])->sum('LineTotal'),2)}} --}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{number_format($totalExpense,2)}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
 
                                                 {{number_format($gross_profit ,2)}}
                                             </td>
-                                            <td>{{number_format($gp*100,2)}} %</td>
+                                            <td class="text-right">{{number_format($gp*100,2)}} %</td>
                                             @endif
                                             <td>{{ $invoice->Product_Classification }}</td>
                                             <td>{{ $invoice->SlpName }}</td>
@@ -696,7 +743,7 @@
                                                 $ave_unit_price = $total_foreign_value / $total_volume;
                                             }
                                         @endphp
-                                        <tr style="padding:15px">
+                                        <tr class="text-right" style="padding:15px; font-weight:bold">
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -719,11 +766,11 @@
                                             <td id="aveGp"></td>
                                             <td></td><td></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="text-right" style="font-weight:bold">
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td><td></td><td></td><td></td><td></td>
+                                            <td></td><td></td><td></td><td></td><td>TOTAL</td>
                                             <td>{{ number_format($total_volume, 2) }}</td>
                                             <td>{{ number_format($ave_unit_price, 2) }}</td>
                                             <td>{{ number_format($total_dollar, 2) }}</td>
@@ -784,6 +831,13 @@
         updateFooter();  
     });
 
+    $(".column_filter_select").on("change", function() {
+        var column = $(this).data("column");
+        var value = $(this).val();
+        table.column(column).search(value).draw();
+        updateFooter();  
+    });
+
     function updateFooter() {
         var totalVolume = 0, aveUnitPrice = 0, totalDollar = 0, totalEuro = 0, totalPhp = 0,
             totalCosRm = 0, totalFreight = 0, totalDelivery = 0, totalInsurance = 0, totalBrokerage = 0,
@@ -832,6 +886,24 @@
         $('#aveGp').text(aveGp.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %');
         $('#subtotal').text('SUBTOTAL');
     }
+    function populateSelectFilters() {
+        $(".column_filter_select").each(function() {
+            var columnIdx = $(this).data("column");
+            var select = $(this);
+            select.empty().append('<option value="">All</option>');
+
+            var uniqueValues = new Set();
+            table.column(columnIdx).data().each(function(value) {
+                uniqueValues.add(value);
+            });
+
+            uniqueValues.forEach(function(value) {
+                select.append('<option value="' + value + '">' + value + '</option>');
+            });
+        });
+    }
+
+    populateSelectFilters();
 
     updateFooter();
 });
