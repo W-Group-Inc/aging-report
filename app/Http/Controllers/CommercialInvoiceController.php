@@ -34,6 +34,7 @@ use App\CRD1_PBI;
 use App\OITM_PBI;
 use App\OCRD_PBI;
 use App\ODLN_CCC;
+use App\SisCode;
 use Illuminate\Http\Request;
 
 class CommercialInvoiceController extends Controller
@@ -47,6 +48,7 @@ class CommercialInvoiceController extends Controller
         $salesOrder = null;
         $view = '';
 
+        $sisCodes = SisCode::all();
         if ($request->is('pbi_bir_invoice')) {
             $model = ODLN_PBI::query();
             $salesOrder = ORDR_PBI::query();
@@ -162,6 +164,7 @@ class CommercialInvoiceController extends Controller
             array(
                 'details' =>$details,
                 'search' =>$search,
+                'sisCodes' =>$sisCodes
             )
         );
     }
@@ -182,6 +185,8 @@ class CommercialInvoiceController extends Controller
         $save_as_new->ShipTo = $request->ShipTo;
         $save_as_new->InvoiceDueDate = $request->InvoiceDueDate;
         $save_as_new->PaymentInstruction = $request->PaymentInstruction;
+        $save_as_new->Phrex = $request->Phrex;
+        $save_as_new->ShowPhrex = $request->ShowPhrex;
         $save_as_new->DateOfShipment = $request->DateOfShipment;
         $save_as_new->PortOfLoading = $request->PortOfLoading;
         $save_as_new->PortOfDestination = $request->PortOfDestination;
@@ -196,6 +201,9 @@ class CommercialInvoiceController extends Controller
         $save_as_new->SoNo = $request->SoNo;
         $save_as_new->Remarks = str_replace('/', "\n", $request->Remarks);
         $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
+        $save_as_new->Currency = $request->Currency;
+        $save_as_new->Uom = $request->UnitOfM;
+
 
         $save_as_new->save();
         foreach ($request->input('Description') as $index => $description) {
@@ -246,6 +254,8 @@ class CommercialInvoiceController extends Controller
         $update_saved_invoice->ShipTo = $request->ShipTo;
         $update_saved_invoice->InvoiceDueDate = $request->InvoiceDueDate;
         $update_saved_invoice->PaymentInstruction = $request->PaymentInstruction;
+        $update_saved_invoice->Phrex = $request->Phrex;
+        $update_saved_invoice->ShowPhrex = $request->ShowPhrex;
         $update_saved_invoice->DateOfShipment = $request->DateOfShipment;
         $update_saved_invoice->PortOfLoading = $request->PortOfLoading;
         $update_saved_invoice->PortOfDestination = $request->PortOfDestination;
@@ -261,7 +271,8 @@ class CommercialInvoiceController extends Controller
         $update_saved_invoice->invoice_date = $request->invoice_date;
         $update_saved_invoice->Remarks = str_replace('/', "\n", $request->Remarks);
         $update_saved_invoice->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
-
+        $update_saved_invoice->Currency = $request->Currency;
+        $update_saved_invoice->Uom = $request->UnitOfM;
         $update_saved_invoice->update();
 
         foreach ($request->Description as $index => $description) {

@@ -18,9 +18,13 @@
                     <label >Date:</label>
                     <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse($detail->asNew->invoice_date)->format('Y-m-d') }}">
                 </div>
-                <div class="col-md-12">
+                {{-- <div class="col-md-12">
                     <label >Sold To:</label>
                     <input name="Client" class="form-control" type="text" value="{{ $detail->asNew->SoldTo }}">
+                </div> --}}
+                <div class="col-md-12">
+                    <label >Sold To:</label>
+                    <textarea name="Client" class="form-control"  rows="5" type="text">{{ $detail->asNew->SoldTo }}</textarea>
                 </div>
                 {{-- <div class="col-md-12">
                     <label>Address</label>
@@ -28,7 +32,7 @@
                 </div> --}}
                 <div class="col-md-12">
                     <label>Ship To</label>
-                    <input name="ShipTo" class="form-control" type="text" value="{{ $detail->asNew->ShipTo }}">
+                    <textarea name="ShipTo" class="form-control"  rows="5" type="text">{{ $detail->asNew->ShipTo }}</textarea>
                 </div>
                 <div class="col-md-6">
                     <label>TIN</label>
@@ -60,6 +64,14 @@
                     <input name="SoNo" class="form-control" type="text" value="{{ $detail->asNew->SoNo}}">
                     @endforeach
                 </div>
+                <div class="col-md-2">
+                    <label>Cur</label>
+                    <input name="Currency" class="form-control" type="text" value="{{ $detail->asNew->Currency }}">
+                </div>
+                <div class="col-md-2">
+                    <label>UoM</label>
+                    <input class="form-control" name="UnitOfM" type="text" value="{{ $detail->asNew->Uom }}">
+                </div>
                 {{-- <div class="col-md-4">
                     <label>Sales Contract No.</label>
                     <input name="SalesContract" class="form-control" type="text" value="{{ $detail->U_Salescontract }}">
@@ -73,28 +85,34 @@
                     <input name="ScPwd" class="form-control" type="text">
                 </div> --}}
             </div>      
-            <div class="col-md-12 row"><h3>Product</h5></div> 
-            <div class="row">
+            <div class="row" id="pbiEditProductContainer{{ $detail->asNew->id }}">
             @foreach ( $detail->asNew->products as $product)
+            <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h3></div> 
+
             <div class="col-md-12">
                 <input name="product_id[]" class="form-control" type="hidden" value="{{  $product->id }}">
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <label>Product Code</label>
-                <input name="ProductCode[]" class="form-control" type="text" value="{{  $product->ProductCode }}">
+                <input name="ProductCode[]" class="form-control product-code" type="text" value="{{  $product->ProductCode }}">
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <label>Description</label>
-                <input name="Description[]" class="form-control" type="text" value="{{ $product->Description }}">
+                <select class="form-control description-select" name="Description[]" style="position: relative !important">
+                    <option value="" selected>No Description</option>
+                    @foreach ($sisCodes as $codes)
+                        <option value="{{$codes->product }}"  data-code="{{ $codes->product_code }}"  @if ($codes->product == $product->Description ) selected @endif>{{$codes->product  }}</option>
+                    @endforeach
+                </select>
             </div>
             {{-- <div class="col-md-6">
                 <label>Supplier Code</label>
                 <input name="SupplierCode[]" class="form-control" type="text" value="{{ $product->U_SupplierCode }}">
             </div> --}}
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <label>Currency</label>
                 <input name="DocCur[]" class="form-control" type="text" value="{{ $product->DocCur }}">
-            </div>
+            </div> --}}
             {{-- <div class="col-md-3">
                 <label>Packing</label>
                 <input name="Packing[]" class="form-control" type="text" value="{{ $product->U_Bagsperlot }}">
@@ -107,10 +125,10 @@
                 <label>Unit</label>
                 <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->U_Bagsperlot) && $product->U_Bagsperlot != 0 ? number_format($product->Quantity / $product->U_Bagsperlot, 2) : '' }}" readonly>
             </div> --}}
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <label>Unit of Measurement</label>
                 <input class="form-control" name="printUom[]" type="text" value="{{ $product->printUom}}">
-            </div>
+            </div> --}}
             <div class="col-md-4">
                 <label>Quantity</label>
                 <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}">
@@ -118,25 +136,31 @@
             <div class="col-md-4">
                 <label>Unit Price</label>
                     {{-- <input class="form-control" type="text" value="{{ !empty($product->Amount) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->Amount / $product->Quantity, 2) : '' }}" readonly> --}}
-                    <input class="form-control" type="text" value="{{ $product->UnitPrice}}">
+                    <input class="form-control" name="UnitPrice[]" type="text" value="{{ $detail->asNew->Uom == 'lbs' ? number_format($product->UnitPrice / 2.2, 2) : number_format($product->UnitPrice, 2) }}" >
+                    {{-- <input class="form-control" name="UnitPrice[]" type="text" value="{{ $product->UnitPrice}}"> --}}
             </div>
             <div class="col-md-4">
                 <label>Amount</label>
                     <input class="form-control" name="Amount[]" type="text" value="{{ number_format($product->Amount, 2) }}">
+                    {{-- <input class="form-control" name="Amount[]" type="text" value="{{ number_format(($product->Quantity) * ($product->UnitPrice), 2) }}" > --}}
             </div>
             <div class="col-md-4">
                 <input class="form-control" name="PbiSiType[]" type="hidden" value="">
             </div>
-            <div class="col-md-12">
-                <label for="">Payment Instruction</label>
-                <textarea name="PaymentInstruction" class="form-control" rows="10">
-                    {{ $detail->asNew->PaymentInstruction }}
-                </textarea>
-            </div>
             @endforeach
             </div>  
-            <div class="col-md-12 row"><h3>Breakdown</h5></div> 
-                <div class="row" style="margin: 0;">
+            <div class="col-md-12 mt-3" style="padding: 20px;">
+                <button type="button" class="btn btn-primary" id="pbiEditAddRowButton{{ $detail->asNew->id }}" >Add Row</button>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="">Remarks</label>
+                    <textarea name="Remarks" class="form-control" rows="10">
+                        {{ $detail->asNew->Remarks }}
+                    </textarea>
+                </div>
+            </div>
+                {{-- <div class="row" style="margin: 0;">
                     <div class="col-md-12" style="margin: 0; padding: 0;">
                         <div class="mt-4">
                             <table class="table table-bordered customer_request-{{ $detail->asNew->id }}" style="margin: 0; padding: 0;">
@@ -159,7 +183,30 @@
                             </div>
                         </div>
                     </div>
-                </div>                                       
+                </div>    --}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="">Payment Instruction</label>
+                        <textarea name="PaymentInstruction" class="form-control" rows="10">
+                            {{ $detail->asNew->PaymentInstruction }}
+                        </textarea>
+                    </div>   
+                </div> 
+                <div class="row">
+                    <div class="col-md-10">
+                        <label for="">PHREX</label>
+                        <textarea name="Phrex" class="form-control" rows="7">
+                            {{ $detail->asNew->Phrex }}
+                        </textarea>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="checkbox" name="ShowPhrex" class="form-check-input" value="{{ $detail->asNew->ShowPhrex }}" 
+                        {{ $detail->asNew->ShowPhrex == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="ShowPhrex">
+                            Show
+                        </label>
+                    </div>
+                </div>                                 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -174,6 +221,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        
         document.querySelectorAll('.addRowBtn').forEach(function(button) {
             button.addEventListener('click', function() {
                 var table = button.closest('.mt-4').querySelector('table');
@@ -191,6 +239,68 @@
                 `;
                 
                 table.querySelector('tbody').appendChild(newRow);
+            });
+        });
+
+        document.getElementById('pbiEditAddRowButton{{ $detail->asNew->id }}').addEventListener('click', function () {
+            const pbiProductContainer = document.getElementById('pbiEditProductContainer{{ $detail->asNew->id }}');
+            const sis_codes = @json($sisCodes);
+            const selectOptions = sis_codes.map(code => `<option value="${code.product}">${code.product}</option>`).join('');
+            const newRow = `
+            <div class="product-row">
+                <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h3></div> 
+                <div class="col-md-6">
+                    <label>Product Code</label>
+                    <input name="ProductCode[]" class="form-control product-code" type="text" value="">
+                </div>
+                <div class="col-md-6">
+                    <label>Description</label>
+                    <select class="form-control js-example-basic-single description-select" name="Description[]" style="position: relative !important" required>
+                        <option value="" selected>No Description</option>
+                        ${selectOptions}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label>Quantity</label>
+                    <input class="form-control" name="Quantity[]" type="text" value="" >
+                </div>
+                <div class="col-md-4">
+                    <label>Unit Price</label>
+                    <input class="form-control" name="UnitPrice[]" type="text" value="" >
+                </div>
+                <div class="col-md-4">
+                    <label>Amount</label>
+                    <input class="form-control" name="Amount[]" type="text" value="" >
+                </div>
+                <div class="col-md-12">
+                    <input class="form-control" name="PbiSiType[]" type="hidden" value="">
+                </div>
+                <div class="col-md-12 text-end mt-2">
+                    <button type="button" class="btn btn-danger delete-row">Delete</button>
+                </div>
+            </div>
+            `;
+
+            pbiProductContainer.insertAdjacentHTML('beforeend', newRow);
+            const lastAddedRow = pbiProductContainer.lastElementChild;
+            const descriptionSelect = lastAddedRow.querySelector('.description-select');
+            const productCodeInput = lastAddedRow.querySelector('.product-code');
+
+            descriptionSelect.addEventListener('change', function () {
+                const selectedProduct = this.value;
+                const matchingCode = sis_codes.find(code => code.product === selectedProduct);
+                
+                if (matchingCode) {
+                    productCodeInput.value = matchingCode.product_code; 
+                } else {
+                    productCodeInput.value = ''; 
+                }
+            });
+            const deleteButtons = pbiProductContainer.querySelectorAll('.delete-row');
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', function () {
+                    button.closest('.product-row').remove();
+                });
             });
         });
 
@@ -243,4 +353,10 @@
 
 });
 
+    $(document).ready(function() {
+        $('.description-select').on('change', function() {
+            var productCode = $(this).find(':selected').data('code'); 
+            $(this).closest('.col-md-6').prev('.col-md-6').find('.product-code').val(productCode);
+        });
+    });
 </script>

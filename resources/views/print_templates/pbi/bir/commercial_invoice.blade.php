@@ -7,7 +7,7 @@
     
     <style>
         @page{
-        margin: 70px 50px 10px 0px;
+        margin: 70px 58px 10px 0px;
        }
         body {
             font-family: sans-serif;
@@ -120,13 +120,13 @@
             /* border: 1px solid #000;  */
             text-align: center;
             width: 100%;
+            /* border: 1px solid black; */
         }
         .product-details .top-table td{
             padding: 2px; 
             /* border-left: 1px solid #000; */
             text-align: center; 
             /* border-right: 1px solid #000; */
-
         }
         
         .product-details-middle .middle-table{
@@ -189,6 +189,10 @@
             width: 100%; 
             display: block; 
         }
+        .right-column .info-row.multiline .info-value{
+            line-height: 1;
+
+        }
     </style>
 </head>
 <body>
@@ -225,8 +229,8 @@
           <div class="left-column">
               <div class="info-row" style="max-height: 44px; min-height:44px">
                   <span class="info-label"></span>
-                  <span class="info-value">{{ optional($details->first())->PayToCode }}
-                    <br> {{ optional($details->first())->Billtoaddress }}
+                  <span class="info-value"> {!! nl2br(optional($details->first())->PayToCode)!!}
+                    <br> {!! nl2br(optional($details->first())->Billtoaddress)!!} 
                   </span>
               </div>
               <div class="info-row" style="max-height: 45px; min-height:45px">
@@ -235,7 +239,7 @@
               </div>
               <div class="info-row" style="max-height: 50px; min-height:50px">
                 <span class="info-label"></span>
-                <span class="info-value">{{ optional($details->first())->Shiptoaddress }}</span>
+                <span class="info-value">{!! nl2br(optional($details->first())->Shiptoaddress)!!} </span>
             </div>
               <div class="info-row" style="max-height: 60px; min-height:60px">
                   <span class="info-label"></span>
@@ -261,9 +265,9 @@
               </div>
               <div class="info-row">
                   <span class="info-label"></span>
-                  <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->U_SOADueDate)->format('F j, Y') }}</span>
+                  <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') }}</span>
               </div>
-              <div class="info-row" style="margin-bottom:10px">
+              <div class="info-row{{ strlen(optional($details->first())->PymntGroup) > 35 ? 'multiline' : '' }}"  style="margin-bottom:10px">
                 <span class="info-label"></span>
                 <span class="info-value">{{ optional($details->first())->PymntGroup }}</span>
             </div>
@@ -290,7 +294,7 @@
               <thead>
                   <tr>
                     <th style="width: 103px;"></th>
-                    <th style="width: 305px;"></th>
+                    <th style="width: 289px;"></th>
                     <th style="width: 100px;"></th>
                     <th style="width: 74px;"></th>
                     <th style="width: 103px;;"></th>
@@ -298,16 +302,22 @@
               </thead>
               @foreach ($details as $detail)
               <tbody>
+                @php
+                      $total = 0;
+                      foreach ($details as $detail){
+                          $total += ($detail->Quantity) * ($detail->Price);
+                      }
+                  @endphp
                   <tr>
                       <td style="width: 103px;"></td>
-                      <td style="width: 305px;"></td>
+                      <td style="width: 289px;"></td>
                       <td style="width: 100px; text-transform: uppercase;">{{ $detail->U_printUOM }}</td>
                       <td style="width: 74px;">{{ $detail->DocCur }}</td>
                       <td style="width: 103px;;">{{ $detail->DocCur }}</td>
                   </tr>
                   <tr>
                       <td style="width: 103px;"></td>
-                      <td style="width: 305px; text-align:left">{{ $detail->U_label_as }}</td>
+                      <td style="width: 289px; text-align:left">{{ $detail->U_label_as }}</td>
                       <td style="width: 100px;">
                         @if ($detail->U_printUOM == 'lbs')
                         {{ number_format($detail->Quantity * 2.2, 2) }}
@@ -323,19 +333,25 @@
                         @endif
                       <td style="width: 103px;;">{{ number_format(($detail->Quantity) * ($detail->Price), 2) }}</td>
                   </tr>
+                  <tr>
+                    <td style="width: 103px;"></td>
+                    <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
+                    <td style="width: 100px;"></td>
+                    <td style="width: 74px;"></td>
+                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black">{{ number_format($total,2) }}</td>
+                  </tr>
               </tbody>
               @endforeach
           </table>
+          <div style="position: relative; ">
+            <p style="font-size:13px; font-weight: bold; position: fixed; left: 230px; bottom: 240px;">VAT ZERO-RATED</p>
+            <p style="font-size:10px; font-weight: bold; position: fixed; left: 10px; bottom: 305px;">Packaging Code: P52</p>
+          </div>
         </div>
           <div class="product-details-middle">
             <table class="middle-table"  style="margin-top:0; border-top:none; font-size:12px">
                 <tbody >
-                  @php
-                      $total = 0;
-                      foreach ($details as $detail){
-                          $total += ($detail->Quantity) * ($detail->Price);
-                      }
-                  @endphp
+                  
                     <tr>
                         <td></td>
                         <td></td>

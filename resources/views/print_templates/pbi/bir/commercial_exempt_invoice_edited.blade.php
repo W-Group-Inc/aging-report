@@ -7,7 +7,7 @@
     
     <style>
         @page{
-        margin: 70px 50px 10px 0px;
+        margin: 70px 58px 10px 0px;
        }
         body {
             font-family: sans-serif;
@@ -130,7 +130,7 @@
         }
         
         .product-details-middle .middle-table{
-            width: 100%;
+            width: 50%;
             border-collapse: collapse; 
             font-size: 13px;
         }
@@ -189,6 +189,11 @@
             width: 100%; 
             display: block; 
         }
+        .right-column .info-row.multiline .info-value{
+            /* margin-top: -20px; */
+            line-height: 1;
+
+        }
     </style>
 </head>
 <body>
@@ -225,7 +230,7 @@
           <div class="left-column">
               <div class="info-row" style="max-height: 44px; min-height:44px">
                   <span class="info-label"></span>
-                  <span class="info-value">{{ optional($details->first())->Address }}
+                  <span class="info-value">{!! nl2br(optional($details->first())->SoldTo)!!}
                   </span>
               </div>
               <div class="info-row" style="max-height: 45px; min-height:45px">
@@ -234,7 +239,7 @@
               </div>
               <div class="info-row" style="max-height: 50px; min-height:50px">
                 <span class="info-label"></span>
-                <span class="info-value">{{ optional($details->first())->ShipTo }}</span>
+                <span class="info-value"> {!! nl2br(optional($details->first())->ShipTo) !!}</span>
             </div>
               <div class="info-row" style="max-height: 60px; min-height:60px">
                   <span class="info-label"></span>
@@ -262,7 +267,7 @@
                   <span class="info-label"></span>
                   <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') }}</span>
               </div>
-              <div class="info-row" style="margin-bottom:10px">
+              <div class="info-row {{ strlen(optional($details->first())->TermsOfPayment) > 35 ? 'multiline' : '' }}" style="margin-bottom:10px">
                 <span class="info-label"></span>
                 <span class="info-value">{{ optional($details->first())->TermsOfPayment }}</span>
             </div>
@@ -289,7 +294,7 @@
               <thead>
                   <tr>
                     <th style="width: 103px;"></th>
-                    <th style="width: 305px;"></th>
+                    <th style="width: 289px;"></th>
                     <th style="width: 100px;"></th>
                     <th style="width: 74px;"></th>
                     <th style="width: 103px;;"></th>
@@ -299,26 +304,35 @@
                   $total = 0
               @endphp
               @foreach ($details as $detail)
-              @foreach ($detail->products as $product)
-              @php
-                  $total += $product->Amount;
-              @endphp
+              <tr>
+                <td style="width: 103px;"></td>
+                <td style="width: 289px;"></td>
+                <td style="width: 100px; text-transform: uppercase;">{{ $detail->Uom }}</td>
+                <td style="width: 74px;">{{ $detail->Currency }}</td>
+                <td style="width: 103px;;">{{ $detail->Currency }}</td>
+            </tr>
               <tbody>
+                @foreach ($detail->products as $product)
+                @php
+                    $total += $product->Amount;
+                @endphp
                   <tr>
-                      <td style="width: 103px;"></td>
-                      <td style="width: 305px;"></td>
-                      <td style="width: 100px; text-transform: uppercase;">{{ $product->printUom }}</td>
-                      <td style="width: 74px;">{{ $product->DocCur }}</td>
-                      <td style="width: 103px;;">{{ $product->DocCur }}</td>
+                      <td style="width: 103px;">{{ $product->ProductCode }}</td>
+                      <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;">{{ $product->Description }}</td>
+                      <td style="width: 100px;">{{ $product->Quantity !== null ? number_format($product->Quantity, 2) : '' }}</td>
+                      <td style="width: 74px;">{{ $product->UnitPrice !== null ? number_format($product->UnitPrice, 2) : '' }}</td>
+                      <td style="width: 103px;;">{{ $product->Amount !== null ? number_format($product->Amount, 2) : '' }}</td>
                   </tr>
+                  @endforeach
+                  @endforeach
                   <tr>
-                      <td style="width: 103px;"></td>
-                      <td style="width: 305px; text-align:left">{{ $product->Description }}</td>
-                      <td style="width: 100px;">{{ number_format($product->Quantity, 2) }}</td>
-                      <td style="width: 74px;">{{ number_format($product->UnitPrice, 2) }}</td>
-                      <td style="width: 103px;;">{{ number_format($product->Amount, 2) }}</td>
+                    <td style="width: 103px;"></td>
+                    <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
+                    <td style="width: 100px;"></td>
+                    <td style="width: 74px;"></td>
+                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black">{{ number_format($total,2) }}</td>
                   </tr>
-                  @foreach ($detail->clientRequest as $clientreq)
+                  {{-- @foreach ($detail->clientRequest as $clientreq)
                   <tr>
                     <td style="width: 103px;">{{ $clientreq->ProductCode }}</td>
                     <td style="width: 305px; text-align:left">{{ $clientreq->Description }}</td>
@@ -326,51 +340,65 @@
                     <td style="width: 74px;"></td>
                     <td style="width: 103px;;">{{ $clientreq->Amount == 0 || is_null($clientreq->Amount) ? '' : number_format($clientreq->Amount, 2) }}</td>
                 </tr>
-                  @endforeach
+                  @endforeach --}}
               </tbody>
-              @endforeach
-            @endforeach
+              
           </table>
         </div>
           <div class="product-details-middle">
-            <table class="middle-table"  style="margin-top:0; border-top:none; font-size:12px">
+            <table class="middle-table"  style="margin-top:0; border-top:none; font-size:12px;  width: 100%;">
                 <tbody >
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td class="label-column"></td>
-                        <td class="value-column"></td>
+                        <td style="width: 50%;">
+                            <p style="margin: 0; text-align: justify;">
+                                @if (optional($details->first())->ShowPhrex == 1)
+                                   {{ optional($details->first())->Phrex }}
+                                @endif
+                            </p>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="label-column"></td>
+                                        <td class="value-column"></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="label-column"></td>
+                                        <td class="value-column">{{ $detail->Currency }} {{ (number_format($total,2)) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="label-column"></td>
+                                        <td class="value-column"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="label-column"></td>
+                                        <td class="value-column"></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="label-column"></td>
+                                        <td class="value-column"></td>
+                                    </tr>
+                                    <tr>
+                                      <td></td>
+                                      <td></td>
+                                      <td class="label-column"></td>
+                                      <td class="value-column">{{ $detail->Currency }} {{ (number_format($total,2)) }}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td class="label-column"></td>
-                        <td class="value-column">{{ $detail->products->first()->DocCur }} {{ (number_format($total,2)) }}</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td class="label-column"></td>
-                        <td class="value-column"> </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td class="label-column"></td>
-                        <td class="value-column"></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td class="label-column"></td>
-                        <td class="value-column"></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td class="label-column"></td>
-                      <td class="value-column">{{ $detail->DocCur }} {{ (number_format($total,2)) }}</td>
-                  </tr>
                 </tbody>
             </table>
           </div>
@@ -411,21 +439,22 @@
                             // $lines = array_filter(array_map('trim', $lines)); 
 
 
-                            // ?>
-                            // <span>Philippine Bio Industries Inc</span> <br>
+                            ?>
+                            {{-- // <span>Philippine Bio Industries Inc</span> <br>
                             // {{ $formattedDetailsU_T2 }} {{ $formattedDetailsU_T3 }} <br>
                             // {{ $formattedDetailsU_T4 }} <br>
                             // {{ $formattedDetailsU_T5 }} <br> 
                             // @foreach ($lines as $line)
                             //     {{ $line }}<br>
-                            // @endforeach
-                        @endif {!! nl2br(e(optional($details->first())->PaymentInstruction)) !!}
+                            // @endforeach --}}
+                        @endif
+                         {!! nl2br(e(optional($details->first())->PaymentInstruction)) !!}
                         </td>
-                        <td class="" style="padding-left: 10px">
-                          Prepared by <br> <br>
-                          Checked by</td>
+                        <td class="" style="padding-left: 13px; padding-top:35px;">
+                            {{ substr(auth()->user()->name, 0, 1) }}. {{ last(explode(' ', auth()->user()->name)) }} <br> <br>
+                        </td>
                         <td class=""></td>
-                        <td class="">Approved by</td>
+                        <td style="padding-top:40px;">J. Galera</td>
                         <td class=""></td>
                     </tr>
                 </tbody>

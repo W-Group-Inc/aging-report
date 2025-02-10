@@ -185,7 +185,7 @@
             width: 40%; 
             font-size: 13px;
             line-height: 1;
-            margin-left:-40px
+            margin-left:-20px
         }
         .total-left-column .info-name{
             width: 35%; /* Fixed width for labels */
@@ -234,7 +234,7 @@
             word-wrap: break-word;
         }
         .new-col-right .info-detail {
-            width: 54%;
+            width: 55%;
             display: inline-block;
             vertical-align: top;  
             font-size: 11px;
@@ -244,7 +244,7 @@
             margin-top: -8px;
         }
         .new-col-right .container .info-name {
-            width: 31%; /* Fixed width for labels */
+            width: 30%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0
@@ -262,7 +262,7 @@
 
         }
         .new-col-left .info-name{
-            width: 31%; /* Fixed width for labels */
+            width: 28%; /* Fixed width for labels */
             display: inline-block;
             vertical-align: top;  
             margin: 0;
@@ -321,7 +321,7 @@
         }
 
         .right-box .new-col {
-            font-size: 14px;
+            font-size: 13px;
             padding: 10px;
             align-items: center;
         }
@@ -364,7 +364,7 @@
             <span style="font-size: 17px"></span>
             {{-- <div class="line-three">No.: {{ $soa_no }}</div> --}}
             @if ($details->isNotEmpty())
-            <div class="date"> {{ \Carbon\Carbon::parse(optional($details->first())->Dated)->format('F j, Y') }}</div>
+            <div class="date"> {{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</div>
             @endif
         </div>
     </div>
@@ -397,7 +397,7 @@
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ optional($details->first())->U_BuyersPO }}</span>
+            <span class="info-value">{{ $PoNumber }}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>
@@ -427,6 +427,7 @@
             <tr>
                 <th style="width: 34%; height: 16px;"></th>
                 <th style="width: 13%"></th>
+                <th style="width: 1%; border-left: none; border-right: none;"></th> 
                 <th style="width: 13%"></th>
                 <th style="width: 15%"></th>
                 <th style="width: 15%"></th>
@@ -449,6 +450,8 @@
             @endphp
             @foreach ($details as $detail)
             @php
+                $label = str_replace('(', '<br>(', $detail->U_Label_as);
+
             // if (($detail)->DocCur == 'EUR') {
             //         $unit_price = ($detail->Linetotal) /  ($detail->Quantity) ;
             //         $vatable_unit_price = $unit_price * 0.21;
@@ -470,36 +473,57 @@
                 // }
             @endphp
             <tr>
-                <td style="font-weight: bold">{{ $detail->U_Label_as }}</td>
+                <td style="font-weight: bold">{!! $label !!}</td>
                 <td>{{ $detail->U_Bagsperlot }} {{ $detail->U_packUOM }}
                     {{-- @if ($detail->U_Bagsperlot != 0)
                         <span style="float: right; text-align:end">x</span>
                     @endif --}}
                 </td>
+                <td style="width: 0; text-align: center;">
+                    @if ($detail->U_Netweight)x @endif
+                </td>
                 <td>
                     @if ($detail->U_Netweight)
-                    {{ number_format($detail->Quantity / $detail->U_Bagsperlot, 2) }}
+                    {{-- {{ number_format($detail->Quantity / $detail->U_Bagsperlot, 2) }} --}}
+                    {{ number_format($detail->U_Netweight, 2) }}
                     @endif
                     @if ($detail->U_Netweight != '')
                         {{ $detail->U_printUOM }}
                     @endif
                 </td>
                 <td>
-                    @if ($detail->Quantity)
-                    {{ number_format($detail->Quantity, 2) }}
-                    @endif
-                    @if ($detail->U_Netweight != '')
-                        {{ $detail->U_printUOM }}
+                    @if ($detail->U_printUOM == "lbs")
+                        {{ number_format(2.2 * $detail->Quantity, 2) }} {{ $detail->U_printUOM }}
+                    @else
+                        @if ($detail->Quantity)
+                            {{ number_format($detail->Quantity, 2) }}
+                        @endif
+
+                        @if (!empty($detail->U_Netweight))
+                            {{ $detail->U_printUOM }}
+                        @endif
                     @endif
                 </td>
                 <td> 
                      {{-- @if ($detail->U_Netweight != '') --}}
-                     {{ optional($details->first())->DocCur }} {{ number_format(($detail->Linetotal) /  ($detail->Quantity),2)}} /
-                     @if ($detail->U_printUOM == 'lbs')
+                     {{-- {{ optional($details->first())->DocCur }} {{ number_format(($detail->Linetotal) /  ($detail->Quantity),2)}} / --}}
+                     @if ($detail->U_printUOM == "lbs")
+                        {{ optional($details->first())->DocCur }} {{ (number_format($detail->Price / 2.2 ,2))}} /
+                        @if ($detail->U_printUOM == 'lbs')
                         lb
-                     @else
+                        @else
                         kg   
-                     @endif
+                        @endif
+                    @else
+                        {{ optional($details->first())->DocCur }} {{ (number_format($detail->Price,2))}} /
+                        @if ($detail->U_printUOM == 'lbs')
+                        lb
+                        @else
+                        kg   
+                        @endif
+                    @endif
+
+                    
                     {{-- @endif --}}
                 </td>
                 <td>{{ optional($details->first())->DocCur }} {{ number_format($detail->Linetotal, 2) }}</td>
@@ -509,6 +533,7 @@
             </tr>
             <tr>
                 <td style="font-weight: bold"></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 {{-- @if ( $detail->DocCur == 'EUR')
@@ -612,7 +637,7 @@
 </div>
 
 
-<div class="column-container" style="min-height:15px; max-height:15.5px;">
+<div class="column-container" style="min-height:15px; max-height:15px;">
     <div class="total">
         <div class="total-value">{{ optional($details->first())->DocCur }} {{ number_format($vat_inclusive, 2) }}</div>
     </div>
@@ -623,7 +648,7 @@
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->DocDate)->format('F j, Y') }}</span>
+            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->U_BaseDate)->format('F j, Y') }}</span>
         </div>
         <div class="info-row">
             <span class="info-name"></span>
@@ -672,7 +697,7 @@
         </div>
     </div>
     <div class="new-col-right">
-        <div class="container" style="background:red; height:40px">
+        <div class="container" style="height:40px">
             <div class="info-row" style="margin-top:0px; margin-bottom:8px">
                 <span class="info-name"></span>
                 <span class="info-colon"></span>
@@ -691,7 +716,7 @@
                 </div>
                 <div class="payment-instruction">
                 <div class="left-align">
-                    <div class="info-row" style="margin: 8px 0px">
+                    <div class="info-row" style="margin: 2px 0 8px 0px">
                         <span>{{ optional($details->first())->U_T1 }}</span>
                     </div>
                     <div class="info-row">

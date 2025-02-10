@@ -428,7 +428,9 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colspan="2"  style="font-weight: bold; padding:0; text-align: center">{{ $details->first()->U_Delivery }}</td>
+                <td></td>
+                <td></td>
+                {{-- <td colspan="2"  style="font-weight: bold; padding:0; text-align: center">{{ $details->first()->U_Delivery }}</td> --}}
             </tr>
             @php
                 $total = 0;
