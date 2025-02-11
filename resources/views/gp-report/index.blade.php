@@ -20,6 +20,10 @@
     z-index: 2;
     }
 
+    table td{
+        min-width: 280px;
+    }
+
 </style>
 <div class="wrapper wrapper-content ">
     <div class="row">
@@ -790,10 +794,7 @@
                                             {{-- @endif --}}
                                             <td></td><td></td>
                                         </tr>
-                                    </tfoot>
-                                    
-                                    
-                                                                    
+                                    </tfoot>                         
                                 </table>
                             </div>
                         </div>
