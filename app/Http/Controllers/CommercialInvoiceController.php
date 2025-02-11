@@ -119,7 +119,7 @@ class CommercialInvoiceController extends Controller
             'ODLN.U_Salescontract',
             'ODLN.DocDueDate',
             // 'ODLN.U_BaseDate',
-            DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_BaseDate AS U_BaseDate' : 'NULL AS U_Destinationport'),
+            DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_BaseDate AS U_BaseDate' : 'NULL AS U_BaseDate'),
             // 'ODLN.U_PortLoad',
             DB::raw($request->is('whi_bir_invoice') ? 'ODLN.U_PortLoad' : 'NULL AS U_PortLoad'),
 
@@ -168,6 +168,90 @@ class CommercialInvoiceController extends Controller
             )
         );
     }
+
+    function index_special(Request $request) 
+    {
+
+        $search = $request->input('search');
+        $model = null;
+        $view = '';
+
+        $sisCodes = SisCode::all();
+        if ($request->is('pbi_bir_invoice_special')) {
+            $model = ODLN_PBI::query();
+            $salesOrder = ORDR_PBI::query();
+            $view = 'print_templates.print_lists.pbi.bir_commercial_list_special';
+        }  else {
+            abort(404); 
+        }
+
+        if ($request->is('pbi_bir_invoice_special')) {if ($request->is('pbi_bir_invoice_special')) {
+            $model->leftJoin('OCRD as customer', 'ODLN.CardCode', '=', 'customer.CardCode')
+                  ->leftJoin('@Payment_Instruction as g', 'g.Code', '=', DB::raw("
+                      CASE 
+                          WHEN customer.QryGroup1  = 'Y' THEN 'JP-USD'
+                          WHEN customer.QryGroup2  = 'Y' THEN 'SBC-WCC-USD'
+                          WHEN customer.QryGroup3  = 'Y' THEN 'SBC-WCC-PHP'
+                          WHEN customer.QryGroup4  = 'Y' THEN 'SBC-WCC-EUR'
+                          WHEN customer.QryGroup5  = 'Y' THEN 'JP-PHP'
+                          WHEN customer.QryGroup6  = 'Y' THEN 'BPI-W 5th-EUR'
+                      END
+                  "));
+        }
+        $details = $model->select(
+            'ODLN.DocEntry',
+            'ODLN.U_invNo',
+            'ODLN.Address',
+            // $request->is('whi_bir_invoice') ? 'ODLN.Address as Billtoaddress' : 'ODLN.Address as Billtoaddress',
+            \DB::raw('ODLN.PayToCode + CHAR(13) + ODLN.Address as Billtoaddress'),
+            \DB::raw('ODLN.ShipToCode + CHAR(13) + ODLN.Address2 as Shiptoaddress'),
+            'ODLN.GroupNum',
+            'ODLN.DocDate',
+            'ODLN.PayToCode',
+            'ODLN.DocNum',
+            'ODLN.NumAtCard',
+            'ODLN.U_BuyersPO',
+            'ODLN.U_Salescontract',
+            'ODLN.DocDueDate',
+            'ODLN.DocCur',
+            'ODLN.U_ModeShip',
+            'ODLN.U_Delivery',
+            'ODLN.U_BillLading',
+            'ODLN.U_ContainerNo',
+            'ODLN.U_Seal',
+            // 'ODLN.U_SOADueDate',
+            'g.U_T1',
+            'g.U_T2',
+            'g.U_T3',
+            'g.U_T4',
+            'g.U_T5',
+            'g.U_T6',
+        )        
+        ->when($search, function ($query) use ($search, $request) {
+            $terms = explode(' ', $search);
+            foreach ($terms as $term) {
+                $query->where(function ($q) use ($term, $request) {
+                    
+                        $q->where('ODLN.U_invNo', 'LIKE', "%{$term}%")
+                        ->orWhere('ODLN.Address', 'LIKE', "%{$term}%")
+                        ->orWhere('ODLN.U_BuyersPO', 'LIKE', "%{$term}%")
+                        ->orWhere('ODLN.NumAtCard', 'LIKE', "%{$term}%");
+                    
+                });
+            }
+        })        
+        //   ->orderBy('OINV.DocEntry', 'desc')
+          ->where('NumAtCard', 'like', 'AUS%')
+          ->where('CANCELED' ,'!=', 'Y' )
+          ->paginate(15);
+        return view($view, 
+            array(
+                'details' =>$details,
+                'search' =>$search,
+                'sisCodes' =>$sisCodes
+            )
+        );
+    }}
 
     function save_as_new_invoice(Request $request) {
         $save_as_new = new BirInvoice;
@@ -227,7 +311,7 @@ class CommercialInvoiceController extends Controller
             $save_as_product->SupplierCode = $request->SupplierCode[$index] ?? null;
             $save_as_product->DocCur = $request->DocCur[$index] ?? null;
             $save_as_product->ProductCode = $request->ProductCode[$index] ?? null;
-            $save_as_product->PbiSiType = $request->PbiSiType[$index] ?? null;
+            $save_as_product->PbiSiType = $request->PbiSiType[$index] ?? "";
             $save_as_product->Packing = $request->Packing[$index] ?? null;
             $save_as_product->Uom = $request->Uom[$index] ?? null;
             $save_as_product->UnitPrice = $request->UnitPrice[$index] ?? null;
@@ -576,6 +660,8 @@ function edit_print(Request $request, $id){
             $view = 'print_templates.pbi.bir.commercial_vatable_invoice_edited';
         }elseif (Route::currentRouteName() === 'pbi_bir_edited_commercial_exempt_invoice') {
             $view = 'print_templates.pbi.bir.commercial_exempt_invoice_edited';
+        }elseif (Route::currentRouteName() === 'pbi_bir_edited_commercial_invoice_special') {
+            $view = 'print_templates.pbi.bir.commercial_invoice_edited_special';
         }  else {
             $view = null; 
         }

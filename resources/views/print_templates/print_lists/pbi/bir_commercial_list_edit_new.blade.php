@@ -98,11 +98,23 @@
             </div>
             <div class="col-md-6">
                 <label>Description</label>
-                <select class="form-control description-select" name="Description[]" style="position: relative !important">
+                <select class="form-control description-select" id="description-select-{{  $product->id }}" name="Description[]" style="position: relative !important">
                     <option value="" selected>No Description</option>
+                    @php
+                        $found = false;
+                    @endphp
                     @foreach ($sisCodes as $codes)
-                        <option value="{{$codes->product }}"  data-code="{{ $codes->product_code }}"  @if ($codes->product == $product->Description ) selected @endif>{{$codes->product  }}</option>
+                        <option value="{{ $codes->product }}" data-code="{{ $codes->product_code }}" 
+                            @if ($codes->product == $product->Description) 
+                                selected 
+                                @php $found = true; @endphp
+                            @endif>
+                            {{ $codes->product }}
+                        </option>
                     @endforeach
+                    @if (!$found && !empty($product->Description))
+                        <option value="{{ $product->Description }}" selected>{{ $product->Description }} (Not in list)</option>
+                    @endif
                 </select>
             </div>
             {{-- <div class="col-md-6">
@@ -222,6 +234,40 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         
+        function initializeSelect2() {
+            $('.description-select').each(function() {
+                $(this).select2({
+                    tags: true,
+                    placeholder: "Select or type a product",
+                    allowClear: true,
+                    width: '100%',
+                    dropdownParent: $(this).closest('.modal') // Ensure correct modal parent
+                });
+            });
+        }
+
+        $('.modal').on('shown.bs.modal', function () {
+            initializeSelect2();
+        });
+
+        initializeSelect2();function initializeSelect2() {
+            $('.description-select').each(function() {
+                $(this).select2({
+                    tags: true,
+                    placeholder: "Select or type a product",
+                    allowClear: true,
+                    width: '100%',
+                    dropdownParent: $(this).closest('.modal') // Ensure correct modal parent
+                });
+            });
+        }
+
+        $('.modal').on('shown.bs.modal', function () {
+            initializeSelect2();
+        });
+
+        initializeSelect2();
+
         document.querySelectorAll('.addRowBtn').forEach(function(button) {
             button.addEventListener('click', function() {
                 var table = button.closest('.mt-4').querySelector('table');
@@ -255,7 +301,7 @@
                 </div>
                 <div class="col-md-6">
                     <label>Description</label>
-                    <select class="form-control js-example-basic-single description-select" name="Description[]" style="position: relative !important" required>
+                    <select class="form-control description-select" name="Description[]" style="position: relative !important" required>
                         <option value="" selected>No Description</option>
                         ${selectOptions}
                     </select>
@@ -283,19 +329,28 @@
 
             pbiProductContainer.insertAdjacentHTML('beforeend', newRow);
             const lastAddedRow = pbiProductContainer.lastElementChild;
-            const descriptionSelect = lastAddedRow.querySelector('.description-select');
+            const descriptionSelect = $(lastAddedRow).find('.description-select'); 
             const productCodeInput = lastAddedRow.querySelector('.product-code');
 
-            descriptionSelect.addEventListener('change', function () {
-                const selectedProduct = this.value;
+            $(descriptionSelect).select2({
+                tags: true, 
+                placeholder: "Select or type a product",
+                allowClear: true,
+                width: '100%', 
+                dropdownParent: $(lastAddedRow) 
+            });
+
+            descriptionSelect.on('change', function () {
+                const selectedProduct = $(this).val();
                 const matchingCode = sis_codes.find(code => code.product === selectedProduct);
-                
+
                 if (matchingCode) {
                     productCodeInput.value = matchingCode.product_code; 
                 } else {
-                    productCodeInput.value = ''; 
+                    productCodeInput.value = ""; 
                 }
             });
+
             const deleteButtons = pbiProductContainer.querySelectorAll('.delete-row');
             deleteButtons.forEach((button) => {
                 button.addEventListener('click', function () {

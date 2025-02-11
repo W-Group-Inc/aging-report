@@ -1,5 +1,10 @@
 @extends('layouts.header')
 @section('css')
+<style>
+    .select2-dropdown {
+    z-index: 9999 !important;
+}
+</style>
 <link href="{{ asset('/inside/login_css/css/plugins/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
 <link href="{{ asset('/inside/login_css/css/style.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">

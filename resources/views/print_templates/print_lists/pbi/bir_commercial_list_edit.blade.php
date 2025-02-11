@@ -277,7 +277,11 @@
     </form>
     </div>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('addRowBtn{{ $detail->DocEntry }}').addEventListener('click', function() {
             const table = document.getElementById('customer_request{{ $detail->DocEntry }}').getElementsByTagName('tbody')[0];
             const newRow = table.rows[0].cloneNode(true);
@@ -293,6 +297,7 @@
     
             table.appendChild(newRow);
         });
+    });
 
         document.getElementById('pbiAddRowButton{{ $detail->DocEntry }}').addEventListener('click', function () {
             const pbiProductContainer = document.getElementById('pbiProductContainer{{ $detail->DocEntry }}');
@@ -307,7 +312,7 @@
                 </div>
                 <div class="col-md-6">
                     <label>Description</label>
-                    <select class="form-control js-example-basic-single description-select" name="Description[]" style="position: relative !important" required>
+                    <select class="form-control description-select" name="Description[]"  required>
                         <option value="" selected>No Description</option>
                         ${selectOptions}
                     </select>
@@ -335,17 +340,25 @@
 
             pbiProductContainer.insertAdjacentHTML('beforeend', newRow);
             const lastAddedRow = pbiProductContainer.lastElementChild;
-            const descriptionSelect = lastAddedRow.querySelector('.description-select');
+            const descriptionSelect = $(lastAddedRow).find('.description-select'); 
             const productCodeInput = lastAddedRow.querySelector('.product-code');
 
-            descriptionSelect.addEventListener('change', function () {
-                const selectedProduct = this.value;
+            $(descriptionSelect).select2({
+                tags: true, 
+                placeholder: "Select or type a product",
+                allowClear: true,
+                width: '100%', 
+                dropdownParent: $(lastAddedRow) 
+            });
+
+            descriptionSelect.on('change', function () {
+                const selectedProduct = $(this).val();
                 const matchingCode = sis_codes.find(code => code.product === selectedProduct);
-                
+
                 if (matchingCode) {
                     productCodeInput.value = matchingCode.product_code; 
                 } else {
-                    productCodeInput.value = ''; 
+                    productCodeInput.value = ""; 
                 }
             });
             const deleteButtons = pbiProductContainer.querySelectorAll('.delete-row');
@@ -361,4 +374,5 @@
                 button.closest('.product-row').remove();
             });
         });
+        
     </script>

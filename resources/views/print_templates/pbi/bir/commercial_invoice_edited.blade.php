@@ -230,7 +230,7 @@
           <div class="left-column">
               <div class="info-row" style="max-height: 44px; min-height:44px">
                   <span class="info-label"></span>
-                  <span class="info-value">{!! nl2br(optional($details->first())->SoldTo)!!}
+                  <span class="info-value" style="line-height: 1">{!! nl2br(optional($details->first())->SoldTo)!!}
                   </span>
               </div>
               <div class="info-row" style="max-height: 45px; min-height:45px">
@@ -239,7 +239,7 @@
               </div>
               <div class="info-row" style="max-height: 50px; min-height:50px">
                 <span class="info-label"></span>
-                <span class="info-value"> {!! nl2br(optional($details->first())->ShipTo) !!}</span>
+                <span class="info-value" style="line-height: 1"> {!! nl2br(optional($details->first())->ShipTo) !!}</span>
             </div>
               <div class="info-row" style="max-height: 60px; min-height:60px">
                   <span class="info-label"></span>
@@ -296,8 +296,8 @@
                     <th style="width: 103px;"></th>
                     <th style="width: 289px;"></th>
                     <th style="width: 100px;"></th>
-                    <th style="width: 74px;"></th>
-                    <th style="width: 103px;;"></th>
+                    <th style="width: 77px;"></th>
+                    <th style="width:99px;"></th>
                   </tr>
               </thead>
               @php
@@ -308,8 +308,8 @@
                 <td style="width: 103px;"></td>
                 <td style="width: 289px;"></td>
                 <td style="width: 100px; text-transform: uppercase;">{{ $detail->Uom }}</td>
-                <td style="width: 74px;">{{ $detail->Currency }}</td>
-                <td style="width: 103px;;">{{ $detail->Currency }}</td>
+                <td style="width: 77px;">{{ $detail->Currency }}</td>
+                <td style="width:99px;">{{ $detail->Currency }}</td>
             </tr>
               <tbody>
                 @foreach ($detail->products as $product)
@@ -318,10 +318,10 @@
                 @endphp
                   <tr>
                       <td style="width: 103px;">{{ $product->ProductCode }}</td>
-                      <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;">{{ $product->Description }}</td>
+                      <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">{{ $product->Description }}</td>
                       <td style="width: 100px;">{{ $product->Quantity !== null ? number_format($product->Quantity, 2) : '' }}</td>
-                      <td style="width: 74px;">{{ $product->UnitPrice !== null ? number_format($product->UnitPrice, 2) : '' }}</td>
-                      <td style="width: 103px;;">{{ $product->Amount !== null ? number_format($product->Amount, 2) : '' }}</td>
+                      <td style="width: 77px;">{{ $product->UnitPrice !== null ? number_format($product->UnitPrice, 2) : '' }}</td>
+                      <td style="width:99px;">{{ $product->Amount !== null ? number_format($product->Amount, 2) : '' }}</td>
                   </tr>
                   @endforeach
                   @endforeach
@@ -329,7 +329,7 @@
                     <td style="width: 103px;"></td>
                     <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
                     <td style="width: 100px;"></td>
-                    <td style="width: 74px;"></td>
+                    <td style="width: 77px;"></td>
                     <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black">{{ number_format($total,2) }}</td>
                   </tr>
                   <tr>
@@ -344,15 +344,15 @@
                     <td style="width: 103px;">{{ $clientreq->ProductCode }}</td>
                     <td style="width: 289px; text-align:left;padding-left: 10px; box-sizing: border-box;">{{ e($clientreq->Description) }}</td>
                     <td style="width: 100px;"></td>
-                    <td style="width: 74px;"></td>
-                    <td style="width: 103px;;">{{ $clientreq->Amount == 0 || is_null($clientreq->Amount) ? '' : number_format($clientreq->Amount, 2) }}</td>
+                    <td style="width: 77px;"></td>
+                    <td style="width:99px;">{{ $clientreq->Amount == 0 || is_null($clientreq->Amount) ? '' : number_format($clientreq->Amount, 2) }}</td>
                 </tr>
                   @endforeach --}}
               </tbody>
           </table>
           <div style="position: relative; ">
-            <p style="font-size:13px; font-weight: bold; position: fixed; left: 230px; bottom: 240px;">VAT ZERO-RATED</p>
-            <p style="font-size:10px; font-weight: bold; position: fixed; left: 10px; bottom: 305px;">Packaging Code: P52</p>
+            <p style="font-size:13px; font-weight: bold; position: fixed; left: 230px; bottom: 220px;">VAT ZERO-RATED</p>
+            <p style="font-size:10px; position: fixed; left: 10px; bottom: 305px;">Packaging Code: P52</p>
           </div>
         </div>
           <div class="product-details-middle">
@@ -459,7 +459,7 @@
                         @endif
                         {!! nl2br(e(optional($details->first())->PaymentInstruction)) !!}
                         </td>
-                        <td class="" style="padding-left: 13px; padding-top:35px;">
+                        <td class="" style="padding-left: 53px; padding-top:35px;">
                             {{ substr(auth()->user()->name, 0, 1) }}. {{ last(explode(' ', auth()->user()->name)) }} <br> <br>
                         </td>
                         <td class=""></td>
