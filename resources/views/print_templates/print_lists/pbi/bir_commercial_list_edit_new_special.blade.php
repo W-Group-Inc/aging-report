@@ -11,25 +11,14 @@
           </div>
           <div class="modal-body">
             <div class="row">
-                {{-- <div class="col-md-12">
-                    <input name="DocEntry" class="form-control" type="text" value="{{ $detail->asNew->DocEntry }}">
-                </div> --}}
                 <div class="col-md-12">
                     <label >Date:</label>
                     <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse($detail->asNew->invoice_date)->format('Y-m-d') }}">
                 </div>
-                {{-- <div class="col-md-12">
-                    <label >Sold To:</label>
-                    <input name="Client" class="form-control" type="text" value="{{ $detail->asNew->SoldTo }}">
-                </div> --}}
                 <div class="col-md-12">
                     <label >Sold To:</label>
                     <textarea name="Client" class="form-control"  rows="5" type="text">{{ $detail->asNew->SoldTo }}</textarea>
                 </div>
-                {{-- <div class="col-md-12">
-                    <label>Address</label>
-                    <input name="Address" class="form-control" type="text" value="{{ $detail->asNew->Address }}">
-                </div> --}}
                 <div class="col-md-12">
                     <label>Ship To</label>
                     <textarea name="ShipTo" class="form-control"  rows="5" type="text">{{ $detail->asNew->ShipTo }}</textarea>
@@ -72,22 +61,11 @@
                     <label>UoM</label>
                     <input class="form-control" name="UnitOfM" type="text" value="{{ $detail->asNew->Uom }}">
                 </div>
-                {{-- <div class="col-md-4">
-                    <label>Sales Contract No.</label>
-                    <input name="SalesContract" class="form-control" type="text" value="{{ $detail->U_Salescontract }}">
-                </div>
-                <div class="col-md-6">
-                    <label>OSCA/PWD ID No.</label>
-                    <input name="OscaPwd" class="form-control" type="text">
-                </div>
-                <div class="col-md-6">
-                    <label>SC/PWD ID No.</label>
-                    <input name="ScPwd" class="form-control" type="text">
-                </div> --}}
             </div>      
             <div class="row" id="pbiEditProductContainer{{ $detail->asNew->id }}">
-            @foreach ( $detail->asNew->products as $product)
-            <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h3></div> 
+            @foreach ( $detail->asNew->allProducts as $index => $product)
+            <div class="product-row">
+                <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h3></div> 
 
             <div class="col-md-12">
                 <input name="product_id[]" class="form-control" type="hidden" value="{{  $product->id }}">
@@ -119,48 +97,27 @@
                     </select>
                 </div>
             </div>
-            {{-- <div class="col-md-6">
-                <label>Supplier Code</label>
-                <input name="SupplierCode[]" class="form-control" type="text" value="{{ $product->U_SupplierCode }}">
-            </div> --}}
-            {{-- <div class="col-md-6">
-                <label>Currency</label>
-                <input name="DocCur[]" class="form-control" type="text" value="{{ $product->DocCur }}">
-            </div> --}}
-            {{-- <div class="col-md-3">
-                <label>Packing</label>
-                <input name="Packing[]" class="form-control" type="text" value="{{ $product->U_Bagsperlot }}">
-            </div> --}}
-            {{-- <div class="col-md-3">
-                <label>Unit of Measurement</label>
-                <input name="Uom[]" class="form-control" type="text" value="{{ $product->U_packUOM }}">
-            </div> --}}
-            {{-- <div class="col-md-3">
-                <label>Unit</label>
-                <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->U_Bagsperlot) && $product->U_Bagsperlot != 0 ? number_format($product->Quantity / $product->U_Bagsperlot, 2) : '' }}" readonly>
-            </div> --}}
-            {{-- <div class="col-md-6">
-                <label>Unit of Measurement</label>
-                <input class="form-control" name="printUom[]" type="text" value="{{ $product->printUom}}">
-            </div> --}}
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>Quantity</label>
                 <input class="form-control" name="Quantity[]" type="text" value="{{ number_format($product->Quantity,2) }}">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>Unit Price</label>
-                    {{-- <input class="form-control" type="text" value="{{ !empty($product->Amount) && !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->Amount / $product->Quantity, 2) : '' }}" readonly> --}}
                     <input class="form-control" name="UnitPrice[]" type="text" value="{{ $detail->asNew->Uom == 'lbs' ? number_format($product->UnitPrice / 2.2, 2) : number_format($product->UnitPrice, 2) }}" >
-                    {{-- <input class="form-control" name="UnitPrice[]" type="text" value="{{ $product->UnitPrice}}"> --}}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>Amount</label>
                     <input class="form-control" name="Amount[]" type="text" value="{{ number_format($product->Amount, 2) }}">
-                    {{-- <input class="form-control" name="Amount[]" type="text" value="{{ number_format(($product->Quantity) * ($product->UnitPrice), 2) }}" > --}}
             </div>
-            {{-- <div class="col-md-4">
-                <input class="form-control" name="PbiSiType[]" type="hidden" value="">
-            </div> --}}
+            <div class="col-md-3">
+                <input type="hidden" name="PbiSiType[{{ $index }}]" value="0">
+                <input type="checkbox" name="PbiSiType[{{ $index }}]" class="form-check-input" value="1" 
+                       {{ isset($product->PbiSiType) && $product->PbiSiType == 1 ? 'checked' : '' }}>
+                <label class="form-check-label" for="Expense Total">
+                    Expenses Total
+                </label>
+            </div>
+            </div>
             @endforeach
             </div>  
             <div class="col-md-12 mt-3" style="padding: 20px;">
@@ -174,30 +131,6 @@
                     </textarea>
                 </div>
             </div>
-                {{-- <div class="row" style="margin: 0;">
-                    <div class="col-md-12" style="margin: 0; padding: 0;">
-                        <div class="mt-4">
-                            <table class="table table-bordered customer_request-{{ $detail->asNew->id }}" style="margin: 0; padding: 0;">
-                                <tbody>
-                                    @foreach ($detail->asNew->clientRequest as $cRequest)
-                                    <tr>
-                                        <input name="product_id[]" class="form-control" type="hidden" value="{{  $cRequest->id }}">
-                                        <td><input type="text" name="ProductCode[]" class="form-control" value="{{ $cRequest->ProductCode }}"></td>
-                                        <td><input type="text" name="Description[]" class="form-control" value="{{ $cRequest->Description }}"></td>
-                                        <td><input type="text" name="Amount[]" class="form-control" value="{{ $cRequest->Amount }}"></td>
-                                        <td><input type="hidden" name="PbiSiType[]" class="form-control" value="PbiSi"></td>
-                                        <td><input type="hidden" name="UnitPrice[]" class="form-control" value="0"></td>
-                                        <td><button type="button" class="btn btn-danger btn-sm deleteRowBtn">Delete</button></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <div class="row" style="margin-top: 20px; padding: 0;">
-                                <button type="button" class="btn btn-primary addRowBtn" style="margin-top: 0;">Add Row</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>    --}}
                 <div class="row">
                     <div class="col-md-12">
                         <label for="">Payment Instruction</label>
@@ -292,8 +225,10 @@
 
         document.getElementById('pbiEditAddRowButton{{ $detail->asNew->id }}').addEventListener('click', function () {
             const pbiProductContainer = document.getElementById('pbiEditProductContainer{{ $detail->asNew->id }}');
+            const existingRows = pbiProductContainer.querySelectorAll('.product-row').length;
             const sis_codes = @json($sisCodes);
             const selectOptions = sis_codes.map(code => `<option value="${code.product}">${code.product}</option>`).join('');
+            const newRowIndex = existingRows;
             const newRow = `
             <div class="product-row">
                 <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h3></div> 
@@ -310,20 +245,24 @@
                     </select>
                 </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label>Quantity</label>
                     <input class="form-control" name="Quantity[]" type="text" value="" >
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label>Unit Price</label>
                     <input class="form-control" name="UnitPrice[]" type="text" value="" >
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label>Amount</label>
                     <input class="form-control" name="Amount[]" type="text" value="" >
                 </div>
-                <div class="col-md-12">
-                    <input class="form-control" name="PbiSiType[]" type="hidden" value="">
+                <div class="col-md-3">
+                    <input type="hidden" name="PbiSiType[${newRowIndex}]" value="0">
+                    <input type="checkbox" name="PbiSiType[${newRowIndex}]" class="form-check-input" value="1">
+                    <label class="form-check-label">
+                        Expenses Total
+                    </label>
                 </div>
                 <div class="col-md-12 text-end mt-2">
                     <button type="button" class="btn btn-danger delete-row">Delete</button>

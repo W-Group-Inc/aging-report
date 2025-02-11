@@ -339,7 +339,7 @@ class CommercialInvoiceController extends Controller
         $update_saved_invoice->InvoiceDueDate = $request->InvoiceDueDate;
         $update_saved_invoice->PaymentInstruction = $request->PaymentInstruction;
         $update_saved_invoice->Phrex = $request->Phrex;
-        $update_saved_invoice->ShowPhrex = $request->ShowPhrex;
+        $update_saved_invoice->ShowPhrex = $request->has('ShowPhrex') ? 1 : 0;
         $update_saved_invoice->DateOfShipment = $request->DateOfShipment;
         $update_saved_invoice->PortOfLoading = $request->PortOfLoading;
         $update_saved_invoice->PortOfDestination = $request->PortOfDestination;
@@ -359,7 +359,7 @@ class CommercialInvoiceController extends Controller
         $update_saved_invoice->Uom = $request->UnitOfM;
         $update_saved_invoice->update();
 
-        foreach ($request->Description as $index => $description) {
+        foreach ($request->input('Description') as $index => $description) {
             $productId = $request->product_id[$index];
             $description = str_replace(['@', '/'], [' ', "\n"], $description);
             
@@ -374,7 +374,7 @@ class CommercialInvoiceController extends Controller
             $save_as_product->SupplierCode = $request->SupplierCode[$index] ?? null;
             $save_as_product->DocCur = $request->DocCur[$index] ?? null;
             $save_as_product->ProductCode = $request->ProductCode[$index] ?? null;
-            $save_as_product->PbiSiType = $request->PbiSiType[$index] ?? null;
+            $save_as_product->PbiSiType = $request->PbiSiType[$index] ?? "";
             $save_as_product->Packing = $request->Packing[$index] ?? null;
             $save_as_product->Uom = $request->Uom[$index] ?? null;
             $save_as_product->printUom = $request->printUom[$index] ?? null;

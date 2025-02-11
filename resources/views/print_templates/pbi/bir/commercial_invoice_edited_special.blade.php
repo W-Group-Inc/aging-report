@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Commercial Invoice</title>
+    <title>Commercial Invoice Special</title>
     
     <style>
         @page{
@@ -301,7 +301,9 @@
                   </tr>
               </thead>
               @php
-                  $total = 0
+                  $total = 0;
+                  $expensesTotal =0;
+                  $showCIP = false;
               @endphp
               @foreach ($details as $detail)
               <tr>
@@ -312,31 +314,61 @@
                 <td style="width:99px;">{{ $detail->Currency }}</td>
             </tr>
               <tbody>
-                @foreach ($detail->products as $product)
+                @foreach ($detail->specialProductsOrig as $product)
                 @php
                     $total += $product->Amount;
                 @endphp
                   <tr style="line-height: 10px">
                       <td style="width: 103px;">{{ $product->ProductCode }}</td>
                       <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">{{ $product->Description }}</td>
+                      <td style="width: 100px;">{{ $product->Quantity !== null ? number_format($product->Quantity, 2) : '' }}</td>
+                      <td style="width: 77px;">{{ $product->UnitPrice !== null ? number_format($product->UnitPrice, 2) : '' }}</td>
+                      <td style="width:99px;">{{ $product->Amount !== null ? number_format($product->Amount, 2) : '' }}</td>
+                  </tr>
+                  @endforeach
+                  @endforeach
+                  <tr >
+                    <td style="width: 103px;"></td>
+                    <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
+                    <td style="width: 100px;"></td>
+                    <td style="width: 77px;"></td>
+                    <td style="width: 103px; padding:0; border-bottom: 1px solid black; border-top: 1px solid black;">{{ number_format($total,2) }}</td>
+                  </tr>
+                    @foreach ($details as $detail)
+                    @foreach ($detail->specialProducts as $specialProduct)
+                    @php
+                        $expensesTotal += $specialProduct->Amount;
+                        if (strpos($specialProduct->Description, 'Airfreight') !== false) {
+                            $showCIP = true;
+                        }
+                    @endphp
+                  <tr style="line-height: 10px">
+                      <td style="width: 103px;">{{ $specialProduct->ProductCode }}</td>
+                      <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">{{ $specialProduct->Description }}</td>
                       <td style="width: 100px;">
-                        {{ $product->Quantity !== null && $product->Quantity != 0 ? number_format($product->Quantity, 2) : '' }}
+                        {{ $specialProduct->Quantity !== null && $specialProduct->Quantity != 0 ? number_format($specialProduct->Quantity, 2) : '' }}
                     </td>
                     <td style="width: 77px;">
-                        {{ $product->UnitPrice !== null && $product->UnitPrice != 0 ? number_format($product->UnitPrice, 2) : '' }}
+                        {{ $specialProduct->UnitPrice !== null && $specialProduct->UnitPrice != 0 ? number_format($specialProduct->UnitPrice, 2) : '' }}
                     </td>
                     <td style="width: 99px;">
-                        {{ $product->Amount !== null && $product->Amount != 0 ? number_format($product->Amount, 2) : '' }}
+                        {{ $specialProduct->Amount !== null && $specialProduct->Amount != 0 ? number_format($specialProduct->Amount, 2) : '' }}
                     </td>
                   </tr>
                   @endforeach
                   @endforeach
                   <tr>
                     <td style="width: 103px;"></td>
-                    <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
+                    <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">
+                        @if ($showCIP)
+                            CIP TOTAL
+                        @else
+                            CIF TOTAL
+                        @endif
+                    </td>
                     <td style="width: 100px;"></td>
                     <td style="width: 77px;"></td>
-                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black">{{ number_format($total,2) }}</td>
+                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1px solid black">{{ number_format($expensesTotal,2) }}</td>
                   </tr>
                   <tr>
                     <td></td>
@@ -344,7 +376,7 @@
                     <td></td>
                     <td></td>
                     <td ></td>
-                 </tr>
+                  </tr>
                   {{-- @foreach ($detail->clientRequest as $clientreq)
                   <tr>
                     <td style="width: 103px;">{{ $clientreq->ProductCode }}</td>
