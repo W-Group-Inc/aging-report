@@ -33,7 +33,10 @@
     @yield('css')
     <link href="{{ asset('/inside/login_css/css/animate.css')}}" rel="stylesheet">
     <link href="{{ asset('/inside/login_css/css/style.css')}}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
+    {{-- <link href="{{ asset('/inside/login_css/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/inside/login_css/css/select2-bootstrap.min.css') }}" rel="stylesheet"> --}}
   <!-- End plugin css for this page -->
     <style>
       .center {
@@ -143,6 +146,11 @@
                                     <a class="dropdown-item dropdown-toggle" href="#">SOA</a>
                                     <ul class="dropdown-menu">
                                         <li>
+                                            <a class="dropdown-item" href="{{url('/whi_soa_list')}}">
+                                                SOA List
+                                            </a>
+                                        </li>     
+                                        <li>
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaUsaModal">
                                                 SOA USA Commercial Invoice
                                             </a>
@@ -233,9 +241,19 @@
                                     </ul>
                                 </li> --}}
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item" href="{{url('/pbi_bir_invoice')}}">
-                                        BIR Template Sales Invoice List
-                                    </a>
+                                    <a class="dropdown-item dropdown-toggle" href="#">BIR Template Sales Invoice</a>
+                                    <ul class="dropdown-menu">    
+                                        <li>
+                                            <a class="dropdown-item" href="{{url('/pbi_bir_invoice')}}">
+                                                BIR Template Sales Invoice List
+                                            </a>
+                                        </li>     
+                                        <li>
+                                            <a class="dropdown-item" href="{{url('/pbi_bir_invoice_special')}}">
+                                                BIR Special Template Sales Invoice List
+                                            </a>
+                                        </li>                                        
+                                    </ul>
                                 </li>
                                 <li class="dropdown-submenu">
                                     <a class="dropdown-item" href="{{url('/pbi_debit_memo')}}">
@@ -392,7 +410,8 @@
 <script src="{{ asset('inside/login_css/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('inside/login_css/js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
 <script src="{{ asset('inside/login_css/js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
-
+<script src="{{ asset('inside/login_css/js/select2.min.js') }}"></script>
+        <script src="{{ asset('inside/login_css/js/select2.js') }}"></script>
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('inside/login_css/js/inspinia.js')}}"></script>
 <script src="{{ asset('inside/login_css/js/plugins/pace/pace.min.js')}}"></script>

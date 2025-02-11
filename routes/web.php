@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // WHI
     // SOA Sharp
+    Route::get('/whi_soa_list', 'PrinController@soa_index');
     Route::post('/soa_usa_commercial', 'PrinController@soa_usa_commercial');
     Route::post('/soa_eur_commercial', 'PrinController@soa_eur_commercial');
     Route::post('/soa_php_commercial', 'PrinController@soa_php_commercial');
@@ -84,6 +85,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pbi_save_as_new_invoice', 'CommercialInvoiceController@save_as_new_invoice');
     Route::post('/pbi_edit_new_invoice/{id}', 'CommercialInvoiceController@edit_new_invoice');
     Route::delete('/delete-product/{id}', 'CommercialInvoiceController@deleteProduct');
+    Route::get('/pbi_bir_invoice_special', 'CommercialInvoiceController@index_special');
+    Route::get('/pbi_bir_edited_commercial_invoice_special/{DocNum}', 'CommercialInvoiceController@edit_print')->name('pbi_bir_edited_commercial_invoice_special');
 
 
     // Debit Memo
