@@ -265,7 +265,11 @@
               </div>
               <div class="info-row">
                   <span class="info-label"></span>
-                  <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') }}</span>
+                  <span class="info-value">
+                    @if (optional($details->first())->InvoiceDueDate)
+                        {{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') }}</span>
+                    @else 
+                    @endif
               </div>
               <div class="info-row {{ strlen(optional($details->first())->TermsOfPayment) > 35 ? 'multiline' : '' }}" style="margin-bottom:10px">
                 <span class="info-label"></span>
