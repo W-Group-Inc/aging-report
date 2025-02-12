@@ -145,11 +145,11 @@
                                 <li class="dropdown-submenu">
                                     <a class="dropdown-item dropdown-toggle" href="#">SOA</a>
                                     <ul class="dropdown-menu">
-                                        <li>
+                                        {{-- <li>
                                             <a class="dropdown-item" href="{{url('/whi_soa_list')}}">
                                                 SOA List
                                             </a>
-                                        </li>     
+                                        </li>      --}}
                                         <li>
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaUsaModal">
                                                 SOA USA Commercial Invoice
