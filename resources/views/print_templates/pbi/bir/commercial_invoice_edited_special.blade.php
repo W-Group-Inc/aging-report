@@ -323,16 +323,16 @@
                       <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">{{ $product->Description }}</td>
                       <td style="width: 100px;">{{ $product->Quantity !== null ? number_format($product->Quantity, 2) : '' }}</td>
                       <td style="width: 77px;">{{ $product->UnitPrice !== null ? number_format($product->UnitPrice, 2) : '' }}</td>
-                      <td style="width:99px;">{{ $product->Amount !== null ? number_format($product->Amount, 2) : '' }}</td>
+                      <td style="width: 99px;">{{ $product->Amount !== null ? number_format($product->Amount, 2) : '' }}</td>
                   </tr>
                   @endforeach
                   @endforeach
-                  <tr >
+                  <tr>
                     <td style="width: 103px;"></td>
                     <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
                     <td style="width: 100px;"></td>
                     <td style="width: 77px;"></td>
-                    <td style="width: 103px; padding:0; border-bottom: 1px solid black; border-top: 1px solid black;">{{ number_format($total,2) }}</td>
+                    <td style="width: 103px; padding-bottom:0; border-bottom: 1px solid black; border-top: 1px solid black;">{{ number_format($total,2) }}</td>
                   </tr>
                     @foreach ($details as $detail)
                     @foreach ($detail->specialProducts as $specialProduct)
@@ -342,7 +342,7 @@
                             $showCIP = true;
                         }
                     @endphp
-                  <tr style="line-height: 10px">
+                  <tr style="line-height: 10px;">
                       <td style="width: 103px;">{{ $specialProduct->ProductCode }}</td>
                       <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">{{ $specialProduct->Description }}</td>
                       <td style="width: 100px;">

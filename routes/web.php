@@ -87,6 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/delete-product/{id}', 'CommercialInvoiceController@deleteProduct');
     Route::get('/pbi_bir_invoice_special', 'CommercialInvoiceController@index_special');
     Route::get('/pbi_bir_edited_commercial_invoice_special/{DocNum}', 'CommercialInvoiceController@edit_print')->name('pbi_bir_edited_commercial_invoice_special');
+    Route::get('/pbi_bir_edited_commercial_vatable_invoice_special/{DocNum}', 'CommercialInvoiceController@edit_print')->name('pbi_bir_edited_commercial_vatable_invoice_special');
+    Route::get('/pbi_bir_edited_commercial_exempt_invoice_special/{DocNum}', 'CommercialInvoiceController@edit_print')->name('pbi_bir_edited_commercial_exempt_invoice_special');
 
 
     // Debit Memo

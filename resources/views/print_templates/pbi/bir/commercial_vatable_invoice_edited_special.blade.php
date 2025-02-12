@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Commercial Invoice</title>
+    <title>Commercial Invoice Special</title>
     
     <style>
         @page{
@@ -306,6 +306,8 @@
                   $taxable_amount = 0;
                   $total_amount_payable = 0;
                   $vatable_amount = 0;
+                  $expensesTotal =0;
+                  $showCIP = false;
               @endphp
               @foreach ($details as $detail)
               <tr>
@@ -316,14 +318,8 @@
                 <td style="width:99px;">{{ $detail->Currency }}</td>
             </tr>
               <tbody>
-              @foreach ($detail->products as $product)
+              @foreach ($detail->specialProductsOrig as $product)
               @php
-            //   if (($detail)->DocCur == 'EUR') {
-            //      $amount_tax = 0.21 * $product->Amount;
-            //       $vatable_amount += $amount_tax;
-            //       $total += $product->Amount;
-            //       $total_amount_payable += ($total  + $vatable_amount);
-            //   } else {
                   $amount_tax = 0.12 * $product->Amount;
                   $vatable_amount += $amount_tax;
                   $total += $product->Amount;
@@ -336,16 +332,16 @@
                       <td style="width: 100px;">
                             {{ !empty($product->Quantity) && $product->Quantity != 0 ? number_format($product->Quantity, 2) : '' }}
                       </td>
-                      <td style="width: 74px;">
+                      <td style="width: 77px;">
                             {{ !empty($product->UnitPrice) && $product->UnitPrice != 0 ? number_format($product->UnitPrice, 2) : '' }}
                       </td>
-                      <td style="width: 103px;">
+                      <td style="width: 99px;">
                             {{ !empty($product->Amount) && $product->Amount != 0 ? number_format($product->Amount, 2) : '' }}
                       </td>
                   </tr>
                   @endforeach
                   @endforeach
-                  <tr>
+                  <tr >
                     <td style="width: 103px;"></td>
                         <td style="width: 289px; text-align:left; padding-left: 20px;"><strong>ADD:12% VAT</strong></td>
                     <td style="width: 100px;"></td>
@@ -357,7 +353,43 @@
                     <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
                     <td style="width: 100px;"></td>
                     <td style="width: 77px;"></td>
-                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black">{{ number_format($total_amount_payable,2) }}</td>
+                    <td style="width: 103px; padding-bottom:0; border-bottom: 1px solid black; border-top: 1px solid black;">{{ number_format($total_amount_payable,2) }}</td>
+                  </tr>
+                  @foreach ($details as $detail)
+                    @foreach ($detail->specialProducts as $specialProduct)
+                    @php
+                        $expensesTotal += $specialProduct->Amount;
+                        if (strpos($specialProduct->Description, 'Airfreight') !== false) {
+                            $showCIP = true;
+                        }
+                    @endphp
+                  <tr style="line-height: 10px;">
+                      <td style="width: 103px;">{{ $specialProduct->ProductCode }}</td>
+                      <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">{{ $specialProduct->Description }}</td>
+                      <td style="width: 100px;">
+                        {{ $specialProduct->Quantity !== null && $specialProduct->Quantity != 0 ? number_format($specialProduct->Quantity, 2) : '' }}
+                    </td>
+                    <td style="width: 77px;">
+                        {{ $specialProduct->UnitPrice !== null && $specialProduct->UnitPrice != 0 ? number_format($specialProduct->UnitPrice, 2) : '' }}
+                    </td>
+                    <td style="width: 99px;">
+                        {{ $specialProduct->Amount !== null && $specialProduct->Amount != 0 ? number_format($specialProduct->Amount, 2) : '' }}
+                    </td>
+                  </tr>
+                  @endforeach
+                  @endforeach
+                  <tr>
+                    <td style="width: 103px;"></td>
+                    <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">
+                        @if ($showCIP)
+                            CIP TOTAL
+                        @else
+                            CIF TOTAL
+                        @endif
+                    </td>
+                    <td style="width: 100px;"></td>
+                    <td style="width: 77px;"></td>
+                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1px solid black">{{ number_format($expensesTotal,2) }}</td>
                   </tr>
                   <tr>
                     <td></td>
@@ -365,7 +397,7 @@
                     <td></td>
                     <td></td>
                     <td ></td>
-                 </tr>
+                  </tr>
                 
                   {{-- @foreach ($detail->clientRequest as $clientreq)
                   <tr>
@@ -448,11 +480,11 @@
                     <tr style="">
                         <td class="label-column"></td>
                         <td class="value-column" style="font-size: 11px">{!! nl2br(e(optional($details->first())->PaymentInstruction)) !!}</td>
-                        <td class="" style="padding-left: 53px; padding-top:30px;">
+                        <td class="" style="padding-left: 13px; padding-top:35px;">
                             {{ substr(auth()->user()->name, 0, 1) }}. {{ last(explode(' ', auth()->user()->name)) }} <br> <br>
                         </td>
                         <td class=""></td>
-                        <td style="padding-top:35px;">J. Galera</td>
+                        <td style="padding-top:40px;">J. Galera</td>
                         <td class=""></td>
                     </tr>
                 </tbody>

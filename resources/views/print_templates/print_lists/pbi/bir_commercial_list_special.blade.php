@@ -75,14 +75,14 @@
                                             </td>
                                             <td>
                                                 @if ($detail->asNew)
-                                                <a target='_blank' href="{{ url('pbi_bir_edited_commercial_vatable_invoice', $detail->asNew->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
+                                                <a target='_blank' href="{{ url('pbi_bir_edited_commercial_vatable_invoice_special', $detail->asNew->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
                                                 @else 
                                                 <a target='_blank' href="{{ url('pbi_bir_original_commercial_vatable_invoice', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
                                                 @endif
                                             </td> 
                                             <td>
                                                 @if ($detail->asNew)
-                                                <a target='_blank' href="{{ url('pbi_bir_edited_commercial_exempt_invoice', $detail->asNew->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
+                                                <a target='_blank' href="{{ url('pbi_bir_edited_commercial_exempt_invoice_special', $detail->asNew->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
                                                 @else 
                                                 <a target='_blank' href="{{ url('pbi_bir_original_commercial_exempt_invoice', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
                                                 @endif

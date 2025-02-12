@@ -7,7 +7,7 @@
     
     <style>
         @page{
-        margin: 70px 50px 10px 0px;
+        margin: 70px 58px 10px 0px;
        }
         body {
             font-family: sans-serif;
@@ -189,6 +189,10 @@
             width: 100%; 
             display: block; 
         }
+        .right-column .info-row.multiline .info-value{
+            line-height: 1;
+
+        }
     </style>
 </head>
 <body>
@@ -225,8 +229,8 @@
           <div class="left-column">
               <div class="info-row" style="max-height: 44px; min-height:44px">
                   <span class="info-label"></span>
-                  <span class="info-value">{{ optional($details->first())->PayToCode }}
-                    <br> {{ optional($details->first())->Billtoaddress }}
+                  <span class="info-value" style="line-height: 1"> {!! nl2br(optional($details->first())->PayToCode)!!}
+                    <br> {!! nl2br(optional($details->first())->Billtoaddress)!!} 
                   </span>
               </div>
               <div class="info-row" style="max-height: 45px; min-height:45px">
@@ -235,7 +239,7 @@
               </div>
               <div class="info-row" style="max-height: 50px; min-height:50px">
                 <span class="info-label"></span>
-                <span class="info-value">{{ optional($details->first())->Shiptoaddress }}</span>
+                <span class="info-value" style="line-height: 1">{!! nl2br(optional($details->first())->Shiptoaddress)!!} </span>
             </div>
               <div class="info-row" style="max-height: 60px; min-height:60px">
                   <span class="info-label"></span>
@@ -263,7 +267,7 @@
                   <span class="info-label"></span>
                   <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->ArDueDate)->format('F j, Y') }}</span>
               </div>
-              <div class="info-row" style="margin-bottom:10px">
+              <div class="info-row{{ strlen(optional($details->first())->PymntGroup) > 35 ? 'multiline' : '' }}"  style="margin-bottom:10px">
                 <span class="info-label"></span>
                 <span class="info-value">{{ optional($details->first())->PymntGroup }}</span>
             </div>
@@ -290,17 +294,25 @@
               <thead>
                   <tr>
                     <th style="width: 103px;"></th>
-                    <th style="width: 305px;"></th>
+                    <th style="width: 289px;"></th>
                     <th style="width: 100px;"></th>
-                    <th style="width: 74px;"></th>
-                    <th style="width: 103px;;"></th>
+                    <th style="width: 77px;"></th>
+                    <th style="width:99px;"></th>
                   </tr>
               </thead>
               @php
                 $total = 0; 
                 $value_added_tax = 0;
                 $total_amount_payable = 0;
+                $vatable_amount = 0;
               @endphp
+              <tr>
+                <td style="width: 103px;"></td>
+                <td style="width: 289px;"></td>
+                <td style="width: 100px; text-transform: uppercase;">{{ $details->first()->U_printUOM }}</td>
+                <td style="width: 77px;">{{ $details->first()->DocCur }}</td>
+                <td style="width: 99px;;">{{ $details->first()->DocCur }}</td>
+            </tr>
               @foreach ($details as $detail)
                 @php
                 // if (($detail)->DocCur == 'EUR') {
@@ -311,41 +323,52 @@
                 //     $total_amount_payable += ($total  + $value_added_tax);
                 // } else {
                     $total += ($detail->Quantity) * ($detail->Price);
-                    $vatable_amount = 0;
                     $vatable_amount = 0.12 * ($detail->Quantity) * ($detail->Price);
                     $value_added_tax += $vatable_amount;
-                    $total_amount_payable += ($total  + $value_added_tax);
+                    $total_amount_payable = ($total  + $value_added_tax);
                 // }
                     
                 @endphp
               <tbody>
-                  <tr>
+                  <tr style="line-height: 10px">
                       <td style="width: 103px;"></td>
-                      <td style="width: 305px;"></td>
-                      <td style="width: 100px; text-transform: uppercase;">{{ $detail->U_printUOM }}</td>
-                      <td style="width: 74px;">{{ $detail->DocCur }}</td>
-                      <td style="width: 103px;;">{{ $detail->DocCur }}</td>
+                      <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">{{ $detail->U_label_as }}</td>
+                      <td style="width: 100px;">
+                        @if ($detail->U_printUOM == 'lbs')
+                        {{ number_format($detail->Quantity * 2.2, 2) }}
+                        @else
+                        {{ number_format($detail->Quantity, 2) }}</td>
+                        @endif
+                      </td>
+                      <td style="width: 77px;">
+                        @if ($detail->U_printUOM == 'lbs')
+                        {{ number_format($detail->Price/2.2, 2) }}</td>
+                        @else
+                        {{ number_format($detail->Price, 2) }}</td>
+                        @endif
+                      <td style="width: 99px;;">{{ number_format(($detail->Quantity) * ($detail->Price), 2) }}</td>
                   </tr>
-                  <tr>
-                      <td style="width: 103px;"></td>
-                      <td style="width: 305px; text-align:left">{{ $detail->U_label_as }}</td>
-                      <td style="width: 100px;">{{ number_format($detail->Quantity,0) }}</td>
-                      <td style="width: 74px;">{{ number_format($detail->Price, 2) }}</td>
-                      <td style="width: 103px;;">{{ number_format(($detail->Quantity) * ($detail->Price), 2) }}</td>
-                  </tr>
+              @endforeach
+
                   <tr>
                     <td style="width: 103px;"></td>
                     {{-- @if ( $detail->DocCur == 'EUR')
                         <td style="width: 305px; text-align:left"><strong>ADD:21% VAT</strong></td>
                     @else --}}
-                        <td style="width: 305px; text-align:left"><strong>ADD:12% VAT</strong></td>
+                        <td  style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;"><strong>ADD:12% VAT</strong></td>
                     {{-- @endif --}}
                     <td style="width: 100px;"></td>
                     <td style="width: 74px;"></td>
-                    <td style="width: 103px;;">{{ number_format($vatable_amount,2) }}</td>
+                    <td style="width: 103px;;">{{ number_format($value_added_tax,2) }}</td>
                 </tr>
+                <tr>
+                    <td style="width: 103px;"></td>
+                    <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;"></td>
+                    <td style="width: 100px;"></td>
+                    <td style="width: 77px;"></td>
+                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black">{{ number_format($total_amount_payable,2) }}</td>
+                  </tr>
               </tbody>
-              @endforeach
           </table>
         </div>
           <div class="product-details-middle">

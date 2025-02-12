@@ -662,6 +662,10 @@ function edit_print(Request $request, $id){
             $view = 'print_templates.pbi.bir.commercial_exempt_invoice_edited';
         }elseif (Route::currentRouteName() === 'pbi_bir_edited_commercial_invoice_special') {
             $view = 'print_templates.pbi.bir.commercial_invoice_edited_special';
+        }elseif (Route::currentRouteName() === 'pbi_bir_edited_commercial_vatable_invoice_special') {
+            $view = 'print_templates.pbi.bir.commercial_vatable_invoice_edited_special';
+        }elseif (Route::currentRouteName() === 'pbi_bir_edited_commercial_exempt_invoice_special') {
+            $view = 'print_templates.pbi.bir.commercial_exempt_invoice_edited_special';
         }  else {
             $view = null; 
         }

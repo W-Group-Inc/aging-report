@@ -16,9 +16,7 @@
                 </div>
                 <div class="col-md-12">
                     <label >Date:</label>
-                    @foreach ( $detail->dln1 as $arDetail)
                     <input name="invoice_date" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($detail)->DocDueDate)->format('Y-m-d') }}">
-                    @endforeach
                 </div>
                 {{-- <div class="col-md-12">
                     <label >Sold To:</label>
@@ -54,9 +52,7 @@
                 </div>
                 <div class="col-md-4">
                     <label>Terms / Due Date</label>
-                    @foreach ( $detail->dln1 as $arDetail)
-                    <input name="InvoiceDueDate" class="form-control" type="text" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvPbi)->DocDueDate)->format('Y-m-d') }}">
-                    @endforeach
+                    <input name="InvoiceDueDate" class="form-control" type="text" value="{{ \Carbon\Carbon::parse(optional($detail->dln1->first()->oinvPbi)->DocDueDate)->format('Y-m-d') }}">
                 </div>
                 <div class="col-md-4">
                     <label>Payment Terms</label>
@@ -64,9 +60,7 @@
                 </div>
                 <div class="col-md-4">
                     <label>SO #</label>
-                    @foreach ( $detail->dln1 as $item)
-                    <input name="SoNo" class="form-control" type="text" value="{{ $item->ordrPbi->DocEntry}}">
-                    @endforeach
+                    <input name="SoNo" class="form-control" type="text"  value="{{ $detail->dln1->map(fn($item) => $item->ordrPbi->DocEntry)->implode(', ') }}">
                 </div>
                 <div class="col-md-2">
                     <label>Cur</label>
