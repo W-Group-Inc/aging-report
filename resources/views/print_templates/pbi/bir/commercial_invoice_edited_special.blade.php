@@ -237,17 +237,17 @@
                   <span class="info-label"></span>
                   <span class="info-value"></span>
               </div>
-              <div class="info-row" style="max-height: 50px; min-height:50px">
+              <div class="info-row" style="max-height: 63px; min-height:63px">
                 <span class="info-label"></span>
                 <span class="info-value" style="line-height: 1"> {!! nl2br(optional($details->first())->ShipTo) !!}</span>
             </div>
               <div class="info-row" style="max-height: 60px; min-height:60px">
                   <span class="info-label"></span>
-                  <span class="info-value"></span>
+                  <span class="info-value">{{ (optional($details->first())->Tin) }}</span>
               </div>
               <div class="info-row">
                   <span class="info-label"></span>
-                  <span class="info-value"></span>
+                  <span class="info-value">{{ (optional($details->first())->BusinessStyle) }}</span>
               </div>
           </div>
           <div class="right-column">
@@ -270,7 +270,6 @@
                         {{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') }}</span>
                     @else 
                     @endif
-                  </span>
               </div>
               <div class="info-row {{ strlen(optional($details->first())->TermsOfPayment) > 35 ? 'multiline' : '' }}" style="margin-bottom:10px">
                 <span class="info-label"></span>
@@ -402,14 +401,14 @@
             <table class="middle-table"  style="margin-top:0; border-top:none; font-size:12px;  width: 100%;">
                 <tbody >
                     <tr>
-                        <td style="width: 50%;">
-                            <p style="margin: 0; text-align: justify;">
+                        <td style="width: 52%;">
+                            <p style="margin-left:15px; text-align: justify;">
                                 @if (optional($details->first())->ShowPhrex == 1)
                                    {{ optional($details->first())->Phrex }}
                                 @endif
                             </p>
                         </td>
-                        <td style="width: 50%; vertical-align: top;">
+                        <td style="width: 48%; vertical-align: top;">
                             <table style="width: 100%; border-collapse: collapse;">
                                 <tbody>
                                     <tr>

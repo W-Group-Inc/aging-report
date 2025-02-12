@@ -25,11 +25,11 @@
                 </div>
                 <div class="col-md-6">
                     <label>TIN</label>
-                    <input name="Tin" class="form-control" type="text">
+                    <input name="Tin" class="form-control" type="text" value="{{ $detail->asNew->Tin }}">
                 </div>
                 <div class="col-md-6">
                     <label>Business Style</label>
-                    <input name="BusinessStyle" class="form-control" type="text">
+                    <input name="BusinessStyle" class="form-control" type="text" value="{{ $detail->asNew->BusinessStyle }}">
                 </div>
                 <div class="col-md-4">
                     <label>Buyer's PO No.</label>
