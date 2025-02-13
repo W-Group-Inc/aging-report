@@ -283,8 +283,8 @@ class CommercialInvoiceController extends Controller
         $save_as_new->SealNo = $request->SealNo;
         $save_as_new->TermsOfPayment = $request->TermsOfPayment;
         $save_as_new->SoNo = $request->SoNo;
-        $save_as_new->Remarks = str_replace('/', "\n", $request->Remarks);
-        $save_as_new->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
+        $save_as_new->Remarks = str_replace('|', "\n", $request->Remarks);
+        $save_as_new->RemarksTwo = str_replace('|', "\n", $request->RemarksTwo);
         $save_as_new->Currency = $request->Currency;
         $save_as_new->Uom = $request->UnitOfM;
 
@@ -353,15 +353,15 @@ class CommercialInvoiceController extends Controller
         $update_saved_invoice->TermsOfPayment = $request->TermsOfPayment;
         $update_saved_invoice->SoNo = $request->SoNo;
         $update_saved_invoice->invoice_date = $request->invoice_date;
-        $update_saved_invoice->Remarks = str_replace('/', "\n", $request->Remarks);
-        $update_saved_invoice->RemarksTwo = str_replace('/', "\n", $request->RemarksTwo);
+        $update_saved_invoice->Remarks = str_replace('|', "\n", $request->Remarks);
+        $update_saved_invoice->RemarksTwo = str_replace('|', "\n", $request->RemarksTwo);
         $update_saved_invoice->Currency = $request->Currency;
         $update_saved_invoice->Uom = $request->UnitOfM;
         $update_saved_invoice->update();
 
         foreach ($request->input('Description') as $index => $description) {
             $productId = $request->product_id[$index];
-            $description = str_replace(['@', '/'], [' ', "\n"], $description);
+            $description = str_replace(['@', '|'], [' ', "\n"], $description);
             
             if ($productId) {
                 $save_as_product = BirInvoiceProduct::find($productId);
