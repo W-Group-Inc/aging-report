@@ -847,7 +847,23 @@
             buttons: [
                 {extend: 'csv', title: 'Aging Report'},
                 // {extend: 'excel', title: 'Aging Report'}
-            ]
+            ],
+            columnDefs: [
+        {
+            targets: [4, 9, 10, 11, 12, 13, 16], 
+            type: 'num', 
+            render: function (data, type, row) {
+                if (type === 'sort' || type === 'type') {
+                    if (data === 'NA' || data.trim() === '') {
+                        return -Infinity; 
+                    }
+                    let parsedData = parseFloat(data.replace(/[$,€₱]/g, '').trim());
+                    return isNaN(parsedData) ? 0 : parsedData;
+                }
+                return data; 
+            }
+        }
+    ]
 
         });
 
