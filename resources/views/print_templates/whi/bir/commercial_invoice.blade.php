@@ -246,7 +246,7 @@
             margin-bottom: 1.5px;
         }
         .new-col-left .info-detail {
-            width: 50%;
+            width: 53%;
             display: inline-block;
             vertical-align: top;  
             font-size: 11px;
@@ -653,7 +653,7 @@
             <div class="info-row {{ strlen(optional($details->first())->PymntGroup) > 35 ? 'multiline' : '' }}">
                 <span class="info-name"></span>
                 <span class="info-colon"></span>
-                <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</span>
+                <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->ArDueDate)->format('F j, Y') }}</span>
             </div>
         </div>
         <div class="right-box" style="min-height: 210px;max-height: 210px">

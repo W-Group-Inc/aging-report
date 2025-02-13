@@ -242,7 +242,7 @@
             margin-bottom: 3.8px;
         }
         .new-col-left .info-detail {
-            width: 50%;
+            width: 53%;
             display: inline-block;
             vertical-align: top;  
             font-size: 11px;
