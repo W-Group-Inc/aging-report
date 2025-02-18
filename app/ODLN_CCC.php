@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ODLN_CCC extends Model
+class ODLN_CCC extends Model 
 {
+
     protected $connection = 'sqlsrv_ccc';
     protected $table = 'ODLN';
     public function ccc_products()
@@ -28,5 +29,13 @@ class ODLN_CCC extends Model
     public function PoNumbers() 
     {
         return $this->hasMany(ORDR_CCC::class, 'NumAtCard', 'NumAtCard')->select('U_BuyersPO');
+    }
+    public function cccDln1()
+    {
+        return $this->hasMany(DLN1_CCC::class, 'DocEntry', 'DocEntry');
+    }
+    public function newEntry() 
+    {
+        return $this->hasOne(SalesInvoice::class, 'DocNum', 'DocEntry');
     }
 }

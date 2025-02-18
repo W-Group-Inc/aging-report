@@ -34,6 +34,8 @@ use App\CRD1_PBI;
 use App\OITM_PBI;
 use App\OCRD_PBI;
 use App\ODLN_CCC;
+use App\SalesInvoice;
+use App\SalesInvoiceProduct;
 use App\SisCode;
 use Illuminate\Http\Request;
 
@@ -666,13 +668,43 @@ function edit_print(Request $request, $id){
             $view = 'print_templates.pbi.bir.commercial_vatable_invoice_edited_special';
         }elseif (Route::currentRouteName() === 'pbi_bir_edited_commercial_exempt_invoice_special') {
             $view = 'print_templates.pbi.bir.commercial_exempt_invoice_edited_special';
-        }  else {
+        } else {
             $view = null; 
         }
 
         $filename = Route::currentRouteName() === 'bir_edited_invoice_whi'
         ? 'WHI_BIR_Commercial_Invoice_New.pdf'
         : 'CCC_BIR_Commercial_Invoice_New.pdf';
+        $pdf = PDF::loadView($view, [
+            array(
+                'details' =>$details,
+            ),
+        ])
+        ->setPaper([0, 0, 622, 792], 'portrait');
+
+        return $pdf->stream($filename);
+    }
+}
+
+function ccc_edit_print(Request $request, $id){
+    {
+        $customer_ref = $id;
+        $details = SalesInvoice::where('id', '=', $customer_ref)
+        ->orderBy('DocNum', 'ASC')
+        ->get();
+        View::share('details', $details);
+
+        if (Route::currentRouteName() === 'ccc_bir_edited_sales_invoice') {
+            $view = 'print_templates.ccc.bir.sales_invoice_zero_rate_edited';
+        } elseif (Route::currentRouteName() === 'ccc_bir_edited_sales_invoice_vatable') {
+            $view = 'print_templates.ccc.bir.sales_invoice_vatable_edited';
+        } else {
+            $view = null; 
+        }
+
+        $filename = Route::currentRouteName() === 'ccc_bir_edited_sales_invoice'
+        ? 'CCC_BIR_Sales_Invoice_Zero_Rare_New.pdf'
+        : 'CCC_BIR_Sales_Invoice_Vatable_New.pdf';
         $pdf = PDF::loadView($view, [
             array(
                 'details' =>$details,
@@ -886,6 +918,71 @@ function edit_new_invoice_ccc(Request $request, $id){
 return redirect()->back()->with('success', 'Invoice updated successfully.');
 
 }
+
+function save_as_new_sales_invoice_ccc(Request $request) {
+    $save_as_new = new SalesInvoice;
+    $save_as_new->DocNum = $request->DocEntry; 
+    $save_as_new->InvoiceDate = $request->InvoiceDate; 
+    $save_as_new->SoldTo = $request->Client; 
+    $save_as_new->Address = $request->ClientAddress;
+    $save_as_new->Tin = $request->Tin;
+    $save_as_new->BusinessStyle = $request->BusinessStyle;
+    $save_as_new->BuyersPo = $request->BuyersPo;
+    $save_as_new->SalesContractNo = $request->SalesContract;
+    $save_as_new->TermsOfPayment = $request->TermOfPayment;
+    $save_as_new->InvoiceDueDate = $request->InvoiceDueDate;
+    $save_as_new->OscaPwd = $request->OscaPwd;
+    $save_as_new->ScPwd = $request->ScPwd;
+    $save_as_new->Currency = $request->Currency;
+    $save_as_new->Uom = $request->UnitOfM;
+    $save_as_new->save();
+    foreach ($request->Description as $index => $description) {
+        $save_as_product = new SalesInvoiceProduct; 
+        $save_as_product->DocNum = $save_as_new->id; 
+        $save_as_product->Description = $description;
+        $save_as_product->Quantity = $request->Quantity[$index];
+        $save_as_product->UnitPrice = $request->UnitPrice[$index];
+        $save_as_product->Amount = $request->Amount[$index];
+        $save_as_product->save(); 
+    }
+
+    return redirect()->back()->with('success', 'Invoice saved successfully.');
+}
+
+function edit_new_sales_invoice_ccc(Request $request, $id){
+    $update_saved_invoice = SalesInvoice::find($id);
+    $update_saved_invoice->InvoiceDate = $request->InvoiceDate; 
+    $update_saved_invoice->SoldTo = $request->Client; 
+    $update_saved_invoice->Address = $request->Address;
+    $update_saved_invoice->Tin = $request->Tin;
+    $update_saved_invoice->BusinessStyle = $request->BusinessStyle;
+    $update_saved_invoice->BuyersPo = $request->BuyersPo;
+    $update_saved_invoice->SalesContractNo = $request->SalesContractNo;
+    $update_saved_invoice->TermsOfPayment = $request->TermOfPayment;
+    $update_saved_invoice->InvoiceDueDate = $request->InvoiceDueDate;
+    $update_saved_invoice->OscaPwd = $request->OscaPwd;
+    $update_saved_invoice->ScPwd = $request->ScPwd;
+    $update_saved_invoice->Currency = $request->Currency;
+    $update_saved_invoice->Uom = $request->UnitOfM;
+    $update_saved_invoice->update();
+
+    foreach ($request->Description as $index => $description) {
+        $productId = $request->product_id[$index];
+        $save_as_product = SalesInvoiceProduct::find($productId) ?? new SalesInvoiceProduct();
+        $save_as_product->Description = $description;
+        $save_as_product->Quantity = (float) str_replace(',', '', $request->Quantity[$index]);
+        $save_as_product->UnitPrice = $request->UnitPrice[$index];
+        $save_as_product->Amount = (float) str_replace(',', '', $request->Amount[$index]); 
+        if (!$save_as_product->exists) {
+            $save_as_product->DocNum  = $id;
+            $save_as_product->save();
+        } else {
+            $save_as_product->update();
+        }
+}
+return redirect()->back()->with('success', 'Invoice updated successfully.');
+
+}
 function ccc_original_print(Request $request, $invoice_number){
     {
         $customer_ref =$invoice_number;
@@ -997,7 +1094,7 @@ function sales_invoice_index(Request $request)
         $view = '';
 
         if ($request->is('ccc_bir_sales_invoice')) {
-            $model = ODLN_CCC::query();
+            $model = ODLN_CCC::with('newEntry.auditHistory','newEntry.salesProduct.auditProductHistory');
             $view = 'print_templates.print_lists.ccc.bir_sales_invoice_list';
         } else {
             abort(404); 
@@ -1035,6 +1132,7 @@ function sales_invoice_index(Request $request)
             $request->is('ccc_bir_sales_invoice') ? 'ODLN.U_ContainerNo': null,
             $request->is('ccc_bir_sales_invoice') ? 'ODLN.U_Seal': null,
             $request->is('ccc_bir_sales_invoice') ? 'ODLN.U_SAODueDate': null,
+            $request->is('ccc_bir_sales_invoice') ? 'ODLN.LicTradNum': null,
             'g.U_T1',
             'g.U_T2',
             'g.U_T3',

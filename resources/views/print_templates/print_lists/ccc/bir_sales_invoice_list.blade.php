@@ -91,6 +91,7 @@
                                             <th>Address</th>
                                             <th>Buyer's PO No.</th>
                                             <th>Buyer's Ref. No.</th>
+                                            <th>History Logs</th>
                                            
                                         </tr>
                                     </thead>
@@ -98,17 +99,117 @@
                                     @foreach ( $details as $detail)
                                         <tr>
                                             <td>
-                                                <a target='_blank' href="{{ url('ccc_bir_original_sales_invoice_zero_rate', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
+                                                @if ($detail->newEntry)
+                                                    <button onclick="" type="button" class="btn btn-primary btn-outline" title="Edit Invoice" data-toggle="modal" data-target="#CccBirSalesEditNew{{ $detail->newEntry->id }}" ><i class="fa fa fa-pencil"></i></button>
+                                                    <a target='_blank' href="{{ url('ccc_bir_edited_sales_invoice', $detail->newEntry->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
+                                                @else
+                                                    <button onclick="" type="button" class="btn btn-primary btn-outline" title="Edit Invoice" data-toggle="modal" data-target="#CccBirSalesEdit{{ $detail->DocEntry }}" ><i class="fa fa fa-plus"></i></button>
+                                                    <a target='_blank' href="{{ url('ccc_bir_original_sales_invoice_zero_rate', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
+                                                @endif
                                             </td>
                                             <td>
-                                                <a target='_blank' href="{{ url('ccc_bir_original_sales_invoice_vatable', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
+                                                @if ($detail->newEntry)
+                                                    <a target='_blank' href="{{ url('ccc_bir_edited_sales_invoice', $detail->newEntry->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
+                                                @else
+                                                    <a target='_blank' href="{{ url('ccc_bir_original_sales_invoice_vatable', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
+                                                @endif
                                             </td>        
                                             <td>{{ $detail->DocDate }}</td>
                                             <td>{{ $detail->PayToCode }}</td>
                                             <td>{{ $detail->Address }}</td>
                                             <td>{{ $detail->U_BuyersPO }}</td>
                                             <td>{{ $detail->NumAtCard }}</td>
-                                            {{-- <td>{{ $detail->U_Salescontract }}</td> --}}
+                                            <td>
+                                                @if ($detail->newEntry)
+                                                    <button type="button" class="btn btn-info btn-outline" data-toggle="modal" data-target="#historyModal{{ $detail->newEntry->id }}">
+                                                        <i class="fa fa-history"></i> View Logs
+                                                   </button>
+                                
+                                                    <div class="modal fade" id="historyModal{{ $detail->newEntry->id }}" tabindex="-1" role="dialog">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">History Logs for Invoice</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <table class="table table-bordered">
+                                                                        <tr>
+                                                                            <th>User</th>
+                                                                            <th>Action</th>
+                                                                            {{-- <th>Old Values</th> --}}
+                                                                            <th>Values</th>
+                                                                            <th>Date</th>
+                                                                        </tr>
+                                                                        @foreach ($detail->newEntry->auditHistory as $audit)
+                                                                            <tr>
+                                                                                <td>{{ $audit->user->name }}</td>
+                                                                                <td>{{ $audit->event }}</td>
+                                                                                <td>
+                                                                                    @if(!empty($audit->new_values))
+                                                                                        Sales Invoice
+                                                                                    @endif
+                                                                                </td>
+                                                                                {{-- <td>
+                                                                                    @if(!empty($audit->old_values))
+                                                                                        @foreach($audit->old_values as $key => $value)
+                                                                                            <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong> {{ $value }} <br>
+                                                                                        @endforeach
+                                                                                    @else
+                                                                                        <em>No changes</em>
+                                                                                    @endif
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if(!empty($audit->new_values))
+                                                                                        @foreach($audit->new_values as $key => $value)
+                                                                                            <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong> {{ $value }} <br>
+                                                                                        @endforeach
+                                                                                    @else
+                                                                                        <em>No changes</em>
+                                                                                    @endif
+                                                                                </td> --}}
+                                                                                <td>{{ $audit->created_at }}</td>
+                                                                            </tr>
+                                                                        @foreach ($detail->newEntry->salesProduct as $salesProduct)
+                                                                            @foreach ($salesProduct->auditProductHistory as $auditProduct)
+                                                                                <tr>
+                                                                                    <td>{{ $auditProduct->user->name }}</td>
+                                                                                    <td>{{ $auditProduct->event }}</td>
+                                                                                    <td>
+                                                                                        @if(!empty($audit->new_values))
+                                                                                            Sales Invoice Product
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    {{-- <td>
+                                                                                        @if(!empty($auditProduct->old_values))
+                                                                                            @foreach($auditProduct->old_values as $key => $value)
+                                                                                                <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong> {{ $value }} <br>
+                                                                                            @endforeach
+                                                                                        @else
+                                                                                            <em>No changes</em>
+                                                                                        @endif
+                                                                                    </td> --}}
+                                                                                    {{-- <td>
+                                                                                        @if(!empty($auditProduct->new_values))
+                                                                                            @foreach($auditProduct->new_values as $key => $value)
+                                                                                                <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong> {{ $value }} <br>
+                                                                                            @endforeach
+                                                                                        @else
+                                                                                            <em>No changes</em>
+                                                                                        @endif
+                                                                                    </td> --}}
+                                                                                        <td>{{ $auditProduct->created_at }}</td>
+                                                                                    </tr>
+                                                                                @endforeach
+                                                                            @endforeach
+                                                                        @endforeach
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                    </tbody>
@@ -157,8 +258,8 @@
     // });
 </script>
 @foreach ( $details as $detail)
-{{-- @include('print_templates.print_lists.ccc.bir_commercial_list_edit')
-@include('print_templates.print_lists.ccc.bir_commercial_list_edit_new') --}}
+@include('print_templates.print_lists.ccc.bir_sales_list_edit')
+@include('print_templates.print_lists.ccc.bir_sales_list_edit_new')
 @endforeach
 @endsection
 

@@ -233,7 +233,11 @@
             <div class="product-row">
                 <div class="col-md-12 row"><h3 style="font-weight:bold; text-decoration: underline;">Product</h3></div> 
                 <div class="row">
-                    <div class="col-md-6">
+                <div class="row">
+                     <div class="col-md-12">
+                    <input name="product_id[]" class="form-control" type="hidden" value="">
+                </div>
+                <div class="col-md-6">
                     <label>Product Code</label>
                     <input name="ProductCode[]" class="form-control product-code" type="text" value="">
                 </div>

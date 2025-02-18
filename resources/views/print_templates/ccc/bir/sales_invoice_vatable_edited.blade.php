@@ -362,54 +362,59 @@
         <div class="info-row" style="max-height: 60px; min-height:60px">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value"><strong>{{ optional($details->first())->PayToCode }}</strong></span>
+            <span class="info-value"><strong>{!! nl2br(optional($details->first())->SoldTo)!!}</strong></span>
         </div>
         <div class="info-row" style="margin-bottom: 5px">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ optional($details->first())->LicTradNum }}</span>
+            <span class="info-value">{{ optional($details->first())->Tin }}</span>
         </div>
         <div class="info-row" style="max-height:42px; min-height:42px;">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ optional($details->first())->Billtoaddress }}</span>
+            <span class="info-value">{!! nl2br(optional($details->first())->Address)!!}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ optional($details->first())->PayToCode }}</span>
+            <span class="info-value">{{ optional($details->first())->BusinessStyle }}</span>
         </div>
     </div>
     <div class="right-column">
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</span>
+            <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDate)->format('F j, Y') }}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ optional($details->first())->U_BuyersPO }}</span>
+            <span class="info-value">{{ optional($details->first())->BuyersPo }}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ optional($details->first())->U_Salescontract }}/{{ optional($details->first())->NumAtCard }}</span>
+            <span class="info-value">{{ optional($details->first())->SalesContractNo }}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ optional($details->first())->PymntGroup }}</span>
+            <span class="info-value">{{ optional($details->first())->TermsOfPayment }}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->ArDueDate)->format('F j, Y') }}</span>
+            <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') }}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value"></span>
+            <span class="info-value">{{ optional($details->first())->OscaPwd }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label"></span>
+            <span class="info-colon"></span>
+            <span class="info-value">{{ optional($details->first())->ScPwd }}</span>
         </div>
     </div>
 </div>
@@ -432,47 +437,43 @@
                 <td colspan="2"  style="font-weight: bold; padding:10px; text-align: center">{{ optional($details->first())->U_Remark3 }}</td>
             </tr>
             @php
-                    $total_vatable_unit_price = 0;
+                $total_vatable_unit_price = 0;
                     $total = 0;
                     $vat_inclusive = 0;
                     $total_vatable_amount = 0;
+                    $vatable_unit_price = 0;
             @endphp
             @foreach ($details as $detail)
-            
-            <tr>
-                <td style="font-weight: bold">{{ $detail->U_Label_as }}</td>
-                <td>
-                    @if ($detail->Quantity)
-                    {{ number_format($detail->Quantity, 2) }}
-                    @endif
-                    @if ($detail->U_Netweight != '')
-                        {{ $detail->U_printUOM }}
-                    @endif
-                </td>
-                <td> 
-                     {{-- @if ($detail->U_Netweight != '') --}}
-                     {{ optional($details->first())->DocCur }} {{ number_format($detail->Price,2) }} 
-                    {{-- @endif --}}
-                </td>
-                <td>{{ optional($details->first())->DocCur }} {{ number_format($detail->Linetotal, 2) }}</td>
-            </tr>
-            
-            <tr>
-                <td></td>
-                <td>Add Vat:12%</td>
-                @php
+                @foreach ($detail->salesProduct as $product)
+                    @php
+                        $vatable_unit_price = $product->UnitPrice * 0.12;
+                        $total_vatable_unit_price += $vatable_unit_price;
+                        $vatable_amount = ($product->Amount) * 0.12;
+                        $total_vatable_amount += $vatable_amount;
 
-                    $vatable_unit_price = $detail->Price * 0.12;
-                    $total_vatable_unit_price += $vatable_unit_price;
-                    $vatable_amount = ($detail->Linetotal) * 0.12;
-                    $total_vatable_amount += $vatable_amount;
-
-                    $total += $detail->Linetotal;
-                    $vat_inclusive = $total + $total_vatable_amount;
-                @endphp
-                <td>{{ optional($details->first())->DocCur }} {{ $vatable_unit_price }}</td>
-                <td>{{ optional($details->first())->DocCur }} {{ number_format($vatable_amount, 2) }}</td>
-            </tr>
+                        $total += $product->Amount;
+                        $vat_inclusive = $total + $total_vatable_amount;
+                    @endphp
+                    <tr>
+                        <td style="font-weight: bold">{{ $product->Description }}</td>
+                        <td>
+                            @if ($product->Quantity)
+                            {{ number_format($product->Quantity, 2) }} {{ optional($detail)->Uom }}
+                            @endif
+                        </td>
+                        <td> 
+                            {{ optional($detail)->Currency }} {{ number_format($product->UnitPrice,2) }} 
+                        </td>
+                        <td>{{ optional($detail)->Currency }} {{ number_format($product->Amount, 2) }}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <td>Add Vat:12%</td>
+                        <td>{{ optional($details->first())->Currency }} {{ $vatable_unit_price }}</td>
+                        <td>{{ optional($details->first())->Currency }} {{ number_format($vatable_amount, 2) }}</td>
+                    </tr>
+                @endforeach
             @endforeach
             <tr>
                 <td style=" padding:10px; text-align: center">{{ optional($details->first())->U_Remark1 }}</td>
@@ -499,7 +500,7 @@
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }} {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name"></span>
@@ -514,7 +515,7 @@
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total_vatable_amount, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }} {{ number_format($total_vatable_amount, 2) }}</span>
         </div>
     </div>
 
@@ -522,17 +523,17 @@
         <div class="info-row" style="margin-bottom:5px;">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($vat_inclusive, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }} {{ number_format($vat_inclusive, 2) }}</span>
         </div>
         <div class="info-row" style="margin-bottom:3px;">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total_vatable_amount, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }} {{ number_format($total_vatable_amount, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }} {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name"></span>
@@ -542,12 +543,12 @@
         <div class="info-row" style="margin-bottom:3px;">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }} {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name"></span>
             <span class="info-colon"></span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total_vatable_amount, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }} {{ number_format($total_vatable_amount, 2) }}</span>
         </div>
     </div>
 </div>
@@ -555,7 +556,7 @@
 
 <div class="column-container" style="min-height:15px; max-height:15px;">
     <div class="total">
-        <div class="total-value">{{ optional($details->first())->DocCur }} {{ number_format($vat_inclusive, 2) }}</div>
+        <div class="total-value">{{ optional($details->first())->Currency }} {{ number_format($vat_inclusive, 2) }}</div>
     </div>
 </div>
 

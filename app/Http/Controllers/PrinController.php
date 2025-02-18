@@ -32,7 +32,6 @@ class PrinController extends Controller
         $soa_type = $request->input('soa_type');
         $prepared_by = $request->input('prepared_by');
 
-        // Fetch data from the database
         $details = ORDR::select(
             'T0.DocEntry',
             'T0.DocNum',
@@ -124,12 +123,11 @@ class PrinController extends Controller
         $dompdf = $pdf->getDomPDF();
         $canvas = $dompdf->getCanvas();
 
-        // Add dynamic page numbers
         $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
             $font = $fontMetrics->getFont('Helvetica', 'normal');
-            $size = 10; // Font size
-            $x = 520;  // Adjust horizontal position
-            $y = 820;  // Adjust vertical position
+            $size = 10; 
+            $x = 520;  
+            $y = 820;  
             $canvas->text($x, $y, "Page $pageNumber of $pageCount", $font, $size);
         });
         return $pdf->stream('SOA_USA_Commercial_Invoice.pdf');
@@ -1454,19 +1452,60 @@ class PrinController extends Controller
         ->leftJoin('OCQG as T5', 'T3.GroupCode', '=', 'T5.GroupCode')
         ->where('T0.NumAtCard', '=', $customer_ref)
         ->get();
-        // Share the data with the view
         View::share('details', $details);
         
-        // Load the view and generate PDF
         $pdf = PDF::loadView('print_templates.ccc.billing_statement.ccc_billing_print', [
             array(
                 'details' =>$details,
             ),
             'soa_no' => $soa_no,
         ])->setPaper('A4', 'portrait');
-
-        // Output PDF as a response
         return $pdf->stream('Billing_Statement_CCC.pdf');
+    }
+
+    public function soa_index(Request $request)
+    {
+        $search = $request->input('search');
+
+        $details = ORDR::select(
+            'ORDR.DocNum',
+            'ORDR.NumAtCard',
+            'ORDR.DocStatus',
+            'ORDR.CardName',
+            'ORDR.PayToCode',
+            'ORDR.Address as Billtoaddress',
+            'ORDR.ShipToCode',
+            'ORDR.Address2 as Shiptoaddress',
+            'ORDR.U_Salescontract',
+            'ORDR.DocDueDate',
+            'ORDR.U_BuyersPO',
+            'ORDR.U_SOANum',
+            'ORDR.U_ModeShip',
+            'ORDR.U_Inco',
+            'ORDR.CANCELED'
+            
+        )->when($search, function ($query) use ($search, $request) {
+            $terms = explode(' ', $search);
+            foreach ($terms as $term) {
+                $query->where(function ($q) use ($term, $request) {
+                    
+                        $q->where('ORDR.U_invNo', 'LIKE', "%{$term}%")
+                        ->orWhere('ORDR.CardName', 'LIKE', "%{$term}%")
+                        ->orWhere('ORDR.U_BuyersPO', 'LIKE', "%{$term}%")
+                        ->orWhere('ORDR.NumAtCard', 'LIKE', "%{$term}%");
+                    
+                });
+            }
+        })   
+        ->where('CANCELED' ,'!=', 'Y' )
+        ->where('NumAtCard' ,'!=', '' )
+        ->paginate(15);
+        return view('print_templates.whi.soa.index', 
+            array(
+                'details' =>$details,
+                'search' =>$search,
+            )
+        );
     }
 
 }
