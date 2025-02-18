@@ -267,7 +267,7 @@
                   <span class="info-label"></span>
                   <span class="info-value">{{ \Carbon\Carbon::parse(optional($details->first())->ArDueDate)->format('F j, Y') }}</span>
               </div>
-              <div class="info-row{{ strlen(optional($details->first())->PymntGroup) > 35 ? 'multiline' : '' }}"  style="margin-bottom:10px">
+              <div class="info-row {{ strlen(optional($details->first())->PymntGroup) > 35 ? 'multiline' : '' }}" style="margin-bottom:10px">
                 <span class="info-label"></span>
                 <span class="info-value">{{ optional($details->first())->PymntGroup }}</span>
             </div>
