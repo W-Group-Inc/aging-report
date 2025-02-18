@@ -170,6 +170,7 @@
         .product-details-bottom .bottom-table tr{
             /* border-right: 1px solid black;
             border-left: 1px solid black; */
+            
             padding: 10px;
             vertical-align: top
             
