@@ -170,7 +170,7 @@
                                                                                 </td> --}}
                                                                                 <td>{{ $audit->created_at }}</td>
                                                                             </tr>
-                                                                        @foreach ($detail->newEntry->salesProduct as $salesProduct)
+                                                                        {{-- @foreach ($detail->newEntry->salesProduct as $salesProduct)
                                                                             @foreach ($salesProduct->auditProductHistory as $auditProduct)
                                                                                 <tr>
                                                                                     <td>{{ $auditProduct->user->name }}</td>
@@ -179,7 +179,7 @@
                                                                                         @if(!empty($audit->new_values))
                                                                                             Sales Invoice Product
                                                                                         @endif
-                                                                                    </td>
+                                                                                    </td> --}}
                                                                                     {{-- <td>
                                                                                         @if(!empty($auditProduct->old_values))
                                                                                             @foreach($auditProduct->old_values as $key => $value)
@@ -198,10 +198,10 @@
                                                                                             <em>No changes</em>
                                                                                         @endif
                                                                                     </td> --}}
-                                                                                        <td>{{ $auditProduct->created_at }}</td>
+                                                                                        {{-- <td>{{ $auditProduct->created_at }}</td>
                                                                                     </tr>
                                                                                 @endforeach
-                                                                            @endforeach
+                                                                            @endforeach --}}
                                                                         @endforeach
                                                                     </table>
                                                                 </div>
