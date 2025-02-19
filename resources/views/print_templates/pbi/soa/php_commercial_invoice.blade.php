@@ -149,14 +149,14 @@
         }
         .bottom-table .label-column{
             text-align: left;
-            width: 22%;
-            padding-left: 10px
+            width: 12%;
+            padding-left: 0px;
         }
 
         .bottom-table .value-column{
             text-align: left;
-            width: 40%;
-            padding-left: 10px
+            width: 44%;
+            /* padding-left: 10px */
         }
         /* New */
         .new-row {
