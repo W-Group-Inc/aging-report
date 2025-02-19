@@ -359,12 +359,12 @@
 </div>
 <div class="customer-container">
     <div class="left-column" >
-        <div class="info-row" style="max-height: 30px; min-height:30px">
+        <div class="info-row" style="max-height: 20px; min-height:20px">
             <span class="info-label"></span>
             <span class="info-colon"></span>
             <span class="info-value"><strong>{!! nl2br(optional($details->first())->SoldTo)!!}</strong></span>
         </div>
-        <div class="info-row" style="max-height: 29px; min-height:29px">
+        <div class="info-row" style="max-height: 39px; min-height:39px">
             <span class="info-label"></span>
             <span class="info-colon"></span>
             <span class="info-value">{!! nl2br(optional($details->first())->Remarks)!!}</span>

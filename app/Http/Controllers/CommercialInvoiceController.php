@@ -935,6 +935,7 @@ function save_as_new_sales_invoice_ccc(Request $request) {
     $save_as_new->ScPwd = $request->ScPwd;
     $save_as_new->Currency = $request->Currency;
     $save_as_new->Uom = $request->UnitOfM;
+    $save_as_new->Remarks = $request->Remarks;
     $save_as_new->save();
     foreach ($request->Description as $index => $description) {
         $save_as_product = new SalesInvoiceProduct; 
