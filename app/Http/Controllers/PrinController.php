@@ -1060,7 +1060,6 @@ class PrinController extends Controller
 
         return $pdf->stream('SOA_PBI_EUR_Commercial_Invoice.pdf');
     }
-
     public function soa_php_commercial_pbi(Request $request)
     {
         $soa_no = $request->input('soa_no');
