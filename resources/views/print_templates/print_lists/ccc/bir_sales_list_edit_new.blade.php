@@ -12,9 +12,13 @@
           </div>
           <div class="modal-body">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <label >Date:</label>
                     <input name="InvoiceDate" class="form-control" type="date" value="{{ \Carbon\Carbon::parse($detail->newEntry->InvoiceDate)->format('Y-m-d') }}">
+                </div>
+                <div class="col-md-6">
+                    <label>Remarks</label>
+                    <input name="Remarks" class="form-control" type="text" value="{{  $detail->newEntry->Remarks }}">
                 </div>
                 <div class="col-md-12">
                     <label >Sold To:</label>

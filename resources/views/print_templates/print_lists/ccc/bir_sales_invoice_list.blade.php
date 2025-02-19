@@ -109,7 +109,7 @@
                                             </td>
                                             <td>
                                                 @if ($detail->newEntry)
-                                                    <a target='_blank' href="{{ url('ccc_bir_edited_sales_invoice', $detail->newEntry->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
+                                                    <a target='_blank' href="{{ url('ccc_bir_edited_sales_invoice_vatable', $detail->newEntry->id) }}" class="btn btn-warning btn-outline" > <i class="fa fa-sharp fa-print"></i></a>
                                                 @else
                                                     <a target='_blank' href="{{ url('ccc_bir_original_sales_invoice_vatable', $detail->DocEntry) }}" class="btn btn-danger btn-outline" > <i class="fa fa-solid fa-print"></i></a>
                                                 @endif

@@ -962,7 +962,8 @@ function edit_new_sales_invoice_ccc(Request $request, $id){
     $update_saved_invoice->InvoiceDueDate = $request->InvoiceDueDate;
     $update_saved_invoice->OscaPwd = $request->OscaPwd;
     $update_saved_invoice->ScPwd = $request->ScPwd;
-    $update_saved_invoice->Currency = $request->Currency;
+    $update_saved_invoice->ScPwd = $request->ScPwd;
+    $update_saved_invoice->Remarks = $request->Remarks;
     $update_saved_invoice->Uom = $request->UnitOfM;
     $update_saved_invoice->update();
 

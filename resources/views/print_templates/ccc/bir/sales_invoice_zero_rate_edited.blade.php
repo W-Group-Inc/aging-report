@@ -359,10 +359,15 @@
 </div>
 <div class="customer-container">
     <div class="left-column" >
-        <div class="info-row" style="max-height: 60px; min-height:60px">
+        <div class="info-row" style="max-height: 30px; min-height:30px">
             <span class="info-label"></span>
             <span class="info-colon"></span>
             <span class="info-value"><strong>{!! nl2br(optional($details->first())->SoldTo)!!}</strong></span>
+        </div>
+        <div class="info-row" style="max-height: 29px; min-height:29px">
+            <span class="info-label"></span>
+            <span class="info-colon"></span>
+            <span class="info-value">{!! nl2br(optional($details->first())->Remarks)!!}</span>
         </div>
         <div class="info-row" style="margin-bottom: 5px">
             <span class="info-label"></span>
@@ -372,7 +377,7 @@
         <div class="info-row" style="max-height:42px; min-height:42px;">
             <span class="info-label"></span>
             <span class="info-colon"></span>
-            <span class="info-value">{!! nl2br(optional($details->first())->Address)!!}</span>
+            <span class="info-value" style="">{!! nl2br(optional($details->first())->Address)!!}</span>
         </div>
         <div class="info-row">
             <span class="info-label"></span>

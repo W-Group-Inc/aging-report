@@ -118,7 +118,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/edit_new_invoice_ccc/{id}', 'CommercialInvoiceController@edit_new_invoice_ccc');
     Route::get('/bir_edited_commercial_invoice/{DocNum}', 'CommercialInvoiceController@edit_print')->name('ccc_bir_edited_invoice');
     Route::get('/ccc_bir_edited_sales_invoice/{DocNum}', 'CommercialInvoiceController@ccc_edit_print')->name('ccc_bir_edited_sales_invoice');
-    Route::get('/ccc_bir_edited_sales_invoice/{DocNum}', 'CommercialInvoiceController@ccc_edit_print')->name('ccc_bir_edited_sales_invoice_vatable');
+    Route::get('/ccc_bir_edited_sales_invoice_vatable/{DocNum}', 'CommercialInvoiceController@ccc_edit_print')->name('ccc_bir_edited_sales_invoice_vatable');
     Route::post('/save_as_new_sales_invoice_ccc', 'CommercialInvoiceController@save_as_new_sales_invoice_ccc');
     Route::post('/edit_new_sales_invoice_ccc/{id}', 'CommercialInvoiceController@edit_new_sales_invoice_ccc');
 
