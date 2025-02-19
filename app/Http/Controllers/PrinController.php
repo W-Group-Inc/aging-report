@@ -133,6 +133,114 @@ class PrinController extends Controller
         return $pdf->stream('SOA_USA_Commercial_Invoice.pdf');
     }
 
+    public function soa_usa_commercial_edited(Request $request, $id)
+    {
+        $soa_no = $request->input('soa_no');
+        $customer_ref = $request->input('customer_ref');
+        $soa_type = $request->input('soa_type');
+        $prepared_by = $request->input('prepared_by');
+
+        $details = ORDR::select(
+            'T0.DocEntry',
+            'T0.DocNum',
+            'T0.NumAtCard',
+            'T0.DocStatus',
+            'T0.CardName',
+            'T0.PayToCode',
+            'T0.Address as Billtoaddress',
+            'T0.ShipToCode',
+            'T0.Address2 as Shiptoaddress',
+            'T0.U_Salescontract',
+            'T0.DocDueDate',
+            'T0.U_BuyersPO',
+            'T0.U_SOANum',
+            'T0.U_ModeShip',
+            'T0.U_Inco',
+            'T0.CANCELED',
+            'T1.U_label_as',
+            'T1.U_Bagsperlot',
+            'T1.U_packUOM',
+            'T1.U_printUOM',
+            'T1.U_Netweight',
+            \DB::raw('T1.U_Bagsperlot * T1.U_Netweight as Quantity'),
+            'T1.TotalFrgn',
+            'T0.DocCur',
+            'T0.U_SAODueDate',
+            \DB::raw("CASE 
+                            WHEN T1.U_MetricTon = 1 OR T1.U_MetricTon = '' OR T1.U_Metricton IS NULL THEN 
+                                (CASE WHEN T1.U_printUOM = 'lbs' THEN ISNULL(T1.Price, 0.00) / 2.2 ELSE ISNULL(T1.Price, 0.00) END) 
+                            ELSE 
+                                (CASE WHEN T1.U_printUOM = 'lbs' THEN T1.U_UnitCostMetricTon / 2.2 ELSE T1.U_UnitCostMetricTon END) 
+                        END as Price"),
+            'T2.PymntGroup',
+            'T2.GroupNum',
+            DB::raw("CASE WHEN T0.DocCur = 'PHP' THEN T1.LineTotal ELSE T1.TotalFrgn END as LineTotal"),
+            'T0.U_PortDestination',
+            'T0.U_PortLoad',
+            'T0.U_OceanVessel',
+            'T0.U_FeedVessel',
+            'T0.U_ABill',
+            'T0.U_Seal',
+            'T0.U_ContainerNo',
+            'T0.U_BillLading',
+            'g.U_T1',
+            'g.U_T2',
+            'g.U_T3',
+            'g.U_T4',
+            'g.U_T5',
+            'g.U_T6'
+        )
+        ->from('ORDR as T0')
+        ->leftJoin('RDR1 as T1', 'T0.DocEntry', '=', 'T1.DocEntry')
+        ->leftJoin('OCTG as T2', 'T0.GroupNum', '=', 'T2.GroupNum')
+        ->leftJoin('OCRD as T3', 'T0.CardCode', '=', 'T3.CardCode')
+        ->leftJoin('@Payment_Instruction as g', 'g.Code', '=', \DB::raw("
+            CASE 
+                WHEN T3.QryGroup2  = 'Y' THEN 'SBC-WCC-USD1'
+                WHEN T3.QryGroup3  = 'Y' THEN 'BDO-USD'
+                WHEN T3.QryGroup4  = 'Y' THEN 'MBTC-USD'
+                WHEN T3.QryGroup5  = 'Y' THEN 'SBC-WCC-EUR'
+                WHEN T3.QryGroup6  = 'Y' THEN 'SBC-WCC-USD'
+                WHEN T3.QryGroup7  = 'Y' THEN 'SBC-WCC-PHP'
+                WHEN T3.QryGroup8  = 'Y' THEN 'SBC-MARKET-PHP'
+                WHEN T3.QryGroup9  = 'Y' THEN 'SBC-MARKET-USD'
+                WHEN T3.QryGroup10 = 'Y' THEN 'BOA-PO BOX'
+                WHEN T3.QryGroup11 = 'Y' THEN 'BOA-ACH'
+                WHEN T3.QryGroup16 = 'Y' THEN 'BPI-W 5th-EUR'
+            END
+        "))
+        // ->where('T0.U_SOANum', '=', $soa_no)
+        ->where('T0.NumAtCard', '=', $customer_ref)
+        ->where('T0.CANCELED', '!=', 'Y')
+        ->orderBy('T0.DocNum', 'ASC')
+        ->get();
+
+        // Share the data with the view
+        View::share('details', $details);
+        
+        // Load the view and generate PDF
+        $pdf = PDF::loadView('print_templates.whi.soa.usa_commercial_invoice', [
+            array(
+                'details' =>$details,
+            ),
+            'soa_no' => $soa_no,
+            'soa_type' => $soa_type,
+            'prepared_by' => $prepared_by,
+        ])->setPaper('A4', 'portrait');
+
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $font = $fontMetrics->getFont('Helvetica', 'normal');
+            $size = 10; 
+            $x = 520;  
+            $y = 820;  
+            $canvas->text($x, $y, "Page $pageNumber of $pageCount", $font, $size);
+        });
+        return $pdf->stream('SOA_USA_Commercial_Invoice.pdf');
+    }
+
     public function soa_eur_commercial(Request $request)
     {
         $soa_no = $request->input('soa_no');
@@ -926,6 +1034,7 @@ class PrinController extends Controller
             END
         "))
         ->where('T0.NumAtCard', '=', $customer_ref)
+        ->where('T1.LineStatus', '!=', 'C')
         ->orderBy('T0.DocNum', 'ASC')
         ->get();
         View::share('details', $details);
@@ -1468,6 +1577,7 @@ class PrinController extends Controller
         $search = $request->input('search');
 
         $details = ORDR::select(
+            'ORDR.DocEntry',
             'ORDR.DocNum',
             'ORDR.NumAtCard',
             'ORDR.DocStatus',
@@ -1482,7 +1592,14 @@ class PrinController extends Controller
             'ORDR.U_SOANum',
             'ORDR.U_ModeShip',
             'ORDR.U_Inco',
-            'ORDR.CANCELED'
+            'ORDR.CANCELED',
+            'ORDR.U_SAODueDate',
+            'ORDR.GroupNum','g.U_T1',
+            'g.U_T2',
+            'g.U_T3',
+            'g.U_T4',
+            'g.U_T5',
+            'g.U_T6'
             
         )->when($search, function ($query) use ($search, $request) {
             $terms = explode(' ', $search);
@@ -1499,6 +1616,22 @@ class PrinController extends Controller
         })   
         ->where('CANCELED' ,'!=', 'Y' )
         ->where('NumAtCard' ,'!=', '' )
+        ->leftJoin('OCRD as customer', 'ORDR.CardCode', '=', 'customer.CardCode')
+                  ->leftJoin('@Payment_Instruction as g', 'g.Code', '=', DB::raw("
+                      CASE 
+                          WHEN customer.QryGroup2  = 'Y' THEN 'SBC-WCC-USD1'
+                        WHEN customer.QryGroup3  = 'Y' THEN 'BDO-USD'
+                        WHEN customer.QryGroup4  = 'Y' THEN 'MBTC-USD'
+                        WHEN customer.QryGroup5  = 'Y' THEN 'SBC-WCC-EUR'
+                        WHEN customer.QryGroup6  = 'Y' THEN 'SBC-WCC-USD'
+                        WHEN customer.QryGroup7  = 'Y' THEN 'SBC-WCC-PHP'
+                        WHEN customer.QryGroup8  = 'Y' THEN 'SBC-MARKET-PHP'
+                        WHEN customer.QryGroup9  = 'Y' THEN 'SBC-MARKET-USD'
+                        WHEN customer.QryGroup10 = 'Y' THEN 'BOA-PO BOX'
+                        WHEN customer.QryGroup11 = 'Y' THEN 'BOA-ACH'
+                        WHEN customer.QryGroup16 = 'Y' THEN 'BPI-W 5th-EUR'
+                      END
+                  "))
         ->paginate(15);
         return view('print_templates.whi.soa.index', 
             array(
