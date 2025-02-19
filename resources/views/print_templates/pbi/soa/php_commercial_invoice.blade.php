@@ -489,7 +489,7 @@
               <tr style="">
                   <td class="label-column">Please Remit Payment To</td>
                   <td class="value-column">
-                    <span>Beneficiary: Philippine Bio Industries, Inc.</span>
+                    <span>Beneficiary: Philippine Bio Industries, Inc.</span> <br>
                     @if($details->first() && $details->first()->U_T3)
                     <?php
                         $intermediaryBankDetails = optional($details->first())->U_T2 . ' \ ' . optional($details->first())->U_T3 . ' \ ' . optional($details->first())->U_T4 . ' \ ' . optional($details->first())->U_T5 . ' \ ' . optional($details->first())->U_T6;
