@@ -138,18 +138,18 @@
                                                                             <th>User</th>
                                                                             <th>Action</th>
                                                                             {{-- <th>Old Values</th> --}}
-                                                                            <th>Values</th>
+                                                                            {{-- <th>Values</th> --}}
                                                                             <th>Date</th>
                                                                         </tr>
                                                                         @foreach ($detail->newEntry->auditHistory as $audit)
                                                                             <tr>
                                                                                 <td>{{ $audit->user->name }}</td>
                                                                                 <td>{{ $audit->event }}</td>
-                                                                                <td>
+                                                                                {{-- <td>
                                                                                     @if(!empty($audit->new_values))
                                                                                         Sales Invoice
                                                                                     @endif
-                                                                                </td>
+                                                                                </td> --}}
                                                                                 {{-- <td>
                                                                                     @if(!empty($audit->old_values))
                                                                                         @foreach($audit->old_values as $key => $value)

@@ -16,6 +16,8 @@ use App\ORDR;
 use App\ORDR_PBI;
 use App\PbiCreditNote;
 use App\PbiCreditNoteItem;
+use App\SoaProduct;
+use App\StatementOfAccount;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\DB;
@@ -1593,6 +1595,7 @@ class PrinController extends Controller
             'ORDR.U_Inco',
             'ORDR.CANCELED',
             'ORDR.U_SAODueDate',
+            'ORDR.U_PortLoad',
             'ORDR.GroupNum','g.U_T1',
             'g.U_T2',
             'g.U_T3',
@@ -1638,6 +1641,167 @@ class PrinController extends Controller
                 'search' =>$search,
             )
         );
+    }
+
+    function whi_soa_save_as_new(Request $request) {
+        $save_as_new = new StatementOfAccount;
+        $save_as_new->DocNum = $request->DocEntry; 
+        $save_as_new->SoaNo = $request->SoaNo;
+        $save_as_new->InvoiceDate = $request->invoice_date;
+        $save_as_new->SoldTo = $request->Client; 
+        $save_as_new->Address = $request->Address;
+        $save_as_new->VatNumber = $request->VatNumber;
+        $save_as_new->BuyersPo = $request->BuyersPo;
+        $save_as_new->BuyersRef = $request->BuyersRef;
+        $save_as_new->SalesContractNo = $request->SalesContractNo;
+        $save_as_new->OscaPwd = $request->OscaPwd;
+        $save_as_new->ScPwd = $request->ScPwd;
+        $save_as_new->Currency = $request->Currency;
+        $save_as_new->PackingUnit = $request->PackingUom;
+        $save_as_new->Uom = $request->UnitOfM;
+        $save_as_new->DateOfShipment = $request->DateOfShipment;
+        $save_as_new->PlaceOfLoading = $request->PlaceOfLoading;
+        $save_as_new->PlaceOfDelivery = $request->DeliveryAddress;
+        $save_as_new->ModeOfShipment = $request->ModeOfDelivery;
+        $save_as_new->TermsOfDelivery = $request->TermsOfDelivery;
+        $save_as_new->FeederVessel = $request->FeederVessel;
+        $save_as_new->OceanVessel = $request->OceanVessel;
+        $save_as_new->AirwayBillNo = $request->AirwayBillNo;
+        $save_as_new->ContainerNo = $request->ContainerNo;
+        $save_as_new->SealNo = $request->SealNo;
+        $save_as_new->TermsOfPayment = $request->TermsOfPayment;
+        $save_as_new->InvoiceDueDate = $request->InvoiceDueDate;
+        $save_as_new->PaymentInstruction = $request->PaymentInstruction;
+        $save_as_new->Tin = $request->Tin;
+        $save_as_new->BusinessStyle = $request->BussinessStyle;
+        $save_as_new->PickupDate = $request->PickupDate;
+        $save_as_new->Phrex = $request->Phrex;
+        $save_as_new->ShowPhrex = $request->ShowPhrex;
+        $save_as_new->Type = $request->soa_type;
+        $save_as_new->save();
+        foreach ($request->input('Description') as $index => $description) {
+            $description = str_replace(['@', '/'], [' ', "\n"], $description);
+            $quantity = isset($request->Quantity[$index]) && $request->Quantity[$index] !== '' 
+                ? (float) str_replace(',', '', $request->Quantity[$index]) 
+                : null;
+
+            $amount = isset($request->Amount[$index]) && $request->Amount[$index] !== '' 
+                ? (float) str_replace(',', '', $request->Amount[$index]) 
+                : null;
+            $save_as_product = new SoaProduct(); 
+            $save_as_product->DocNum = $save_as_new->id; 
+            $save_as_product->Description = $description ?? null;
+            $save_as_product->Packing = $request->Packing[$index] ?? null;
+            $save_as_product->Unit = $request->Unit[$index] ?? null;
+            $save_as_product->Quantity = $quantity ?? null;
+            $save_as_product->UnitPrice = $request->UnitPrice[$index] ?? null;
+            $save_as_product->Amount = $amount ?? null;
+            $save_as_product->save(); 
+        }
+
+        return redirect()->back()->with('success', 'Invoice saved successfully.');
+    }
+
+    function edit_new_soa_invoice(Request $request, $id){
+        $update_saved_invoice = StatementOfAccount::find($id);
+        // $update_saved_invoice->DocNum = $request->DocEntry; 
+        $update_saved_invoice->SoaNo = $request->SoaNo;
+        $update_saved_invoice->InvoiceDate = $request->invoice_date;
+        $update_saved_invoice->SoldTo = $request->Client; 
+        $update_saved_invoice->Address = $request->Address;
+        $update_saved_invoice->VatNumber = $request->VatNumber;
+        $update_saved_invoice->BuyersPo = $request->BuyersPo;
+        $update_saved_invoice->BuyersRef = $request->BuyersRef;
+        $update_saved_invoice->SalesContractNo = $request->SalesContractNo;
+        $update_saved_invoice->OscaPwd = $request->OscaPwd;
+        $update_saved_invoice->ScPwd = $request->ScPwd;
+        $update_saved_invoice->Currency = $request->Currency;
+        $update_saved_invoice->PackingUnit = $request->PackingUom;
+        $update_saved_invoice->Uom = $request->UnitOfM;
+        $update_saved_invoice->DateOfShipment = $request->DateOfShipment;
+        $update_saved_invoice->PlaceOfLoading = $request->PlaceOfLoading;
+        $update_saved_invoice->PlaceOfDelivery = $request->DeliveryAddress;
+        $update_saved_invoice->ModeOfShipment = $request->ModeOfDelivery;
+        $update_saved_invoice->TermsOfDelivery = $request->TermsOfDelivery;
+        $update_saved_invoice->FeederVessel = $request->FeederVessel;
+        $update_saved_invoice->OceanVessel = $request->OceanVessel;
+        $update_saved_invoice->AirwayBillNo = $request->AirwayBillNo;
+        $update_saved_invoice->ContainerNo = $request->ContainerNo;
+        $update_saved_invoice->SealNo = $request->SealNo;
+        $update_saved_invoice->TermsOfPayment = $request->TermsOfPayment;
+        $update_saved_invoice->InvoiceDueDate = $request->InvoiceDueDate;
+        $update_saved_invoice->PaymentInstruction = $request->PaymentInstruction;
+        $update_saved_invoice->Tin = $request->Tin;
+        $update_saved_invoice->BusinessStyle = $request->BussinessStyle;
+        $update_saved_invoice->PickupDate = $request->PickupDate;
+        $update_saved_invoice->Phrex = $request->Phrex;
+        $update_saved_invoice->ShowPhrex = $request->ShowPhrex;
+        $update_saved_invoice->Type = $request->soa_type;
+        $update_saved_invoice->update();
+    
+        foreach ($request->Description as $index => $description) {
+            $productId = $request->product_id[$index];
+
+
+            if ($productId) {
+                $save_as_product = SoaProduct::find($productId);
+            } else {
+                $save_as_product = new SoaProduct();
+                $save_as_product->DocNum = $update_saved_invoice->id; 
+            }
+
+            $save_as_product->Description = $description;
+            $save_as_product->Packing = $request->Packing[$index] ?? null;
+            $save_as_product->Unit = $request->Unit[$index] ?? null;
+            $save_as_product->Quantity = (float) str_replace(',', '', $request->Quantity[$index]);
+            $save_as_product->UnitPrice = $request->UnitPrice[$index];
+            $save_as_product->Amount = (float) str_replace(',', '', $request->Amount[$index]); 
+            $save_as_product->update(); 
+    }
+    return redirect()->back()->with('success', 'Invoice updated successfully.');
+    
+    }
+
+    function whi_soa_print(Request $request, $id){
+        {
+            $customer_ref = $id;
+            $details = StatementOfAccount::where('id', '=', $customer_ref)
+            ->orderBy('DocNum', 'ASC')
+            ->get();
+            View::share('details', $details);
+    
+            if (Route::currentRouteName() === 'whi_usa_soa') {
+                $view = 'print_templates.whi.soa.usa.usa_commercial_invoice';
+            } elseif (Route::currentRouteName() === 'whi_eur_soa') {
+                $view = 'print_templates.whi.soa.eur.eur_commercial_invoice';
+            } elseif (Route::currentRouteName() === 'whi_php_soa') {
+                $view = 'print_templates.whi.soa.php.php_commercial_invoice';
+            } else {
+                $view = null; 
+            }
+    
+            $filename = Route::currentRouteName() === 'whi_usa_soa_zero_rated'
+            ? 'WHI_SOA_Zero_Rated.pdf'
+            : 'CCC_BIR_Commercial_Invoice_New.pdf';
+            $pdf = PDF::loadView($view, [
+                array(
+                    'details' =>$details,
+                ),
+            ])
+            ->setPaper('A4', 'portrait');
+    
+            $dompdf = $pdf->getDomPDF();
+            $canvas = $dompdf->getCanvas();
+
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $font = $fontMetrics->getFont('Helvetica', 'normal');
+                $size = 10; 
+                $x = 520;  
+                $y = 820;  
+                $canvas->text($x, $y, "Page $pageNumber of $pageCount", $font, $size);
+            });
+            return $pdf->stream($filename);
+        }
     }
 
 }

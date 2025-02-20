@@ -128,6 +128,7 @@
         .product-details thead tr{
             border-bottom: 5px double; /* Table cell borders */
             text-align: center; /* Align text to the left */
+            margin
         }
         .product-details th:first-child,
         td:first-child {
@@ -159,7 +160,7 @@
             line-height: 0.8;
 
         }
-        .total-left-column {
+        .total-left-column, {
             margin-right:-60px
         }
         .total-left-column .info-name{
@@ -331,9 +332,9 @@
     <div class="left">
         <div class="header">
             <span style="font-size: 17px">COMMERCIAL INVOICE</span>
-            <div class="line-three">No.: {{ $soa_no }}</div>
+            <div class="line-three">No.: {{ optional($details->first())->SoaNo }}</div>
             @if ($details->isNotEmpty())
-            <div class="date">Dated: {{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</div>
+            <div class="date">Dated: {{ \Carbon\Carbon::parse(optional($details->first())->InvoiceDate)->format('F j, Y') }}</div>
             @endif
             <div style="font-size: 11px;">VAT Reg. TIN 225-688-438-0000</div>
         </div>
@@ -366,44 +367,44 @@
         <div class="info-row">
             <span class="info-label">Sold To</span>
             <span class="info-colon">:</span>
-            <span class="info-value"><strong>{{ optional($details->first())->PayToCode }}</strong></span>
+            <span class="info-value"><strong>{{ optional($details->first())->SoldTo }}</strong></span>
         </div>
         <div class="info-row">
             <span class="info-label">Address</span>
             <span class="info-colon">:</span>
-            <span class="info-value">{{ optional($details->first())->Billtoaddress }}</span>
+            <span class="info-value">{{ optional($details->first())->Address }}</span>
         </div>
         <div class="info-row">
             <span class="info-label">VAT Number</span>
             <span class="info-colon">:</span>
-            <span class="info-value">{{ optional($details->first())->LicTradNum }}</span>
+            <span class="info-value">{{ optional($details->first())->VatNum }}</span>
         </div>
     </div>
     <div class="right-column">
         <div class="info-row">
             <span class="info-label">Buyer's PO No.</span>
             <span class="info-colon">:</span>
-            <span class="info-value">{{ optional($details->first())->U_BuyersPO }}</span>
+            <span class="info-value">{{ optional($details->first())->BuyersPo }}</span>
         </div>
         <div class="info-row">
             <span class="info-label">Buyer's Ref. No.</span>
             <span class="info-colon">:</span>
-            <span class="info-value">{{ optional($details->first())->NumAtCard }}</span>
+            <span class="info-value">{{ optional($details->first())->BuyersRef }}</span>
         </div>
         <div class="info-row">
             <span class="info-label">Sales Contract No.</span>
             <span class="info-colon">:</span>
-            <span class="info-value">{{ optional($details->first())->U_Salescontract }}</span>
+            <span class="info-value">{{ optional($details->first())->SalesContractNo }}</span>
         </div>
         <div class="info-row">
             <span class="info-label">OSCA/PWD ID No.</span>
             <span class="info-colon">:</span>
-            <span class="info-value"></span>
+            <span class="info-value">{{ optional($details->first())->OscaPwd }}</span>
         </div>
         <div class="info-row">
             <span class="info-label">SC/PWD Signature</span>
             <span class="info-colon">:</span>
-            <span class="info-value"></span>
+            <span class="info-value">{{ optional($details->first())->ScPwd }}</span>
         </div>
     </div>
 </div>
@@ -437,89 +438,92 @@
                 $total_amount_payable = 0;
             @endphp
             @foreach ($details as $detail)
-            @php
-                $total += $detail->TotalFrgn;
-                $vatable_unit_price = 0;
-                $vatable_amount = 0;
-                if ($soa_type == 'vatable') {
-                        // if (($detail)->DocCur == 'EUR') {
-                            $vatable_amount = 0.21 * $detail->TotalFrgn;
-                            $vatable_unit_price = 0.21 * $detail->Price;
-                            $value_added_tax += $vatable_amount;
-                        // } else {
-                            // $vatable_amount = 0.12 * $detail->TotalFrgn;
-                            // $vatable_unit_price = 0.12 * $detail->Price;
-                            // $value_added_tax += $vatable_amount;
-                        // }
-                    }
-            @endphp
-            @php
-                $total_amount_payable = $total + $value_added_tax;
-            @endphp
-            <tr>
-                <td>{{ $detail->U_label_as }}</td>
-                <td>{{ $detail->U_Bagsperlot }}
-                    @if ($detail->U_Bagsperlot > 1)
-                        bags
-                    @elseif ($detail->U_Bagsperlot == 0)
-                    
-                    @else
-                        bag
-                    @endif
-                </td>
-                <td style="width: 0; text-align: center;">
-                    @if ($detail->U_Netweight)x @endif
-                </td>
-                <td>
-                    @if ($detail->U_Netweight)
-                    {{ number_format($detail->U_Netweight, 2) }} 
-                    @endif
-                    @if ($detail->U_Netweight != '')
-                        {{ $detail->U_printUOM }}
-                    @endif
-                </td>
-                <td>
-                    @if ($detail->Quantity)
-                    {{ number_format($detail->Quantity, 2) }}
-                    @endif
-                    @if ($detail->U_Netweight != '')
-                        {{ $detail->U_printUOM }}
-                    @endif
-                </td>
-                <td> 
-                     @if ($detail->U_Netweight != '')
-                     {{ optional($details->first())->DocCur }} {{ number_format($detail->Price, 2) }} /
-                     @if ($detail->U_printUOM == 'lbs')
-                        lb
-                     @else
-                        kg   
-                     @endif
-                    @endif
-                </td>
-                <td>{{ optional($details->first())->DocCur }} {{ number_format($detail->TotalFrgn, 2) }}</td>
-            </tr>
-            @if ($soa_type == 'vatable')
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    {{-- @if ( $detail->DocCur == 'EUR') --}}
-                    <td>ADD:21% VAT</td>
-                    {{-- @else --}}
-                    {{-- <td>ADD:12% VAT</td> --}}
-                    {{-- @endif --}}
-                    <td></td>
-                    {{-- <td >{{ $detail->DocCur }} {{ number_format($vatable_unit_price,2) }}</td> --}}
-                    <td>{{ $detail->DocCur }} {{ number_format($vatable_amount,2) }}</td>
+            @foreach ($detail->soaProduct as $product)
+                    @php
+                    $total += $product->Amount;
+                    $vatable_unit_price = 0;
+                    $vatable_amount = 0;
+                    if ($details->first()->Type == 'vatable') {
+                            // if (($detail)->DocCur == 'EUR') {
+                                $vatable_amount = 0.21 * $product->Amount;
+                                $vatable_unit_price = 0.21 * $product->UnitPrice;
+                                $value_added_tax += $vatable_amount;
+                            // } else {
+                                // $vatable_amount = 0.12 * $product->Amount;
+                                // $vatable_unit_price = 0.12 * $product->UnitPrice;
+                                // $value_added_tax += $vatable_amount;
+                            // }
+                        }
+                @endphp
+                @php
+                    $total_amount_payable = $total + $value_added_tax;
+                @endphp
+                <tr>
+                    <td>{{ $product->Description }}</td>
+                    <td>{{ $product->Packing }}
+                        @if ($product->Packing > 1)
+                            bags
+                        @elseif ($product->Packing == 0)
+                        
+                        @else
+                            bag
+                        @endif
+                    </td>
+                    <td style="width: 0; text-align: center;">
+                        @if ($product->Unit)x @endif
+                    </td>
+                    <td>
+                        @if ($product->Unit)
+                        {{ number_format($product->Unit, 2) }} 
+                        @endif
+                        @if ($product->Unit != '')
+                             {{ optional($details->first())->Uom }}
+                        @endif
+                    </td>
+                    <td>
+                        @if ($product->Unit != '')
+                        {{ number_format($product->Quantity, 2) }}
+                        @endif
+                        @if ($product->Unit != '')
+                             {{ optional($details->first())->Uom }}
+                        @endif
+                    </td>
+                    <td> 
+                        @if ($product->Unit != '')
+                        {{ optional($details->first())->Currency }}  {{ number_format($product->UnitPrice, 2) }} /
+                        @if (optional($details->first())->Uom == 'lbs')
+                            lb
+                        @else
+                            kg   
+                        @endif
+                        @endif
+                    </td>
+                    <td>{{ optional($details->first())->Currency }}  {{ number_format($product->Amount, 2) }}</td>
                 </tr>
-             @endif
+                @if ($details->first()->Type == 'vatable')
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {{-- @if ( $product->DocCur == 'EUR') --}}
+                        <td>ADD:21% VAT</td>
+                        {{-- @else --}}
+                        {{-- <td>ADD:12% VAT</td> --}}
+                        {{-- @endif --}}
+                        <td></td>
+                        {{-- <td >{{ $product->DocCur }} {{ number_format($vatable_unit_price,2) }}</td> --}}
+                        <td>{{ $product->DocCur }} {{ number_format($vatable_amount,2) }}</td>
+                    </tr>
+                @endif
+                    
+                @endforeach
             @endforeach
         </tbody>
     </table>
 </div>
 
-@if ($soa_type == 'zero_rated')
+@if ($details->first()->Type == 'zero_rated')
 <div class="product-total">
     <div class="total-left-column">
         <div class="info-row">
@@ -540,7 +544,7 @@
         <div class="info-row">
             <span class="info-name">Zero Rated Sales</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">VAT Amount</span>
@@ -568,7 +572,7 @@
         <div class="info-row">
             <span class="info-name">Amount Due</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Add:VAT</span>
@@ -584,24 +588,22 @@
         <div class="total">
             <div class="label">TOTAL</div>
             <div class="arrow"> <a href=""><img  style='width: 30px; height:20px;' src="{{URL::asset('/images/arrow.png')}}" height='45px' alt="AVATAR"></a></div>
-            <div class="total-value">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</div>
+            <div class="total-value">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</div>
         </div>
     </div>
     <div class="column-left">
         <div class="remarks">
             <div class="info-row">
                 <span class="left-span">
-                 The Exporter PHREX2020P02A23JUN0000010257 of the products 
-                 covered by this document declares that, except where otherwise clearly 
-                 indicated, these products are of  Philippine preferential origin according 
-                 to the rules of origin of the Generalised System of Preferences of the 
-                 European Union and that the origin criterion met is "W".
+                    @if (optional($details->first())->ShowPhrex == 1)
+                       {{ optional($details->first())->Phrex }}
+                     @endif
                 </span>
              </div>
         </div>
     </div>
 </div>
-@elseif ($soa_type == 'vatable')
+@elseif ($details->first()->Type == 'vatable')
 <div class="product-total">
     <div class="total-left-column">
         <div class="info-row">
@@ -612,7 +614,7 @@
         <div class="info-row">
             <span class="info-name">VATable Sales</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">VAT-Exempt Sales</span>
@@ -627,7 +629,7 @@
         <div class="info-row">
             <span class="info-name">VAT Amount</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($value_added_tax, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($value_added_tax, 2) }}</span>
         </div>
     </div>
 
@@ -635,12 +637,12 @@
         <div class="info-row">
             <span class="info-name">Less: VAT</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($value_added_tax, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($value_added_tax, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Amount: Net of VAT</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Less: SC/PWD Discount</span>
@@ -650,12 +652,12 @@
         <div class="info-row">
             <span class="info-name">Amount Due</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Add:VAT</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($value_added_tax, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($value_added_tax, 2) }}</span>
         </div>
     </div>
 </div>
@@ -666,25 +668,23 @@
         <div class="total">
             <div class="label">TOTAL</div>
             <div class="arrow"> <a href=""><img  style='width: 30px; height:20px;' src="{{URL::asset('/images/arrow.png')}}" height='45px' alt="AVATAR"></a></div>
-            <div class="total-value">{{ optional($details->first())->DocCur }} {{ number_format($total_amount_payable, 2) }}</div>
+            <div class="total-value">{{ optional($details->first())->Currency }}  {{ number_format($total_amount_payable, 2) }}</div>
         </div>
     </div>
     <div class="column-left">
         <div class="remarks">
             <div class="info-row">
                 <span class="left-span">
-                 The Exporter PHREX2020P02A23JUN0000010257 of the products 
-                 covered by this document declares that, except where otherwise clearly 
-                 indicated, these products are of  Philippine preferential origin according 
-                 to the rules of origin of the Generalised System of Preferences of the 
-                 European Union and that the origin criterion met is "W".
+                    @if (optional($details->first())->ShowPhrex == 1)
+                       {{ optional($details->first())->Phrex }}
+                     @endif
                 </span>
              </div>
         </div>
     </div>
 </div>
 
-@elseif ($soa_type == 'exempt')
+@elseif ($details->first()->Type == 'exempt')
 <div class="product-total">
     <div class="total-left-column">
         <div class="info-row">
@@ -700,7 +700,7 @@
         <div class="info-row">
             <span class="info-name">VAT-Exempt Sales</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Zero Rated Sales</span>
@@ -733,7 +733,7 @@
         <div class="info-row">
             <span class="info-name">Amount Due</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</span>
+            <span class="info-detail">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Add:VAT</span>
@@ -749,18 +749,16 @@
         <div class="total">
             <div class="label">TOTAL</div>
             <div class="arrow"> <a href=""><img  style='width: 30px; height:20px;' src="{{URL::asset('/images/arrow.png')}}" height='45px' alt="AVATAR"></a></div>
-            <div class="total-value">{{ optional($details->first())->DocCur }} {{ number_format($total, 2) }}</div>
+            <div class="total-value">{{ optional($details->first())->Currency }}  {{ number_format($total, 2) }}</div>
         </div>
     </div>
     <div class="column-left">
         <div class="remarks">
             <div class="info-row">
                 <span class="left-span">
-                 The Exporter PHREX2020P02A23JUN0000010257 of the products 
-                 covered by this document declares that, except where otherwise clearly 
-                 indicated, these products are of  Philippine preferential origin according 
-                 to the rules of origin of the Generalised System of Preferences of the 
-                 European Union and that the origin criterion met is "W".
+                    @if (optional($details->first())->ShowPhrex == 1)
+                       {{ optional($details->first())->Phrex }}
+                     @endif
                 </span>
              </div>
         </div>
@@ -773,29 +771,28 @@
         <div class="info-row">
             <span class="info-name">Date of Shipment</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->DocDueDate)->format('F j, Y') }}</span>
+            <span class="info-detail">{{ \Carbon\Carbon::parse(optional($details->first())->DateOfShipment)->format('F j, Y') }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Place of Loading</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{optional($details->first())->U_PortLoad }}</span>
+            <span class="info-detail">{{optional($details->first())->PlaceOfLoading }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Delivery Address</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{optional($details->first())->Shiptoaddress }}</span>
+            <span class="info-detail">{{optional($details->first())->PlaceOfDelivery }}</span>
         </div>
-
         <div style="margin-top: 30px">
             <div class="info-row">
                 <span class="info-name">Mode of Shipment</span>
                 <span class="info-colon">:</span>
-                <span class="info-detail">{{ optional($details->first())->U_ModeShip }}</span>
+                <span class="info-detail">{{ optional($details->first())->ModeOfShipment }}</span>
             </div>
             <div class="info-row">
                 <span class="info-name">Terms of Delivery</span>
                 <span class="info-colon">:</span>
-                <span class="info-detail">{{optional($details->first())->U_Inco }}</span>
+                <span class="info-detail">{{optional($details->first())->TermsOfDelivery }}</span>
             </div>
         </div>
     </div>
@@ -803,12 +800,12 @@
         <div class="info-row">
             <span class="info-name">Terms of Payment</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->PymntGroup }}</span>
+            <span class="info-detail">{{ optional($details->first())->TermsOfPayment }}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Invoice Due Date</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{ optional($details->first())->U_SAODueDate ? \Carbon\Carbon::parse(optional($details->first())->U_SAODueDate)->format('F j, Y') : '' }}</span>
+            <span class="info-detail">{{ optional($details->first())->InvoiceDueDate ? \Carbon\Carbon::parse(optional($details->first())->InvoiceDueDate)->format('F j, Y') : '' }}</span>
         </div>
         <div class="right-box">
             <div class="new-col">
@@ -819,22 +816,9 @@
                     <div>Payment Instructions: </div>
                 <div class="left-align" style="font-size: 12px">
                     <div class="info-row" style="margin: 10px 0px">
-                        <span>{{ optional($details->first())->U_T1 }}</span>
+                        {!! nl2br(e(optional($details->first())->PaymentInstruction )) !!}
                     </div>
-                    <div class="info-row">
-                        @if($details->first() && $details->first()->U_T3)
-                            <?php
-                                $intermediaryBankDetails = optional($details->first())->U_T2 . ' / ' . optional($details->first())->U_T3 . ' / ' . optional($details->first())->U_T4 . ' / ' . optional($details->first())->U_T5 . ' / ' . optional($details->first())->U_T6;
-
-                                $formattedDetails = preg_replace('/^\/+|\/+$/', '', $intermediaryBankDetails);
-                                $lines = explode('/', $formattedDetails);
-                                $lines = array_map('trim', $lines);
-                            ?>
-                            @foreach ($lines as $line)
-                                {{ $line }} <br>
-                            @endforeach
-                        @endif
-                    </div>
+                   
                 </div>
                 </div>
             </div>
@@ -852,10 +836,14 @@
             <strong>W HYDROCOLLOIDS, INC.</strong>
             <div class="signatory">
                 <div class="esign" style="margin-bottom: -15px;">
-                    <img src="{{ asset(auth()->user()->signature) }}" 
-                         style="width: 80px; height: auto;">
+                    @if (auth()->user()->signature != "")
+                        <img src="{{ asset(auth()->user()->signature) }}" 
+                        style="width: 80px; height: auto;">
+                    @endif
                 </div>
-                <div class="signature-space"><span>{{ $prepared_by }}</span></div>
+                <div class="signature-space">
+                    <span>{{ auth()->user()->name }}</span>
+                </div>
             </div>
             <div class="text">
                 <span style="display: block">Authorized Representative</span>

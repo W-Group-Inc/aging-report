@@ -36,6 +36,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/soa_eur_commercial', 'PrinController@soa_eur_commercial');
     Route::post('/soa_php_commercial', 'PrinController@soa_php_commercial');
     
+    Route::post('/soa_usa_commercial/{id}', 'PrinController@soa_usa_commercial_original');
+    Route::post('/whi_soa_save_as_new', 'PrinController@whi_soa_save_as_new');
+    Route::get('/whi_usa_soa/{DocNum}', 'PrinController@whi_soa_print')->name('whi_usa_soa');
+    Route::get('/whi_eur_soa/{DocNum}', 'PrinController@whi_soa_print')->name('whi_eur_soa');
+    Route::get('/whi_php_soa/{DocNum}', 'PrinController@whi_soa_print')->name('whi_php_soa');
+    Route::post('/whi_soa_new_edit/{id}', 'PrinController@edit_new_soa_invoice');
+
+    Route::get('/whi_usa_soa_zero_rated/{DocNum}', 'PrinController@whi_soa_print')->name('whi_usa_soa_zero_rated');
+    Route::get('/whi_usa_vatable/{DocNum}', 'PrinController@whi_soa_print')->name('whi_usa_vatable');
+
     // Credit Note 
     Route::get('/credit_note', 'PrinController@whi_credit_note_index');
     Route::post('/save_credit_note', 'PrinController@save_credit_note');
