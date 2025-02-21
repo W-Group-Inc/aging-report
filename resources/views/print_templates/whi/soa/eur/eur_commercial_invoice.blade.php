@@ -474,7 +474,7 @@
                     </td>
                     <td>
                         @if ($product->Unit)
-                        {{ number_format($product->Unit, 2) }} 
+                        {{ rtrim(rtrim(number_format($product->Unit, 10, '.', ''), '0'), '.') }}
                         @endif
                         @if ($product->Unit != '')
                              {{ optional($details->first())->Uom }}
