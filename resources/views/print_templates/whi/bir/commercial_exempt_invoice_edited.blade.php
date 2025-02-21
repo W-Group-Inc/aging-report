@@ -563,7 +563,7 @@
     </div>
 </div>
 <div style="position: relative; ">
-    <span style="font-size:12px; position: fixed; left: 80px; bottom: 325px; width: 38%;">
+    <span style="font-size:12px; position: fixed; left: 50px; bottom: 325px; width: 38%;">
         @if (optional($details->first())->ShowPhrex == 1)
            {{ optional($details->first())->Phrex }}
          @endif
