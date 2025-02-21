@@ -619,6 +619,14 @@
     </div>
 </div>
 
+<div style="position: relative; ">
+    <span style="font-size:12px; position: fixed; left: 80px; bottom: 325px; width: 38%;">
+        @if (optional($details->first())->ShowPhrex == 1)
+           {{ optional($details->first())->Phrex }}
+         @endif
+    </span>
+</div>
+
 <div class="new-row">
     <div class="new-col-left" style="margin-top: 69px; font-size:16px; height:80px">
         <div class="info-row">

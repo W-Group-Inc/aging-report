@@ -173,7 +173,22 @@
             <div class="col-md-6">
                 <label>Invoice Due Date</label>
                 <input name="InvoiceDueDate" class="form-control" type="date" value="{{ optional($detail->asNew)->InvoiceDueDate ? \Carbon\Carbon::parse(optional($detail->asNew)->InvoiceDueDate)->format('Y-m-d') : '' }}">
-            </div>            
+            </div> 
+            <div class="row">
+                <div class="col-md-10">
+                    <label for="">PHREX</label>
+                    <textarea name="Phrex" class="form-control" rows="7">
+                        {{ $detail->asNew->Phrex }}
+                    </textarea>
+                </div>
+                <div class="col-md-2">
+                    <input type="checkbox" name="ShowPhrex" class="form-check-input" value="{{ $detail->asNew->ShowPhrex }}" 
+                    {{ $detail->asNew->ShowPhrex == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="ShowPhrex">
+                        Show
+                    </label>
+                </div>
+            </div>             
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

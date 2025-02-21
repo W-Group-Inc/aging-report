@@ -190,7 +190,7 @@
                 <input name="TermsOfDelivery" class="form-control" type="text" value="{{ $detail->U_Delivery }}">
             </div>
             <div class="col-md-6">
-                <label>Fedder Vessel</label>
+                <label>Feeder Vessel</label>
                 <input name="FedderVessel" class="form-control" type="text" value="{{ $detail->U_FeedVessel }}">
             </div>
             <div class="col-md-6">
@@ -219,6 +219,24 @@
                     <input name="InvoiceDueDate" class="form-control" type="date" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvWhi)->DocDueDate)->format('Y-m-d')}}">
                 @endforeach
             </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <label for="">PHREX</label>
+                    <textarea name="Phrex" class="form-control" rows="7">
+                        The Exporter PHREX2020P02A23JUN0000010257 of the products covered by this 
+                        document declares that, except where otherwise clearly indicated, these products
+                         are of  Philippine preferential origin according to the rules of origin of the 
+                         Generalised System of Preferences of the European Union and that the origin 
+                         criterion met is "W".
+                    </textarea>
+                </div>
+                <div class="col-md-2">
+                    <input type="checkbox" name="ShowPhrex" class="form-check-input" value="1" checked>
+                    <label class="form-check-label" for="ShowPhrex">
+                        Show
+                    </label>
+                </div>
+            </div>  
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
