@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-md-3">
                     <label>Unit Price UoM </label>
-                    <input class="form-control" name="UnitOfM" type="text" value="{{ $detail->asNew->PackingUnit }}">
+                    <input class="form-control" name="UnitOfM" type="text" value="{{ $detail->asNew->Uom }}">
                 </div>
                 <div class="col-md-3">
                     <label>Payment Terms</label>

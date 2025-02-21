@@ -474,7 +474,7 @@
                     </td>
                     <td>
                         @if ($product->Unit)
-                        {{ rtrim(rtrim(number_format($product->Unit, 10, '.', ''), '0'), '.') }}
+                        {{ $product->Unit }}
                         @endif
                         @if ($product->Unit != '')
                              {{ optional($details->first())->Uom }}
@@ -490,7 +490,7 @@
                     </td>
                     <td> 
                         @if ($product->Unit != '')
-                        {{ optional($details->first())->Currency }}  {{ number_format($product->UnitPrice, 2) }} /
+                        {{ optional($details->first())->Currency }}  {{ ($product->UnitPrice) }} /
                         @if (optional($details->first())->Uom == 'lbs')
                             lb
                         @else
