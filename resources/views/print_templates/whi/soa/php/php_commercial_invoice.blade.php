@@ -775,7 +775,7 @@
         <div class="info-row">
             <span class="info-name">Port of Destination</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{optional($details->first())->PlaceOfDelivery }}</span>
+            <span class="info-detail">{!! nl2br(e(optional($details->first())->PlaceOfDelivery)) !!}</span>
         </div>
         <div class="info-row">
             <span class="info-name">Mode of Shipment</span>

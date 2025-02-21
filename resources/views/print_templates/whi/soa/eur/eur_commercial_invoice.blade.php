@@ -781,7 +781,7 @@
         <div class="info-row">
             <span class="info-name">Delivery Address</span>
             <span class="info-colon">:</span>
-            <span class="info-detail">{{optional($details->first())->PlaceOfDelivery }}</span>
+            <span class="info-detail">{!! nl2br(e(optional($details->first())->PlaceOfDelivery)) !!}</span>
         </div>
         <div style="margin-top: 30px">
             <div class="info-row">
