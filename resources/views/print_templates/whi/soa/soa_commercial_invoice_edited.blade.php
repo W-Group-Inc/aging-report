@@ -74,15 +74,15 @@
                 </div>
                 <div class="col-md-3">
                     <label>Mode of Delivery</label>
-                    <input name="ModeOfDelivery" class="form-control" type="text" value="{{ $detail->asNew->U_ModeShip }}">
+                    <input name="ModeOfDelivery" class="form-control" type="text" value="{{ $detail->asNew->ModeOfShipment }}">
                 </div>
                 <div class="col-md-3">
                     <label>Terms of Delivery</label>
-                    <input name="TermsOfDelivery" class="form-control" type="text" value="{{ $detail->asNew->U_Inco }}">
+                    <input name="TermsOfDelivery" class="form-control" type="text" value="{{ $detail->asNew->TermsOfDelivery }}">
                 </div>
                 <div class="col-md-12">
                     <label >Delivery Address:</label>
-                    <textarea name="DeliveryAddress" class="form-control" type="text">{{ $detail->asNew->ShipToCode }} {{ $detail->asNew->Shiptoaddress}}</textarea>
+                    <textarea name="DeliveryAddress" class="form-control" type="text">{{ $detail->asNew->ShipToCode }} {{ $detail->asNew->PlaceOfDelivery}}</textarea>
                 </div>
                 {{-- <div class="col-md-4">
                     <label>Sales Contract No.</label>

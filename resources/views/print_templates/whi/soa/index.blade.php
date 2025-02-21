@@ -42,16 +42,24 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary">Search</button>
                                 </form>
-                                <div class="mr-3"><strong>Legend:</strong></div>
-                                <div class="mr-3 d-flex align-items-center">
-                                    <span class="btn btn-danger btn-outline"><i class="fa fa-solid fa-print"></i></i></span> Zero Rated
-                                </div>
-                                <div class="mr-3 d-flex align-items-center">
-                                    <span class="btn btn-success btn-outline"><i class="fa fa-solid fa-print"></i></span> Vatable
-                                </div>
-                                <div class="mr-3 d-flex align-items-center">
-                                    <span class="btn btn-info btn-outline"><i class="fa fa-solid fa-print"></i></span> Exempt
-                                </div>
+                                <div style="display: flex; align-items: center; flex-wrap: nowrap; margin: 10px;">
+                                    <div style="margin-right: 10px; font-weight: bold;">Legend:</div>
+                                    <div style="display: flex; align-items: center; margin-right: 10px;">
+                                        <span class="btn btn-danger btn-outline px-2 py-1" style="padding: 2px 6px; border-radius: 4px; margin-right: 5px;">
+                                            <i class="fa fa-solid fa-print"></i>
+                                        </span> Zero Rated
+                                    </div>
+                                    <div style="display: flex; align-items: center; margin-right: 10px;">
+                                        <span class="btn btn-success btn-outline px-2 py-1" style="padding: 2px 6px; border-radius: 4px; margin-right: 5px;">
+                                            <i class="fa fa-solid fa-print"></i>
+                                        </span> Vatable
+                                    </div>
+                                    <div style="display: flex; align-items: center;">
+                                        <span class="btn btn-info btn-outline px-2 py-1" style="padding: 2px 6px; border-radius: 4px; margin-right: 5px;">
+                                            <i class="fa fa-solid fa-print"></i>
+                                        </span> Exempt
+                                    </div>
+                                </div>                                                            
                             </div>
                             <div class="table-responsive">
                                 <table id='table' class="table table-striped table-bordered table-hover bir_invoices_whi" style="margin-bottom: 0px !important;">
