@@ -477,7 +477,6 @@
               <tr style="">
                   <td class="label-column">Please Remit Payment To</td>
                   <td class="value-column">
-                    <span>Beneficiary: Philippine Bio Industries, Inc.</span> <br>
                     <span>{!! nl2br(e(optional($details->first())->PaymentInstruction)) !!}</span>
                     </td>
                 @php

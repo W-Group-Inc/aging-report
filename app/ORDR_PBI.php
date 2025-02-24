@@ -19,6 +19,6 @@ class ORDR_PBI extends Model
     }
     public function whiOctgs()
     {
-        return $this->belongsTo(OCTG::class,'GroupNum','GroupNum');
+        return $this->belongsTo(OCTG_PBI::class,'GroupNum','GroupNum');
     }
 }
