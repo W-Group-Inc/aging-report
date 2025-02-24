@@ -1576,8 +1576,51 @@ class PrinController extends Controller
     public function soa_index(Request $request)
     {
         $search = $request->input('search');
+        $model = null;
+        $view = '';
 
-        $details = ORDR::select(
+        if ($request->is('whi_soa_list')) {
+            $model = ORDR::query();
+            $view = 'print_templates.whi.soa.index';
+        }elseif ($request->is('pbi_soa_list')) {
+            $model = ORDR_PBI::query();
+            $view = 'print_templates.pbi.soa.index';
+        } else {
+            abort(404); 
+        }
+
+        if ($request->is('whi_soa_list')) {
+            $model->leftJoin('OCRD as customer', 'ORDR.CardCode', '=', 'customer.CardCode')
+            ->leftJoin('@Payment_Instruction as g', 'g.Code', '=', DB::raw("
+                CASE 
+                    WHEN customer.QryGroup2  = 'Y' THEN 'SBC-WCC-USD1'
+                  WHEN customer.QryGroup3  = 'Y' THEN 'BDO-USD'
+                  WHEN customer.QryGroup4  = 'Y' THEN 'MBTC-USD'
+                  WHEN customer.QryGroup5  = 'Y' THEN 'SBC-WCC-EUR'
+                  WHEN customer.QryGroup6  = 'Y' THEN 'SBC-WCC-USD'
+                  WHEN customer.QryGroup7  = 'Y' THEN 'SBC-WCC-PHP'
+                  WHEN customer.QryGroup8  = 'Y' THEN 'SBC-MARKET-PHP'
+                  WHEN customer.QryGroup9  = 'Y' THEN 'SBC-MARKET-USD'
+                  WHEN customer.QryGroup10 = 'Y' THEN 'BOA-PO BOX'
+                  WHEN customer.QryGroup11 = 'Y' THEN 'BOA-ACH'
+                  WHEN customer.QryGroup16 = 'Y' THEN 'BPI-W 5th-EUR'
+                END
+            "));
+        } elseif ($request->is('pbi_soa_list')) {
+            $model->leftJoin('OCRD as customer', 'ORDR.CardCode', '=', 'customer.CardCode')
+                  ->leftJoin('@Payment_Instruction as g', 'g.Code', '=', DB::raw("
+                      CASE 
+                        WHEN customer.QryGroup1  = 'Y' THEN 'JP-USD'
+                        WHEN customer.QryGroup2  = 'Y' THEN 'SBC-WCC-USD'
+                        WHEN customer.QryGroup3  = 'Y' THEN 'SBC-WCC-PHP'
+                        WHEN customer.QryGroup4  = 'Y' THEN 'SBC-WCC-EUR'
+                        WHEN customer.QryGroup5  = 'Y' THEN 'JP-PHP'
+                        WHEN customer.QryGroup6  = 'Y' THEN 'BPI-W 5th-EUR'
+                      END
+                  "));
+        }
+        
+        $details = $model->select(
             'ORDR.DocEntry',
             'ORDR.DocNum',
             'ORDR.NumAtCard',
@@ -1590,20 +1633,34 @@ class PrinController extends Controller
             'ORDR.U_Salescontract',
             'ORDR.DocDueDate',
             'ORDR.U_BuyersPO',
-            'ORDR.U_SOANum',
+            DB::raw($request->is('whi_soa_list') ?  'ORDR.U_SOANum': 'NULL AS U_SOANum'),
+            // 'ORDR.U_SOANum',
             'ORDR.U_ModeShip',
-            'ORDR.U_Inco',
+            // 'ORDR.U_Inco',
+            DB::raw($request->is('whi_soa_list') ? 'ORDR.U_Inco' : ($request->is('pbi_soa_list') ? 'ORDR.U_Delivery' : 'NULL AS U_Inco')),
+
             'ORDR.CANCELED',
-            'ORDR.U_SAODueDate',
-            'ORDR.U_PortLoad',
+            // 'ORDR.U_SAODueDate',
+            // DB::raw($request->is('whi_soa_list') ?  'ORDR.U_SAODueDate': 'NULL AS U_SOADueDate'),
+            DB::raw($request->is('whi_soa_list') ? 'ORDR.U_SAODueDate' : ($request->is('pbi_soa_list') ? 'ORDR.U_SOADueDate' : 'NULL AS U_SAODueDate')),
+            DB::raw($request->is('whi_soa_list') ? 'ORDR.U_PortLoad' : ($request->is('pbi_soa_list') ? 'ORDR.U_PlaceLoading' : 'NULL AS U_PortLoad')),
+            // DB::raw($request->is('whi_soa_list') ?  'ORDR.U_PortLoad': 'NULL AS U_PortLoad'),
+            // 'ORDR.U_PortLoad',
             'ORDR.GroupNum','g.U_T1',
+            DB::raw($request->is('pbi_soa_list') ?  'ORDR.U_TaxID': 'NULL AS U_TaxID'),
+            DB::raw($request->is('pbi_soa_list') ?  'ORDR.U_Salescontract': 'NULL AS U_Salescontract'),
+            DB::raw($request->is('pbi_soa_list') ?  'ORDR.U_Remarks1': 'NULL AS U_Remarks1'),
+            DB::raw($request->is('pbi_soa_list') ?  'ORDR.U_Remarks2': 'NULL AS U_Remarks2'),
+            DB::raw($request->is('pbi_soa_list') ?  'ORDR.U_Remarks3': 'NULL AS U_Remarks3'),
+
             'g.U_T2',
             'g.U_T3',
             'g.U_T4',
             'g.U_T5',
             'g.U_T6'
             
-        )->when($search, function ($query) use ($search, $request) {
+        )
+        ->when($search, function ($query) use ($search, $request) {
             $terms = explode(' ', $search);
             foreach ($terms as $term) {
                 $query->where(function ($q) use ($term, $request) {
@@ -1618,24 +1675,9 @@ class PrinController extends Controller
         })   
         ->where('CANCELED' ,'!=', 'Y' )
         ->where('NumAtCard' ,'!=', '' )
-        ->leftJoin('OCRD as customer', 'ORDR.CardCode', '=', 'customer.CardCode')
-                  ->leftJoin('@Payment_Instruction as g', 'g.Code', '=', DB::raw("
-                      CASE 
-                          WHEN customer.QryGroup2  = 'Y' THEN 'SBC-WCC-USD1'
-                        WHEN customer.QryGroup3  = 'Y' THEN 'BDO-USD'
-                        WHEN customer.QryGroup4  = 'Y' THEN 'MBTC-USD'
-                        WHEN customer.QryGroup5  = 'Y' THEN 'SBC-WCC-EUR'
-                        WHEN customer.QryGroup6  = 'Y' THEN 'SBC-WCC-USD'
-                        WHEN customer.QryGroup7  = 'Y' THEN 'SBC-WCC-PHP'
-                        WHEN customer.QryGroup8  = 'Y' THEN 'SBC-MARKET-PHP'
-                        WHEN customer.QryGroup9  = 'Y' THEN 'SBC-MARKET-USD'
-                        WHEN customer.QryGroup10 = 'Y' THEN 'BOA-PO BOX'
-                        WHEN customer.QryGroup11 = 'Y' THEN 'BOA-ACH'
-                        WHEN customer.QryGroup16 = 'Y' THEN 'BPI-W 5th-EUR'
-                      END
-                  "))
+        
         ->paginate(15);
-        return view('print_templates.whi.soa.index', 
+        return view($view, 
             array(
                 'details' =>$details,
                 'search' =>$search,
@@ -1656,6 +1698,8 @@ class PrinController extends Controller
         $save_as_new->SalesContractNo = $request->SalesContractNo;
         $save_as_new->OscaPwd = $request->OscaPwd;
         $save_as_new->ScPwd = $request->ScPwd;
+        $save_as_new->SoNo = $request->SoNo;
+        $save_as_new->DrNo = $request->DrNo;
         $save_as_new->Currency = $request->Currency;
         $save_as_new->PackingUnit = $request->PackingUom;
         $save_as_new->Uom = $request->UnitOfM;
@@ -1678,6 +1722,7 @@ class PrinController extends Controller
         $save_as_new->Phrex = $request->Phrex;
         $save_as_new->ShowPhrex = $request->ShowPhrex;
         $save_as_new->Type = $request->soa_type;
+        $save_as_new->Remarks = $request->Remarks;
         $save_as_new->save();
         foreach ($request->input('Description') as $index => $description) {
             $description = str_replace(['@', '/'], [' ', "\n"], $description);
@@ -1691,6 +1736,7 @@ class PrinController extends Controller
             $save_as_product = new SoaProduct(); 
             $save_as_product->DocNum = $save_as_new->id; 
             $save_as_product->Description = $description ?? null;
+            $save_as_product->ProductCode = $request->ProductCode[$index] ?? null;
             $save_as_product->Packing = $request->Packing[$index] ?? null;
             $save_as_product->Unit = $request->Unit[$index] ?? null;
             $save_as_product->Quantity = $quantity ?? null;
@@ -1715,6 +1761,8 @@ class PrinController extends Controller
         $update_saved_invoice->SalesContractNo = $request->SalesContractNo;
         $update_saved_invoice->OscaPwd = $request->OscaPwd;
         $update_saved_invoice->ScPwd = $request->ScPwd;
+        $update_saved_invoice->SoNo = $request->SoNo;
+        $update_saved_invoice->DrNo = $request->DrNo;
         $update_saved_invoice->Currency = $request->Currency;
         $update_saved_invoice->PackingUnit = $request->PackingUom;
         $update_saved_invoice->Uom = $request->UnitOfM;
@@ -1776,6 +1824,10 @@ class PrinController extends Controller
                 $view = 'print_templates.whi.soa.eur.eur_commercial_invoice';
             } elseif (Route::currentRouteName() === 'whi_php_soa') {
                 $view = 'print_templates.whi.soa.php.php_commercial_invoice';
+            } elseif (Route::currentRouteName() === 'pbi_php_soa') {
+                $view = 'print_templates.pbi.soa.php.php_commercial_invoice';
+            } elseif (Route::currentRouteName() === 'pbi_eur_soa') {
+                $view = 'print_templates.pbi.soa.eur.eur_commercial_invoice';
             } else {
                 $view = null; 
             }

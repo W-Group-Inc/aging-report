@@ -212,8 +212,13 @@
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
                                     <a class="dropdown-item dropdown-toggle" href="#">SOA</a>
-                                    <ul class="dropdown-menu">    
+                                    <ul class="dropdown-menu">   
                                         <li>
+                                            <a class="dropdown-item" href="{{url('/pbi_soa_list')}}">
+                                                SOA List
+                                            </a>
+                                        </li>      
+                                        {{-- <li>
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaPbiEurModal">
                                                 SOA EUR Commercial Invoice
                                             </a>
@@ -222,7 +227,7 @@
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#soaPbiPhpModal">
                                                 SOA PHP Commercial Invoice
                                             </a>
-                                        </li>                                        
+                                        </li>                                         --}}
                                     </ul>
                                 </li>
                                 {{-- <li class="dropdown-submenu">

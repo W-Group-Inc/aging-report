@@ -84,6 +84,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/soa_eur_commercial_pbi', 'PrinController@soa_eur_commercial_pbi');
     Route::post('/soa_php_commercial_pbi', 'PrinController@soa_php_commercial_pbi');
 
+    Route::get('/pbi_soa_list', 'PrinController@soa_index');
+    Route::get('/pbi_php_soa/{DocNum}', 'PrinController@whi_soa_print')->name('pbi_php_soa');
+    Route::get('/pbi_eur_soa/{DocNum}', 'PrinController@whi_soa_print')->name('pbi_eur_soa');
+
     // PBI BIR
     Route::get('/pbi_bir_invoice', 'CommercialInvoiceController@index');
     Route::get('/pbi_bir_original_commercial_invoice/{invoice_number}', 'CommercialInvoiceController@pbi_original_print')->name('pbi_bir_original_invoice');
