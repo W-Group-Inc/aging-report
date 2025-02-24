@@ -330,9 +330,9 @@
                 <tr>
                     <td style="text-align: left;">{{ $product->ProductCode }}</td>
                     <td style="text-align: left;">{{ $product->Description }}</td>
-                    <td>{{ ($product->Quantity) }}</td>
+                    <td>{{ rtrim(rtrim(number_format($product->Quantity, 10), '0'), '.') }}</td>
                     <td>{{ ($product->UnitPrice) }}</td>
-                    <td>{{ ($product->Amount) }}</td>
+                    <td>{{ rtrim(rtrim(number_format($product->Amount, 10), '0'), '.') }}</td>
                 </tr>
                 @if ($details->first()->Type == 'vatable')
 

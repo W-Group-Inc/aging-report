@@ -1785,6 +1785,8 @@ class PrinController extends Controller
         $update_saved_invoice->Phrex = $request->Phrex;
         $update_saved_invoice->ShowPhrex = $request->ShowPhrex;
         $update_saved_invoice->Type = $request->soa_type;
+        $update_saved_invoice->Remarks = $request->Remarks;
+
         $update_saved_invoice->update();
     
         foreach ($request->Description as $index => $description) {
