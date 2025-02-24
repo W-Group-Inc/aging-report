@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-md-3">
                     <label>Sales Contract No.</label>
-                    <input name="SalesContract" class="form-control" type="text" value="{{ $detail->asNew->SalesContractNo }}">
+                    <input name="SalesContractNo" class="form-control" type="text" value="{{ $detail->asNew->SalesContractNo }}">
                 </div> 
                 <div class="col-md-3">
                     <label>OSCA/PWD ID No.</label>

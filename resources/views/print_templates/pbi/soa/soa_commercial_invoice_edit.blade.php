@@ -178,8 +178,8 @@
                     <textarea name="PaymentInstruction" class="form-control" rows="10">
                         @if($detail && $detail->U_T3)
                         <?php
-                            // Collect intermediary bank details safely
                             $intermediaryBankDetails = [
+                                optional($detail)->U_T1,
                                 optional($detail)->U_T2,
                                 optional($detail)->U_T3,
                                 optional($detail)->U_T4,
@@ -187,13 +187,11 @@
                                 optional($detail)->U_T6
                             ];
                             
-                            // Clean and format each part
                             $intermediaryBankDetails = array_map(function ($item) {
                                 return trim($item);
-                            }, array_filter($intermediaryBankDetails)); // Remove empty values
+                            }, array_filter($intermediaryBankDetails)); 
                             
-                            // Convert all `/` into new lines
-                            $formattedDetails = preg_replace('/\s*\/\s*/', "\n", implode(' / ', $intermediaryBankDetails));
+                            $formattedDetails = preg_replace('/\s*[\/\\\\]\s*/', "\n", implode(' / ', $intermediaryBankDetails));
                             ?>
 
                             {{ $formattedDetails }} 
