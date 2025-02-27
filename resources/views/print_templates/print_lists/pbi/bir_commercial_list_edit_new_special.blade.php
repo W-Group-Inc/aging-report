@@ -1,3 +1,8 @@
+<style>
+    .select2-dropdown {
+    z-index: 9999 !important;
+}
+</style>
 <div class="modal fade" id="pbiBirCommercialEditNew{{ $detail->asNew->id }}" tabindex="-1" aria-labelledby="pbiBirCommercialEditLabel" aria-hidden="true">
     <form method="POST" id="pbiBirCommercial" action="{{ url('pbi_edit_new_invoice/'. $detail->asNew->id) }}" autocomplete="off">
       @csrf
@@ -192,7 +197,7 @@
                     placeholder: "Select or type a product",
                     allowClear: true,
                     width: '100%',
-                    dropdownParent: $(this).closest('.modal') // Ensure correct modal parent
+                    // dropdownParent: $(this).closest('.modal'), // Ensure correct modal parent
                 });
             });
         }
