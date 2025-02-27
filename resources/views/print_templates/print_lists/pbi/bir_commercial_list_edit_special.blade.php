@@ -46,9 +46,7 @@
                 </div>
                 <div class="col-md-4">
                     <label>Terms / Due Date</label>
-                    @foreach ( $detail->first()->dln1 as $arDetail)
-                    <input name="InvoiceDueDate" class="form-control" type="text" value="{{ \Carbon\Carbon::parse(optional($arDetail->oinvPbi)->DocDueDate)->format('Y-m-d') }}">
-                    @endforeach
+                    <input name="InvoiceDueDate" class="form-control" type="text" value="{{ \Carbon\Carbon::parse(optional($detail->dln1->first()->oinvPbi)->DocDueDate)->format('Y-m-d') }}">
                 </div>
                 <div class="col-md-4">
                     <label>Payment Terms</label>
@@ -57,7 +55,7 @@
                 <div class="col-md-4">
                     <label>SO #</label>
                     @foreach ( $detail->first()->dln1 as $item)
-                    <input name="SoNo" class="form-control" type="text" value="{{ $item->ordrPbi->DocEntry}}">
+                    <input name="SoNo" class="form-control" type="text" value="{{ $detail->dln1->map(fn($item) => $item->ordrPbi->DocEntry)->implode(', ') }}">
                     @endforeach
                 </div>
                 <div class="col-md-2">
