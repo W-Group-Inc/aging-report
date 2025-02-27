@@ -143,7 +143,7 @@
                             <a class="dropdown-item dropdown-toggle" href="#">WHI</a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="#">SOA</a>
+                                    <a class="dropdown-item dropdown-toggle" href="#">WHI SOA</a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item" href="{{url('/whi_soa_list')}}">
@@ -211,7 +211,7 @@
                             <a class="dropdown-item dropdown-toggle" href="#">PBI</a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="#">SOA</a>
+                                    <a class="dropdown-item dropdown-toggle" href="#">PBI SOA</a>
                                     <ul class="dropdown-menu">   
                                         <li>
                                             <a class="dropdown-item" href="{{url('/pbi_soa_list')}}">
