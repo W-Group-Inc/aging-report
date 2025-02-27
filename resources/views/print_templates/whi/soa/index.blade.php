@@ -32,7 +32,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>SOA</h5>
+                            <h5>WHI SOA</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="d-flex align-items-center flex-wrap">
