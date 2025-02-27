@@ -1654,6 +1654,7 @@ class PrinController extends Controller
             DB::raw($request->is('pbi_soa_list') ?  'ORDR.U_Remarks2': 'NULL AS U_Remarks2'),
             DB::raw($request->is('pbi_soa_list') ?  'ORDR.U_Remarks3': 'NULL AS U_Remarks3'),
 
+            'g.U_T1',
             'g.U_T2',
             'g.U_T3',
             'g.U_T4',

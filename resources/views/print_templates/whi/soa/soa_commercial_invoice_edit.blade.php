@@ -188,10 +188,10 @@
                 <div class="col-md-12">
                     <label for="">Payment Instruction</label>
                     <textarea name="PaymentInstruction" class="form-control" rows="10">
-                        @if($detail && $detail->U_T3)
                         <?php
                             // Collect intermediary bank details safely
                             $intermediaryBankDetails = [
+                                optional($detail)->U_T1,
                                 optional($detail)->U_T2,
                                 optional($detail)->U_T3,
                                 optional($detail)->U_T4,
@@ -209,7 +209,7 @@
                             ?>
 
                             {{ $formattedDetails }} 
-                    @endif</textarea>
+                        </textarea>
                 </div>
             </div>  
             <div class="row">
