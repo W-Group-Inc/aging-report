@@ -54,9 +54,9 @@
                 </div>
                 <div class="col-md-4">
                     <label>SO #</label>
-                    @foreach ( $detail->dln1 as $item)
+                    {{-- @foreach ( $detail->dln1 as $item) --}}
                     <input name="SoNo" class="form-control" type="text" value="{{ $detail->asNew->SoNo}}">
-                    @endforeach
+                    {{-- @endforeach --}}
                 </div>
                 <div class="col-md-2">
                     <label>Cur</label>
@@ -65,6 +65,14 @@
                 <div class="col-md-2">
                     <label>UoM</label>
                     <input class="form-control" name="UnitOfM" type="text" value="{{ $detail->asNew->Uom }}">
+                </div>
+                <div class="col-md-6">
+                    <label>Seal No.</label>
+                    <input class="form-control" name="SealNo" type="text" value="{{ $detail->asNew->SealNo }}">
+                </div>
+                <div class="col-md-6">
+                    <label>Container No.</label>
+                    <input class="form-control" name="ContainerNo" type="text" value="{{ $detail->asNew->ContainerNo }}">
                 </div>
             </div>      
             <div class="row" id="pbiEditProductContainer{{ $detail->asNew->id }}">
