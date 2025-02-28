@@ -285,12 +285,12 @@
             </div>
             <div class="info-row">
                 <span class="info-label"></span>
-                <span class="info-value">{{ optional($details->first())->SealNo }}</span>
+                <span class="info-value">{{ optional($details->first())->ContainerNo }}</span>
             </div>
             <div class="info-row">
-              <span class="info-label"></span>
-              <span class="info-value">{{ optional($details->first())->ContainerNo }}</span>
-          </div>
+                <span class="info-label"></span>
+                <span class="info-value">{{ optional($details->first())->SealNo }}</span>
+            </div>
           </div>
       </div>
       <div class="product-details">

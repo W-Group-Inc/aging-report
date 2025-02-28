@@ -67,13 +67,14 @@
                     <input class="form-control" name="UnitOfM" type="text" value="{{ $detail->asNew->Uom }}">
                 </div>
                 <div class="col-md-6">
-                    <label>Seal No.</label>
-                    <input class="form-control" name="SealNo" type="text" value="{{ $detail->asNew->SealNo }}">
-                </div>
-                <div class="col-md-6">
                     <label>Container No.</label>
                     <input class="form-control" name="ContainerNo" type="text" value="{{ $detail->asNew->ContainerNo }}">
                 </div>
+                <div class="col-md-6">
+                    <label>Seal No.</label>
+                    <input class="form-control" name="SealNo" type="text" value="{{ $detail->asNew->SealNo }}">
+                </div>
+               
             </div>      
             <div class="row" id="pbiEditProductContainer{{ $detail->asNew->id }}">
             @foreach ( $detail->asNew->allProducts as $index => $product)
