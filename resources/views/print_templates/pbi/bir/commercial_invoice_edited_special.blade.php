@@ -316,7 +316,7 @@
                 <td style="width: 100px; text-transform: uppercase;">{{ $detail->Uom }}</td>
                 <td style="width: 77px;">{{ $detail->Currency }}</td>
                 <td style="width:99px;">{{ $detail->Currency }}</td>
-            </tr>
+             </tr>
               <tbody>
                 @foreach ($detail->specialProductsOrig as $product)
                 @php
@@ -337,6 +337,15 @@
                     <td style="width: 100px;"></td>
                     <td style="width: 77px;"></td>
                     <td style="width: 103px; padding-bottom:0; border-bottom: 1px solid black; border-top: 1px solid black;">{{ number_format($total,2) }}</td>
+                  </tr>
+                  <tr style="height: 55px;">
+                    <td colspan="5"></td> 
+                  </tr>
+                  <tr style="height: 55px;">
+                    <td colspan="5"></td> 
+                  </tr>
+                  <tr style="height: 55px;">
+                    <td colspan="5"></td> 
                   </tr>
                     @foreach ($details as $detail)
                     @foreach ($detail->specialProducts as $specialProduct)

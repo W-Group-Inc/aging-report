@@ -359,6 +359,15 @@
                     <td style="width: 77px;"></td>
                     <td style="width: 103px; padding-bottom:0; border-bottom: 1px solid black; border-top: 1px solid black;">{{ number_format($total_amount_payable,2) }}</td>
                   </tr>
+                  <tr style="height: 55px;">
+                    <td colspan="5"></td> 
+                  </tr>
+                  <tr style="height: 55px;">
+                    <td colspan="5"></td> 
+                  </tr>
+                  <tr style="height: 55px;">
+                    <td colspan="5"></td> 
+                  </tr>
                   @foreach ($details as $detail)
                     @foreach ($detail->specialProducts as $specialProduct)
                     @php
