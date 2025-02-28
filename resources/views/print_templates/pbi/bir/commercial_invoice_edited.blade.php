@@ -423,7 +423,7 @@
             </table>
           </div>
         <div class="product-details-bottom">
-            <table class="bottom-table"  style="margin-top:5px; border-top:none;">
+            <table class="bottom-table"  style="margin-top:0px; border-top:none;">
                 <tbody >
                   {{-- @php
                       $total = 0;
