@@ -59,7 +59,7 @@
                     <input name="OscaPwd" class="form-control" type="text">
                 </div>
                 <div class="col-md-3">
-                    <label>SC/PWD ID No.</label>
+                    <label>SC/PWD Signature</label>
                     <input name="ScPwd" class="form-control" type="text">
                 </div>
                 <div class="col-md-3">
