@@ -70,6 +70,14 @@
                     <label>UoM</label>
                     <input class="form-control" name="UnitOfM" type="text" value="{{ $detail->dln1->first()->U_printUOM }}">
                 </div>
+                <div class="col-md-6">
+                    <label>Container No.</label>
+                    <input class="form-control" name="ContainerNo" type="text" value="">
+                </div>
+                <div class="col-md-6">
+                    <label>Seal No.</label>
+                    <input class="form-control" name="SealNo" type="text" value="">
+                </div>
                 {{-- <div class="col-md-4">
                     <label>Sales Contract No.</label>
                     <input name="SalesContract" class="form-control" type="text" value="{{ $detail->U_Salescontract }}">

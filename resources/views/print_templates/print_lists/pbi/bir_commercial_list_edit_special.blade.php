@@ -66,6 +66,14 @@
                     <label>UoM</label>
                     <input class="form-control" name="UnitOfM" type="text" value="{{ $detail->dln1->first()->U_printUOM }}">
                 </div>
+                <div class="col-md-6">
+                    <label>Container No.</label>
+                    <input class="form-control" name="ContainerNo" type="text" value="">
+                </div>
+                <div class="col-md-6">
+                    <label>Seal No.</label>
+                    <input class="form-control" name="SealNo" type="text" value="">
+                </div>
             </div>      
             <div class="row" id="pbiProductContainer{{ $detail->DocEntry }}">
                 @foreach ( $detail->dln1 as $index => $product)
