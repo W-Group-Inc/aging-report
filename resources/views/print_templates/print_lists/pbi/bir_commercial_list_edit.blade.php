@@ -168,6 +168,9 @@
                 <div class="col-md-12">
                     <label for="">Remarks</label>
                     <textarea name="Remarks" class="form-control" rows="10">
+                        Country of Origin: Philippines
+                        Carmelray Industrial Park 1 -
+                        Special Economic Zone
                     </textarea>
                 </div>
                 {{-- <div class="mt-4">
