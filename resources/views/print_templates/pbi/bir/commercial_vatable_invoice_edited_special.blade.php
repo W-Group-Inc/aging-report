@@ -279,7 +279,7 @@
                   <span class="info-label"></span>
                   <span class="info-value">{{ optional($details->first())->SoNo }}</span>
               </div>
-              <div class="info-row">
+              <div class="info-row" style="height: 27px">
                 <span class="info-label"></span>
                 <span class="info-value"></span>
             </div>
