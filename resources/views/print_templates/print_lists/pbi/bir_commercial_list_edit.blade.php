@@ -99,7 +99,9 @@
                     <select class="form-control" name="ProductCode[]" style="position: relative !important">
                         <option value="" selected>No Description</option>
                         @foreach ($sisCodes as $codes)
+                        @if (!empty($codes->product_code)) 
                             <option value="{{$codes->product_code }}">{{$codes->product_code  }}</option>
+                        @endif
                         @endforeach
                     </select>
                     {{-- <input name="ProductCode[]" class="form-control" type="text" value=""> --}}

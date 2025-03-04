@@ -50,7 +50,7 @@ class CommercialInvoiceController extends Controller
         $salesOrder = null;
         $view = '';
 
-        $sisCodes = SisCode::where('product_code', '!=', '')->get();
+        $sisCodes = SisCode::get();
         if ($request->is('pbi_bir_invoice')) {
             $model = ODLN_PBI::query();
             $salesOrder = ORDR_PBI::query();
