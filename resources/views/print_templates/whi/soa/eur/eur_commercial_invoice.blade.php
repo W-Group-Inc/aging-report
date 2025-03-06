@@ -377,7 +377,7 @@
         <div class="info-row">
             <span class="info-label">VAT Number</span>
             <span class="info-colon">:</span>
-            <span class="info-value">{{ optional($details->first())->VatNum }}</span>
+            <span class="info-value">{{ optional($details->first())->VatNumber }}</span>
         </div>
     </div>
     <div class="right-column">

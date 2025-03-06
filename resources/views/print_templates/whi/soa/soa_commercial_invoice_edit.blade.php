@@ -99,7 +99,7 @@
                 <div class="col-md-12 row"><h4 style="font-weight:bold; color:red;">Additional Fields For EUR</h4></div> 
                 <div class="col-md-4">
                     <label >Vat Number</label>
-                    <input name="VatNumber" class="form-control" type="text" value="">
+                    <input name="VatNumber" class="form-control" type="text" value="{{ $detail->U_TaxID }}">
                 </div>
                 <div class="col-md-4">
                     <label>OSCA/PWD ID No.</label>
