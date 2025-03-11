@@ -1633,6 +1633,7 @@ class PrinController extends Controller
             // 'ORDR.U_Salescontract',
             'ORDR.DocDueDate',
             'ORDR.U_BuyersPO',
+            'ORDR.GroupNum',
             DB::raw($request->is('whi_soa_list') ?  'ORDR.U_SOANum': 'NULL AS U_SOANum'),
             // 'ORDR.U_SOANum',
             'ORDR.U_ModeShip',
