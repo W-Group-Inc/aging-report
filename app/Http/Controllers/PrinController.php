@@ -1646,7 +1646,7 @@ class PrinController extends Controller
             DB::raw($request->is('whi_soa_list') ? 'ORDR.U_PortLoad' : ($request->is('pbi_soa_list') ? 'ORDR.U_PlaceLoading' : 'NULL AS U_PortLoad')),
             // DB::raw($request->is('whi_soa_list') ?  'ORDR.U_PortLoad': 'NULL AS U_PortLoad'),
             // 'ORDR.U_PortLoad',
-            'ORDR.GroupNum','g.U_T1',
+            // 'ORDR.GroupNum','g.U_T1',
             DB::raw($request->is('whi_soa_list') ? 'ORDR.U_TaxID' : ($request->is('pbi_soa_list') ? 'ORDR.U_TaxID' : 'NULL AS U_TaxID')),
 
             // DB::raw($request->is('pbi_soa_list') ?  'ORDR.U_TaxID': 'NULL AS U_TaxID'),
