@@ -143,5 +143,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/billing_statement_ccc', 'PrinController@billing_statement_ccc');
 
 
-    
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 });

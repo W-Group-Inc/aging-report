@@ -17,6 +17,7 @@
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
         "owen-it/laravel-auditing": "^8.0",
+        "rap2hpoutre/laravel-log-viewer": "^2.3",
         "realrashid/sweet-alert": "^7.1"
     },
     "require-dev": {
