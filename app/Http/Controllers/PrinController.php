@@ -1802,7 +1802,7 @@ class PrinController extends Controller
                 $save_as_product = SoaProduct::find($productId);
             } else {
                 $save_as_product = new SoaProduct();
-                $save_as_product->DocNum = $update_saved_invoice->id; 
+                $save_as_product->DocNum = $id; 
             }
 
             $save_as_product->Description = $description;
@@ -1811,7 +1811,7 @@ class PrinController extends Controller
             $save_as_product->Quantity = (float) str_replace(',', '', $request->Quantity[$index]);
             $save_as_product->UnitPrice = $request->UnitPrice[$index];
             $save_as_product->Amount = (float) str_replace(',', '', $request->Amount[$index]); 
-            $save_as_product->update(); 
+            $save_as_product->save(); 
     }
     return redirect()->back()->with('success', 'Invoice updated successfully.');
     
