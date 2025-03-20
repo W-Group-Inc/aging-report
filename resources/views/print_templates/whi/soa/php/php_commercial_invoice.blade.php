@@ -170,6 +170,22 @@
             margin: 0;
             font-size: 12px;
         }
+        .total-right-column .info-detail {
+            width: 33%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 12px;
+            word-wrap: break-word;
+            text-align: right;
+        }
+        .total-left-column .info-detail {
+            width: 33%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 12px;
+            word-wrap: break-word;
+            text-align: right;
+        }
         .info-name {
             width: 40%; /* Fixed width for labels */
             display: inline-block;

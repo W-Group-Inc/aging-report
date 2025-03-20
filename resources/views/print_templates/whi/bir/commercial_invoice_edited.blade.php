@@ -207,12 +207,14 @@
             vertical-align: top;  
             font-size: 12px;
             word-wrap: break-word;
+            text-align: right;
         }
         .total-right-column .info-detail{
             width: 30%;
             display: inline-block;
             vertical-align: top;  
             font-size: 12px;
+            text-align: right;
             word-wrap: break-word;
         }
         .info-name {

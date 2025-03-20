@@ -198,6 +198,7 @@
             vertical-align: top;  
             margin: 0;
             font-size: 12px;
+            text-align: right;
         }
         .total-left-column .info-detail{
             width: 30%;
@@ -205,6 +206,7 @@
             vertical-align: top;  
             font-size: 12px;
             word-wrap: break-word;
+            text-align: right;
         }
         .total-right-column .info-detail{
             width: 30%;

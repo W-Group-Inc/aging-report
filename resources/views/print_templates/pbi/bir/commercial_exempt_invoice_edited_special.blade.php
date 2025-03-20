@@ -7,7 +7,7 @@
     
     <style>
         @page{
-        margin: 70px 58px 10px 0px;
+        margin: 70px 60px 10px 0px;
        }
         body {
             font-family: sans-serif;
@@ -327,7 +327,7 @@
                       <td style="width: 289px; text-align:left; padding-left: 20px; box-sizing: border-box;">{{ $product->Description }}</td>
                       <td style="width: 100px;">{{ $product->Quantity !== null ? number_format($product->Quantity, 2) : '' }}</td>
                       <td style="width: 77px;">{{ $product->UnitPrice !== null ? number_format($product->UnitPrice, 2) : '' }}</td>
-                      <td style="width: 99px;">{{ $product->Amount !== null ? number_format($product->Amount, 2) : '' }}</td>
+                      <td style="width: 99px;text-align: right;">{{ $product->Amount !== null ? number_format($product->Amount, 2) : '' }}</td>
                   </tr>
                   @endforeach
                   @endforeach
@@ -336,7 +336,7 @@
                     <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
                     <td style="width: 100px;"></td>
                     <td style="width: 77px;"></td>
-                    <td style="width: 103px; padding-bottom:0; border-bottom: 1px solid black; border-top: 1px solid black;">{{ number_format($total,2) }}</td>
+                    <td style="width: 103px; padding-bottom:0; border-bottom: 1px solid black; border-top: 1px solid black;text-align: right;">{{ number_format($total,2) }}</td>
                   </tr>
                   <tr style="height: 55px;">
                     <td colspan="5"></td> 
@@ -364,7 +364,7 @@
                     <td style="width: 77px;">
                         {{ $specialProduct->UnitPrice !== null && $specialProduct->UnitPrice != 0 ? number_format($specialProduct->UnitPrice, 2) : '' }}
                     </td>
-                    <td style="width: 99px;">
+                    <td style="width: 99px;text-align: right;">
                         {{ $specialProduct->Amount !== null && $specialProduct->Amount != 0 ? number_format($specialProduct->Amount, 2) : '' }}
                     </td>
                   </tr>
@@ -381,7 +381,7 @@
                     </td>
                     <td style="width: 100px;"></td>
                     <td style="width: 77px;"></td>
-                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1px solid black">{{ number_format($expensesTotal,2) }}</td>
+                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1px solid black;text-align: right;">{{ number_format($expensesTotal,2) }}</td>
                   </tr>
                   <tr>
                     <td></td>
@@ -508,11 +508,11 @@
                         @endif
                          {!! nl2br(e(optional($details->first())->PaymentInstruction)) !!}
                         </td>
-                        <td class="" style="padding-left: 13px; padding-top:35px;">
+                        <td class="" style="padding-left: 53px; padding-top:35px;">
                             {{ substr(auth()->user()->name, 0, 1) }}. {{ last(explode(' ', auth()->user()->name)) }} <br> <br>
                         </td>
                         <td class=""></td>
-                        <td style="padding-top:40px;">J. Galera</td>
+                        <td style="padding-top:37px;">J. Galera</td>
                         <td class=""></td>
                     </tr>
                 </tbody>

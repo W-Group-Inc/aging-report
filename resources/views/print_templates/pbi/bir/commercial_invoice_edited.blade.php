@@ -7,7 +7,7 @@
     
     <style>
         @page{
-        margin: 70px 58px 10px 0px;
+        margin: 70px 60px 10px 0px;
        }
         body {
             font-family: sans-serif;
@@ -329,7 +329,7 @@
                     <td style="width: 77px;">
                         {{ $product->UnitPrice !== null && $product->UnitPrice != 0 ? number_format($product->UnitPrice, 2) : '' }}
                     </td>
-                    <td style="width: 99px;">
+                    <td style="width: 99px; text-align: right;">
                         {{ $product->Amount !== null && $product->Amount != 0 ? number_format($product->Amount, 2) : '' }}
                     </td>
                   </tr>
@@ -340,7 +340,7 @@
                     <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
                     <td style="width: 100px;"></td>
                     <td style="width: 77px;"></td>
-                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black">{{ number_format($total,2) }}</td>
+                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black;text-align: right;">{{ number_format($total,2) }}</td>
                   </tr>
                   <tr>
                     <td></td>

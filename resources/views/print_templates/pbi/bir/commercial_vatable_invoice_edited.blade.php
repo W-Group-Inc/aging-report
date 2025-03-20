@@ -7,7 +7,7 @@
     
     <style>
         @page{
-        margin: 70px 58px 10px 0px;
+        margin: 70px 60px 10px 0px;
        }
         body {
             font-family: sans-serif;
@@ -343,7 +343,7 @@
                       <td style="width: 74px;">
                             {{ !empty($product->UnitPrice) && $product->UnitPrice != 0 ? number_format($product->UnitPrice, 2) : '' }}
                       </td>
-                      <td style="width: 103px;">
+                      <td style="width: 103px;text-align: right;">
                             {{ !empty($product->Amount) && $product->Amount != 0 ? number_format($product->Amount, 2) : '' }}
                       </td>
                   </tr>
@@ -354,14 +354,14 @@
                         <td style="width: 289px; text-align:left; padding-left: 20px;"><strong>ADD:12% VAT</strong></td>
                     <td style="width: 100px;"></td>
                     <td style="width: 74px;"></td>
-                    <td style="width: 103px;;">{{ number_format($vatable_amount, 2) }}</td>
+                    <td style="width: 103px;text-align: right;">{{ number_format($vatable_amount, 2) }}</td>
                   </tr>
                   <tr>
                     <td style="width: 103px;"></td>
                     <td style="width: 289px; text-align:left; padding-left: 10px; box-sizing: border-box;"></td>
                     <td style="width: 100px;"></td>
                     <td style="width: 77px;"></td>
-                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black">{{ number_format($total_amount_payable,2) }}</td>
+                    <td style="width: 103px; padding:0;border-bottom: 1px double black; border-top:1 px solid black;text-align: right;">{{ number_format($total_amount_payable,2) }}</td>
                   </tr>
                   <tr>
                     <td></td>
@@ -452,11 +452,11 @@
                     <tr style="">
                         <td class="label-column"></td>
                         <td class="value-column" style="font-size: 11px">{!! nl2br(e(optional($details->first())->PaymentInstruction)) !!}</td>
-                        <td class="" style="padding-left: 53px; padding-top:30px;">
+                        <td class="" style="padding-left: 53px; padding-top:35px;">
                             {{ substr(auth()->user()->name, 0, 1) }}. {{ last(explode(' ', auth()->user()->name)) }} <br> <br>
                         </td>
                         <td class=""></td>
-                        <td style="padding-top:35px;">J. Galera</td>
+                        <td style="padding-top:37px;">J. Galera</td>
                         <td class=""></td>
                     </tr>
                 </tbody>

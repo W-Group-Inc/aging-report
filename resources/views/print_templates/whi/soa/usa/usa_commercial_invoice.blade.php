@@ -177,6 +177,22 @@
             margin: 0;
             font-size: 12px;
         }
+        .total-left-column .info-detail {
+            width: 35%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 12px;
+            word-wrap: break-word;
+            text-align: right;
+        }
+        .total-right-column .info-detail {
+            width: 33%;
+            display: inline-block;
+            vertical-align: top;  
+            font-size: 12px;
+            word-wrap: break-word;
+            text-align: right;
+        }
         .info-name {
             width: 35%; /* Fixed width for labels */
             display: inline-block;

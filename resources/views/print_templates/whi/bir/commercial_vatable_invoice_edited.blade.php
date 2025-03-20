@@ -204,6 +204,7 @@
             display: inline-block;
             vertical-align: top;  
             font-size: 12px;
+            text-align: right;
             word-wrap: break-word;
         }
         .total-right-column .info-detail{
@@ -211,6 +212,7 @@
             display: inline-block;
             vertical-align: top;  
             font-size: 12px;
+            text-align: right;
             word-wrap: break-word;
         }
         .info-name {
