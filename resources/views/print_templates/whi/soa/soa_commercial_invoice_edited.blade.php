@@ -196,7 +196,8 @@
                     </textarea>
                 </div>
                 <div class="col-md-2">
-                    <input type="checkbox" name="ShowPhrex" class="form-check-input" value="{{ $detail->asNew->ShowPhrex }}" 
+                    <input type="hidden" name="ShowPhrex" value="0"> <!-- hidden input for unchecked state -->
+                    <input type="checkbox" name="ShowPhrex" class="form-check-input" value="1" 
                     {{ $detail->asNew->ShowPhrex == 1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="ShowPhrex">
                         Show
