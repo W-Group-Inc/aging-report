@@ -84,7 +84,7 @@
                 </div>
                 <div class="col-md-3">
                     <label>Terms of Delivery</label>
-                    <input name="TermsOfDelivery" class="form-control" type="text" value="{{ $detail->U_Inco }}">
+                    <input name="TermsOfDelivery" class="form-control" type="text" value="{{ $detail->U_Delivery }}">
                 </div>
                 <div class="col-md-12">
                     <label >Delivery Address:</label>

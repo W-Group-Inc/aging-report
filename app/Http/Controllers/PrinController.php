@@ -1638,7 +1638,7 @@ class PrinController extends Controller
             // 'ORDR.U_SOANum',
             'ORDR.U_ModeShip',
             // 'ORDR.U_Inco',
-            DB::raw($request->is('whi_soa_list') ? 'ORDR.U_Inco' : ($request->is('pbi_soa_list') ? 'ORDR.U_Delivery' : 'NULL AS U_Inco')),
+            DB::raw($request->is('whi_soa_list') ? 'ORDR.U_Delivery' : ($request->is('pbi_soa_list') ? 'ORDR.U_Delivery' : 'NULL AS U_Inco')),
 
             'ORDR.CANCELED',
             // 'ORDR.U_SAODueDate',
