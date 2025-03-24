@@ -829,7 +829,7 @@
         <div class="info-row">
             <span class="info-name">Container No.</span>
             <span class="info-colon">:</span>
-            @if (optional($details->first())->ContainerNo === '')
+            @if (optional($details->first())->ContainerNo === 'insert container no.')
             <span class="info-detail"></span>
             @else
             <span class="info-detail">{{optional($details->first())->OceanVessel }}</span>
