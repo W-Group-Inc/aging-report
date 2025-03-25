@@ -54,7 +54,9 @@
                 </div>
                 <div class="col-md-4">
                     <label>Terms / Due Date</label>
-                    <input name="InvoiceDueDate" class="form-control" type="text" value="{{ \Carbon\Carbon::parse($detail->asNew->InvoiceDueDate)->format('Y-m-d') }}">
+                    {{-- <input name="InvoiceDueDate" class="form-control" type="text" value="{{ \Carbon\Carbon::parse($detail->asNew->InvoiceDueDate)->format('Y-m-d') }}"> --}}
+                    <input name="InvoiceDueDate" class="form-control" type="date" value="{{ optional($detail->asNew)->InvoiceDueDate ? \Carbon\Carbon::parse(optional($detail->asNew)->InvoiceDueDate)->format('Y-m-d') : '' }}">
+
                 </div>
                 <div class="col-md-4">
                     <label>Payment Terms</label>
