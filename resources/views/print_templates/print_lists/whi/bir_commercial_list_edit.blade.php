@@ -38,7 +38,7 @@
                 </div> --}}
                 <div class="col-md-4">
                     <label>Buyer's PO No.</label>
-                    <input name="BuyersPo" class="form-control" type="text" value="{{ collect($detail->PoNumbers)->pluck('U_BuyersPO')->unique()->implode(', ') }}">
+                    <input name="BuyersPo" class="form-control" type="text" value="{{ collect($detail->PoNumbers)->pluck('U_BuyersPO')->unique()->implode(', ') ?: $detail->U_BuyersPO }}">
                 </div>
                 <div class="col-md-4">
                     <label>Buyer's Ref No.</label>
