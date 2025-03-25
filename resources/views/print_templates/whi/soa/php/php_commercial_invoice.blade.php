@@ -171,7 +171,7 @@
             font-size: 12px;
         }
         .total-right-column .info-detail {
-            width: 33%;
+            width: 30%;
             display: inline-block;
             vertical-align: top;  
             font-size: 12px;
@@ -179,7 +179,7 @@
             text-align: right;
         }
         .total-left-column .info-detail {
-            width: 33%;
+            width: 30%;
             display: inline-block;
             vertical-align: top;  
             font-size: 12px;
