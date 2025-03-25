@@ -7,7 +7,7 @@
     
     <style>
         @page{
-        margin: 70px 60px 10px 0px;
+        margin: 70px 70px 10px 0px;
        }
         body {
             font-family: sans-serif;
@@ -145,12 +145,12 @@
         }
         .product-details-middle .middle-table .label-column{
             text-align: left;
-            width: 10%;
+            width: 5%;
             height: 14.6px;
         }
         .product-details-middle .middle-table .value-column {
-            width: 30%;
-            padding-right: 20px;
+            width: 35%;
+            padding-right: 10px;
             text-align: right;
 
         }

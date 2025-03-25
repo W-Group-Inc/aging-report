@@ -7,7 +7,7 @@
     
     <style>
         @page{
-        margin: 70px 60px 10px 0px;
+        margin: 70px 70px 10px 0px;
        }
         body {
             font-family: sans-serif;
@@ -145,12 +145,12 @@
         }
         .product-details-middle .middle-table .label-column{
             text-align: left;
-            width: 10%;
+            width: 5%;
             height: 14.6px;
         }
         .product-details-middle .middle-table .value-column {
-            width: 30%;
-            padding-right: 20px;
+            width: 35%;
+            padding-right: 10px;
             text-align: right;
 
         }
@@ -410,7 +410,7 @@
             <table class="middle-table"  style="margin-top:0; border-top:none; font-size:12px;  width: 100%;">
                 <tbody >
                     <tr>
-                        <td style="width: 52%;">
+                        <td style="width: 53%;">
                             <p style="margin-left:15px; text-align: justify;">
                                 @if (optional($details->first())->ShowPhrex == 1)
                                    {{ optional($details->first())->Phrex }}
@@ -445,10 +445,10 @@
                                         <td class="value-column"></td>
                                     </tr>
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="label-column"></td>
-                                        <td class="value-column"></td>
+                                        <td style="height: 10px !important;"></td>
+                                        <td style="height: 10px !important;"></td>
+                                        <td class="label-column" style="height: 10px !important;"></td>
+                                        <td class="value-column" style="height: 10px !important;"></td>
                                     </tr>
                                     <tr>
                                       <td></td>
