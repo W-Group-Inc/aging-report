@@ -244,7 +244,7 @@
             margin-bottom: 3.8px;
         }
         .new-col-left .info-detail {
-            width: 53%;
+            width: 55%;
             display: inline-block;
             vertical-align: top;  
             font-size: 11px;
