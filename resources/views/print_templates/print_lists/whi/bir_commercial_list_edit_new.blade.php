@@ -83,7 +83,8 @@
             </div>
             <div class="col-md-2">
                 <label>Unit</label>
-                <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->Packing) && $product->Packing != 0 ? number_format($product->Quantity / $product->Packing, 2) : '' }}">
+                {{-- <input class="form-control" name="Unit[]"type="text" value="{{ !empty($product->Quantity) && !empty($product->Packing) && $product->Packing != 0 ? number_format($product->Quantity / $product->Packing, 2) : '' }}"> --}}
+                <input class="form-control" name="Unit[]"type="text" value="{{ $product->Unit}}">
             </div>
             <div class="col-md-1">
                 <label>UoM</label>

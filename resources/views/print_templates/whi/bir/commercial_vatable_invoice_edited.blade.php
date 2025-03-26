@@ -465,7 +465,8 @@
                 <td>{{ $product->Packing }} {{ $product->Uom }}
                 </td>
                 <td>
-                    {{ !empty($product->Quantity) && !empty($product->Packing) && $product->Packing != 0 ? number_format($product->Quantity / $product->Packing, 2) : '' }}
+                    {{-- {{ !empty($product->Quantity) && !empty($product->Packing) && $product->Packing != 0 ? number_format($product->Quantity / $product->Packing, 2) : '' }} --}}
+                    {{ $product->Unit }}
                     {{ $product->printUom }}
                 </td>
 

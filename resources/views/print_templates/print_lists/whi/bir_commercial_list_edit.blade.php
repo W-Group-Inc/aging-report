@@ -83,7 +83,7 @@
                     <div class="col-md-2">
                         <label>Unit</label>
                         {{-- <input class="form-control" type="text" value="{{ !empty($product->Quantity) && !empty($product->U_Bagsperlot) && $product->U_Bagsperlot != 0 ? number_format($product->Quantity / $product->U_Bagsperlot, 2) : '' }}"> --}}
-                        <input class="form-control" type="text" value="{{ number_format($product->U_Netweight) }}">
+                        <input class="form-control" name="Unit[]" type="text" value="{{ number_format($product->U_Netweight) }}">
                     </div>
                     <div class="col-md-1">
                         <label>UoM</label>
@@ -276,7 +276,7 @@
                 </div>
                 <div class="col-md-2">
                     <label>Unit</label>
-                    <input class="form-control" type="text" value="">
+                    <input class="form-control" name="Unit[]"type="text" value="">
                 </div>
                 <div class="col-md-1">
                     <label>UoM</label>

@@ -317,6 +317,7 @@ class CommercialInvoiceController extends Controller
             $save_as_product->Packing = $request->Packing[$index] ?? null;
             $save_as_product->Uom = $request->Uom[$index] ?? null;
             $save_as_product->UnitPrice = $request->UnitPrice[$index] ?? null;
+            $save_as_product->Unit = $request->Unit[$index] ?? null;
             $save_as_product->printUom = $request->printUom[$index] ?? null;
             $save_as_product->Quantity = $quantity ?? null;
             $save_as_product->Amount = $amount ?? null;
@@ -381,6 +382,7 @@ class CommercialInvoiceController extends Controller
             $save_as_product->Uom = $request->Uom[$index] ?? null;
             $save_as_product->printUom = $request->printUom[$index] ?? null;
             $save_as_product->UnitPrice = $request->UnitPrice[$index] ?? null;
+            $save_as_product->Unit = $request->Unit[$index] ?? null;
     
             $save_as_product->Quantity = isset($request->Quantity[$index]) && $request->Quantity[$index] !== '' 
                 ? (float) str_replace(',', '', $request->Quantity[$index]) 
