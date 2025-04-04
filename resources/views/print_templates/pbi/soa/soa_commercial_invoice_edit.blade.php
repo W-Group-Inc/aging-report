@@ -202,11 +202,11 @@
                 <div class="col-md-10">
                     <label for="">PHREX</label>
                     <textarea name="Phrex" class="form-control" rows="7">
-                        The Exporter PHREX2020P02A23JUN0000010257 of the products covered by this 
-                        document declares that, except where otherwise clearly indicated, these products
-                         are of  Philippine preferential origin according to the rules of origin of the 
-                         Generalised System of Preferences of the European Union and that the origin 
-                         criterion met is "W".
+                        The Exporter PHREX2021P02A12FEB0000010538 of the products covered by this 
+                        document declares that, except where otherwise clearly indicated, these products 
+                        are of Philippine preferential origin according to the rules of origin of the 
+                        Generalised System of Preferences of the European Union and that the origin 
+                        criterion met is W".
                     </textarea>
                 </div>
                 <div class="col-md-2">
